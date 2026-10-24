@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import SopaDeLetras from './SopaDeLetras.jsx'
+import Trivia from './Trivia.jsx'
+import { leer } from './storage.js'
 
 const MODOS = [
   { id: 'sopa', nombre: 'Sopa de letras', activo: true },
-  { id: 'trivia', nombre: 'Trivia', activo: false },
+  { id: 'trivia', nombre: 'Trivia', activo: true },
   { id: 'crucigrama', nombre: 'Crucigrama', activo: false },
 ]
 
@@ -11,6 +13,9 @@ export default function App() {
   const [modo, setModo] = useState(null)
 
   if (modo === 'sopa') return <SopaDeLetras onVolver={() => setModo(null)} />
+  if (modo === 'trivia') return <Trivia onVolver={() => setModo(null)} />
+
+  const g = leer()
 
   return (
     <main className="pantalla inicio">
@@ -29,6 +34,11 @@ export default function App() {
           </button>
         ))}
       </nav>
+      <section className="stats">
+        <div><b>{g.nivel}</b>Nivel trivia</div>
+        <div><b>{g.mejor}/10</b>Mejor puntaje</div>
+        <div><b>{g.sopas}</b>Sopas hechas</div>
+      </section>
     </main>
   )
 }

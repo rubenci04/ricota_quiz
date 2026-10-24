@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { sumarSopa } from './storage.js'
 import { SIZE, discos, discoTieneJuego, nuevaPartida } from './sopa.js'
 
 const COLORES = ['#e0a526', '#c0392b', '#3aa17e', '#5b8def', '#b455d6', '#e0742b', '#2bb7c9', '#d6567f', '#8fb339', '#9a8cff']
@@ -75,6 +76,7 @@ export default function SopaDeLetras({ onVolver }) {
       (p) => !(p.norm in encontradas) && (p.norm === letras || p.norm === alReves),
     )
     if (hallada) {
+      if (Object.keys(encontradas).length + 1 === partida.palabras.length) sumarSopa()
       setEncontradas((prev) => ({ ...prev, [hallada.norm]: Object.keys(prev).length % COLORES.length }))
     }
     setSeleccion([])
