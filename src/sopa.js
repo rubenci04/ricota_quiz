@@ -30,6 +30,7 @@ function mezclar(arr) {
 export function palabrasDisponibles(discoId) {
   const mapa = new Map()
   for (const c of datos.canciones) {
+    if (!c.palabras_verificadas) continue
     if (discoId !== 'todos' && c.disco !== discoId) continue
     for (const p of c.palabras) {
       const norm = normalizar(p)

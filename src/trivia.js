@@ -49,7 +49,7 @@ function preguntaRol() {
 }
 
 function preguntaPalabras() {
-  const c = azar(canciones.filter((x) => x.palabras.length >= 4))
+  const c = azar(canciones.filter((x) => x.palabras_verificadas && x.palabras.length >= 4))
   const cuantas = Math.min(c.palabras.length, 4 + Math.floor(Math.random() * 2))
   const mostradas = mezclar(c.palabras).slice(0, cuantas)
   const norm = mostradas.map(normalizar)

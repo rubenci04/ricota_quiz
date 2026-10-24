@@ -1,5 +1,5 @@
 {
-  "_aviso": "Datos base armados a partir de un informe generado por IA. Discos, años, canciones por disco e integrantes contrastados con Wikipedia. Las palabras de cada canción NO se pudieron verificar contra las letras (palabras_verificadas: false).",
+  "_aviso": "Discos, años, canciones por disco e integrantes contrastados con Wikipedia. Las palabras de las canciones con palabras_verificadas: true se comprobaron contra un informe privado de letras (no incluido en el repositorio); las demás siguen sin verificar.",
   "banda": {
     "nombre": "Patricio Rey y sus Redonditos de Ricota",
     "apodo": "Los Redondos",
@@ -102,7 +102,8 @@
         "bombas",
         "ojos",
         "ciegos",
-        "montaje"
+        "montaje",
+        "imagen"
       ],
       "frases": [
         "Los ojos ciegos bien abiertos"
@@ -119,11 +120,16 @@
         "bombas": "Artefactos explosivos",
         "ojos": "Órganos de la vista",
         "ciegos": "Que carecen de vista",
-        "montaje": "Unión de partes para formar un conjunto"
+        "montaje": "Unión de partes para formar un conjunto",
+        "imagen": "Representación visual de algo o alguien"
       },
       "titulo_parafraseado": "Carcajada escrita en onomatopeya",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Juguetes perdidos",
@@ -140,8 +146,7 @@
         "noche",
         "granizo",
         "campana",
-        "juguetes",
-        "perdidos"
+        "diablo"
       ],
       "frases": [
         "Banderas en tu corazón, yo quiero verlas"
@@ -159,12 +164,15 @@
         "noche": "Período sin luz solar",
         "granizo": "Piedras de hielo que caen del cielo",
         "campana": "Instrumento metálico que suena al golpearlo",
-        "juguetes": "Objetos con los que se divierten los niños",
-        "perdidos": "Extraviados, que no se encuentran"
+        "diablo": "Ser maligno de las creencias religiosas"
       },
       "titulo_parafraseado": "Objetos de la infancia que ya no están",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "La bestia pop",
@@ -174,9 +182,14 @@
         "pop",
         "brillar",
         "amor",
-        "reggae",
-        "saxo",
-        "primavera"
+        "héroe",
+        "caballos",
+        "potros",
+        "galopar",
+        "vigilia",
+        "sueños",
+        "butaca",
+        "bailar"
       ],
       "frases": [
         "Vamos a brillar, mi amor"
@@ -187,13 +200,22 @@
         "pop": "Estilo musical masivo y comercial",
         "brillar": "Emitir o reflejar luz intensa",
         "amor": "Sentimiento de cariño profundo",
-        "reggae": "Ritmo musical de Jamaica",
-        "saxo": "Instrumento de viento con caña, de latón",
-        "primavera": "Estación posterior al invierno"
+        "héroe": "Persona admirada por su valentía",
+        "caballos": "Animales de montar, de cuatro patas",
+        "potros": "Caballos jóvenes que aún no se domaron",
+        "galopar": "Correr al paso más veloz del equino",
+        "vigilia": "Estado de quien permanece sin dormir",
+        "sueños": "Imágenes que aparecen mientras se duerme",
+        "butaca": "Asiento cómodo de teatros y cines",
+        "bailar": "Mover el cuerpo al compás de música"
       },
       "titulo_parafraseado": "La fiera de la música popular",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Todo un palo",
@@ -202,13 +224,13 @@
         "futuro",
         "rato",
         "trenes",
-        "latir",
         "corazón",
-        "diario",
-        "siniestro",
-        "represión",
-        "desilusión",
-        "sinfonía"
+        "silbidos",
+        "llamando",
+        "arregla",
+        "perro",
+        "esperabas",
+        "llegó"
       ],
       "frases": [
         "El futuro llegó hace rato"
@@ -218,17 +240,21 @@
         "futuro": "Tiempo que aún no llegó",
         "rato": "Lapso breve de tiempo",
         "trenes": "Vehículos que circulan sobre rieles",
-        "latir": "Pulsar con ritmo, como el pecho",
         "corazón": "Órgano que bombea la sangre",
-        "diario": "Periódico de publicación cotidiana",
-        "siniestro": "Funesto, que anuncia desgracia",
-        "represión": "Uso de fuerza para sofocar protestas",
-        "desilusión": "Pérdida de las expectativas",
-        "sinfonía": "Obra musical extensa para orquesta"
+        "silbidos": "Sonidos agudos hechos con los labios",
+        "llamando": "Convocando a alguien con la voz",
+        "arregla": "Repara o pone en orden",
+        "perro": "Animal doméstico que ladra",
+        "esperabas": "Aguardabas que algo sucediera",
+        "llegó": "Arribó a un lugar o momento"
       },
       "titulo_parafraseado": "Algo de gran magnitud, dicho en lunfardo",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Motor psico",
@@ -240,11 +266,12 @@
         "amor",
         "dios",
         "dados",
-        "universo",
-        "fe",
-        "libre",
-        "albedrío",
-        "esperanza"
+        "especial",
+        "susurro",
+        "hemoglobina",
+        "jugando",
+        "gloria",
+        "sangro"
       ],
       "frases": [
         "Motor psico, el mercado de todo amor"
@@ -257,15 +284,20 @@
         "amor": "Sentimiento de cariño profundo",
         "dios": "Ser supremo para los creyentes",
         "dados": "Cubitos numerados que se tiran en juegos",
-        "universo": "Conjunto de todo lo que existe",
-        "fe": "Confianza firme sin necesidad de pruebas",
-        "libre": "Sin ataduras ni restricciones",
-        "albedrío": "Capacidad de elegir por voluntad propia",
-        "esperanza": "Confianza en que algo bueno ocurrirá"
+        "especial": "Fuera de lo común",
+        "susurro": "Voz muy baja, casi un soplo",
+        "hemoglobina": "Pigmento rojo que lleva oxígeno en la sangre",
+        "jugando": "Divirtiéndose con reglas o azar",
+        "gloria": "Fama y honor extraordinarios",
+        "sangro": "Pierdo el líquido rojo del cuerpo"
       },
       "titulo_parafraseado": "Máquina de la mente",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "El pibe de los astilleros",
@@ -278,8 +310,11 @@
         "pasta",
         "campeón",
         "torbellino",
-        "radial",
-        "euforia"
+        "radio",
+        "pimpollos",
+        "haragana",
+        "aventura",
+        "cigarro"
       ],
       "frases": [
         "Las minitas aman los payasos y la pasta de campeón"
@@ -293,12 +328,19 @@
         "pasta": "Masa de harina, como los fideos",
         "campeón": "El que gana un torneo",
         "torbellino": "Remolino de viento",
-        "radial": "Perteneciente a la emisión por ondas",
-        "euforia": "Alegría intensa y desbordada"
+        "radio": "Aparato que emite sonidos por ondas",
+        "pimpollos": "Capullos de flor; jóvenes atractivos",
+        "haragana": "Persona que evita el trabajo",
+        "aventura": "Suceso arriesgado y emocionante",
+        "cigarro": "Rollo de tabaco para fumar"
       },
       "titulo_parafraseado": "El muchacho de los talleres navales",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Esa estrella era mi lujo",
@@ -310,9 +352,12 @@
         "vivo",
         "lío",
         "único",
-        "despecho",
-        "metejón",
-        "orgullo"
+        "iluso",
+        "anzuelo",
+        "gesto",
+        "tonto",
+        "soñar",
+        "pulso"
       ],
       "frases": [
         "Esa estrella era mi lujo"
@@ -325,46 +370,59 @@
         "vivo": "Que tiene vida; también, astuto",
         "lío": "Enredo o problema",
         "único": "Sin igual, el solo ejemplar",
-        "despecho": "Resentimiento tras un desengaño amoroso",
-        "metejón": "Enamoramiento fuerte, en lunfardo",
-        "orgullo": "Satisfacción excesiva de uno mismo"
+        "iluso": "Que se engaña con falsas esperanzas",
+        "anzuelo": "Gancho metálico para pescar",
+        "gesto": "Movimiento expresivo del rostro o las manos",
+        "tonto": "De poca inteligencia o ingenio",
+        "soñar": "Representar imágenes mentales al dormir",
+        "pulso": "Latido de las arterias en la muñeca"
       },
       "titulo_parafraseado": "Aquel astro era mi privilegio",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Etiqueta negra",
       "disco": "lobo",
       "palabras": [
-        "etiqueta",
-        "negra",
-        "loco",
-        "fierro",
-        "resaca",
-        "marea",
-        "densa",
-        "infortunios",
-        "héroe"
+        "talismanes",
+        "amuletos",
+        "caricias",
+        "billete",
+        "destino",
+        "desafío",
+        "jungla",
+        "bosque",
+        "flores",
+        "rumor"
       ],
       "frases": [
         "Etiqueta negra"
       ],
       "verificar": true,
       "definiciones": {
-        "etiqueta": "Rótulo adherido a un producto",
-        "negra": "Del color del carbón",
-        "loco": "Que perdió la razón",
-        "fierro": "Hierro, o arma de fuego en lunfardo",
-        "resaca": "Malestar posterior a beber de más",
-        "marea": "Subida y bajada periódica del océano",
-        "densa": "Espesa, muy compacta",
-        "infortunios": "Desgracias o mala suerte",
-        "héroe": "Persona admirada por su valentía"
+        "talismanes": "Objetos a los que se atribuye buena suerte",
+        "amuletos": "Objetos que supuestamente protegen del mal",
+        "caricias": "Roces suaves hechos con la mano",
+        "billete": "Papel moneda",
+        "destino": "Fuerza que fija lo que ocurrirá",
+        "desafío": "Reto que exige probar el valor propio",
+        "jungla": "Selva densa de clima tropical",
+        "bosque": "Terreno poblado de muchos árboles",
+        "flores": "Partes coloridas y perfumadas de las plantas",
+        "rumor": "Noticia vaga que circula entre la gente"
       },
       "titulo_parafraseado": "Rótulo oscuro",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Vencedores vencidos",
@@ -372,14 +430,16 @@
       "palabras": [
         "vencedores",
         "vencidos",
-        "preso",
-        "político",
         "tribu",
         "calle",
         "pared",
-        "caos",
-        "inflacionario",
-        "asonadas"
+        "general",
+        "alarma",
+        "ensayo",
+        "teatro",
+        "farsa",
+        "monos",
+        "ovejero"
       ],
       "frases": [
         "Vencedores vencidos"
@@ -388,18 +448,24 @@
       "definiciones": {
         "vencedores": "Ganadores de una contienda",
         "vencidos": "Derrotados en una pelea",
-        "preso": "Persona encarcelada",
-        "político": "Relativo al gobierno del Estado",
         "tribu": "Grupo social con costumbres propias",
         "calle": "Vía urbana entre edificios",
         "pared": "Muro que divide ambientes",
-        "caos": "Desorden total",
-        "inflacionario": "Relativo a la suba general de precios",
-        "asonadas": "Levantamientos tumultuosos"
+        "general": "Alto grado militar",
+        "alarma": "Aviso de peligro inminente",
+        "ensayo": "Prueba previa de una obra",
+        "teatro": "Arte de representar obras ante público",
+        "farsa": "Engaño que se hace pasar por real",
+        "monos": "Primates de cola larga y ágiles",
+        "ovejero": "Perro que cuida el rebaño"
       },
       "titulo_parafraseado": "Ganadores derrotados",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Un ángel para tu soledad",
@@ -410,9 +476,13 @@
         "llamas",
         "pena",
         "cuerpo",
-        "beatnik",
         "desolación",
-        "hipnótico"
+        "bailar",
+        "ilusión",
+        "principiante",
+        "esqueleto",
+        "acrobacia",
+        "secreto"
       ],
       "frases": [
         "Un ángel para tu soledad"
@@ -424,13 +494,21 @@
         "llamas": "Lenguas de fuego",
         "pena": "Tristeza o aflicción",
         "cuerpo": "Conjunto físico de una persona",
-        "beatnik": "Joven bohemio de los años cincuenta",
         "desolación": "Tristeza profunda y vacío",
-        "hipnótico": "Que adormece o fascina"
+        "bailar": "Mover el cuerpo al compás de música",
+        "ilusión": "Esperanza basada en un deseo",
+        "principiante": "Persona que recién empieza una actividad",
+        "esqueleto": "Armazón de huesos del cuerpo",
+        "acrobacia": "Ejercicio de agilidad y equilibrio en el aire",
+        "secreto": "Cosa que se mantiene oculta"
       },
       "titulo_parafraseado": "Un ser celestial para tu aislamiento",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Ropa sucia",
@@ -441,10 +519,13 @@
         "vivir",
         "cuesta",
         "vida",
-        "riff",
-        "arrastrado",
-        "wagneriano",
-        "trapera"
+        "dientes",
+        "cuello",
+        "tangos",
+        "fatales",
+        "tormenta",
+        "estómago",
+        "relámpagos"
       ],
       "frases": [
         "Ropa sucia"
@@ -456,14 +537,21 @@
         "vivir": "Existir, transitar la existencia",
         "cuesta": "Pendiente de un terreno",
         "vida": "Período entre nacer y morir",
-        "riff": "Frase de guitarra que se repite",
-        "arrastrado": "Llevado a lo largo del suelo",
-        "wagneriano": "Propio de cierto compositor alemán de óperas",
-        "trapera": "Mujer que junta cosas viejas"
+        "dientes": "Piezas duras de la boca para masticar",
+        "cuello": "Parte que une cabeza y tronco",
+        "tangos": "Danzas y canciones rioplatenses",
+        "fatales": "Que traen mala suerte o muerte",
+        "tormenta": "Tempestad con viento, lluvia y rayos",
+        "estómago": "Órgano donde se digiere la comida",
+        "relámpagos": "Destellos de luz durante una tempestad"
       },
       "titulo_parafraseado": "Prendas manchadas",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Un poco de amor francés",
@@ -471,12 +559,15 @@
       "palabras": [
         "amor",
         "francés",
-        "piba",
-        "consolar",
-        "barrio",
+        "consolarte",
         "defecto",
-        "maravilla",
-        "bajón"
+        "engatuzas",
+        "rapaz",
+        "vulgaridad",
+        "hormigas",
+        "sincera",
+        "lengua",
+        "mezcla"
       ],
       "frases": [
         "Un poco de amor francés"
@@ -485,16 +576,23 @@
       "definiciones": {
         "amor": "Sentimiento de cariño profundo",
         "francés": "Nativo del país de París",
-        "piba": "Chica, en lunfardo",
-        "consolar": "Aliviar la tristeza de alguien",
-        "barrio": "Zona de una ciudad",
+        "consolarte": "Aliviar tu aflicción",
         "defecto": "Falla o imperfección",
-        "maravilla": "Cosa que causa gran admiración",
-        "bajón": "Decaimiento del ánimo, en lunfardo"
+        "engatuzas": "Convences con halagos y astucia",
+        "rapaz": "Muchacho joven; también, ave de presa",
+        "vulgaridad": "Falta de refinamiento o elegancia",
+        "hormigas": "Insectos pequeños que viven en colonias",
+        "sincera": "Que dice lo que piensa sin fingir",
+        "lengua": "Órgano de la boca; también, idioma",
+        "mezcla": "Unión de varias sustancias"
       },
       "titulo_parafraseado": "Algo de cariño galo",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Masacre en el puticlub",
@@ -502,11 +600,14 @@
       "palabras": [
         "masacre",
         "puticlub",
-        "under",
-        "piringundines",
-        "marcha",
-        "lenta",
-        "adiós"
+        "impacientes",
+        "pastillita",
+        "gladiador",
+        "entrañas",
+        "coreano",
+        "fuerte",
+        "salón",
+        "cañón"
       ],
       "frases": [
         "Masacre en el puticlub"
@@ -515,15 +616,22 @@
       "definiciones": {
         "masacre": "Matanza de muchas personas",
         "puticlub": "Local nocturno de prostitución",
-        "under": "Subterráneo, fuera del circuito comercial",
-        "piringundines": "Locales nocturnos de mala fama",
-        "marcha": "Desfile o caminata colectiva",
-        "lenta": "De poca velocidad",
-        "adiós": "Saludo de despedida"
+        "impacientes": "Que no soportan esperar",
+        "pastillita": "Comprimido pequeño de medicina",
+        "gladiador": "Luchador de la antigua Roma",
+        "entrañas": "Órganos internos del cuerpo",
+        "coreano": "Natural de la península asiática del este",
+        "fuerte": "Con mucha potencia o resistencia",
+        "salón": "Estancia amplia para reuniones o fiestas",
+        "cañón": "Arma de artillería de tubo largo"
       },
       "titulo_parafraseado": "Carnicería en el local nocturno",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Preso en mi ciudad",
@@ -532,9 +640,15 @@
         "preso",
         "ciudad",
         "atrapado",
-        "muros",
         "libertad",
-        "asfixia"
+        "bienhechor",
+        "delicioso",
+        "violento",
+        "sensible",
+        "drácula",
+        "tacones",
+        "gatillo",
+        "llanto"
       ],
       "frases": [
         "Preso en mi ciudad"
@@ -544,13 +658,23 @@
         "preso": "Persona encarcelada",
         "ciudad": "Gran centro urbano habitado",
         "atrapado": "Capturado, sin salida",
-        "muros": "Paredes gruesas que rodean un lugar",
         "libertad": "Estado de quien no está atado",
-        "asfixia": "Falta de aire para respirar"
+        "bienhechor": "Que hace el bien a otros",
+        "delicioso": "Muy agradable al paladar",
+        "violento": "Que actúa con fuerza brusca",
+        "sensible": "Que percibe o se conmueve fácilmente",
+        "drácula": "Vampiro de la novela de Bram Stoker",
+        "tacones": "Alzas del calzado en la parte trasera",
+        "gatillo": "Pieza que dispara un arma",
+        "llanto": "Derrame de lágrimas"
       },
       "titulo_parafraseado": "Cautivo en mi urbe",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Salando las heridas",
@@ -589,30 +713,40 @@
       "titulo": "Queso ruso",
       "disco": "mosca",
       "palabras": [
-        "queso",
-        "ruso",
-        "comensales",
         "mosca",
-        "sopa",
-        "muerte",
-        "manzana"
+        "mandarines",
+        "marines",
+        "inteligentes",
+        "bronceador",
+        "hechicería",
+        "enfermedad",
+        "radiación",
+        "chimpancé",
+        "saliva"
       ],
       "frases": [
         "Queso ruso"
       ],
       "verificar": true,
       "definiciones": {
-        "queso": "Lácteo hecho con leche cuajada",
-        "ruso": "Nativo del país de Moscú",
-        "comensales": "Personas sentadas a la mesa",
         "mosca": "Insecto volador de dos alas",
-        "sopa": "Plato líquido caliente",
-        "muerte": "Fin de la existencia",
-        "manzana": "Fruta; también, cuadra de una ciudad"
+        "mandarines": "Cítricos pequeños, de cáscara fácil de pelar",
+        "marines": "Soldados de infantería naval estadounidense",
+        "inteligentes": "Con gran capacidad de comprender",
+        "bronceador": "Crema que ayuda a tostar la piel",
+        "hechicería": "Prácticas mágicas de brujos",
+        "enfermedad": "Alteración de la salud",
+        "radiación": "Energía que se emite en forma de ondas",
+        "chimpancé": "Primate africano muy parecido al humano",
+        "saliva": "Líquido que humedece la boca"
       },
       "titulo_parafraseado": "Lácteo de Moscú",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Tarea fina",
@@ -620,9 +754,14 @@
       "palabras": [
         "tarea",
         "fina",
-        "precisión",
-        "detalle",
-        "oficio"
+        "piernas",
+        "bonitas",
+        "oscuridad",
+        "estupidez",
+        "traición",
+        "turbina",
+        "ternura",
+        "sobrio"
       ],
       "frases": [
         "Tarea fina"
@@ -631,13 +770,22 @@
       "definiciones": {
         "tarea": "Trabajo asignado",
         "fina": "Delgada, delicada",
-        "precisión": "Exactitud al hacer algo",
-        "detalle": "Elemento pequeño dentro del todo",
-        "oficio": "Trabajo manual aprendido"
+        "piernas": "Miembros inferiores del cuerpo",
+        "bonitas": "Agradables a la vista",
+        "oscuridad": "Falta de luz",
+        "estupidez": "Falta de inteligencia",
+        "traición": "Falta de lealtad",
+        "turbina": "Máquina que gira impulsada por un fluido",
+        "ternura": "Afecto suave y delicado",
+        "sobrio": "Moderado; sin haber bebido alcohol"
       },
       "titulo_parafraseado": "Trabajo delicado",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "Yo caníbal",
@@ -670,7 +818,14 @@
         "juega",
         "esclavo",
         "lágrimas",
-        "dolor"
+        "violencia",
+        "formidables",
+        "despiadados",
+        "carreteras",
+        "guerreros",
+        "soberbios",
+        "titanes",
+        "tigre"
       ],
       "frases": [
         "Nuestro amo juega al esclavo"
@@ -681,11 +836,22 @@
         "juega": "Se entretiene con reglas",
         "esclavo": "Persona sin libertad, propiedad de otro",
         "lágrimas": "Gotas que brotan de los ojos",
-        "dolor": "Sufrimiento físico o emocional"
+        "violencia": "Uso de fuerza para dañar",
+        "formidables": "Admirables por su enorme tamaño o potencia",
+        "despiadados": "Sin compasión",
+        "carreteras": "Vías anchas para vehículos",
+        "guerreros": "Combatientes de batallas",
+        "soberbios": "Arrogantes, llenos de orgullo",
+        "titanes": "Gigantes de la mitología griega",
+        "tigre": "Felino grande de rayas oscuras"
       },
       "titulo_parafraseado": "Nuestro patrón hace de siervo",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ]
     },
     {
       "titulo": "La hija del fletero",
@@ -711,6 +877,295 @@
       "titulo_parafraseado": "La nena del transportista",
       "palabras_verificadas": false,
       "disco_verificado": true
+    },
+    {
+      "titulo": "El infierno está encantador esta noche",
+      "disco": "gulp",
+      "palabras": [
+        "embriagador",
+        "cuernos",
+        "salvar",
+        "labios",
+        "diablo",
+        "respetable",
+        "público",
+        "envasado",
+        "dolor",
+        "beber"
+      ],
+      "definiciones": {
+        "embriagador": "Que emborracha o fascina mucho",
+        "cuernos": "Protuberancias duras en la cabeza de ciertos animales",
+        "salvar": "Librar de un peligro",
+        "labios": "Bordes carnosos de la boca",
+        "diablo": "Ser maligno de las creencias religiosas",
+        "respetable": "Digno de consideración",
+        "público": "Conjunto de espectadores",
+        "envasado": "Puesto dentro de un recipiente",
+        "dolor": "Sufrimiento físico o emocional",
+        "beber": "Tomar un líquido"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "titulo_parafraseado": "Hoy el averno resulta fascinante entre sombras",
+      "verificar": false
+    },
+    {
+      "titulo": "Gualicho",
+      "disco": "finisterre",
+      "palabras": [
+        "armar",
+        "jugarlo",
+        "olvidar",
+        "despedidas",
+        "encendida",
+        "chaparrón",
+        "apretado",
+        "tormenta",
+        "bendita",
+        "ceguera"
+      ],
+      "definiciones": {
+        "armar": "Reunir las partes de algo",
+        "jugarlo": "Apostarlo en una partida",
+        "olvidar": "Dejar de recordar",
+        "despedidas": "Saludos al partir",
+        "encendida": "Con fuego o luz activada",
+        "chaparrón": "Lluvia fuerte y breve",
+        "apretado": "Muy ajustado o estrecho",
+        "tormenta": "Tempestad con viento, lluvia y rayos",
+        "bendita": "Santificada, digna de elogio",
+        "ceguera": "Falta total de visión"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "titulo_parafraseado": "Hechizo malévolo del folclore criollo",
+      "verificar": false
+    },
+    {
+      "titulo": "La parabellum del buen psicópata",
+      "disco": "bang",
+      "palabras": [
+        "migajas",
+        "trucos",
+        "placer",
+        "flechas",
+        "remedio",
+        "industria",
+        "diversión",
+        "gemidos",
+        "volcán",
+        "maravilla"
+      ],
+      "definiciones": {
+        "migajas": "Pedacitos sueltos de pan",
+        "trucos": "Artimañas para lograr un efecto",
+        "placer": "Sensación agradable",
+        "flechas": "Proyectiles de arco con punta",
+        "remedio": "Medio para curar o solucionar algo",
+        "industria": "Producción de bienes en fábricas",
+        "diversión": "Entretenimiento que causa alegría",
+        "gemidos": "Quejidos de dolor o placer",
+        "volcán": "Montaña que expulsa lava",
+        "maravilla": "Cosa que causa gran admiración"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "titulo_parafraseado": "La pistola del demente amable",
+      "verificar": false
+    },
+    {
+      "titulo": "Caña seca y un membrillo",
+      "disco": "lobo",
+      "palabras": [
+        "negrita",
+        "morena",
+        "asustada",
+        "arrebate",
+        "dedalito",
+        "zumbador",
+        "hormiga",
+        "milagro",
+        "camisa",
+        "sofoco"
+      ],
+      "definiciones": {
+        "negrita": "Apelativo cariñoso para una mujer",
+        "morena": "De piel o cabello oscuro",
+        "asustada": "Con miedo repentino",
+        "arrebate": "Impulso violento de una pasión",
+        "dedalito": "Capuchón pequeño que protege el dedo al coser",
+        "zumbador": "Que produce un sonido vibrante y grave",
+        "hormiga": "Insecto pequeño que vive en colonias",
+        "milagro": "Hecho extraordinario atribuido a lo divino",
+        "camisa": "Prenda con cuello y mangas",
+        "sofoco": "Ahogo o calor intenso"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "titulo_parafraseado": "Aguardiente puro y una fruta amarilla",
+      "verificar": false
+    },
+    {
+      "titulo": "Vamos las bandas",
+      "disco": "baion",
+      "palabras": [
+        "militares",
+        "trepando",
+        "radares",
+        "maquillados",
+        "custodiado",
+        "enfermeras",
+        "temblores",
+        "satélites",
+        "expertos",
+        "botones"
+      ],
+      "definiciones": {
+        "militares": "Miembros de las fuerzas armadas",
+        "trepando": "Subiendo con manos y pies",
+        "radares": "Aparatos que detectan objetos a distancia",
+        "maquillados": "Con cosméticos aplicados al rostro",
+        "custodiado": "Vigilado para proteger",
+        "enfermeras": "Profesionales que asisten a los pacientes",
+        "temblores": "Sacudidas involuntarias del cuerpo",
+        "satélites": "Cuerpos que giran alrededor de un planeta",
+        "expertos": "Personas muy entendidas en una materia",
+        "botones": "Piezas que abrochan o accionan"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "titulo_parafraseado": "Adelante, grupos de seguidores",
+      "verificar": false
+    },
+    {
+      "titulo": "Mi perro dinamita",
+      "disco": "mosca",
+      "palabras": [
+        "recuperando",
+        "afiebrado",
+        "corriendo",
+        "fueguito",
+        "palitos",
+        "ladrar",
+        "hocico",
+        "docilidad",
+        "rechaza",
+        "zorrito"
+      ],
+      "definiciones": {
+        "recuperando": "Volviendo a obtener lo perdido",
+        "afiebrado": "Con temperatura corporal elevada",
+        "corriendo": "Yendo muy rápido a pie",
+        "fueguito": "Llama pequeña",
+        "palitos": "Varillas finas de madera",
+        "ladrar": "Emitir el sonido propio del can",
+        "hocico": "Parte saliente de la cara de un animal",
+        "docilidad": "Disposición a obedecer",
+        "rechaza": "No acepta algo",
+        "zorrito": "Cría de un cánido astuto de cola tupida"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson",
+        "Daniel \"Semilla\" Bucciarelli"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "titulo_parafraseado": "Mi can explosivo",
+      "verificar": false
+    },
+    {
+      "titulo": "Ya nadie va a escuchar tu remera",
+      "disco": "oktubre",
+      "palabras": [
+        "efímero",
+        "reloj",
+        "estado",
+        "ánimo",
+        "hipnótico",
+        "alrededor",
+        "proteger",
+        "paladar",
+        "aliento",
+        "tiempo"
+      ],
+      "definiciones": {
+        "efímero": "De muy corta duración",
+        "reloj": "Aparato que mide el tiempo",
+        "estado": "Situación en que se encuentra algo",
+        "ánimo": "Disposición emocional de una persona",
+        "hipnótico": "Que adormece o fascina",
+        "alrededor": "En torno a algo",
+        "proteger": "Resguardar de un daño",
+        "paladar": "Parte superior interior de la boca",
+        "aliento": "Aire que se exhala al respirar",
+        "tiempo": "Duración medida en horas y días"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "titulo_parafraseado": "Ninguna persona prestará oído a tu prenda estampada",
+      "verificar": false
+    },
+    {
+      "titulo": "Me matan, Limón!",
+      "disco": "luzbelito",
+      "palabras": [
+        "sangrando",
+        "padrecito",
+        "merengues",
+        "tormenta",
+        "promesas",
+        "cumbias",
+        "crueles",
+        "olvido",
+        "techos",
+        "tejas"
+      ],
+      "definiciones": {
+        "sangrando": "Soltando líquido rojo por una herida",
+        "padrecito": "Sacerdote; también, trato afectuoso",
+        "merengues": "Dulces de clara y azúcar; ritmo caribeño",
+        "tormenta": "Tempestad con viento, lluvia y rayos",
+        "promesas": "Compromisos de hacer algo",
+        "cumbias": "Ritmos bailables de origen colombiano",
+        "crueles": "Que causan dolor sin piedad",
+        "olvido": "Pérdida del recuerdo",
+        "techos": "Cubiertas superiores de las casas",
+        "tejas": "Piezas de arcilla que cubren techos"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "titulo_parafraseado": "¡Me asesinan, fruto cítrico!",
+      "verificar": false
     }
   ],
   "curiosidades": [

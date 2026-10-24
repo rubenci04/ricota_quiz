@@ -15,7 +15,7 @@ const MODOS = {
   parafraseado: { nombre: 'Dicho de otra forma', detalle: 'El título explicado con otras palabras' },
 }
 
-const canciones = datos.canciones.filter((c) => c.palabras.length >= 3)
+const canciones = datos.canciones.filter((c) => c.palabras_verificadas && c.palabras.length >= 3)
 
 // Una casilla por letra del título completo, agrupadas por palabra.
 function armarCasillas(titulo) {
@@ -26,7 +26,8 @@ function armarCasillas(titulo) {
 }
 
 function nuevaRonda(modo, anterior) {
-  const pool = canciones.filter((c) => modo !== 'parafraseado' || c.titulo_parafraseado)
+  // el modo por palabras usa solo canciones con palabras verificadas
+  const pool = modo === 'parafraseado' ? datos.canciones.filter((c) => c.titulo_parafraseado) : canciones
   let c
   do {
     c = pool[Math.floor(Math.random() * pool.length)]

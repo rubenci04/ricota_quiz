@@ -24,7 +24,9 @@ export function candidatas(discoId, dificultad = 'casual') {
     lista.push({ respuesta, pista })
   }
 
-  const cancionesTema = datos.canciones.filter((c) => discoId === 'todos' || c.disco === discoId)
+  const cancionesTema = datos.canciones.filter(
+    (c) => c.palabras_verificadas && (discoId === 'todos' || c.disco === discoId),
+  )
 
   for (const d of datos.discos) {
     if (discoId !== 'todos' && d.id !== discoId) continue

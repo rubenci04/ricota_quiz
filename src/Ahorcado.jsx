@@ -11,7 +11,7 @@ const MAX_PISTAS = 2
 const ERRORES_PARA_DISCO = 3
 const normalizarAhorcado = normalizarLetras
 
-const pares = datos.canciones.flatMap((c) =>
+const pares = datos.canciones.filter((c) => c.palabras_verificadas).flatMap((c) =>
   c.palabras
     .filter((p) => normalizarAhorcado(p).length >= 4)
     .map((p) => ({ original: p, clave: normalizarAhorcado(p), cancion: c.titulo, disco: c.disco })),
