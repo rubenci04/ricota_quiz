@@ -180,3 +180,20 @@ button, select { font: inherit; color: inherit; }
 .tecla.mal { background: #3a1512; border-color: var(--rojo); color: var(--tenue); }
 .stats { flex-wrap: wrap; }
 .stats div { flex: 1 1 28%; }
+
+/* adivinanzas */
+.subtitulo { align-self: flex-start; margin: 6px 0 0; font-size: 0.8rem; color: var(--tenue); text-transform: uppercase; letter-spacing: 0.08em; }
+.modo small { display: block; margin-top: 2px; font-size: 0.7rem; color: var(--tenue); text-transform: none; letter-spacing: 0; }
+.modo.elegido { border-left-color: var(--rojo); background: #221b12; }
+.ayuda { margin: 0; color: var(--tenue); font-size: 0.85rem; }
+.etiqueta { color: var(--tenue); font-size: 0.7rem; text-transform: uppercase; margin-left: 6px; }
+.parafrasis { font-style: italic; color: var(--acento); }
+.datos-disco { font-size: 0.9rem; color: var(--tenue); }
+.casillas { display: flex; flex-wrap: wrap; gap: 10px 16px; width: 100%; justify-content: center; }
+.grupo-palabra { display: flex; gap: 3px; }
+.casilla { width: 28px; height: 36px; padding: 0; background: var(--panel); border: 0; border-bottom: 3px solid var(--tenue); font-weight: 700; font-size: 1.1rem; cursor: pointer; }
+.casilla.foco { border-bottom-color: var(--acento); background: #2a2008; }
+.casilla.ok { background: #12301f; border-bottom-color: #3aa17e; }
+.casilla.mal { background: #3a1512; border-bottom-color: var(--rojo); }
+.casilla.fija { color: var(--acento); }
+.tecla.borrar { grid-column: span 2; }

@@ -1,19 +1,11 @@
 import { useState } from 'react'
 import datos from './data/datos-ricotero.json'
 import { guardar, leer } from './storage.js'
+import { normalizarLetras } from './letras.js'
+import Teclado from './Teclado.jsx'
 
 const MAX_ERRORES = 6
-const TECLAS = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('')
-
-// Quita tildes pero conserva la Ñ como letra propia.
-function normalizarAhorcado(t) {
-  return t
-    .replace(/ñ/gi, '\u0001')
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toUpperCase()
-    .replace(/\u0001/g, 'Ñ')
-}
+const normalizarAhorcado = normalizarLetras
 
 const pares = datos.canciones.flatMap((c) =>
   c.palabras
@@ -96,17 +88,11 @@ export default function Ahorcado({ onVolver }) {
           <button className="nueva" onClick={otra}>Otra palabra</button>
         </>
       ) : (
-        <div className="teclado">
-          {TECLAS.map((l) => {
-            const usada = usadas.includes(l)
-            const estado = usada ? (palabra.clave.includes(l) ? ' ok' : ' mal') : ''
-            return (
-              <button key={l} className={`tecla${estado}`} disabled={usada} onClick={() => probar(l)}>
-                {l}
-              </button>
-            )
-          })}
-        </div>
+        <Teclado
+          onTecla={probar}
+          usada={(l) => usadas.includes(l)}
+          estado={(l) => (usadas.includes(l) ? (palabra.clave.includes(l) ? ' ok' : ' mal') : '')}
+        />
       )}
     </main>
   )

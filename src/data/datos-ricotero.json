@@ -21,22 +21,23 @@
     {
       "nombre": "Semilla Bucciarelli",
       "apodo": "Semilla",
-      "rol": "Bajo"
+      "rol": "Bajo (1982-2001)"
     },
     {
       "nombre": "Walter Sidotti",
       "apodo": "Walter",
-      "rol": "Batería"
+      "rol": "Batería (1987-2001)"
     },
     {
       "nombre": "Willy Crook",
       "apodo": "Willy Crook",
-      "rol": "Saxo (1984-1987)"
+      "rol": "Saxo (1984-1987)",
+      "verificar": true
     },
     {
       "nombre": "Sergio Dawi",
       "apodo": "Dawi",
-      "rol": "Saxo (desde 1987)"
+      "rol": "Saxo (1987-2001)"
     }
   ],
   "discos": [

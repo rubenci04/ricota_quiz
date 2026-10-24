@@ -15,7 +15,7 @@ function mezclar(arr) {
 }
 
 // Respuestas de una sola palabra con su pista, todo sacado del JSON.
-export function candidatas(discoId) {
+export function candidatas(discoId, dificultad = 'casual') {
   const lista = []
   const vistas = new Set()
   const agregar = (respuesta, pista) => {
@@ -28,28 +28,23 @@ export function candidatas(discoId) {
 
   for (const d of datos.discos) {
     if (discoId !== 'todos' && d.id !== discoId) continue
-    if (!/\s/.test(d.titulo.trim())) agregar(alnum(d.titulo), `Disco de ${d.anio}`)
+    if (!/\s/.test(d.titulo.trim())) agregar(alnum(d.titulo), `Disco de ${d.anio} (${alnum(d.titulo).length})`)
   }
 
   for (const i of datos.integrantes) {
     const primera = (r) => r.split(' ')[0]
     const unico = datos.integrantes.filter((x) => primera(x.rol) === primera(i.rol)).length === 1
-    if (unico && !/\s/.test(i.apodo)) agregar(alnum(i.apodo), `Integrante con el rol de ${i.rol}`)
+    const rol = i.rol.replace(/\s*\(.*\)/, '')
+    if (unico && !/\s/.test(i.apodo)) agregar(alnum(i.apodo), `Integrante con el rol de ${rol} (${alnum(i.apodo).length})`)
   }
 
+  // Solo palabras con definición cargada en el JSON.
   for (const c of cancionesTema) {
-    const disco = datos.discos.find((d) => d.id === c.disco)
-    const delDisco = datos.canciones.filter((x) => x.disco === c.disco).flatMap((x) => x.palabras.map(alnum))
     for (const p of c.palabras) {
+      const def = c.definiciones?.[p]
+      if (!def) continue
       const a = alnum(p)
-      const igual = (x) => x[0] === a[0] && x.length === a.length
-      const unicaEnCancion = c.palabras.map(alnum).filter((x) => igual(x) && x !== a).length === 0
-      const unicaEnDisco = delDisco.filter((x) => igual(x) && x !== a).length === 0
-      if (unicaEnDisco && Math.random() < 0.4) {
-        agregar(a, `Palabra de una canción de «${disco.titulo}» que empieza con ${a[0]} (${a.length} letras)`)
-      } else if (unicaEnCancion) {
-        agregar(a, `Palabra de la canción «${c.titulo}» que empieza con ${a[0]} (${a.length} letras)`)
-      }
+      agregar(a, dificultad === 'casual' ? `${c.titulo}: ${def} (${a.length})` : `${def} (${a.length})`)
     }
   }
   return lista
@@ -122,8 +117,8 @@ function intentar(cands, objetivo) {
   return puestas
 }
 
-export function nuevoCrucigrama(discoId) {
-  const pool = candidatas(discoId)
+export function nuevoCrucigrama(discoId, dificultad = 'casual') {
+  const pool = candidatas(discoId, dificultad)
   const objetivo = 8 + Math.floor(Math.random() * 3)
   let mejor = []
   for (let i = 0; i < 40; i++) {

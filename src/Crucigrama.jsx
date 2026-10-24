@@ -8,7 +8,8 @@ const VECTOR = { across: [0, 1], down: [1, 0] }
 
 export default function Crucigrama({ onVolver }) {
   const [discoId, setDiscoId] = useState('todos')
-  const [juego, setJuego] = useState(() => nuevoCrucigrama('todos'))
+  const [dificultad, setDificultad] = useState('casual')
+  const [juego, setJuego] = useState(() => nuevoCrucigrama('todos', 'casual'))
   const [letras, setLetras] = useState({})
   const [fijas, setFijas] = useState({})
   const [revision, setRevision] = useState({})
@@ -16,8 +17,8 @@ export default function Crucigrama({ onVolver }) {
   const [pistas, setPistas] = useState(0)
   const entrada = useRef(null)
 
-  const empezar = (id) => {
-    setJuego(nuevoCrucigrama(id))
+  const empezar = (id, dif = dificultad) => {
+    setJuego(nuevoCrucigrama(id, dif))
     setLetras({}); setFijas({}); setRevision({}); setSel(null); setPistas(0)
   }
 
@@ -131,7 +132,7 @@ export default function Crucigrama({ onVolver }) {
           className={`pista-item${activa === e ? ' activa' : ''}`}
           onClick={() => tocarPista(e)}
         >
-          <b>{e.num}.</b> {e.pista} {!/letras\)$/.test(e.pista) && `(${e.respuesta.length})`}
+          <b>{e.num}.</b> {e.pista}
         </button>
       ))}
     </section>
@@ -153,6 +154,17 @@ export default function Crucigrama({ onVolver }) {
               {d.titulo} ({d.anio}){hayCrucigrama(d.id) ? '' : ' – pocos datos'}
             </option>
           ))}
+        </select>
+      </label>
+
+      <label className="selector">
+        <span>Nivel</span>
+        <select
+          value={dificultad}
+          onChange={(e) => { setDificultad(e.target.value); empezar(discoId, e.target.value) }}
+        >
+          <option value="casual">Casual (con la canción en la pista)</option>
+          <option value="fanatico">Fanático (solo la definición)</option>
         </select>
       </label>
 
