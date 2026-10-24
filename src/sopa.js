@@ -34,7 +34,7 @@ export function palabrasDisponibles(discoId) {
     for (const p of c.palabras) {
       const norm = normalizar(p)
       if (norm.length >= MIN_LEN && norm.length <= SIZE && !mapa.has(norm)) {
-        mapa.set(norm, { original: p, norm })
+        mapa.set(norm, { original: p, norm, cancion: c.titulo })
       }
     }
   }

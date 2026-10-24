@@ -23,7 +23,8 @@ function lineaHasta(ini, r, c) {
   return Array.from({ length: largo }, (_, i) => ({ r: ini.r + ddr * i, c: ini.c + ddc * i }))
 }
 
-const clave = (r, c) => `${r},${c}`
+const MAX_PISTAS = 3
+const clave =(r, c) => `${r},${c}`
 
 export default function SopaDeLetras({ onVolver }) {
   const [discoId, setDiscoId] = useState('todos')
@@ -32,11 +33,20 @@ export default function SopaDeLetras({ onVolver }) {
   const [seleccion, setSeleccion] = useState([])
   const gridRef = useRef(null)
   const inicio = useRef(null)
+  const [pistas, setPistas] = useState([]) // norm de palabras con letra inicial revelada
+  const [facil, setFacil] = useState(false)
 
   const empezar = (id) => {
     setPartida(nuevaPartida(id))
     setEncontradas({})
     setSeleccion([])
+    setPistas([])
+  }
+
+  const pedirPista = () => {
+    const libres = partida.palabras.filter((p) => !(p.norm in encontradas) && !pistas.includes(p.norm))
+    if (pistas.length >= MAX_PISTAS || libres.length === 0) return
+    setPistas([...pistas, libres[Math.floor(Math.random() * libres.length)].norm])
   }
 
   const cambiarDisco = (id) => {
@@ -93,13 +103,20 @@ export default function SopaDeLetras({ onVolver }) {
   const enSeleccion = new Set(seleccion.map(({ r, c }) => clave(r, c)))
   const ganaste = partida.palabras.length > 0 && Object.keys(encontradas).length === partida.palabras.length
 
+  const disco = discos.find((d) => d.id === discoId)
+  const tema = disco ? `${disco.titulo} (${disco.anio})` : 'todos los discos'
+
   return (
     <main className="pantalla juego">
       <header className="barra">
         <button className="volver" onClick={onVolver} aria-label="Volver al menú">←</button>
         <h2>Sopa de letras</h2>
-        <span className="contador">{Object.keys(encontradas).length}/{partida.palabras.length}</span>
       </header>
+
+      <div className="tema">
+        <p>Buscá palabras de: <strong>{tema}</strong></p>
+        <p className="contador">Encontradas {Object.keys(encontradas).length} de {partida.palabras.length}</p>
+      </div>
 
       <label className="selector">
         <span>Disco</span>
@@ -138,13 +155,40 @@ export default function SopaDeLetras({ onVolver }) {
         )}
       </div>
 
-      <ul className="lista">
-        {partida.palabras.map((p) => (
-          <li key={p.norm} className={p.norm in encontradas ? 'tachada' : ''}>
-            {p.original}
-          </li>
-        ))}
-      </ul>
+      <div className="casilleros">
+        {partida.palabras.map((p) => {
+          const hallada = p.norm in encontradas
+          return (
+            <div key={p.norm} className={`casillero${hallada ? ' tachada' : ''}`}>
+              <b>{hallada ? p.original : '?'.repeat(p.norm.length)}</b>
+              <small>
+                de la canción «{p.cancion}» · {p.norm.length} letras
+                {!hallada && pistas.includes(p.norm) && ` · empieza con ${p.norm[0]}`}
+              </small>
+            </div>
+          )
+        })}
+      </div>
+
+      <div className="herramientas">
+        <button className="secundario" onClick={pedirPista} disabled={pistas.length >= MAX_PISTAS || ganaste}>
+          Pista ({MAX_PISTAS - pistas.length})
+        </button>
+        <label className="interruptor">
+          <input type="checkbox" checked={facil} onChange={(e) => setFacil(e.target.checked)} />
+          Modo fácil
+        </label>
+      </div>
+
+      {facil && (
+        <ul className="lista">
+          {partida.palabras.map((p) => (
+            <li key={p.norm} className={p.norm in encontradas ? 'tachada' : ''}>
+              {p.original}
+            </li>
+          ))}
+        </ul>
+      )}
 
       {ganaste && (
         <div className="victoria" role="status">

@@ -127,3 +127,26 @@ button, select { font: inherit; color: inherit; }
 .opcion.mal { background: #3a1512; border-color: var(--rojo); }
 .curiosidad { width: 100%; padding: 14px; background: var(--panel); border: 1px solid var(--borde); font-size: 0.95rem; }
 .secundario { width: 100%; padding: 12px; background: var(--panel); border: 1px solid var(--borde); cursor: pointer; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* sopa rediseñada, adivinanzas, pie */
+.pantalla { padding-bottom: 56px; }
+.tema { width: 100%; text-align: center; }
+.tema p { margin: 0 0 4px; }
+.tema strong { color: var(--acento); }
+.tema .contador { color: var(--tenue); font-size: 0.9rem; }
+.casilleros { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+.casillero { flex: 1 1 140px; padding: 8px 10px; background: var(--panel); border: 1px dashed var(--borde); display: flex; flex-direction: column; gap: 2px; }
+.casillero b { letter-spacing: 0.15em; color: var(--tenue); font-size: 0.85rem; overflow-wrap: anywhere; }
+.casillero small { color: var(--tenue); font-size: 0.72rem; }
+.casillero.tachada { border-style: solid; border-color: var(--acento); }
+.casillero.tachada b { color: var(--acento); text-decoration: line-through; letter-spacing: normal; font-size: 1rem; }
+.herramientas { display: flex; gap: 10px; width: 100%; align-items: stretch; }
+.herramientas .secundario { flex: 1; width: auto; }
+.herramientas .secundario:disabled { opacity: 0.4; cursor: not-allowed; }
+.interruptor { display: flex; align-items: center; gap: 8px; padding: 0 10px; background: var(--panel); border: 1px solid var(--borde); font-size: 0.85rem; text-transform: uppercase; }
+.interruptor input { width: 18px; height: 18px; accent-color: var(--acento); }
+.respuesta { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.respuesta input { padding: 14px; font: inherit; color: var(--texto); background: var(--panel); border: 1px solid var(--borde); }
+.respuesta input:focus { outline: 2px solid var(--acento); }
+.error { margin: 0; color: var(--rojo); }
+.pie { position: fixed; left: 0; right: 0; bottom: 0; padding: 8px 12px; text-align: center; font-size: 0.7rem; color: var(--tenue); background: rgba(11, 11, 12, 0.92); border-top: 1px solid var(--borde); }

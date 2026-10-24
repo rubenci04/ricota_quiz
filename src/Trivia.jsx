@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { PREGUNTAS_POR_NIVEL, armarNivel, curiosidadAlAzar } from './trivia.js'
 import { guardar, leer } from './storage.js'
 
+const PUNTOS_PARA_PASAR = 6
+
 export default function Trivia({ onVolver }) {
   const [vista, setVista] = useState('niveles') // niveles | jugando | fin
   const [nivel, setNivel] = useState(1)
@@ -35,9 +37,12 @@ export default function Trivia({ onVolver }) {
     }
     const actual = leer()
     setGuardado(
-      guardar({ nivel: Math.max(actual.nivel, nivel + 1), mejor: Math.max(actual.mejor, puntos) }),
+      guardar({
+        nivel: puntos >= PUNTOS_PARA_PASAR ? Math.max(actual.nivel, nivel + 1) : actual.nivel,
+        mejor: Math.max(actual.mejor, puntos),
+      }),
     )
-    setCuriosidad(curiosidadAlAzar())
+    setCuriosidad(puntos >= PUNTOS_PARA_PASAR ? curiosidadAlAzar() : null)
     setVista('fin')
   }
 
@@ -67,10 +72,15 @@ export default function Trivia({ onVolver }) {
         <h2 className="logo chico">Nivel {nivel}</h2>
         <div className="victoria">
           <strong>{puntos}/{preguntas.length}</strong> respuestas correctas
-          <br />Se desbloqueó el nivel {nivel + 1}.
+          <br />
+          {puntos >= PUNTOS_PARA_PASAR
+            ? `Se desbloqueó el nivel ${nivel + 1}.`
+            : `Intentá de nuevo: necesitás ${PUNTOS_PARA_PASAR} o más para pasar.`}
         </div>
         {curiosidad && <div className="curiosidad"><strong>Curiosidad:</strong> {curiosidad}</div>}
-        <button className="nueva" onClick={() => jugar(nivel + 1)}>Nivel {nivel + 1}</button>
+        {puntos >= PUNTOS_PARA_PASAR && (
+          <button className="nueva" onClick={() => jugar(nivel + 1)}>Nivel {nivel + 1}</button>
+        )}
         <button className="secundario" onClick={() => jugar(nivel)}>Repetir nivel</button>
         <button className="secundario" onClick={() => setVista('niveles')}>Elegir nivel</button>
       </main>
