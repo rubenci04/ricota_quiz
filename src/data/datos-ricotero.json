@@ -1,54 +1,774 @@
 {
-  "_aviso": "Datos base armados a partir de un informe generado por IA. NO verificados todavía. Todo lo marcado verificar:true debe confirmarse antes de publicar.",
+  "_aviso": "Datos base armados a partir de un informe generado por IA. Discos, años, canciones por disco e integrantes contrastados con Wikipedia. Las palabras de cada canción NO se pudieron verificar contra las letras (palabras_verificadas: false).",
   "banda": {
     "nombre": "Patricio Rey y sus Redonditos de Ricota",
     "apodo": "Los Redondos",
     "origen": "La Plata, Argentina",
     "nota": "Patricio Rey es un personaje ficticio, nunca un integrante real.",
-    "verificar": true
+    "verificar": false
   },
   "integrantes": [
-    { "nombre": "Carlos Alberto Solari", "apodo": "Indio Solari", "rol": "Voz y letras" },
-    { "nombre": "Eduardo Beilinson", "apodo": "Skay Beilinson", "rol": "Guitarra y música" },
-    { "nombre": "Semilla Bucciarelli", "apodo": "Semilla", "rol": "Bajo" },
-    { "nombre": "Walter Sidotti", "apodo": "Walter", "rol": "Batería" },
-    { "nombre": "Willy Quiroga", "apodo": "Willy", "rol": "Bajo (formación original)" },
-    { "nombre": "Sergio Dawi", "apodo": "Dawi", "rol": "Saxo" }
+    {
+      "nombre": "Carlos Alberto Solari",
+      "apodo": "Indio Solari",
+      "rol": "Voz y letras"
+    },
+    {
+      "nombre": "Eduardo Beilinson",
+      "apodo": "Skay Beilinson",
+      "rol": "Guitarra y música"
+    },
+    {
+      "nombre": "Semilla Bucciarelli",
+      "apodo": "Semilla",
+      "rol": "Bajo"
+    },
+    {
+      "nombre": "Walter Sidotti",
+      "apodo": "Walter",
+      "rol": "Batería"
+    },
+    {
+      "nombre": "Willy Crook",
+      "apodo": "Willy Crook",
+      "rol": "Saxo (1984-1987)"
+    },
+    {
+      "nombre": "Sergio Dawi",
+      "apodo": "Dawi",
+      "rol": "Saxo (desde 1987)"
+    }
   ],
   "discos": [
-    { "id": "gulp", "titulo": "Gulp!", "anio": 1985 },
-    { "id": "oktubre", "titulo": "Oktubre", "anio": 1986 },
-    { "id": "baion", "titulo": "Un baión para el ojo idiota", "anio": 1988 },
-    { "id": "bang", "titulo": "¡Bang! ¡Bang!... Estás liquidado", "anio": 1989 },
-    { "id": "mosca", "titulo": "La mosca y la sopa", "anio": 1991 },
-    { "id": "lobo", "titulo": "Lobo suelto / Cordero atado", "anio": 1993 },
-    { "id": "luzbelito", "titulo": "Luzbelito", "anio": 1996 },
-    { "id": "finisterre", "titulo": "Último bondi a Finisterre", "anio": 1998 },
-    { "id": "momo", "titulo": "Momo sampler", "anio": 1999 }
+    {
+      "id": "gulp",
+      "titulo": "Gulp!",
+      "anio": 1985
+    },
+    {
+      "id": "oktubre",
+      "titulo": "Oktubre",
+      "anio": 1986
+    },
+    {
+      "id": "baion",
+      "titulo": "Un baión para el ojo idiota",
+      "anio": 1988
+    },
+    {
+      "id": "bang",
+      "titulo": "¡Bang! ¡Bang!... Estás liquidado",
+      "anio": 1989
+    },
+    {
+      "id": "mosca",
+      "titulo": "La mosca y la sopa",
+      "anio": 1991
+    },
+    {
+      "id": "lobo",
+      "titulo": "Lobo suelto / Cordero atado",
+      "anio": 1993
+    },
+    {
+      "id": "luzbelito",
+      "titulo": "Luzbelito",
+      "anio": 1996
+    },
+    {
+      "id": "finisterre",
+      "titulo": "Último bondi a Finisterre",
+      "anio": 1998
+    },
+    {
+      "id": "momo",
+      "titulo": "Momo sampler",
+      "anio": 2000
+    }
   ],
   "canciones": [
-    { "titulo": "Ji ji ji", "disco": "oktubre", "palabras": ["film", "velado", "blanca", "noche", "cristal", "añicos", "chicos", "bombas", "ojos", "ciegos", "montaje"], "frases": ["Los ojos ciegos bien abiertos"], "verificar": true },
-    { "titulo": "Juguetes perdidos", "disco": "luzbelito", "palabras": ["banderas", "corazón", "ondeando", "sol", "perfume", "dolor", "licor", "pájaros", "noche", "granizo", "campana", "juguetes", "perdidos"], "frases": ["Banderas en tu corazón, yo quiero verlas"], "verificar": true },
-    { "titulo": "La bestia pop", "disco": "gulp", "palabras": ["bestia", "pop", "brillar", "amor", "reggae", "saxo", "primavera"], "frases": ["Vamos a brillar, mi amor"], "verificar": true },
-    { "titulo": "Todo un palo", "disco": "baion", "palabras": ["futuro", "rato", "trenes", "latir", "corazón", "diario", "siniestro", "represión", "desilusión", "sinfonía"], "frases": ["El futuro llegó hace rato"], "verificar": true },
-    { "titulo": "Motor psico", "disco": "oktubre", "palabras": ["motor", "psico", "mercado", "amor", "dios", "dados", "universo", "fe", "libre", "albedrío", "esperanza"], "frases": ["Motor psico, el mercado de todo amor"], "verificar": true },
-    { "titulo": "El pibe de los astilleros", "disco": "mosca", "palabras": ["pibe", "astilleros", "minitas", "payasos", "pasta", "campeón", "torbellino", "radial", "euforia"], "frases": ["Las minitas aman los payasos y la pasta de campeón"], "verificar": true },
-    { "titulo": "Esa estrella era mi lujo", "disco": "bang", "palabras": ["estrella", "lujo", "héroe", "vivo", "lío", "único", "despecho", "metejón", "orgullo"], "frases": ["Esa estrella era mi lujo"], "verificar": true },
-    { "titulo": "Etiqueta negra", "disco": "lobo", "palabras": ["etiqueta", "negra", "loco", "fierro", "resaca", "marea", "densa", "infortunios", "héroe"], "frases": ["Etiqueta negra"], "verificar": true },
-    { "titulo": "Vencedores vencidos", "disco": "baion", "palabras": ["vencedores", "vencidos", "preso", "político", "tribu", "calle", "pared", "caos", "inflacionario", "asonadas"], "frases": ["Vencedores vencidos"], "verificar": true },
-    { "titulo": "Un ángel para tu soledad", "disco": "lobo", "palabras": ["ángel", "soledad", "llamas", "pena", "cuerpo", "beatnik", "desolación", "hipnótico"], "frases": ["Un ángel para tu soledad"], "verificar": true },
-    { "titulo": "Ropa sucia", "disco": "bang", "palabras": ["ropa", "sucia", "vivir", "cuesta", "vida", "riff", "arrastrado", "wagneriano", "trapera"], "frases": ["Ropa sucia"], "verificar": true },
-    { "titulo": "Un poco de amor francés", "disco": "mosca", "palabras": ["amor", "francés", "piba", "consolar", "barrio", "defecto", "maravilla", "bajón"], "frases": ["Un poco de amor francés"], "verificar": true },
-    { "titulo": "Masacre en el puticlub", "disco": "baion", "palabras": ["masacre", "puticlub", "under", "piringundines", "marcha", "lenta", "adiós"], "frases": ["Masacre en el puticlub"], "verificar": true },
-    { "titulo": "Preso en mi ciudad", "disco": "oktubre", "palabras": ["preso", "ciudad", "atrapado", "muros", "libertad", "asfixia"], "frases": ["Preso en mi ciudad"], "verificar": true },
-    { "titulo": "Salando las heridas", "disco": "mosca", "palabras": ["salando", "heridas", "jodiste", "cristo", "boluditos", "luna", "tipas", "lengua", "rabia"], "frases": ["Salando las heridas"], "verificar": true },
-    { "titulo": "Queso ruso", "disco": "mosca", "palabras": ["queso", "ruso", "comensales", "mosca", "sopa", "muerte", "manzana"], "frases": ["Queso ruso"], "verificar": true },
-    { "titulo": "Tarea fina", "disco": "mosca", "palabras": ["tarea", "fina", "precisión", "detalle", "oficio"], "frases": ["Tarea fina"], "verificar": true },
-    { "titulo": "Yo caníbal", "disco": "lobo", "palabras": ["caníbal", "carne", "hambre", "devorar"], "frases": ["Yo caníbal"], "verificar": true },
-    { "titulo": "Nuestro amo juega al esclavo", "disco": "bang", "palabras": ["amo", "juega", "esclavo", "lágrimas", "dolor"], "frases": ["Nuestro amo juega al esclavo"], "verificar": true },
-    { "titulo": "La hija del fletero", "disco": "lobo", "palabras": ["hija", "fletero", "rasgueo", "melancólico", "dolorida"], "frases": ["La hija del fletero"], "verificar": true }
+    {
+      "titulo": "Ji ji ji",
+      "disco": "oktubre",
+      "palabras": [
+        "film",
+        "velado",
+        "blanca",
+        "noche",
+        "cristal",
+        "añicos",
+        "chicos",
+        "bombas",
+        "ojos",
+        "ciegos",
+        "montaje"
+      ],
+      "frases": [
+        "Los ojos ciegos bien abiertos"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "film": "Película",
+        "velado": "Oculto, apenas visible",
+        "blanca": "Del color de la nieve",
+        "noche": "Período sin luz solar",
+        "cristal": "Vidrio fino y transparente",
+        "añicos": "Pedazos muy pequeños",
+        "chicos": "Niños y niñas",
+        "bombas": "Artefactos explosivos",
+        "ojos": "Órganos de la vista",
+        "ciegos": "Que carecen de vista",
+        "montaje": "Unión de partes para formar un conjunto"
+      },
+      "titulo_parafraseado": "Carcajada escrita en onomatopeya",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Juguetes perdidos",
+      "disco": "luzbelito",
+      "palabras": [
+        "banderas",
+        "corazón",
+        "ondeando",
+        "sol",
+        "perfume",
+        "dolor",
+        "licor",
+        "pájaros",
+        "noche",
+        "granizo",
+        "campana",
+        "juguetes",
+        "perdidos"
+      ],
+      "frases": [
+        "Banderas en tu corazón, yo quiero verlas"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "banderas": "Telas con los colores de un país",
+        "corazón": "Órgano que bombea la sangre",
+        "ondeando": "Moviéndose en el aire como las olas",
+        "sol": "Estrella que ilumina la Tierra",
+        "perfume": "Líquido aromático",
+        "dolor": "Sufrimiento físico o emocional",
+        "licor": "Bebida alcohólica azucarada",
+        "pájaros": "Aves pequeñas de canto",
+        "noche": "Período sin luz solar",
+        "granizo": "Piedras de hielo que caen del cielo",
+        "campana": "Instrumento metálico que suena al golpearlo",
+        "juguetes": "Objetos con los que se divierten los niños",
+        "perdidos": "Extraviados, que no se encuentran"
+      },
+      "titulo_parafraseado": "Objetos de la infancia que ya no están",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "La bestia pop",
+      "disco": "gulp",
+      "palabras": [
+        "bestia",
+        "pop",
+        "brillar",
+        "amor",
+        "reggae",
+        "saxo",
+        "primavera"
+      ],
+      "frases": [
+        "Vamos a brillar, mi amor"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "bestia": "Animal salvaje o feroz",
+        "pop": "Estilo musical masivo y comercial",
+        "brillar": "Emitir o reflejar luz intensa",
+        "amor": "Sentimiento de cariño profundo",
+        "reggae": "Ritmo musical de Jamaica",
+        "saxo": "Instrumento de viento con caña, de latón",
+        "primavera": "Estación posterior al invierno"
+      },
+      "titulo_parafraseado": "La fiera de la música popular",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Todo un palo",
+      "disco": "baion",
+      "palabras": [
+        "futuro",
+        "rato",
+        "trenes",
+        "latir",
+        "corazón",
+        "diario",
+        "siniestro",
+        "represión",
+        "desilusión",
+        "sinfonía"
+      ],
+      "frases": [
+        "El futuro llegó hace rato"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "futuro": "Tiempo que aún no llegó",
+        "rato": "Lapso breve de tiempo",
+        "trenes": "Vehículos que circulan sobre rieles",
+        "latir": "Pulsar con ritmo, como el pecho",
+        "corazón": "Órgano que bombea la sangre",
+        "diario": "Periódico de publicación cotidiana",
+        "siniestro": "Funesto, que anuncia desgracia",
+        "represión": "Uso de fuerza para sofocar protestas",
+        "desilusión": "Pérdida de las expectativas",
+        "sinfonía": "Obra musical extensa para orquesta"
+      },
+      "titulo_parafraseado": "Algo de gran magnitud, dicho en lunfardo",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Motor psico",
+      "disco": "oktubre",
+      "palabras": [
+        "motor",
+        "psico",
+        "mercado",
+        "amor",
+        "dios",
+        "dados",
+        "universo",
+        "fe",
+        "libre",
+        "albedrío",
+        "esperanza"
+      ],
+      "frases": [
+        "Motor psico, el mercado de todo amor"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "motor": "Máquina que produce movimiento",
+        "psico": "Prefijo que alude a la mente",
+        "mercado": "Lugar donde se compra y se vende",
+        "amor": "Sentimiento de cariño profundo",
+        "dios": "Ser supremo para los creyentes",
+        "dados": "Cubitos numerados que se tiran en juegos",
+        "universo": "Conjunto de todo lo que existe",
+        "fe": "Confianza firme sin necesidad de pruebas",
+        "libre": "Sin ataduras ni restricciones",
+        "albedrío": "Capacidad de elegir por voluntad propia",
+        "esperanza": "Confianza en que algo bueno ocurrirá"
+      },
+      "titulo_parafraseado": "Máquina de la mente",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "El pibe de los astilleros",
+      "disco": "mosca",
+      "palabras": [
+        "pibe",
+        "astilleros",
+        "minitas",
+        "payasos",
+        "pasta",
+        "campeón",
+        "torbellino",
+        "radial",
+        "euforia"
+      ],
+      "frases": [
+        "Las minitas aman los payasos y la pasta de campeón"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "pibe": "Muchacho, en lunfardo",
+        "astilleros": "Lugares donde se construyen barcos",
+        "minitas": "Chicas jóvenes, en lunfardo",
+        "payasos": "Artistas de circo de nariz roja",
+        "pasta": "Masa de harina, como los fideos",
+        "campeón": "El que gana un torneo",
+        "torbellino": "Remolino de viento",
+        "radial": "Perteneciente a la emisión por ondas",
+        "euforia": "Alegría intensa y desbordada"
+      },
+      "titulo_parafraseado": "El muchacho de los talleres navales",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Esa estrella era mi lujo",
+      "disco": "bang",
+      "palabras": [
+        "estrella",
+        "lujo",
+        "héroe",
+        "vivo",
+        "lío",
+        "único",
+        "despecho",
+        "metejón",
+        "orgullo"
+      ],
+      "frases": [
+        "Esa estrella era mi lujo"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "estrella": "Astro que brilla en el cielo",
+        "lujo": "Abundancia de cosas caras y refinadas",
+        "héroe": "Persona admirada por su valentía",
+        "vivo": "Que tiene vida; también, astuto",
+        "lío": "Enredo o problema",
+        "único": "Sin igual, el solo ejemplar",
+        "despecho": "Resentimiento tras un desengaño amoroso",
+        "metejón": "Enamoramiento fuerte, en lunfardo",
+        "orgullo": "Satisfacción excesiva de uno mismo"
+      },
+      "titulo_parafraseado": "Aquel astro era mi privilegio",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Etiqueta negra",
+      "disco": "lobo",
+      "palabras": [
+        "etiqueta",
+        "negra",
+        "loco",
+        "fierro",
+        "resaca",
+        "marea",
+        "densa",
+        "infortunios",
+        "héroe"
+      ],
+      "frases": [
+        "Etiqueta negra"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "etiqueta": "Rótulo adherido a un producto",
+        "negra": "Del color del carbón",
+        "loco": "Que perdió la razón",
+        "fierro": "Hierro, o arma de fuego en lunfardo",
+        "resaca": "Malestar posterior a beber de más",
+        "marea": "Subida y bajada periódica del océano",
+        "densa": "Espesa, muy compacta",
+        "infortunios": "Desgracias o mala suerte",
+        "héroe": "Persona admirada por su valentía"
+      },
+      "titulo_parafraseado": "Rótulo oscuro",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Vencedores vencidos",
+      "disco": "baion",
+      "palabras": [
+        "vencedores",
+        "vencidos",
+        "preso",
+        "político",
+        "tribu",
+        "calle",
+        "pared",
+        "caos",
+        "inflacionario",
+        "asonadas"
+      ],
+      "frases": [
+        "Vencedores vencidos"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "vencedores": "Ganadores de una contienda",
+        "vencidos": "Derrotados en una pelea",
+        "preso": "Persona encarcelada",
+        "político": "Relativo al gobierno del Estado",
+        "tribu": "Grupo social con costumbres propias",
+        "calle": "Vía urbana entre edificios",
+        "pared": "Muro que divide ambientes",
+        "caos": "Desorden total",
+        "inflacionario": "Relativo a la suba general de precios",
+        "asonadas": "Levantamientos tumultuosos"
+      },
+      "titulo_parafraseado": "Ganadores derrotados",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Un ángel para tu soledad",
+      "disco": "lobo",
+      "palabras": [
+        "ángel",
+        "soledad",
+        "llamas",
+        "pena",
+        "cuerpo",
+        "beatnik",
+        "desolación",
+        "hipnótico"
+      ],
+      "frases": [
+        "Un ángel para tu soledad"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "ángel": "Mensajero celestial con alas",
+        "soledad": "Estado de quien está sin compañía",
+        "llamas": "Lenguas de fuego",
+        "pena": "Tristeza o aflicción",
+        "cuerpo": "Conjunto físico de una persona",
+        "beatnik": "Joven bohemio de los años cincuenta",
+        "desolación": "Tristeza profunda y vacío",
+        "hipnótico": "Que adormece o fascina"
+      },
+      "titulo_parafraseado": "Un ser celestial para tu aislamiento",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Ropa sucia",
+      "disco": "bang",
+      "palabras": [
+        "ropa",
+        "sucia",
+        "vivir",
+        "cuesta",
+        "vida",
+        "riff",
+        "arrastrado",
+        "wagneriano",
+        "trapera"
+      ],
+      "frases": [
+        "Ropa sucia"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "ropa": "Prendas de vestir",
+        "sucia": "Manchada, no limpia",
+        "vivir": "Existir, transitar la existencia",
+        "cuesta": "Pendiente de un terreno",
+        "vida": "Período entre nacer y morir",
+        "riff": "Frase de guitarra que se repite",
+        "arrastrado": "Llevado a lo largo del suelo",
+        "wagneriano": "Propio de cierto compositor alemán de óperas",
+        "trapera": "Mujer que junta cosas viejas"
+      },
+      "titulo_parafraseado": "Prendas manchadas",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Un poco de amor francés",
+      "disco": "mosca",
+      "palabras": [
+        "amor",
+        "francés",
+        "piba",
+        "consolar",
+        "barrio",
+        "defecto",
+        "maravilla",
+        "bajón"
+      ],
+      "frases": [
+        "Un poco de amor francés"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "amor": "Sentimiento de cariño profundo",
+        "francés": "Nativo del país de París",
+        "piba": "Chica, en lunfardo",
+        "consolar": "Aliviar la tristeza de alguien",
+        "barrio": "Zona de una ciudad",
+        "defecto": "Falla o imperfección",
+        "maravilla": "Cosa que causa gran admiración",
+        "bajón": "Decaimiento del ánimo, en lunfardo"
+      },
+      "titulo_parafraseado": "Algo de cariño galo",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Masacre en el puticlub",
+      "disco": "baion",
+      "palabras": [
+        "masacre",
+        "puticlub",
+        "under",
+        "piringundines",
+        "marcha",
+        "lenta",
+        "adiós"
+      ],
+      "frases": [
+        "Masacre en el puticlub"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "masacre": "Matanza de muchas personas",
+        "puticlub": "Local nocturno de prostitución",
+        "under": "Subterráneo, fuera del circuito comercial",
+        "piringundines": "Locales nocturnos de mala fama",
+        "marcha": "Desfile o caminata colectiva",
+        "lenta": "De poca velocidad",
+        "adiós": "Saludo de despedida"
+      },
+      "titulo_parafraseado": "Carnicería en el local nocturno",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Preso en mi ciudad",
+      "disco": "oktubre",
+      "palabras": [
+        "preso",
+        "ciudad",
+        "atrapado",
+        "muros",
+        "libertad",
+        "asfixia"
+      ],
+      "frases": [
+        "Preso en mi ciudad"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "preso": "Persona encarcelada",
+        "ciudad": "Gran centro urbano habitado",
+        "atrapado": "Capturado, sin salida",
+        "muros": "Paredes gruesas que rodean un lugar",
+        "libertad": "Estado de quien no está atado",
+        "asfixia": "Falta de aire para respirar"
+      },
+      "titulo_parafraseado": "Cautivo en mi urbe",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Salando las heridas",
+      "disco": "mosca",
+      "palabras": [
+        "salando",
+        "heridas",
+        "jodiste",
+        "cristo",
+        "boluditos",
+        "luna",
+        "tipas",
+        "lengua",
+        "rabia"
+      ],
+      "frases": [
+        "Salando las heridas"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "salando": "Echando cloruro de sodio a la comida",
+        "heridas": "Lesiones en la piel",
+        "jodiste": "Arruinaste algo, en lunfardo",
+        "cristo": "Jesús de Nazaret",
+        "boluditos": "Tontitos, en lunfardo",
+        "luna": "Satélite natural de la Tierra",
+        "tipas": "Mujeres, en el habla coloquial",
+        "lengua": "Órgano de la boca; también, idioma",
+        "rabia": "Enojo violento"
+      },
+      "titulo_parafraseado": "Echando condimento sobre las lesiones",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Queso ruso",
+      "disco": "mosca",
+      "palabras": [
+        "queso",
+        "ruso",
+        "comensales",
+        "mosca",
+        "sopa",
+        "muerte",
+        "manzana"
+      ],
+      "frases": [
+        "Queso ruso"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "queso": "Lácteo hecho con leche cuajada",
+        "ruso": "Nativo del país de Moscú",
+        "comensales": "Personas sentadas a la mesa",
+        "mosca": "Insecto volador de dos alas",
+        "sopa": "Plato líquido caliente",
+        "muerte": "Fin de la existencia",
+        "manzana": "Fruta; también, cuadra de una ciudad"
+      },
+      "titulo_parafraseado": "Lácteo de Moscú",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Tarea fina",
+      "disco": "mosca",
+      "palabras": [
+        "tarea",
+        "fina",
+        "precisión",
+        "detalle",
+        "oficio"
+      ],
+      "frases": [
+        "Tarea fina"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "tarea": "Trabajo asignado",
+        "fina": "Delgada, delicada",
+        "precisión": "Exactitud al hacer algo",
+        "detalle": "Elemento pequeño dentro del todo",
+        "oficio": "Trabajo manual aprendido"
+      },
+      "titulo_parafraseado": "Trabajo delicado",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Yo caníbal",
+      "disco": "lobo",
+      "palabras": [
+        "caníbal",
+        "carne",
+        "hambre",
+        "devorar"
+      ],
+      "frases": [
+        "Yo caníbal"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "caníbal": "Que come carne de su propia especie",
+        "carne": "Músculo animal que se come",
+        "hambre": "Ganas intensas de comer",
+        "devorar": "Tragar con mucha ansia"
+      },
+      "titulo_parafraseado": "Yo, devorador de personas",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "Nuestro amo juega al esclavo",
+      "disco": "bang",
+      "palabras": [
+        "amo",
+        "juega",
+        "esclavo",
+        "lágrimas",
+        "dolor"
+      ],
+      "frases": [
+        "Nuestro amo juega al esclavo"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "amo": "Dueño o patrón",
+        "juega": "Se entretiene con reglas",
+        "esclavo": "Persona sin libertad, propiedad de otro",
+        "lágrimas": "Gotas que brotan de los ojos",
+        "dolor": "Sufrimiento físico o emocional"
+      },
+      "titulo_parafraseado": "Nuestro patrón hace de siervo",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    },
+    {
+      "titulo": "La hija del fletero",
+      "disco": "lobo",
+      "palabras": [
+        "hija",
+        "fletero",
+        "rasgueo",
+        "melancólico",
+        "dolorida"
+      ],
+      "frases": [
+        "La hija del fletero"
+      ],
+      "verificar": true,
+      "definiciones": {
+        "hija": "Mujer respecto de sus padres",
+        "fletero": "Quien transporta cargas a cambio de pago",
+        "rasgueo": "Modo de tocar rozando las cuerdas",
+        "melancólico": "Triste y soñador",
+        "dolorida": "Lastimada, que sufre"
+      },
+      "titulo_parafraseado": "La nena del transportista",
+      "palabras_verificadas": false,
+      "disco_verificado": true
+    }
   ],
-  "curiosidades": [],
-  "significados": [],
-  "_pendiente": "curiosidades y significados se completan y verifican en un paso posterior (con fuentes)."
+  "curiosidades": [
+    {
+      "texto": "La banda nació en La Plata en 1976 y su primer show con ese nombre fue el 26 de noviembre de 1977 en el Teatro Lozano, un evento que llamaron «el Lozanazo».",
+      "fuente": "https://es.wikipedia.org/wiki/Patricio_Rey_y_sus_Redonditos_de_Ricota"
+    },
+    {
+      "texto": "El nombre «Redonditos de Ricota» viene de unas frituras redondas de ricota y nuez que se repartieron en el Lozanazo, presentadas como «redonditos y afrodisíacos».",
+      "fuente": "https://es.wikipedia.org/wiki/Patricio_Rey_y_sus_Redonditos_de_Ricota"
+    },
+    {
+      "texto": "Patricio Rey es un personaje inventado: los integrantes armaron la historia de un misterioso benefactor para responder a los fans que preguntaban quién era.",
+      "fuente": "https://es.wikipedia.org/wiki/Patricio_Rey_y_sus_Redonditos_de_Ricota"
+    },
+    {
+      "texto": "«Gulp!» fue una producción independiente, financiada con un porcentaje de lo que se recaudaba en cada show. Rocambole hizo las tapas a mano, por serigrafía, en unas 7.000 copias.",
+      "fuente": "https://es.wikipedia.org/wiki/Gulp!"
+    },
+    {
+      "texto": "«Oktubre» se grabó en unos dos meses, entre agosto y septiembre de 1986, en los Estudios Panda, con teclados de Daniel Melero. Rolling Stone Argentina lo ubicó cuarto en su lista de los 100 mejores discos nacionales de 2007.",
+      "fuente": "https://es.wikipedia.org/wiki/Oktubre_(álbum)"
+    },
+    {
+      "texto": "«Un baión para el ojo idiota» se grabó en 1987, justo cuando Sergio Dawi y Walter Sidotti se sumaron a la banda. Su último tema, «Todo un palo», dura 7:25 y es el más largo de toda su discografía.",
+      "fuente": "https://es.wikipedia.org/wiki/Un_baión_para_el_ojo_idiota"
+    },
+    {
+      "texto": "La tapa de «¡Bang! ¡Bang!... Estás liquidado» es de Rocambole y se inspira en «El tres de mayo de 1808 en Madrid» de Goya, con miembros de la Cruz Roja en lugar del pelotón de fusilamiento.",
+      "fuente": "https://es.wikipedia.org/wiki/¡Bang!_¡Bang!..._Estás_liquidado"
+    },
+    {
+      "texto": "«¡Bang! ¡Bang!... Estás liquidado» se grabó en febrero de 1989 en el estudio Del Cielito, en Parque Leloir.",
+      "fuente": "https://es.wikipedia.org/wiki/Patricio_Rey_y_sus_Redonditos_de_Ricota"
+    },
+    {
+      "texto": "Para la tapa de «La mosca y la sopa», Rocambole usó un gato momificado que había encontrado.",
+      "fuente": "https://es.wikipedia.org/wiki/La_mosca_y_la_sopa"
+    },
+    {
+      "texto": "«Luzbelito» es un disco conceptual sobre un hijo ficticio del diablo, y fue el primero de la banda que se vendió sin la caja de plástico tradicional: venía con un mini libro ilustrado.",
+      "fuente": "https://es.wikipedia.org/wiki/Luzbelito"
+    },
+    {
+      "texto": "En agosto de 1997 un decreto municipal de Olavarría frenó un recital de la banda por miedo a la violencia; el show terminó haciéndose en Tandil el 4 de octubre de ese año.",
+      "fuente": "https://es.wikipedia.org/wiki/Luzbelito"
+    },
+    {
+      "texto": "Con «Último bondi a Finisterre» la banda apareció por primera vez en la tapa de un disco, aunque ahí se representa a sus clones digitales y no a los músicos.",
+      "fuente": "https://es.wikipedia.org/wiki/Último_bondi_a_Finisterre"
+    },
+    {
+      "texto": "«Último bondi a Finisterre» salió el 18 de noviembre de 1998 de forma independiente y se presentó en la cancha de Racing, con unas 50.000 personas cada noche.",
+      "fuente": "https://es.wikipedia.org/wiki/Patricio_Rey_y_sus_Redonditos_de_Ricota"
+    },
+    {
+      "texto": "«Momo Sampler» salió el 17 de noviembre de 2000 en una caja de goma EVA y cartón, con un medallón artesanal para llevar al cuello como un escapulario.",
+      "fuente": "https://es.wikipedia.org/wiki/Momo_Sampler"
+    }
+  ],
+  "significados": []
 }
