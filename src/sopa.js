@@ -83,8 +83,33 @@ export function nuevaPartida(discoId) {
     if (res.puestas.length >= cantidad) break
   }
   const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  const grilla = mejor.grilla.map((fila) =>
-    fila.map((x) => x || letras[Math.floor(Math.random() * letras.length)]),
-  )
+  let grilla
+  // el relleno al azar no debe formar una segunda copia de ninguna palabra
+  for (let i = 0; i < 60; i++) {
+    grilla = mejor.grilla.map((fila) =>
+      fila.map((x) => x || letras[Math.floor(Math.random() * letras.length)]),
+    )
+    if (mejor.puestas.every((p) => contarApariciones(grilla, p.norm) === 1)) break
+  }
   return { grilla, palabras: mejor.puestas }
+}
+
+function contarApariciones(grilla, norm) {
+  const alReves = [...norm].reverse().join('')
+  let n = 0
+  for (let r = 0; r < SIZE; r++) {
+    for (let c = 0; c < SIZE; c++) {
+      for (const [dr, dc] of DIRS) {
+        const rf = r + dr * (norm.length - 1)
+        const cf = c + dc * (norm.length - 1)
+        if (rf < 0 || rf >= SIZE || cf < 0 || cf >= SIZE) continue
+        let ok = true
+        for (let i = 0; i < norm.length; i++) {
+          if (grilla[r + dr * i][c + dc * i] !== norm[i]) { ok = false; break }
+        }
+        if (ok) n++
+      }
+    }
+  }
+  return norm === alReves ? n / 2 : n
 }

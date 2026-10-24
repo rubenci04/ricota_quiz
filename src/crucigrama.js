@@ -1,0 +1,167 @@
+import datos from './data/datos-ricotero.json'
+import { normalizar } from './sopa.js'
+
+export const MAX = 13
+const MIN_PALABRAS = 6
+const alnum = (t) => normalizar(t).replace(/[^A-Z0-9]/g, '')
+
+function mezclar(arr) {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
+// Respuestas de una sola palabra con su pista, todo sacado del JSON.
+export function candidatas(discoId) {
+  const lista = []
+  const vistas = new Set()
+  const agregar = (respuesta, pista) => {
+    if (respuesta.length < 3 || respuesta.length > MAX || vistas.has(respuesta)) return
+    vistas.add(respuesta)
+    lista.push({ respuesta, pista })
+  }
+
+  const cancionesTema = datos.canciones.filter((c) => discoId === 'todos' || c.disco === discoId)
+
+  for (const d of datos.discos) {
+    if (discoId !== 'todos' && d.id !== discoId) continue
+    if (!/\s/.test(d.titulo.trim())) agregar(alnum(d.titulo), `Disco de ${d.anio}`)
+  }
+
+  for (const i of datos.integrantes) {
+    const primera = (r) => r.split(' ')[0]
+    const unico = datos.integrantes.filter((x) => primera(x.rol) === primera(i.rol)).length === 1
+    if (unico && !/\s/.test(i.apodo)) agregar(alnum(i.apodo), `Integrante con el rol de ${i.rol}`)
+  }
+
+  for (const c of cancionesTema) {
+    const disco = datos.discos.find((d) => d.id === c.disco)
+    const delDisco = datos.canciones.filter((x) => x.disco === c.disco).flatMap((x) => x.palabras.map(alnum))
+    for (const p of c.palabras) {
+      const a = alnum(p)
+      const igual = (x) => x[0] === a[0] && x.length === a.length
+      const unicaEnCancion = c.palabras.map(alnum).filter((x) => igual(x) && x !== a).length === 0
+      const unicaEnDisco = delDisco.filter((x) => igual(x) && x !== a).length === 0
+      if (unicaEnDisco && Math.random() < 0.4) {
+        agregar(a, `Palabra de una canción de «${disco.titulo}» que empieza con ${a[0]} (${a.length} letras)`)
+      } else if (unicaEnCancion) {
+        agregar(a, `Palabra de la canción «${c.titulo}» que empieza con ${a[0]} (${a.length} letras)`)
+      }
+    }
+  }
+  return lista
+}
+
+export function hayCrucigrama(discoId) {
+  return candidatas(discoId).length >= 8
+}
+
+function intentar(cands, objetivo) {
+  const grilla = new Map() // "r,c" -> { ch, dirs: Set }
+  const puestas = []
+
+  const puedeColocar = (a, r, c, dir) => {
+    const [dr, dc] = dir === 'across' ? [0, 1] : [1, 0]
+    const rf = r + dr * (a.length - 1)
+    const cf = c + dc * (a.length - 1)
+    if (r < 0 || c < 0 || rf >= MAX || cf >= MAX) return -1
+    if (grilla.has(`${r - dr},${c - dc}`) || grilla.has(`${rf + dr},${cf + dc}`)) return -1
+    let cruces = 0
+    for (let i = 0; i < a.length; i++) {
+      const rr = r + dr * i
+      const cc = c + dc * i
+      const celda = grilla.get(`${rr},${cc}`)
+      if (celda) {
+        if (celda.ch !== a[i] || celda.dirs.has(dir)) return -1
+        cruces++
+      } else if (grilla.has(`${rr + dc},${cc + dr}`) || grilla.has(`${rr - dc},${cc - dr}`)) {
+        return -1
+      }
+    }
+    return cruces
+  }
+
+  const colocar = (cand, r, c, dir) => {
+    const [dr, dc] = dir === 'across' ? [0, 1] : [1, 0]
+    for (let i = 0; i < cand.respuesta.length; i++) {
+      const k = `${r + dr * i},${c + dc * i}`
+      const celda = grilla.get(k) || { ch: cand.respuesta[i], dirs: new Set() }
+      celda.dirs.add(dir)
+      grilla.set(k, celda)
+    }
+    puestas.push({ ...cand, r, c, dir })
+  }
+
+  for (const cand of cands) {
+    if (puestas.length >= objetivo) break
+    const a = cand.respuesta
+    if (puestas.length === 0) {
+      colocar(cand, Math.floor(MAX / 2), Math.floor((MAX - a.length) / 2), 'across')
+      continue
+    }
+    let mejor = []
+    let maxCruces = 0
+    for (const dir of ['across', 'down']) {
+      for (let r = 0; r < MAX; r++) {
+        for (let c = 0; c < MAX; c++) {
+          const cruces = puedeColocar(a, r, c, dir)
+          if (cruces < 1) continue
+          if (cruces > maxCruces) { maxCruces = cruces; mejor = [] }
+          if (cruces === maxCruces) mejor.push([r, c, dir])
+        }
+      }
+    }
+    if (mejor.length) {
+      const [r, c, dir] = mejor[Math.floor(Math.random() * mejor.length)]
+      colocar(cand, r, c, dir)
+    }
+  }
+  return puestas
+}
+
+export function nuevoCrucigrama(discoId) {
+  const pool = candidatas(discoId)
+  const objetivo = 8 + Math.floor(Math.random() * 3)
+  let mejor = []
+  for (let i = 0; i < 40; i++) {
+    // primero las más largas (con algo de azar) para tener más cruces posibles
+    const orden = mezclar(pool).sort((x, y) => y.respuesta.length - x.respuesta.length + (Math.random() - 0.5) * 6)
+    const puestas = intentar(orden, objetivo)
+    if (puestas.length > mejor.length) mejor = puestas
+    if (mejor.length >= objetivo) break
+  }
+  if (mejor.length < MIN_PALABRAS) return null
+
+  // recortar al rectángulo ocupado
+  let minR = MAX, minC = MAX, maxR = 0, maxC = 0
+  for (const p of mejor) {
+    const [dr, dc] = p.dir === 'across' ? [0, 1] : [1, 0]
+    minR = Math.min(minR, p.r); minC = Math.min(minC, p.c)
+    maxR = Math.max(maxR, p.r + dr * (p.respuesta.length - 1))
+    maxC = Math.max(maxC, p.c + dc * (p.respuesta.length - 1))
+  }
+  const entradas = mejor.map((p) => ({ ...p, r: p.r - minR, c: p.c - minC }))
+  const filas = maxR - minR + 1
+  const cols = maxC - minC + 1
+
+  const solucion = {}
+  for (const e of entradas) {
+    const [dr, dc] = e.dir === 'across' ? [0, 1] : [1, 0]
+    for (let i = 0; i < e.respuesta.length; i++) solucion[`${e.r + dr * i},${e.c + dc * i}`] = e.respuesta[i]
+  }
+
+  // numeración por orden de lectura de las celdas de inicio
+  const inicios = [...new Set(entradas.map((e) => `${e.r},${e.c}`))].sort((a, b) => {
+    const [ar, ac] = a.split(',').map(Number)
+    const [br, bc] = b.split(',').map(Number)
+    return ar - br || ac - bc
+  })
+  const numeros = {}
+  inicios.forEach((k, i) => { numeros[k] = i + 1 })
+  for (const e of entradas) e.num = numeros[`${e.r},${e.c}`]
+
+  return { filas, cols, entradas, solucion, numeros }
+}

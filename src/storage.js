@@ -1,5 +1,5 @@
 const CLAVE = 'ricota_quiz'
-const BASE = { nivel: 1, mejor: 0, sopas: 0, adivinanzas: 0 }
+const BASE = { nivel: 1, mejor: 0, sopas: 0, adivinanzas: 0, racha: 0 }
 
 export function leer() {
   try {

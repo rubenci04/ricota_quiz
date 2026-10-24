@@ -2,13 +2,16 @@ import { useState } from 'react'
 import SopaDeLetras from './SopaDeLetras.jsx'
 import Trivia from './Trivia.jsx'
 import Adivinanzas from './Adivinanzas.jsx'
+import Crucigrama from './Crucigrama.jsx'
+import Ahorcado from './Ahorcado.jsx'
 import { leer } from './storage.js'
 
 const MODOS = [
   { id: 'sopa', nombre: 'Sopa de letras', activo: true },
   { id: 'trivia', nombre: 'Trivia', activo: true },
   { id: 'adivinanzas', nombre: 'Adivinanzas', activo: true },
-  { id: 'crucigrama', nombre: 'Crucigrama', activo: false },
+  { id: 'crucigrama', nombre: 'Crucigrama', activo: true },
+  { id: 'ahorcado', nombre: 'Ahorcado', activo: true },
 ]
 
 export default function App() {
@@ -20,6 +23,8 @@ export default function App() {
   if (modo === 'sopa') contenido = <SopaDeLetras onVolver={volver} />
   else if (modo === 'trivia') contenido = <Trivia onVolver={volver} />
   else if (modo === 'adivinanzas') contenido = <Adivinanzas onVolver={volver} />
+  else if (modo === 'crucigrama') contenido = <Crucigrama onVolver={volver} />
+  else if (modo === 'ahorcado') contenido = <Ahorcado onVolver={volver} />
   else {
     contenido = (
       <main className="pantalla inicio">
@@ -43,6 +48,7 @@ export default function App() {
           <div><b>{g.mejor}/10</b>Mejor trivia</div>
           <div><b>{g.sopas}</b>Sopas hechas</div>
           <div><b>{g.adivinanzas}</b>Pts adivinanzas</div>
+          <div><b>{g.racha}</b>Racha ahorcado</div>
         </section>
       </main>
     )
