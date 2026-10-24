@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { PREGUNTAS_POR_NIVEL, armarNivel, curiosidadAlAzar } from './trivia.js'
 import { guardar, leer } from './storage.js'
+import Confeti from './Confeti.jsx'
+import { sonar } from './sonido.js'
 
 const PUNTOS_PARA_PASAR = 6
 
@@ -14,25 +16,44 @@ export default function Trivia({ onVolver }) {
   const [curiosidad, setCuriosidad] = useState(null)
   const [guardado, setGuardado] = useState(leer)
 
+  const [comodinUsado, setComodinUsado] = useState(false) // 50/50: una vez por nivel
+  const [ocultas, setOcultas] = useState([]) // opciones eliminadas por el 50/50
+  const [verAyuda, setVerAyuda] = useState(false)
+
   const jugar = (n) => {
     setNivel(n)
     setPreguntas(armarNivel(n))
     setI(0)
     setElegida(null)
     setPuntos(0)
+    setComodinUsado(false)
+    setOcultas([])
+    setVerAyuda(false)
     setVista('jugando')
   }
 
   const responder = (idx) => {
     if (elegida !== null) return
     setElegida(idx)
-    if (idx === preguntas[i].correcta) setPuntos(puntos + 1)
+    const acierto = idx === preguntas[i].correcta
+    sonar(acierto ? 'ok' : 'error')
+    if (acierto) setPuntos(puntos + 1)
+  }
+
+  const usarComodin = () => {
+    if (comodinUsado || elegida !== null) return
+    const p = preguntas[i]
+    const malas = p.opciones.map((_, k) => k).filter((k) => k !== p.correcta)
+    setOcultas(malas.sort(() => Math.random() - 0.5).slice(0, 2))
+    setComodinUsado(true)
   }
 
   const siguiente = () => {
     if (i + 1 < preguntas.length) {
       setI(i + 1)
       setElegida(null)
+      setOcultas([])
+      setVerAyuda(false)
       return
     }
     const actual = leer()
@@ -48,7 +69,7 @@ export default function Trivia({ onVolver }) {
 
   if (vista === 'niveles') {
     return (
-      <main className="pantalla">
+      <main className="pantalla" key="niveles">
         <header className="barra">
           <button className="volver" onClick={onVolver} aria-label="Volver al menú">←</button>
           <h2>Trivia</h2>
@@ -68,7 +89,8 @@ export default function Trivia({ onVolver }) {
 
   if (vista === 'fin') {
     return (
-      <main className="pantalla">
+      <main className="pantalla" key="fin">
+        {puntos >= PUNTOS_PARA_PASAR && <Confeti />}
         <h2 className="logo chico">Nivel {nivel}</h2>
         <div className="victoria">
           <strong>{puntos}/{preguntas.length}</strong> respuestas correctas
@@ -89,7 +111,7 @@ export default function Trivia({ onVolver }) {
 
   const p = preguntas[i]
   return (
-    <main className="pantalla">
+    <main className="pantalla" key="jugando">
       <header className="barra">
         <button className="volver" onClick={() => setVista('niveles')} aria-label="Salir del nivel">←</button>
         <h2>Nivel {nivel}</h2>
@@ -102,7 +124,18 @@ export default function Trivia({ onVolver }) {
             {p.pistas.map((w) => <li key={w}>{w}</li>)}
           </ul>
         )}
+        {verAyuda && <p className="datos-disco">Pista: {p.ayuda}</p>}
       </div>
+      {elegida === null && (
+        <div className="herramientas">
+          <button className="secundario" onClick={usarComodin} disabled={comodinUsado}>
+            50/50 {comodinUsado ? '(usado)' : '(1)'}
+          </button>
+          <button className="secundario" onClick={() => setVerAyuda(true)} disabled={verAyuda}>
+            Pista gratis
+          </button>
+        </div>
+      )}
       <div className="opciones">
         {p.opciones.map((o, idx) => {
           let estado = ''
@@ -110,8 +143,14 @@ export default function Trivia({ onVolver }) {
             if (idx === p.correcta) estado = ' ok'
             else if (idx === elegida) estado = ' mal'
           }
+          if (ocultas.includes(idx)) estado += ' oculta'
           return (
-            <button key={o} className={`opcion${estado}`} disabled={elegida !== null} onClick={() => responder(idx)}>
+            <button
+              key={o}
+              className={`opcion${estado}`}
+              disabled={elegida !== null || ocultas.includes(idx)}
+              onClick={() => responder(idx)}
+            >
               {o}
             </button>
           )

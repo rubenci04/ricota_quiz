@@ -3,6 +3,8 @@ import datos from './data/datos-ricotero.json'
 import { guardar, leer } from './storage.js'
 import { normalizarLetras } from './letras.js'
 import Teclado from './Teclado.jsx'
+import Confeti from './Confeti.jsx'
+import { sonar } from './sonido.js'
 
 const DIFICULTADES = {
   casual: { nombre: 'Casual', detalle: 'Año y disco desde el inicio, 3 pistas de letra', pistasLetra: 3 },
@@ -39,7 +41,7 @@ function nuevaRonda(modo, anterior) {
 }
 
 export default function Adivinanzas({ onVolver }) {
-  const [config, setConfig] = useState({ dificultad: null, modo: null })
+  const [config, setConfig] = useState({ dificultad: 'casual', modo: 'palabras' })
   const [jugando, setJugando] = useState(false)
   const [ronda, setRonda] = useState(null)
   const [letras, setLetras] = useState([])
@@ -65,11 +67,7 @@ export default function Adivinanzas({ onVolver }) {
     setJugando(true)
   }
 
-  const elegir = (campo, valor) => {
-    const cfg = { ...config, [campo]: valor }
-    setConfig(cfg)
-    if (cfg.dificultad && cfg.modo) empezar(null, cfg)
-  }
+  const elegir = (campo, valor) => setConfig({ ...config, [campo]: valor })
 
   if (!jugando) {
     return (
@@ -95,7 +93,7 @@ export default function Adivinanzas({ onVolver }) {
             </button>
           ))}
         </div>
-        <p className="ayuda">Elegí las dos opciones para empezar.</p>
+        <button className="nueva" onClick={() => empezar()}>Jugar</button>
       </main>
     )
   }
@@ -148,7 +146,10 @@ export default function Adivinanzas({ onVolver }) {
 
   const comprobar = () => {
     if (resultado) return
-    setRevision(letras.map((l, i) => (l ? (l === solucion[i] ? 'ok' : 'mal') : '')))
+    const rev = letras.map((l, i) => (l ? (l === solucion[i] ? 'ok' : 'mal') : ''))
+    setRevision(rev)
+    if (rev.includes('mal')) sonar('error')
+    else if (rev.includes('ok')) sonar('ok')
     terminar(letras, pistasLetra)
   }
 
@@ -232,6 +233,7 @@ export default function Adivinanzas({ onVolver }) {
         </>
       )}
 
+      {resultado?.acierto && <Confeti />}
       {resultado && (
         <>
           <div className="victoria">

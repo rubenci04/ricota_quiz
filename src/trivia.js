@@ -28,19 +28,24 @@ const tituloDisco = (id) => discos.find((d) => d.id === id).titulo
 function preguntaAnio() {
   const d = azar(discos)
   const anios = discos.map((x) => String(x.anio))
-  return armar(`¿En qué año salió el disco "${d.titulo}"?`, String(d.anio), anios)
+  const tema = canciones.find((c) => c.disco === d.id)
+  const ayuda = tema ? `Incluye la canción «${tema.titulo}»` : `Es de los años ${Math.floor(d.anio / 10) * 10}`
+  return armar(`¿En qué año salió el disco "${d.titulo}"?`, String(d.anio), anios, { ayuda })
 }
 
 function preguntaDisco() {
   const c = azar(canciones)
-  return armar(`¿A qué disco pertenece la canción "${c.titulo}"?`, tituloDisco(c.disco), discos.map((d) => d.titulo))
+  const anio = discos.find((d) => d.id === c.disco).anio
+  return armar(`¿A qué disco pertenece la canción "${c.titulo}"?`, tituloDisco(c.disco), discos.map((d) => d.titulo), {
+    ayuda: `El disco salió en ${anio}`,
+  })
 }
 
 function preguntaRol() {
   const i = azar(integrantes)
   const raiz = (r) => r.split(' ')[0]
   const pool = integrantes.filter((x) => raiz(x.rol) !== raiz(i.rol)).map((x) => x.rol)
-  return armar(`¿Qué rol tenía ${i.apodo} en la banda?`, i.rol, pool)
+  return armar(`¿Qué rol tenía ${i.apodo} en la banda?`, i.rol, pool, { ayuda: `La respuesta empieza con «${i.rol[0]}»` })
 }
 
 function preguntaPalabras() {
@@ -52,7 +57,8 @@ function preguntaPalabras() {
   const pool = canciones
     .filter((x) => x.titulo === c.titulo || !norm.every((n) => x.palabras.map(normalizar).includes(n)))
     .map((x) => x.titulo)
-  return armar('Adiviná la canción', c.titulo, pool, { pistas: mostradas })
+  const anio = discos.find((d) => d.id === c.disco).anio
+  return armar('Adiviná la canción', c.titulo, pool, { pistas: mostradas, ayuda: `La canción salió en ${anio}` })
 }
 
 const palabrasTitulo = (t) => t.split(' ').filter((w) => normalizar(w).length >= 4)
@@ -65,7 +71,9 @@ function preguntaTitulo() {
     .flatMap((x) => palabrasTitulo(x.titulo))
     .filter((w) => !enTitulo.includes(normalizar(w)))
   const titulo = c.titulo.replace(oculta, '_____')
-  return armar(`Completá el título: "${titulo}"`, oculta, pool)
+  return armar(`Completá el título: "${titulo}"`, oculta, pool, {
+    ayuda: `Es de «${tituloDisco(c.disco)}» y la palabra tiene ${oculta.length} letras`,
+  })
 }
 
 const GENERADORES = {

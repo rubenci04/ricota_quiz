@@ -3,14 +3,18 @@ import datos from './data/datos-ricotero.json'
 import { guardar, leer } from './storage.js'
 import { normalizarLetras } from './letras.js'
 import Teclado from './Teclado.jsx'
+import Confeti from './Confeti.jsx'
+import { sonar } from './sonido.js'
 
-const MAX_ERRORES = 6
+const MAX_ERRORES = 8
+const MAX_PISTAS = 2
+const ERRORES_PARA_DISCO = 3
 const normalizarAhorcado = normalizarLetras
 
 const pares = datos.canciones.flatMap((c) =>
   c.palabras
     .filter((p) => normalizarAhorcado(p).length >= 4)
-    .map((p) => ({ original: p, clave: normalizarAhorcado(p), cancion: c.titulo })),
+    .map((p) => ({ original: p, clave: normalizarAhorcado(p), cancion: c.titulo, disco: c.disco })),
 )
 
 function nuevaPalabra() {
@@ -28,6 +32,8 @@ function Dibujo({ errores }) {
       {errores > 3 && <path {...p} d="M85 60 L102 78" />}
       {errores > 4 && <path {...p} d="M85 90 L70 115" />}
       {errores > 5 && <path {...p} d="M85 90 L100 115" />}
+      {errores > 6 && <path {...p} d="M70 115 L61 115" />}
+      {errores > 7 && <path {...p} d="M100 115 L109 115" />}
     </svg>
   )
 }
@@ -36,6 +42,7 @@ export default function Ahorcado({ onVolver }) {
   const [palabra, setPalabra] = useState(nuevaPalabra)
   const [usadas, setUsadas] = useState([])
   const [racha, setRacha] = useState(() => leer().racha)
+  const [pistas, setPistas] = useState(0)
 
   const errores = usadas.filter((l) => !palabra.clave.includes(l)).length
   const acertada = [...palabra.clave].every((l) => usadas.includes(l))
@@ -47,6 +54,8 @@ export default function Ahorcado({ onVolver }) {
     const nuevas = [...usadas, l]
     setUsadas(nuevas)
     const nErrores = nuevas.filter((x) => !palabra.clave.includes(x)).length
+    if (!palabra.clave.includes(l)) sonar('error')
+    else if (!palabra.clave.split('').every((x) => nuevas.includes(x))) sonar('ok')
     if ([...palabra.clave].every((x) => nuevas.includes(x))) {
       setRacha(guardar({ racha: leer().racha + 1 }).racha)
     } else if (nErrores >= MAX_ERRORES) {
@@ -54,10 +63,21 @@ export default function Ahorcado({ onVolver }) {
     }
   }
 
+  const pedirPista = () => {
+    if (pistas >= MAX_PISTAS || terminada) return
+    const faltan = [...new Set(palabra.clave)].filter((l) => !usadas.includes(l))
+    if (!faltan.length) return
+    setPistas(pistas + 1)
+    probar(faltan[Math.floor(Math.random() * faltan.length)])
+  }
+
   const otra = () => {
     setPalabra(nuevaPalabra())
     setUsadas([])
+    setPistas(0)
   }
+
+  const disco = datos.discos.find((d) => d.id === palabra.disco)
 
   return (
     <main className="pantalla">
@@ -68,6 +88,10 @@ export default function Ahorcado({ onVolver }) {
       </header>
 
       <p className="tema">de la canción «{palabra.cancion}» · {palabra.clave.length} letras</p>
+
+      {errores >= ERRORES_PARA_DISCO && (
+        <p className="tema datos-disco">Disco: {disco.titulo} ({disco.anio})</p>
+      )}
 
       <Dibujo errores={errores} />
 
@@ -88,12 +112,18 @@ export default function Ahorcado({ onVolver }) {
           <button className="nueva" onClick={otra}>Otra palabra</button>
         </>
       ) : (
-        <Teclado
-          onTecla={probar}
-          usada={(l) => usadas.includes(l)}
-          estado={(l) => (usadas.includes(l) ? (palabra.clave.includes(l) ? ' ok' : ' mal') : '')}
-        />
+        <>
+          <Teclado
+            onTecla={probar}
+            usada={(l) => usadas.includes(l)}
+            estado={(l) => (usadas.includes(l) ? (palabra.clave.includes(l) ? ' ok' : ' mal') : '')}
+          />
+          <button className="secundario" onClick={pedirPista} disabled={pistas >= MAX_PISTAS}>
+            Pista ({MAX_PISTAS - pistas})
+          </button>
+        </>
       )}
+      {acertada && <Confeti />}
     </main>
   )
 }

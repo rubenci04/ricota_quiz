@@ -197,3 +197,33 @@ button, select { font: inherit; color: inherit; }
 .casilla.mal { background: #3a1512; border-bottom-color: var(--rojo); }
 .casilla.fija { color: var(--acento); }
 .tecla.borrar { grid-column: span 2; }
+
+/* animaciones */
+@keyframes entrar { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.12); box-shadow: 0 0 14px #3aa17e; } 100% { transform: scale(1); } }
+@keyframes sacudida { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
+@keyframes brillo { 0% { filter: brightness(2.2); box-shadow: 0 0 10px #fff; } 100% { filter: none; box-shadow: none; } }
+@keyframes destello { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 50% { box-shadow: 0 0 10px 3px var(--acento); background: #5a4310; } }
+.pantalla { animation: entrar 0.25s ease-out; }
+.opcion.ok, .tecla.ok, .casilla.ok, .letra.ok { animation: pop 0.45s ease-out; }
+.opcion.mal, .tecla.mal, .casilla.mal, .letra.mal { animation: sacudida 0.4s ease-out; }
+.celda.hallada { animation: brillo 0.8s ease-out; }
+.casillero.tachada { animation: brillo 0.8s ease-out; }
+.celda.destello { animation: destello 1.2s ease-in-out infinite; }
+.celda.revelada { background: #5a4310; color: var(--acento); }
+.opcion.oculta { visibility: hidden; }
+.confeti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* sonido, bienvenida y música */
+.sonido { position: fixed; right: 6px; top: 50%; transform: translateY(-50%); z-index: 20; width: 38px; height: 38px; padding: 0; background: var(--panel); border: 1px solid var(--borde); border-radius: 50%; font-size: 1.1rem; cursor: pointer; opacity: 0.85; }
+.entrar { max-width: 260px; font-size: 1.1rem; }
+.aviso { margin: 8px 0 0; font-size: 0.8rem; color: var(--tenue); text-align: center; }
+.musica { position: fixed; right: 8px; bottom: 34px; z-index: 15; width: 200px; background: var(--panel); border: 1px solid var(--borde); }
+.musica-video, .musica-video iframe { display: block; width: 200px; height: 200px; }
+.musica-barra { display: flex; align-items: center; gap: 4px; padding: 4px; }
+.musica-titulo { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.7rem; color: var(--tenue); }
+.musica-barra button { width: 28px; height: 28px; padding: 0; background: var(--bg); border: 1px solid var(--borde); cursor: pointer; }
+.con-musica .pantalla { padding-bottom: 270px; }

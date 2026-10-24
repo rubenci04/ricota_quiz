@@ -2,8 +2,11 @@ import { useRef, useState } from 'react'
 import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
 import { hayCrucigrama, nuevoCrucigrama } from './crucigrama.js'
+import Confeti from './Confeti.jsx'
+import { sonar } from './sonido.js'
 
-const MAX_PISTAS = 3
+const MAX_PISTAS = 5
+const MAX_PALABRAS = 2
 const VECTOR = { across: [0, 1], down: [1, 0] }
 
 export default function Crucigrama({ onVolver }) {
@@ -15,11 +18,12 @@ export default function Crucigrama({ onVolver }) {
   const [revision, setRevision] = useState({})
   const [sel, setSel] = useState(null) // { r, c, dir }
   const [pistas, setPistas] = useState(0)
+  const [palabrasReveladas, setPalabrasReveladas] = useState(0)
   const entrada = useRef(null)
 
   const empezar = (id, dif = dificultad) => {
     setJuego(nuevoCrucigrama(id, dif))
-    setLetras({}); setFijas({}); setRevision({}); setSel(null); setPistas(0)
+    setLetras({}); setFijas({}); setRevision({}); setSel(null); setPistas(0); setPalabrasReveladas(0)
   }
 
   const cambiarDisco = (id) => {
@@ -102,6 +106,18 @@ export default function Crucigrama({ onVolver }) {
     const res = {}
     for (const [k, v] of Object.entries(letras)) res[k] = v === solucion[k] ? 'ok' : 'mal'
     setRevision(res)
+    if (Object.values(res).includes('mal')) sonar('error')
+    else if (Object.keys(res).length) sonar('ok')
+  }
+
+  const revelarPalabra = () => {
+    if (!activa || palabrasReveladas >= MAX_PALABRAS || ganaste) return
+    const [dr, dc] = VECTOR[activa.dir]
+    const celdas = Array.from({ length: activa.respuesta.length }, (_, i) => `${activa.r + dr * i},${activa.c + dc * i}`)
+    setLetras((prev) => ({ ...prev, ...Object.fromEntries(celdas.map((k) => [k, solucion[k]])) }))
+    setFijas((prev) => ({ ...prev, ...Object.fromEntries(celdas.map((k) => [k, true])) }))
+    setRevision((prev) => { const n = { ...prev }; celdas.forEach((k) => delete n[k]); return n })
+    setPalabrasReveladas(palabrasReveladas + 1)
   }
 
   const pedirPista = () => {
@@ -214,14 +230,24 @@ export default function Crucigrama({ onVolver }) {
         aria-label="Escribir letra"
       />
 
+      {ganaste && <Confeti />}
       {ganaste && <div className="victoria" role="status"><strong>¡Completaste el crucigrama!</strong> Zafaste.</div>}
 
       <div className="herramientas">
         <button className="secundario" onClick={comprobar}>Comprobar</button>
-        <button className="secundario" onClick={pedirPista} disabled={pistas >= MAX_PISTAS || ganaste}>
-          Pista ({MAX_PISTAS - pistas})
-        </button>
         <button className="secundario" onClick={borrar} aria-label="Borrar letra">⌫</button>
+      </div>
+      <div className="herramientas">
+        <button className="secundario" onClick={pedirPista} disabled={pistas >= MAX_PISTAS || ganaste}>
+          Revelar letra ({MAX_PISTAS - pistas})
+        </button>
+        <button
+          className="secundario"
+          onClick={revelarPalabra}
+          disabled={!activa || palabrasReveladas >= MAX_PALABRAS || ganaste}
+        >
+          Revelar palabra ({MAX_PALABRAS - palabrasReveladas})
+        </button>
       </div>
 
       {lista('Horizontales', horizontales)}

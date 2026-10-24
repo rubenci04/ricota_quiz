@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
 import { sumarSopa } from './storage.js'
+import Confeti from './Confeti.jsx'
+import { sonar } from './sonido.js'
 import { SIZE, discos, discoTieneJuego, nuevaPartida } from './sopa.js'
 
 const COLORES = ['#e0a526', '#c0392b', '#3aa17e', '#5b8def', '#b455d6', '#e0742b', '#2bb7c9', '#d6567f', '#8fb339', '#9a8cff']
@@ -23,8 +25,9 @@ function lineaHasta(ini, r, c) {
   return Array.from({ length: largo }, (_, i) => ({ r: ini.r + ddr * i, c: ini.c + ddc * i }))
 }
 
-const MAX_PISTAS = 3
-const clave =(r, c) => `${r},${c}`
+const MAX_PISTAS = 5
+const MAX_REVELAR = 1
+const clave = (r, c) => `${r},${c}`
 
 export default function SopaDeLetras({ onVolver }) {
   const [discoId, setDiscoId] = useState('todos')
@@ -35,12 +38,20 @@ export default function SopaDeLetras({ onVolver }) {
   const inicio = useRef(null)
   const [pistas, setPistas] = useState([]) // norm de palabras con letra inicial revelada
   const [facil, setFacil] = useState(false)
+  const [reveladas, setReveladas] = useState([]) // norm de palabras resaltadas completas
 
   const empezar = (id) => {
     setPartida(nuevaPartida(id))
     setEncontradas({})
     setSeleccion([])
     setPistas([])
+    setReveladas([])
+  }
+
+  const revelarPalabra = () => {
+    const libres = partida.palabras.filter((p) => !(p.norm in encontradas) && !reveladas.includes(p.norm))
+    if (reveladas.length >= MAX_REVELAR || libres.length === 0) return
+    setReveladas([...reveladas, libres[Math.floor(Math.random() * libres.length)].norm])
   }
 
   const pedirPista = () => {
@@ -88,6 +99,9 @@ export default function SopaDeLetras({ onVolver }) {
     if (hallada) {
       if (Object.keys(encontradas).length + 1 === partida.palabras.length) sumarSopa()
       setEncontradas((prev) => ({ ...prev, [hallada.norm]: Object.keys(prev).length % COLORES.length }))
+      sonar('ok')
+    } else if (seleccion.length > 1) {
+      sonar('error')
     }
     setSeleccion([])
   }
@@ -98,6 +112,16 @@ export default function SopaDeLetras({ onVolver }) {
     if (!(p.norm in encontradas)) continue
     for (let i = 0; i < p.norm.length; i++) {
       marcadas.set(clave(p.r0 + p.dr * i, p.c0 + p.dc * i), COLORES[encontradas[p.norm]])
+    }
+  }
+  // inicio de palabras con pista (destello) y palabras reveladas completas
+  const destellos = new Set()
+  const resaltadas = new Set()
+  for (const p of partida.palabras) {
+    if (p.norm in encontradas) continue
+    if (pistas.includes(p.norm)) destellos.add(clave(p.r0, p.c0))
+    if (reveladas.includes(p.norm)) {
+      for (let i = 0; i < p.norm.length; i++) resaltadas.add(clave(p.r0 + p.dr * i, p.c0 + p.dc * i))
     }
   }
   const enSeleccion = new Set(seleccion.map(({ r, c }) => clave(r, c)))
@@ -145,7 +169,7 @@ export default function SopaDeLetras({ onVolver }) {
             return (
               <div
                 key={k}
-                className={`celda${enSeleccion.has(k) ? ' sel' : ''}${color ? ' hallada' : ''}`}
+                className={`celda${enSeleccion.has(k) ? ' sel' : ''}${color ? ' hallada' : ''}${destellos.has(k) ? ' destello' : ''}${resaltadas.has(k) ? ' revelada' : ''}`}
                 style={color ? { background: color } : undefined}
               >
                 {letra}
@@ -174,6 +198,9 @@ export default function SopaDeLetras({ onVolver }) {
         <button className="secundario" onClick={pedirPista} disabled={pistas.length >= MAX_PISTAS || ganaste}>
           Pista ({MAX_PISTAS - pistas.length})
         </button>
+        <button className="secundario" onClick={revelarPalabra} disabled={reveladas.length >= MAX_REVELAR || ganaste}>
+          Revelar palabra ({MAX_REVELAR - reveladas.length})
+        </button>
         <label className="interruptor">
           <input type="checkbox" checked={facil} onChange={(e) => setFacil(e.target.checked)} />
           Modo fácil
@@ -190,6 +217,7 @@ export default function SopaDeLetras({ onVolver }) {
         </ul>
       )}
 
+      {ganaste && <Confeti />}
       {ganaste && (
         <div className="victoria" role="status">
           <strong>¡Ganaste!</strong> Encontraste todas las palabras. ¡Que viva el Indio!
