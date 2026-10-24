@@ -1,0 +1,90 @@
+import datos from './data/datos-ricotero.json'
+
+export const SIZE = 12
+const MIN_LEN = 4
+const DIRS = [
+  [0, 1], [1, 0], [1, 1], [-1, 1],
+  [0, -1], [-1, 0], [-1, -1], [1, -1],
+]
+
+export const discos = datos.discos
+
+export function normalizar(texto) {
+  return texto
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/\s+/g, '')
+    .toUpperCase()
+}
+
+function mezclar(arr) {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
+// Palabras únicas (por forma normalizada) de las canciones del disco elegido.
+export function palabrasDisponibles(discoId) {
+  const mapa = new Map()
+  for (const c of datos.canciones) {
+    if (discoId !== 'todos' && c.disco !== discoId) continue
+    for (const p of c.palabras) {
+      const norm = normalizar(p)
+      if (norm.length >= MIN_LEN && norm.length <= SIZE && !mapa.has(norm)) {
+        mapa.set(norm, { original: p, norm })
+      }
+    }
+  }
+  return [...mapa.values()]
+}
+
+export function discoTieneJuego(discoId) {
+  return palabrasDisponibles(discoId).length >= 5
+}
+
+function intentarGrilla(candidatas, cantidad) {
+  const grilla = Array.from({ length: SIZE }, () => Array(SIZE).fill(''))
+  const puestas = []
+  for (const palabra of candidatas) {
+    if (puestas.length >= cantidad) break
+    if (puestas.some((p) => p.norm.includes(palabra.norm) || palabra.norm.includes(p.norm))) continue
+    const len = palabra.norm.length
+    for (let intento = 0; intento < 80; intento++) {
+      const [dr, dc] = DIRS[Math.floor(Math.random() * DIRS.length)]
+      const r0 = Math.floor(Math.random() * SIZE)
+      const c0 = Math.floor(Math.random() * SIZE)
+      const rf = r0 + dr * (len - 1)
+      const cf = c0 + dc * (len - 1)
+      if (rf < 0 || rf >= SIZE || cf < 0 || cf >= SIZE) continue
+      let ok = true
+      for (let i = 0; i < len; i++) {
+        const celda = grilla[r0 + dr * i][c0 + dc * i]
+        if (celda && celda !== palabra.norm[i]) { ok = false; break }
+      }
+      if (!ok) continue
+      for (let i = 0; i < len; i++) grilla[r0 + dr * i][c0 + dc * i] = palabra.norm[i]
+      puestas.push({ ...palabra, r0, c0, dr, dc })
+      break
+    }
+  }
+  return { grilla, puestas }
+}
+
+export function nuevaPartida(discoId) {
+  const pool = palabrasDisponibles(discoId)
+  const cantidad = Math.min(pool.length, 8 + Math.floor(Math.random() * 3))
+  let mejor = null
+  for (let i = 0; i < 20; i++) {
+    const res = intentarGrilla(mezclar(pool), cantidad)
+    if (!mejor || res.puestas.length > mejor.puestas.length) mejor = res
+    if (res.puestas.length >= cantidad) break
+  }
+  const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  const grilla = mejor.grilla.map((fila) =>
+    fila.map((x) => x || letras[Math.floor(Math.random() * letras.length)]),
+  )
+  return { grilla, palabras: mejor.puestas }
+}
