@@ -40,13 +40,28 @@ export function palabrasDisponibles(discoId, tema = 'todos') {
   return [...mapa.values()]
 }
 
-// los datos no cambian durante la sesión: se calcula una vez por disco y tema
-const cacheJuego = new Map()
-export function discoTieneJuego(discoId, tema = 'todos') {
-  const k = `${discoId}|${tema}`
-  if (!cacheJuego.has(k)) cacheJuego.set(k, palabrasDisponibles(discoId, tema).length >= 5)
-  return cacheJuego.get(k)
+// Ningún disco queda sin jugar: si el disco (y tema) elegido tiene pocas palabras, la partida se
+// completa con otras canciones (primero del mismo tema) y se avisa con "completada".
+const MIN_PALABRAS_PARTIDA = 8
+export function poolSopa(discoId, tema = 'todos') {
+  const propias = palabrasDisponibles(discoId, tema)
+  if (propias.length >= MIN_PALABRAS_PARTIDA) return { propias, extras: [], completada: false }
+  const vistas = new Set(propias.map((p) => p.norm))
+  const extras = []
+  for (const origen of [palabrasDisponibles('todos', tema), palabrasDisponibles('todos', 'todos')]) {
+    for (const p of origen) {
+      if (!vistas.has(p.norm)) {
+        vistas.add(p.norm)
+        extras.push(p)
+      }
+    }
+    if (propias.length + extras.length >= 14) break
+  }
+  return { propias, extras, completada: true }
 }
+
+// compatibilidad: ya no hay discos deshabilitados por falta de datos
+export const discoTieneJuego = () => true
 
 function intentarGrilla(candidatas, cantidad) {
   const grilla = Array.from({ length: SIZE }, () => Array(SIZE).fill(''))
@@ -77,11 +92,12 @@ function intentarGrilla(candidatas, cantidad) {
 }
 
 function generarPartida(discoId, tema) {
-  const pool = palabrasDisponibles(discoId, tema)
-  const cantidad = Math.min(pool.length, 8 + R.entero(3))
+  const { propias, extras, completada } = poolSopa(discoId, tema)
+  const cantidad = Math.min(propias.length + extras.length, 8 + R.entero(3))
   let mejor = null
   for (let i = 0; i < 20; i++) {
-    const res = intentarGrilla(mezclar(pool), cantidad)
+    // las palabras del disco elegido van primero; las de relleno, después
+    const res = intentarGrilla([...mezclar(propias), ...mezclar(extras)], cantidad)
     if (!mejor || res.puestas.length > mejor.puestas.length) mejor = res
     if (res.puestas.length >= cantidad) break
   }
@@ -94,7 +110,7 @@ function generarPartida(discoId, tema) {
     )
     if (mejor.puestas.every((p) => contarApariciones(grilla, p.norm) === 1)) break
   }
-  return { grilla, palabras: mejor.puestas }
+  return { grilla, palabras: mejor.puestas, completada }
 }
 
 function contarApariciones(grilla, norm) {

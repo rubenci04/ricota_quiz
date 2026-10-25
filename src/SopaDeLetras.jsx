@@ -1,10 +1,12 @@
 import { useRef, useState } from 'react'
+import Cabecera from './Cabecera.jsx'
 import { leer, sumarSopa } from './storage.js'
 import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
 import { nuevaSemilla } from './desafio.js'
 import SelectorTema from './SelectorTema.jsx'
+import SelectorDisco from './SelectorDisco.jsx'
 import { nombreDeTema } from './temas.js'
 import { SIZE, discos, discoTieneJuego, nuevaPartida } from './sopa.js'
 
@@ -29,11 +31,12 @@ function lineaHasta(ini, r, c) {
   return Array.from({ length: largo }, (_, i) => ({ r: ini.r + ddr * i, c: ini.c + ddc * i }))
 }
 
-const MAX_PISTAS = 5
+const MAX_PISTAS = 7 // incluye 2 extra
+const FALLOS_PARA_PISTA = 2
 const MAX_REVELAR = 1
 const clave = (r, c) => `${r},${c}`
 
-export default function SopaDeLetras({ onVolver, desafio = null }) {
+export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
   // la semilla define la partida: con la misma semilla y disco sale la misma sopa
   const inicial = useRef(null)
   if (!inicial.current) {
@@ -55,6 +58,8 @@ export default function SopaDeLetras({ onVolver, desafio = null }) {
   const [pistas, setPistas] = useState([]) // norm de palabras con letra inicial revelada
   const [facil, setFacil] = useState(false)
   const [mensaje, setMensaje] = useState('')
+  const [auto, setAuto] = useState([]) // pistas automáticas (gratis) tras 2 fallos seguidos
+  const [fallosSeguidos, setFallosSeguidos] = useState(0)
   const [reveladas, setReveladas] = useState([]) // norm de palabras resaltadas completas
 
   const empezar = (id, t = temaId) => {
@@ -64,6 +69,8 @@ export default function SopaDeLetras({ onVolver, desafio = null }) {
     setEncontradas({})
     setSeleccion([])
     setPistas([])
+    setAuto([])
+    setFallosSeguidos(0)
     setReveladas([])
     setMensaje('')
   }
@@ -128,10 +135,25 @@ export default function SopaDeLetras({ onVolver, desafio = null }) {
       if (Object.keys(encontradas).length + 1 === partida.palabras.length) sumarSopa(pistas.length === 0 && reveladas.length === 0)
       setEncontradas((prev) => ({ ...prev, [hallada.norm]: Object.keys(prev).length % COLORES.length }))
       sonar('ok')
+      setFallosSeguidos(0)
       setMensaje(`✓ Encontraste «${hallada.original}». ${frase('acierto')}`)
     } else if (cels.length > 1) {
       sonar('error')
-      setMensaje(`✗ Esa no es. ${frase('error')}`)
+      let texto = `✗ Esa no es. ${frase('error')}`
+      const seguidos = fallosSeguidos + 1
+      if (seguidos >= FALLOS_PARA_PISTA) {
+        // pista automática tras 2 fallos seguidos: el inicio de una palabra, gratis
+        const libres = partida.palabras.filter((p) => !(p.norm in encontradas) && !pistas.includes(p.norm) && !auto.includes(p.norm))
+        if (libres.length) {
+          setAuto([...auto, libres[Math.floor(Math.random() * libres.length)].norm])
+          sonar('pista')
+          texto += ' Te marqué el inicio de una palabra para ayudarte.'
+        }
+        setFallosSeguidos(0)
+      } else {
+        setFallosSeguidos(seguidos)
+      }
+      setMensaje(texto)
     }
     setSeleccion([])
   }
@@ -187,7 +209,7 @@ export default function SopaDeLetras({ onVolver, desafio = null }) {
   const resaltadas = new Set()
   for (const p of partida.palabras) {
     if (p.norm in encontradas) continue
-    if (pistas.includes(p.norm)) destellos.add(clave(p.r0, p.c0))
+    if (pistas.includes(p.norm) || auto.includes(p.norm)) destellos.add(clave(p.r0, p.c0))
     if (reveladas.includes(p.norm)) {
       for (let i = 0; i < p.norm.length; i++) resaltadas.add(clave(p.r0 + p.dr * i, p.c0 + p.dc * i))
     }
@@ -200,29 +222,20 @@ export default function SopaDeLetras({ onVolver, desafio = null }) {
 
   return (
     <main className="pantalla juego">
-      <header className="barra">
-        <button className="volver" onClick={onVolver} aria-label="Volver al menú">←</button>
-        <h2>Sopa de letras</h2>
-      </header>
+      <Cabecera titulo={<>Sopa de letras</>} onVolver={onVolver} onMenu={onMenu} />
 
       <div className="tema">
         <p>Buscá palabras de: <strong>{tema}{temaId !== 'todos' ? ` · ${nombreDeTema(temaId)}` : ''}</strong></p>
         <p className="contador">Encontradas {Object.keys(encontradas).length} de {partida.palabras.length}</p>
       </div>
 
-      <label className="selector">
-        <span>Disco</span>
-        <select value={discoId} disabled={!!desafio} onChange={(e) => cambiarDisco(e.target.value)}>
-          <option value="todos">Todos</option>
-          {discos.map((d) => (
-            <option key={d.id} value={d.id} disabled={!discoTieneJuego(d.id, temaId)}>
-              {d.titulo} ({d.anio}){discoTieneJuego(d.id, temaId) ? '' : ' – sin palabras aún'}
-            </option>
-          ))}
-        </select>
-      </label>
+      {partida.completada && (
+        <p className="cartel" role="note">Este disco tiene pocas canciones cargadas: completamos con otras.</p>
+      )}
 
-      <SelectorTema valor={temaId} onCambio={cambiarTema} tieneDatos={(t) => discoTieneJuego(discoId, t)} deshabilitado={!!desafio} />
+      <SelectorDisco valor={discoId} onCambio={cambiarDisco} deshabilitado={!!desafio} />
+
+      <SelectorTema valor={temaId} onCambio={cambiarTema} deshabilitado={!!desafio} />
 
       <div
         className="grilla"
@@ -262,7 +275,7 @@ export default function SopaDeLetras({ onVolver, desafio = null }) {
               <b>{hallada ? p.original : '?'.repeat(p.norm.length)}</b>
               <small>
                 de la canción «{p.cancion}» · {p.norm.length} letras
-                {!hallada && pistas.includes(p.norm) && ` · empieza con ${p.norm[0]}`}
+                {!hallada && (pistas.includes(p.norm) || auto.includes(p.norm)) && ` · empieza con ${p.norm[0]}`}
               </small>
             </div>
           )
@@ -293,6 +306,9 @@ export default function SopaDeLetras({ onVolver, desafio = null }) {
       )}
 
       <p className="feedback" role="status" aria-live="polite">{mensaje}</p>
+      <p className="contador-pistas">
+        Pistas: <strong>{MAX_PISTAS - pistas.length}</strong> · Palabra revelada: <strong>{MAX_REVELAR - reveladas.length}</strong>
+      </p>
 
       {ganaste && (
         <Resultado

@@ -4,7 +4,7 @@ import { crearAzar } from './azar.js'
 import { cumpleTema } from './temas.js'
 
 export const MAX = 13
-const MIN_PALABRAS = 6
+const MIN_PALABRAS = 5
 const alnum = (t) => normalizar(t).replace(/[^A-Z0-9]/g, '')
 
 // azar de la generación en curso (con semilla si se pidió una)
@@ -51,12 +51,8 @@ export function candidatas(discoId, dificultad = 'casual', tema = 'todos') {
 }
 
 // los datos no cambian durante la sesión: se calcula una vez por tema
-const cacheHay = new Map()
-export function hayCrucigrama(discoId, tema = 'todos') {
-  const k = `${discoId}|${tema}`
-  if (!cacheHay.has(k)) cacheHay.set(k, candidatas(discoId, 'casual', tema).length >= 8)
-  return cacheHay.get(k)
-}
+// compatibilidad: ya no hay discos deshabilitados; se completa con otras canciones
+export const hayCrucigrama = () => true
 
 function intentar(cands, objetivo) {
   const grilla = new Map() // "r,c" -> { ch, dirs: Set }
@@ -121,17 +117,33 @@ function intentar(cands, objetivo) {
   return puestas
 }
 
+const MIN_CANDIDATAS = 14
+
 function generarCrucigrama(discoId, dificultad, tema) {
-  const pool = candidatas(discoId, dificultad, tema)
+  const propias = candidatas(discoId, dificultad, tema)
+  const extras = []
+  let completado = false
+  if (propias.length < MIN_CANDIDATAS) {
+    // pocas palabras en el disco: se completa con otras canciones (primero del mismo tema)
+    completado = true
+    const vistas = new Set(propias.map((p) => p.respuesta))
+    for (const origen of [candidatas('todos', dificultad, tema), candidatas('todos', dificultad, 'todos')]) {
+      for (const p of origen) if (!vistas.has(p.respuesta)) { vistas.add(p.respuesta); extras.push(p) }
+      if (propias.length + extras.length >= MIN_CANDIDATAS + 8) break
+    }
+  }
+  const pool = [...propias, ...extras]
+  const propiasSet = new Set(propias.map((p) => p.respuesta))
   const objetivo = 8 + R.entero(3)
   let mejor = []
   // varias rondas con otras semillas (órdenes al azar) antes de rendirse
   for (let ronda = 0; ronda < 3 && mejor.length < MIN_PALABRAS; ronda++) {
     for (let i = 0; i < 40; i++) {
       // las palabras largas primero (cada grupo mezclado con Fisher–Yates) dejan más cruces posibles
-      const largas = mezclar(pool.filter((p) => p.respuesta.length >= 7))
-      const cortas = mezclar(pool.filter((p) => p.respuesta.length < 7))
-      const puestas = intentar([...largas, ...cortas], objetivo)
+      // y dentro de cada grupo, las del disco elegido antes que las de relleno
+      const grupo = (largas) => pool.filter((p) => (p.respuesta.length >= 7) === largas)
+      const orden = (lista) => [...mezclar(lista.filter((p) => propiasSet.has(p.respuesta))), ...mezclar(lista.filter((p) => !propiasSet.has(p.respuesta)))]
+      const puestas = intentar([...orden(grupo(true)), ...orden(grupo(false))], objetivo)
       if (puestas.length > mejor.length) mejor = puestas
       if (mejor.length >= objetivo) break
     }
@@ -166,7 +178,7 @@ function generarCrucigrama(discoId, dificultad, tema) {
   inicios.forEach((k, i) => { numeros[k] = i + 1 })
   for (const e of entradas) e.num = numeros[`${e.r},${e.c}`]
 
-  return { filas, cols, entradas, solucion, numeros }
+  return { filas, cols, entradas, solucion, numeros, completado }
 }
 
 // Con la misma semilla, tema y dificultad da siempre el mismo crucigrama; sin semilla es al azar.

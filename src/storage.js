@@ -1,12 +1,22 @@
 // Progreso y preferencias: se leen una sola vez al iniciar y viven en memoria.
 const CLAVE = 'ricota_quiz'
 const CLAVE_SONIDO_ANTERIOR = 'ricota_quiz_sonido' // versión previa guardaba el sonido aparte
-const VERSION = 4 // v1–v3 se migran completando los campos nuevos con valores por defecto
+const VERSION = 5 // versiones anteriores se migran completando los campos nuevos con valores por defecto
 
 export const MODOS_JUGABLES = ['reto', 'banda', 'sopa', 'trivia', 'adivinanzas', 'crucigrama']
 const FECHA = /^\d{4}-\d{2}-\d{2}$/
 
 const esFecha = (v) => typeof v === 'string' && FECHA.test(v)
+
+export const CATEGORIAS_DICHO = ['canciones', 'discos', 'palabras', 'integrantes']
+
+// Última elección en "Dicho de otra forma" / "Por palabras", para ofrecer "Repetir".
+function validarEleccion(v) {
+  if (!v || typeof v !== 'object') return null
+  if (v.modo === 'palabras') return { modo: 'palabras', categoria: 'canciones' }
+  if (v.modo === 'dicho' && CATEGORIAS_DICHO.includes(v.categoria)) return { modo: 'dicho', categoria: v.categoria }
+  return null
+}
 
 function validarReto(v) {
   if (!v || typeof v !== 'object' || !esFecha(v.fecha)) return null
@@ -41,6 +51,9 @@ const ESQUEMA = {
   sopaSinPistas: { tipo: 'b', def: false },
   adivinanzaSinPistas: { tipo: 'b', def: false },
   sonido: { tipo: 'b', def: true },
+  volumen: { tipo: 'n', def: 40, min: 0, max: 100 }, // volumen de la música de YouTube
+  apariencia: { tipo: 's', def: 'auto', validos: ['auto', 'claro', 'oscuro'] },
+  ultimaEleccion: { tipo: 'f', def: null, f: validarEleccion },
   vibracion: { tipo: 'b', def: true },
   tutorial: { tipo: 'b', def: false },
   dificultad: { tipo: 's', def: 'casual', validos: ['casual', 'fanatico'] },
@@ -59,7 +72,7 @@ function validar(crudo) {
   const limpio = {}
   for (const [campo, regla] of Object.entries(ESQUEMA)) {
     const v = origen[campo]
-    if (regla.tipo === 'n') limpio[campo] = Number.isFinite(v) ? Math.max(regla.min, Math.floor(v)) : regla.def
+    if (regla.tipo === 'n') limpio[campo] = Number.isFinite(v) ? Math.min(regla.max ?? Infinity, Math.max(regla.min, Math.floor(v))) : regla.def
     else if (regla.tipo === 'b') limpio[campo] = typeof v === 'boolean' ? v : regla.def
     else if (regla.tipo === 's') limpio[campo] = regla.validos.includes(v) ? v : regla.def
     else limpio[campo] = regla.f(v)

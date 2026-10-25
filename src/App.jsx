@@ -15,6 +15,7 @@ import { DESARROLLADOR, MODOS, NOMBRE_JUEGO } from './config.js'
 import { alDesbloquear, iniciarLogros } from './logros.js'
 import { fechaBA, rachaCortada, rachaVigente } from './reto.js'
 import Musica from './Musica.jsx'
+import { ORDEN, seguirSistema, siguienteApariencia } from './apariencia.js'
 import {
   alternarSonido,
   alternarVibracion,
@@ -25,16 +26,21 @@ import {
 } from './sonido.js'
 import { leer, marcarModo } from './storage.js'
 
+// Menú: una tarjeta por modo, cada una con su ícono y su color. "Dicho de otra forma" es la destacada.
 const LISTA_MODOS = [
-  { id: 'reto', nombre: 'Reto del día', detalle: 'Una canción por día, igual para todos', activo: true },
-  { id: 'banda', nombre: 'La banda', detalle: 'Trivia de nicho para los que saben', activo: true },
-  { id: 'sopa', nombre: 'Sopa de letras', activo: true },
-  { id: 'trivia', nombre: 'Trivia', activo: true },
-  { id: 'adivinanzas', nombre: 'Adivinanzas', detalle: 'Dicho de otra forma', activo: true },
-  { id: 'crucigrama', nombre: 'Crucigrama', activo: true },
-  { id: 'ahorcado', nombre: 'Ahorcado', detalle: 'Mantené las luces del escenario encendidas', activo: MODOS.ahorcado === true },
-  { id: 'discografia', nombre: 'Discografía', detalle: 'Discos, canciones, autores y curiosidades', activo: true },
-]
+  { id: 'dicho', nombre: 'Dicho de otra forma', detalle: 'Te lo cuento con otras palabras… ¿adivinás cuál es?', icono: '🧩', color: 'var(--c-dicho)', destacada: true, insignia: 'Estrella' },
+  { id: 'reto', nombre: 'Reto del día', detalle: 'Una canción por día, igual para todos', icono: '📅', color: 'var(--c-reto)' },
+  { id: 'banda', nombre: 'La banda', detalle: 'Trivia de nicho', icono: '🎸', color: 'var(--c-banda)' },
+  { id: 'sopa', nombre: 'Sopa de letras', detalle: 'Encontrá las palabras', icono: '🔍', color: 'var(--c-sopa)' },
+  { id: 'trivia', nombre: 'Trivia', detalle: '10 preguntas por nivel', icono: '🧠', color: 'var(--c-trivia)' },
+  { id: 'crucigrama', nombre: 'Crucigrama', detalle: 'Con definiciones', icono: '✍️', color: 'var(--c-cruci)' },
+  { id: 'discografia', nombre: 'Discografía', detalle: 'Discos, canciones y curiosidades', icono: '💿', color: 'var(--c-disco)' },
+  { id: 'palabras', nombre: 'Adivinanzas por palabras', detalle: 'Palabras clave → canción', icono: '🔤', color: 'var(--c-palabras)', chica: true },
+  { id: 'ahorcado', nombre: 'Ahorcado', detalle: 'Mantené las luces encendidas', icono: '💡', color: 'var(--c-ahorcado)', chica: true, activo: MODOS.ahorcado === true },
+].map((m) => ({ activo: true, ...m }))
+
+const ICONOS_APARIENCIA = { auto: '🌓', claro: '☀️', oscuro: '🌙' }
+const NOMBRES_APARIENCIA = { auto: 'automático', claro: 'claro', oscuro: 'oscuro' }
 
 // los modos opcionales apagados en config.js no aparecen en el menú
 const MODOS_MENU = LISTA_MODOS.filter((m) => m.activo)
@@ -51,9 +57,10 @@ export default function App() {
   const [sonido, setSonido] = useState(sonidoActivo)
   const [vibracion, setVibracion] = useState(vibracionActiva)
   const [avisos, setAvisos] = useState([]) // logros recién desbloqueados
+  const [apariencia, setApariencia] = useState(() => leer().apariencia)
   const volver = () => setModo(null)
   const elegirModo = (id) => {
-    marcarModo(id)
+    marcarModo(id === 'dicho' || id === 'palabras' ? 'adivinanzas' : id)
     setModo(id)
   }
 
@@ -77,6 +84,8 @@ export default function App() {
     return () => window.removeEventListener('hashchange', alCambiarHash)
   }, [])
 
+  useEffect(() => seguirSistema(), [])
+
   useEffect(() => {
     const quitarAviso = alDesbloquear((logro) => {
       setAvisos((prev) => [...prev, logro])
@@ -92,7 +101,7 @@ export default function App() {
 
   let contenido
   if (pagina) {
-    contenido = <Legal seccion={pagina} onVolver={() => setPagina(null)} />
+    contenido = <Legal seccion={pagina} onVolver={() => setPagina(null)} onMenu={() => setPagina(null)} />
   } else if (!entro) {
     contenido = (
       <main className="pantalla inicio" key="bienvenida">
@@ -128,7 +137,7 @@ export default function App() {
       </main>
     )
   } else if (desafio) {
-    const props = { onVolver: salirDelDesafio, desafio }
+    const props = { onVolver: salirDelDesafio, onMenu: salirDelDesafio, desafio }
     if (desafio.modo === 'sopa') contenido = <SopaDeLetras {...props} />
     else if (desafio.modo === 'crucigrama') contenido = <Crucigrama {...props} />
     else if (desafio.modo === 'adivinanzas') contenido = <Adivinanzas {...props} />
@@ -149,30 +158,32 @@ export default function App() {
         </nav>
       </main>
     )
-  } else if (modo === 'reto') contenido = <RetoDelDia onVolver={volver} />
-  else if (modo === 'logros') contenido = <Logros onVolver={volver} />
-  else if (modo === 'discografia') contenido = <Discografia onVolver={volver} />
+  } else if (modo === 'reto') contenido = <RetoDelDia onVolver={volver} onMenu={volver} />
+  else if (modo === 'logros') contenido = <Logros onVolver={volver} onMenu={volver} />
+  else if (modo === 'discografia') contenido = <Discografia onVolver={volver} onMenu={volver} />
   else if (modo === 'ahorcado' && MODOS.ahorcado) contenido = <Ahorcado onVolver={volver} />
-  else if (modo === 'sopa') contenido = <SopaDeLetras onVolver={volver} />
-  else if (modo === 'trivia') contenido = <Trivia onVolver={volver} />
-  else if (modo === 'adivinanzas') contenido = <Adivinanzas onVolver={volver} />
-  else if (modo === 'crucigrama') contenido = <Crucigrama onVolver={volver} />
-  else if (modo === 'banda') contenido = <Trivia onVolver={volver} categoria="banda" />
+  else if (modo === 'sopa') contenido = <SopaDeLetras onVolver={volver} onMenu={volver} />
+  else if (modo === 'trivia') contenido = <Trivia onVolver={volver} onMenu={volver} />
+  else if (modo === 'dicho' || modo === 'palabras') contenido = <Adivinanzas onVolver={volver} onMenu={volver} inicio={modo} />
+  else if (modo === 'crucigrama') contenido = <Crucigrama onVolver={volver} onMenu={volver} />
+  else if (modo === 'banda') contenido = <Trivia onVolver={volver} onMenu={volver} categoria="banda" />
   else {
     contenido = (
       <main className="pantalla inicio" key="menu">
         <h1 className="logo">{NOMBRE_JUEGO}</h1>
         <p className="sub">Patricio Rey y sus Redonditos de Ricota</p>
-        <nav className="menu">
-          {MODOS_MENU.map((m) => (
+        <nav className="menu-grid" aria-label="Modos de juego">
+          {MODOS_MENU.map((m, i) => (
             <button
               key={m.id}
-              className="modo"
-              disabled={!m.activo}
+              className={`tarjeta-modo${m.destacada ? ' destacada' : ''}${m.chica ? ' chica' : ''}`}
+              style={{ '--c': m.color, '--i': i }}
               onClick={() => elegirModo(m.id)}
             >
-              <span>{m.nombre}{m.detalle && <small>{m.detalle}</small>}</span>
-              {!m.activo && <em className="pronto">Próximamente</em>}
+              {m.insignia && <span className="insignia">{m.insignia}</span>}
+              <span className="icono" aria-hidden="true">{m.icono}</span>
+              <strong>{m.nombre}</strong>
+              {m.detalle && <small>{m.detalle}</small>}
             </button>
           ))}
         </nav>
@@ -201,13 +212,16 @@ export default function App() {
     )
   }
 
+  // el modo en curso tiñe la pantalla con su color
+  const modoActual = desafio && aceptado ? (desafio.modo === 'adivinanzas' ? 'dicho' : desafio.modo) : modo
+
   // clic sonoro en cualquier botón
   const alClic = (e) => {
     if (e.target.closest('button:not(:disabled)')) sonar('clic')
   }
 
   return (
-    <div onClick={alClic}>
+    <div className="app" data-modo={modoActual || 'menu'} onClick={alClic}>
       {contenido}
       <div className="avisos-logros" role="status" aria-live="polite">
         {avisos.map((l) => (
@@ -222,6 +236,15 @@ export default function App() {
           aria-pressed={sonido}
         >
           {sonido ? '🔊' : '🔇'}
+        </button>
+        <button
+          className="sonido"
+          data-tema-btn
+          onClick={() => setApariencia(siguienteApariencia())}
+          aria-label={`Tema ${NOMBRES_APARIENCIA[apariencia]}. Tocar para cambiar a ${NOMBRES_APARIENCIA[ORDEN[(ORDEN.indexOf(apariencia) + 1) % ORDEN.length]]}.`}
+          title={`Tema: ${NOMBRES_APARIENCIA[apariencia]}`}
+        >
+          {ICONOS_APARIENCIA[apariencia]}
         </button>
         {vibracionDisponible() && (
           <button

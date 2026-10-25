@@ -1,0 +1,297 @@
+/* =========================================================
+   Sistema visual: tokens (tema oscuro y claro), familias de controles y animaciones.
+   Se carga después de styles.css y tiene la última palabra.
+   ========================================================= */
+
+/* ---------- Tokens: oscuro (por defecto) ---------- */
+:root,
+:root[data-tema='oscuro'] {
+  color-scheme: dark;
+  --bg: #0b0b0c;
+  --degradado: #1d1612;
+  --panel: #161617;
+  --panel-2: #1d1d20;
+  --celda-bg: #1f1f21;
+  --borde: #2f2f33;
+  --borde-fuerte: #5a5a62;
+  --texto: #ece8de;
+  --tenue: #a8a398;
+
+  --acento: #e0a526; /* texto y bordes dorados */
+  --acento-fill: #e0a526; /* rellenos dorados */
+  --sobre-acento: #121212; /* texto sobre relleno dorado */
+  --rojo: #c0392b;
+
+  --accion: #c0392b; /* botón de acción principal */
+  --accion-2: #c63f28;
+  --accion-texto: #ffffff;
+
+  --ok: #3aa17e;
+  --ok-bg: #12301f;
+  --ok-texto: #6fe0aa;
+  --mal: #c0392b;
+  --mal-bg: #3a1512;
+  --mal-texto: #ff8a80;
+
+  --fondo-suave: #221b12;
+  --aviso-bg: #1f1708;
+  --revelada-bg: #46330b;
+  --foco-bg: #2a2008;
+  --activa-bg: #3a2c0c;
+  --foco-anillo: #ffffff;
+  --pie-bg: rgba(11, 11, 12, 0.92);
+  --sombra: rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- Tokens: claro ---------- */
+:root[data-tema='claro'] {
+  color-scheme: light;
+  --bg: #f7f3ea;
+  --degradado: #efe6d2;
+  --panel: #ffffff;
+  --panel-2: #f0eadc;
+  --celda-bg: #f2ede1;
+  --borde: #d9d1bf;
+  --borde-fuerte: #8c846f;
+  --texto: #1d1b17;
+  --tenue: #5d584d;
+
+  --acento: #8a5600;
+  --acento-fill: #e0a526;
+  --sobre-acento: #1d1b17;
+  --rojo: #b3301f;
+
+  --accion: #b3301f;
+  --accion-2: #c8402a;
+  --accion-texto: #ffffff;
+
+  --ok: #1f8a5b;
+  --ok-bg: #d8f1e3;
+  --ok-texto: #0b5d3b;
+  --mal: #b3301f;
+  --mal-bg: #fbdad5;
+  --mal-texto: #8e1f12;
+
+  --fondo-suave: #f3e9d6;
+  --aviso-bg: #fff3d4;
+  --revelada-bg: #f8e6b0;
+  --foco-bg: #fdecc0;
+  --activa-bg: #f8e3ae;
+  --foco-anillo: #1d1b17;
+  --pie-bg: rgba(247, 243, 234, 0.94);
+  --sombra: rgba(60, 40, 10, 0.25);
+}
+
+/* ---------- Un color de acento por modo y por tema (rellenos y bordes, no texto) ---------- */
+:root {
+  --c-dicho: #e11d48;
+  --c-palabras: #7c3aed;
+  --c-reto: #f59e0b;
+  --c-banda: #0ea5e9;
+  --c-sopa: #10b981;
+  --c-trivia: #f97316;
+  --c-cruci: #14b8a6;
+  --c-disco: #d946ef;
+  --c-logros: #eab308;
+  --c-ahorcado: #64748b;
+
+  --t-politica: #ef4444;
+  --t-amor: #ec4899;
+  --t-noche: #6366f1;
+  --t-rock: #f59e0b;
+  --t-personajes: #22c55e;
+  --t-vida: #06b6d4;
+
+  --radio: 14px;
+  --radio-chico: 10px;
+}
+
+/* el modo en curso tiñe cabeceras, preguntas y acentos de la pantalla */
+.app { --modo: var(--acento-fill); }
+.app[data-modo='dicho'], .app[data-modo='adivinanzas'] { --modo: var(--c-dicho); }
+.app[data-modo='palabras'] { --modo: var(--c-palabras); }
+.app[data-modo='reto'] { --modo: var(--c-reto); }
+.app[data-modo='banda'] { --modo: var(--c-banda); }
+.app[data-modo='sopa'] { --modo: var(--c-sopa); }
+.app[data-modo='trivia'] { --modo: var(--c-trivia); }
+.app[data-modo='crucigrama'] { --modo: var(--c-cruci); }
+.app[data-modo='discografia'] { --modo: var(--c-disco); }
+.app[data-modo='logros'] { --modo: var(--c-logros); }
+.app[data-modo='ahorcado'] { --modo: var(--c-ahorcado); }
+
+body { background: radial-gradient(circle at 50% -10%, var(--degradado) 0%, var(--bg) 55%) fixed; color: var(--texto); }
+
+/* ---------- Estados comunes de todo lo tocable ---------- */
+button, select, summary, [role='button'], .ficha, .tarjeta-modo {
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, filter 0.15s ease;
+}
+button:disabled { cursor: not-allowed; }
+:focus-visible { outline: 3px solid var(--foco-anillo); outline-offset: 2px; }
+button:not(:disabled):active, .ficha:not(:disabled):active, .tarjeta-modo:not(:disabled):active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: none;
+}
+@media (hover: hover) {
+  button:not(:disabled):hover, summary:hover { filter: brightness(1.06); }
+}
+
+/* ---------- (a) ACCIÓN PRINCIPAL: botón lleno, color vivo ---------- */
+.nueva {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; padding: 12px 18px;
+  border: 0; border-radius: var(--radio-chico);
+  background: linear-gradient(135deg, var(--accion), var(--accion-2));
+  color: var(--accion-texto);
+  font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--accion) 55%, #000), 0 8px 18px -6px var(--sombra);
+}
+@media (hover: hover) {
+  .nueva:not(:disabled):hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 6px 0 color-mix(in srgb, var(--accion) 55%, #000), 0 12px 22px -6px var(--sombra); }
+}
+.nueva:not(:disabled):active { transform: translateY(3px) scale(0.99); box-shadow: 0 1px 0 color-mix(in srgb, var(--accion) 55%, #000); }
+.nueva:disabled { opacity: 0.5; box-shadow: none; }
+.herramientas .nueva { flex: 1; width: auto; }
+
+/* ---------- (c) NAVEGACIÓN: contorno o ícono, siempre en el mismo lugar ---------- */
+.barra {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px;
+  width: 100%; padding-bottom: 10px; border-bottom: 3px solid var(--modo);
+}
+.barra-titulo { text-align: center; min-width: 0; }
+.barra h2 { margin: 0; flex: none; font-size: 1.05rem; color: var(--texto); }
+.barra .contador { display: block; font-size: 0.78rem; color: var(--tenue); }
+.btn-nav {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 40px; padding: 6px 12px;
+  background: transparent; color: var(--texto);
+  border: 2px solid var(--borde-fuerte); border-radius: 999px;
+  font-size: 0.85rem; font-weight: 700; white-space: nowrap;
+}
+@media (hover: hover) {
+  .btn-nav:not(:disabled):hover { border-color: var(--modo); background: color-mix(in srgb, var(--modo) 14%, transparent); box-shadow: 0 4px 12px -6px var(--sombra); transform: translateY(-1px); }
+}
+.btn-nav.grande { width: 100%; min-height: 48px; font-size: 1rem; }
+.volver { width: auto; height: auto; font-size: 0.85rem; }
+
+/* ---------- (b) ELECCIÓN: tarjetas y fichas con color e ícono propios ---------- */
+.fichas { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+.fichas.tarjetas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.ficha {
+  --c: var(--acento-fill);
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 12px; min-height: 44px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--c) 20%, var(--panel)), var(--panel));
+  color: var(--texto);
+  border: 2px solid color-mix(in srgb, var(--c) 55%, var(--borde));
+  border-radius: 999px;
+  font-size: 0.85rem; font-weight: 600; text-align: left;
+}
+.ficha .ficha-icono { font-size: 1.15rem; line-height: 1; }
+@media (hover: hover) {
+  .ficha:not(:disabled):hover { border-color: var(--c); box-shadow: 0 6px 14px -6px var(--c); transform: translateY(-2px); }
+}
+.ficha.elegida { border-color: var(--c); background: color-mix(in srgb, var(--c) 34%, var(--panel)); box-shadow: 0 0 0 2px var(--c); animation: seleccion 0.35s ease-out; }
+.ficha:disabled { opacity: 0.45; }
+.tarjetas .ficha { border-radius: var(--radio); flex-direction: column; justify-content: center; text-align: center; padding: 14px 8px; min-height: 84px; }
+.tarjetas .ficha .ficha-icono { font-size: 1.8rem; }
+.ficha small { display: block; color: var(--tenue); font-weight: 400; font-size: 0.72rem; }
+.etiqueta-grupo { align-self: flex-start; margin: 6px 0 -4px; font-size: 0.78rem; color: var(--tenue); text-transform: uppercase; letter-spacing: 0.08em; }
+
+@keyframes seleccion { 0% { transform: scale(1); } 40% { transform: scale(1.08); } 100% { transform: scale(1); } }
+
+/* menú principal: tarjetas de modo con degradado, ícono y entrada escalonada */
+.menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
+.tarjeta-modo {
+  --c: var(--acento-fill);
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 4px;
+  min-height: 108px; padding: 14px;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--c) 30%, var(--panel)) 0%, var(--panel) 75%);
+  color: var(--texto); text-align: left; text-transform: none; letter-spacing: 0;
+  border: 2px solid color-mix(in srgb, var(--c) 60%, var(--borde));
+  border-radius: var(--radio);
+  animation: entrar-tarjeta 0.45s ease-out both;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
+.tarjeta-modo .icono { font-size: 1.9rem; line-height: 1; filter: drop-shadow(0 2px 4px var(--sombra)); }
+.tarjeta-modo strong { font-size: 1.02rem; }
+.tarjeta-modo small { font-size: 0.74rem; color: var(--tenue); line-height: 1.25; }
+@media (hover: hover) {
+  .tarjeta-modo:not(:disabled):hover { border-color: var(--c); transform: translateY(-3px); box-shadow: 0 12px 22px -10px var(--c), 0 6px 16px -8px var(--sombra); }
+}
+.tarjeta-modo.destacada {
+  grid-column: 1 / -1; min-height: 150px; padding: 18px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--c) 55%, var(--panel)) 0%, color-mix(in srgb, var(--c) 12%, var(--panel)) 80%);
+  border-width: 3px;
+  animation: entrar-tarjeta 0.5s ease-out both, latido 3.2s ease-in-out 0.8s infinite;
+}
+.tarjeta-modo.destacada .icono { font-size: 2.8rem; }
+.tarjeta-modo.destacada strong { font-size: 1.45rem; }
+.tarjeta-modo.destacada small { font-size: 0.85rem; }
+.tarjeta-modo .insignia { position: absolute; top: 10px; right: 10px; padding: 2px 8px; border-radius: 999px; background: var(--c); color: #111; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.tarjeta-modo.chica { min-height: 84px; padding: 10px 12px; }
+.tarjeta-modo.chica .icono { font-size: 1.4rem; }
+.tarjeta-modo.chica strong { font-size: 0.88rem; }
+
+@keyframes entrar-tarjeta { from { opacity: 0; transform: translateY(14px) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes latido { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c) 0%, transparent); } 50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--c) 30%, transparent), 0 10px 26px -10px var(--c); } }
+
+/* interruptor segmentado (dificultad) */
+.segmentado { display: inline-grid; grid-template-columns: 1fr 1fr; width: 100%; padding: 4px; gap: 4px; background: var(--panel-2); border: 2px solid var(--borde); border-radius: 999px; }
+.segmentado button { min-height: 44px; border: 0; border-radius: 999px; background: transparent; color: var(--tenue); font-weight: 800; font-size: 0.95rem; }
+.segmentado button[aria-pressed='true'] { background: linear-gradient(135deg, var(--accion), var(--accion-2)); color: var(--accion-texto); box-shadow: 0 3px 10px -4px var(--sombra); animation: seleccion 0.3s ease-out; }
+@media (hover: hover) { .segmentado button[aria-pressed='false']:hover { color: var(--texto); background: color-mix(in srgb, var(--modo) 14%, transparent); } }
+
+/* chips de contexto en la pantalla de juego */
+.chips-juego { display: flex; flex-wrap: wrap; gap: 6px; width: 100%; margin: 0; padding: 0; list-style: none; }
+.chips-juego li { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; background: color-mix(in srgb, var(--modo) 18%, var(--panel)); border: 1px solid color-mix(in srgb, var(--modo) 55%, var(--borde)); font-size: 0.78rem; font-weight: 600; }
+
+/* avisos y contadores */
+.cartel { width: 100%; margin: 0; padding: 10px 12px; border-radius: var(--radio-chico); background: var(--aviso-bg); border: 1px solid var(--acento); color: var(--texto); font-size: 0.88rem; }
+.contador-pistas { margin: 0; width: 100%; text-align: center; font-size: 0.85rem; color: var(--tenue); }
+.contador-pistas strong { color: var(--acento); }
+.repetir { width: 100%; }
+
+/* ---------- Superficies que usan el color del modo ---------- */
+.pregunta { border-left-color: var(--modo); border-radius: var(--radio-chico); box-shadow: 0 6px 16px -10px var(--sombra); }
+.tarjeta { border-left-color: var(--modo); border-radius: var(--radio-chico); }
+.secundario { border-radius: var(--radio-chico); border: 2px solid var(--borde-fuerte); background: var(--panel); font-weight: 700; min-height: 44px; }
+@media (hover: hover) { .secundario:not(:disabled):hover { border-color: var(--modo); box-shadow: 0 6px 14px -8px var(--sombra); transform: translateY(-1px); } }
+.opcion { border-radius: var(--radio-chico); border-width: 2px; }
+@media (hover: hover) { .opcion:not(:disabled):hover { border-color: var(--modo); transform: translateY(-1px); box-shadow: 0 6px 14px -8px var(--sombra); } }
+.opcion.ok { background: var(--ok-bg); border-color: var(--ok); }
+.opcion.mal { background: var(--mal-bg); border-color: var(--mal); }
+.opcion.ok .marca { color: var(--ok-texto); }
+.opcion.mal .marca { color: var(--mal-texto); }
+.opcion.oculta { visibility: hidden; }
+.victoria, .aviso-amable, .aviso-logro { background: var(--aviso-bg); }
+.tecla, .casilla, .letra { transition: transform 0.1s ease, background-color 0.15s ease; }
+@media (hover: hover) { .tecla:not(:disabled):hover, .casilla:hover { filter: brightness(1.08); transform: translateY(-1px); } }
+.tecla:not(:disabled):active { transform: translateY(1px) scale(0.96); }
+.sonido { background: var(--panel); color: var(--texto); border: 2px solid var(--borde-fuerte); }
+@media (hover: hover) { .sonido:hover { border-color: var(--modo); transform: translateY(-1px); } }
+.logo { text-shadow: 3px 3px 0 var(--rojo); color: var(--acento); }
+.pie { background: var(--pie-bg); color: var(--tenue); }
+.pie-enlaces button { color: var(--tenue); }
+
+/* reproductor: volumen */
+.musica-volumen { display: flex; align-items: center; gap: 4px; padding: 0 4px 4px; font-size: 0.7rem; color: var(--tenue); }
+.musica-volumen button { width: 28px; height: 28px; padding: 0; background: var(--bg); color: var(--texto); border: 1px solid var(--borde); border-radius: 8px; }
+.musica-volumen output { flex: 1; text-align: center; font-variant-numeric: tabular-nums; }
+.musica-barra button { background: var(--bg); color: var(--texto); border-radius: 8px; }
+.musica { background: var(--panel); border-radius: var(--radio-chico); overflow: hidden; }
+
+/* modo claro/oscuro del menú de interruptores */
+.interruptores .sonido[data-tema-btn] { font-size: 1rem; }
+
+/* respetar el movimiento reducido (también en las animaciones nuevas) */
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta-modo, .tarjeta-modo.destacada, .ficha.elegida, .segmentado button { animation: none !important; }
+  button:not(:disabled):active, .tarjeta-modo:active { transform: none; }
+}
+.con-musica .pantalla { padding-bottom: 320px; }
+
+/* los interruptores (sonido, vibración, tema) van en una fila abajo a la izquierda, sin tapar el contenido */
+.interruptores { top: auto; right: auto; left: 8px; bottom: 72px; transform: none; flex-direction: row; flex-wrap: wrap; max-width: 150px; }
+.pantalla { padding-bottom: 140px; }

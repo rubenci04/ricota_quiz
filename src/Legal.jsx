@@ -1,4 +1,5 @@
 import { ANALITICA, DESARROLLADOR, EMAIL_CONTACTO, NOMBRE_JUEGO, PLAYLIST_YOUTUBE } from './config.js'
+import Cabecera from './Cabecera.jsx'
 import musica from './data/musica.json'
 
 const TITULOS = { aviso: 'Aviso legal', privacidad: 'Privacidad', contacto: 'Contacto' }
@@ -73,14 +74,11 @@ function Privacidad() {
   )
 }
 
-export default function Legal({ seccion, onVolver }) {
+export default function Legal({ seccion, onVolver, onMenu }) {
   const Contenido = { aviso: Aviso, privacidad: Privacidad, contacto: Contacto }[seccion] || Aviso
   return (
     <main className="pantalla" key={`legal-${seccion}`}>
-      <header className="barra">
-        <button className="volver" onClick={onVolver} aria-label="Volver">←</button>
-        <h2>{TITULOS[seccion] || TITULOS.aviso}</h2>
-      </header>
+      <Cabecera titulo={<>{TITULOS[seccion] || TITULOS.aviso}</>} onVolver={onVolver} onMenu={onMenu} />
       <article className="legal">
         <Contenido />
       </article>

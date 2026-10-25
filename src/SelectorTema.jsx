@@ -1,21 +1,16 @@
+import Fichas from './Fichas.jsx'
 import { TEMAS } from './temas.js'
 
-// Selector de tema; los temas sin datos suficientes quedan deshabilitados (tieneDatos(temaId) → boolean).
-export default function SelectorTema({ valor, onCambio, tieneDatos, deshabilitado = false }) {
+// Fichas de tema (cada una con su color e ícono). Elegir uno ya aplica el cambio.
+export default function SelectorTema({ valor, onCambio, tieneDatos = () => true, deshabilitado = false }) {
+  const opciones = [
+    { id: 'todos', etiqueta: 'Todos', icono: '🎶', color: 'var(--acento-fill)', deshabilitada: deshabilitado },
+    ...TEMAS.map((t) => ({ id: t.id, etiqueta: t.nombre, icono: t.icono, color: t.color, deshabilitada: deshabilitado || !tieneDatos(t.id) })),
+  ]
   return (
-    <label className="selector">
-      <span>Tema</span>
-      <select value={valor} disabled={deshabilitado} onChange={(e) => onCambio(e.target.value)}>
-        <option value="todos">Todos</option>
-        {TEMAS.map((t) => {
-          const ok = tieneDatos(t.id)
-          return (
-            <option key={t.id} value={t.id} disabled={!ok}>
-              {t.nombre}{ok ? '' : ' – pocos datos'}
-            </option>
-          )
-        })}
-      </select>
-    </label>
+    <>
+      <p className="etiqueta-grupo">Tema</p>
+      <Fichas nombre="Tema" opciones={opciones} valor={valor} onElegir={onCambio} />
+    </>
   )
 }

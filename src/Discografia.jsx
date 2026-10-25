@@ -1,4 +1,5 @@
 import datos from './data/datos-ricotero.json'
+import Cabecera from './Cabecera.jsx'
 import interpretaciones from './data/interpretaciones.json'
 
 // Solo se muestran interpretaciones verificadas, con su fuente.
@@ -48,16 +49,13 @@ function Cancion({ c }) {
   )
 }
 
-export default function Discografia({ onVolver }) {
+export default function Discografia({ onVolver, onMenu }) {
   const discos = [...datos.discos].sort((a, b) => a.anio - b.anio)
   const curiosidades = (datos.curiosidades || []).filter((c) => c?.texto && c?.fuente)
 
   return (
     <main className="pantalla" key="discografia">
-      <header className="barra">
-        <button className="volver" onClick={onVolver} aria-label="Volver al menú">←</button>
-        <h2>Discografía</h2>
-      </header>
+      <Cabecera titulo={<>Discografía</>} onVolver={onVolver} onMenu={onMenu} />
 
       <section className="discos-lista">
         {discos.map((d) => {

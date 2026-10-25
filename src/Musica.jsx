@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import lista from './data/musica.json'
 import { PLAYLIST_YOUTUBE } from './config.js'
+import { guardar, leer } from './storage.js'
+
+const PASO_VOLUMEN = 10
 
 const ERRORES_DE_INCRUSTACION = [100, 101, 150] // el video no existe o no permite incrustarse
 let apiLista = null
@@ -33,6 +36,8 @@ export default function Musica() {
   const player = useRef(null)
   const indice = useRef(0)
   const erroresSeguidos = useRef(0)
+  const [volumen, setVolumen] = useState(() => leer().volumen) // arranca en 40%
+  const volumenActual = useRef(volumen) // para usarlo dentro de los eventos del reproductor
   const arrancando = useRef(false) // ya se cargó la lista desde un video al azar
   const barajado = useRef(false) // ya se activó el orden aleatorio
 
@@ -87,6 +92,7 @@ export default function Musica() {
         playerVars: PLAYLIST_YOUTUBE ? { ...base, listType: 'playlist', list: PLAYLIST_YOUTUBE } : base,
         events: {
           onReady: (e) => {
+            e.target.setVolume(volumenActual.current)
             if (PLAYLIST_YOUTUBE) {
               empezarAlAzar(e.target, () => cancelado)
             } else {
@@ -97,6 +103,7 @@ export default function Musica() {
           onStateChange: (e) => {
             if (e.data === YT.PlayerState.PLAYING) {
               erroresSeguidos.current = 0
+              e.target.setVolume(volumenActual.current) // en cada cambio de video
               // setShuffle solo funciona con la lista ya cargada: se activa en la primera reproducción
               if (PLAYLIST_YOUTUBE && arrancando.current && !barajado.current) {
                 barajado.current = true
@@ -129,6 +136,16 @@ export default function Musica() {
     }
   }, [abierto])
 
+  // cambia el volumen (0–100), lo aplica al reproductor y lo guarda
+  const cambiarVolumen = (delta) => {
+    const nuevo = Math.min(100, Math.max(0, volumen + delta))
+    setVolumen(nuevo)
+    volumenActual.current = nuevo
+    player.current?.setVolume?.(nuevo)
+    if (nuevo > 0) player.current?.unMute?.()
+    guardar({ volumen: nuevo })
+  }
+
   if (!hayMusica || !abierto) return null
 
   const alternar = () => {
@@ -141,6 +158,11 @@ export default function Musica() {
   return (
     <aside className="musica" aria-label="Reproductor de música">
       <div ref={contenedor} className="musica-video" />
+      <div className="musica-volumen" role="group" aria-label="Volumen de la música">
+        <button onClick={() => cambiarVolumen(-PASO_VOLUMEN)} aria-label="Bajar el volumen" disabled={volumen <= 0}>−</button>
+        <output aria-live="polite">🔊 {volumen}%</output>
+        <button onClick={() => cambiarVolumen(PASO_VOLUMEN)} aria-label="Subir el volumen" disabled={volumen >= 100}>+</button>
+      </div>
       <div className="musica-barra">
         <span className="musica-titulo">{fallo ? 'No se pudo reproducir' : titulo || 'Música'}</span>
         <button onClick={alternar} aria-label="Reproducir o pausar">⏯</button>

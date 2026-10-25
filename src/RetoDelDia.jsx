@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import Cabecera from './Cabecera.jsx'
 import datos from './data/datos-ricotero.json'
 import Teclado from './Teclado.jsx'
 import Resultado from './Resultado.jsx'
@@ -26,7 +27,7 @@ function CuentaRegresiva() {
   )
 }
 
-export default function RetoDelDia({ onVolver }) {
+export default function RetoDelDia({ onVolver, onMenu }) {
   const [fecha] = useState(() => fechaBA())
   const reto = useMemo(() => retoDe(fecha), [fecha])
   const grupos = useMemo(() => armarCasillas(reto.cancion.titulo), [reto])
@@ -127,7 +128,7 @@ export default function RetoDelDia({ onVolver }) {
   const disco = datos.discos.find((d) => d.id === reto.cancion.disco)
   const palabrasVisibles = reto.palabras.slice(0, fallos >= 4 ? 5 : 3)
   const pistas = [
-    { desde: 1, texto: `Dicho de otra forma: «${reto.cancion.titulo_parafraseado}»` },
+    { desde: 1, texto: `Dicho de otra forma: ${reto.dicho}` },
     { desde: 2, texto: `Disco: ${disco.titulo} (${disco.anio})` },
     { desde: 3, texto: `Empieza con «${reto.cancion.titulo[0].toUpperCase()}»` },
   ]
@@ -159,11 +160,7 @@ export default function RetoDelDia({ onVolver }) {
 
   return (
     <main className="pantalla" key="reto">
-      <header className="barra">
-        <button className="volver" onClick={onVolver} aria-label="Volver al menú">←</button>
-        <h2>Reto del día #{reto.numero}</h2>
-        <span className="contador">{fecha}</span>
-      </header>
+      <Cabecera titulo={<>Reto del día #{reto.numero}</>} extra={<>{fecha}</>} onVolver={onVolver} onMenu={onMenu} />
 
       {cortada && !terminado && (
         <p className="aviso-amable" role="note">
@@ -182,6 +179,10 @@ export default function RetoDelDia({ onVolver }) {
           ),
         )}
       </div>
+
+      <p className="contador-pistas">
+        Pistas reveladas: <strong>{terminado ? 4 : Math.min(4, 1 + fallos)}</strong> de 4 · Intentos que quedan: <strong>{Math.max(0, INTENTOS_MAX - fallos)}</strong>
+      </p>
 
       <div className="casillas" aria-label="Título de la canción">{casillas}</div>
       <p className="feedback" role="status" aria-live="polite">{mensaje}</p>

@@ -1,47 +1,64 @@
 import { useEffect, useRef, useState } from 'react'
-import datos from './data/datos-ricotero.json'
 import { guardar, leer, sumarPartida } from './storage.js'
 import { normalizarLetras } from './letras.js'
 import Teclado from './Teclado.jsx'
 import Resultado from './Resultado.jsx'
-import { sonar } from './sonido.js'
-import { hayRonda, mismaLetra, nuevaRonda } from './adivinanza.js'
+import Cabecera from './Cabecera.jsx'
+import Fichas from './Fichas.jsx'
 import SelectorTema from './SelectorTema.jsx'
+import SelectorDisco from './SelectorDisco.jsx'
+import { sonar } from './sonido.js'
 import { frase } from './textos.js'
 import { nuevaSemilla } from './desafio.js'
+import {
+  CATEGORIAS,
+  DIFICULTADES,
+  MODOS_ADIVINANZA,
+  etiquetaDe,
+  leerToken,
+  mismaLetra,
+  nuevaRonda,
+  rondaToken,
+} from './adivinanza.js'
+import { nombreDeTema } from './temas.js'
+import datos from './data/datos-ricotero.json'
 
-const DIFICULTADES = {
-  casual: { nombre: 'Casual', detalle: 'Año y disco desde el inicio, 3 pistas de letra', pistasLetra: 3 },
-  fanatico: { nombre: 'Fanático', detalle: 'Sin datos al inicio, 1 pista de letra', pistasLetra: 1 },
-}
-const MODOS = {
-  palabras: { nombre: 'Por palabras', detalle: 'Palabras clave de la canción' },
-  parafraseado: { nombre: 'Dicho de otra forma', detalle: 'El título explicado con otras palabras' },
-}
+// Pistas de letra según dificultad (incluye 2 extra). La pista automática tras 2 errores seguidos no cuenta.
+const PISTAS_LETRA = { casual: 5, fanatico: 3 }
+const ERRORES_PARA_PISTA = 2
 
-export default function Adivinanzas({ onVolver, desafio = null }) {
+export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio = 'dicho' }) {
   // un desafío recibido arranca directo, con la misma ronda (misma semilla)
+  const desafioToken = desafio ? leerToken(desafio.ronda) : null
   const inicial = useRef(undefined)
-  if (inicial.current === undefined) inicial.current = desafio ? nuevaRonda(desafio.ronda, null, desafio.semilla, desafio.disco, desafio.tema) : null
+  if (inicial.current === undefined) {
+    if (desafio && desafioToken) {
+      inicial.current = nuevaRonda({ ...desafioToken, dif: desafio.dif, semilla: desafio.semilla, disco: desafio.disco, tema: desafio.tema })
+    } else if (inicio === 'palabras') {
+      inicial.current = nuevaRonda({ modo: 'palabras', categoria: 'canciones', dif: leer().dificultad, semilla: nuevaSemilla() })
+    } else {
+      inicial.current = null
+    }
+  }
   const largo = inicial.current ? inicial.current.solucion.length : 0
+
+  const [dif, setDif] = useState(desafio ? desafio.dif : leer().dificultad)
+  const [modo, setModo] = useState(desafioToken ? desafioToken.modo : inicio)
+  const [disco, setDisco] = useState(desafio ? desafio.disco : 'todos')
+  const [tema, setTema] = useState(desafio ? desafio.tema : 'todos')
   const [semilla, setSemilla] = useState(desafio ? desafio.semilla : '')
-  const [config, setConfig] = useState(() => ({
-    dificultad: desafio ? desafio.dif : leer().dificultad,
-    modo: desafio ? desafio.ronda : 'palabras',
-    disco: desafio ? desafio.disco : 'todos',
-    tema: desafio ? desafio.tema : 'todos',
-  }))
-  const [jugando, setJugando] = useState(!!desafio)
   const [ronda, setRonda] = useState(inicial.current)
   const [letras, setLetras] = useState(() => Array(largo).fill(''))
   const [fijas, setFijas] = useState(() => Array(largo).fill(false))
   const [revision, setRevision] = useState(() => Array(largo).fill(''))
   const [foco, setFoco] = useState(0)
   const [pistasLetra, setPistasLetra] = useState(0)
-  const [extra, setExtra] = useState(false)
+  const [extrasVistos, setExtrasVistos] = useState(0)
+  const [erroresSeguidos, setErroresSeguidos] = useState(0)
   const [resultado, setResultado] = useState(null) // { acierto, puntos }
   const [mensaje, setMensaje] = useState('')
   const [total, setTotal] = useState(() => leer().adivinanzas)
+  const ultima = leer().ultimaEleccion
 
   // teclado físico: el manejador vigente se actualiza en cada render
   const acciones = useRef(null)
@@ -55,77 +72,89 @@ export default function Adivinanzas({ onVolver, desafio = null }) {
     return () => window.removeEventListener('keydown', alTecla)
   }, [])
 
-  const empezar = (anterior = null, cfg = config) => {
+  // arranca una partida: la última elección queda guardada para ofrecer "Repetir"
+  const empezar = ({ modo: m = modo, categoria = 'canciones', difi = dif, anterior = null } = {}) => {
     const sem = nuevaSemilla()
-    setSemilla(sem)
-    const r = nuevaRonda(cfg.modo, anterior, sem, cfg.disco, cfg.tema)
+    const r = nuevaRonda({ modo: m, categoria, dif: difi, anterior, semilla: sem, disco, tema })
     const n = r.solucion.length
+    setSemilla(sem)
+    setModo(m)
     setRonda(r)
     setLetras(Array(n).fill(''))
     setFijas(Array(n).fill(false))
     setRevision(Array(n).fill(''))
     setFoco(0)
     setPistasLetra(0)
-    setExtra(false)
+    setExtrasVistos(0)
+    setErroresSeguidos(0)
     setResultado(null)
     setMensaje('')
-    setJugando(true)
+    if (!desafio) guardar({ ultimaEleccion: { modo: m, categoria: m === 'palabras' ? 'canciones' : categoria } })
   }
 
-  const elegir = (campo, valor) => {
-    setConfig({ ...config, [campo]: valor })
-    if (campo === 'dificultad') guardar({ dificultad: valor })
+  const cambiarDificultad = (id) => {
+    setDif(id)
+    guardar({ dificultad: id })
   }
 
-  if (!jugando) {
+  // ---------------- pantalla de entrada: modo, dificultad (aparte) y categoría
+  if (!ronda) {
     acciones.current = null
     return (
-      <main className="pantalla">
-        <header className="barra">
-          <button className="volver" onClick={onVolver} aria-label="Volver al menú">←</button>
-          <h2>Adivinanzas</h2>
-          <span className="contador">{total} pts</span>
-        </header>
-        <h3 className="subtitulo">Dificultad</h3>
-        <div className="menu">
-          {Object.entries(DIFICULTADES).map(([id, d]) => (
-            <button key={id} className={`modo${config.dificultad === id ? ' elegido' : ''}`} aria-pressed={config.dificultad === id} onClick={() => elegir('dificultad', id)}>
-              <span>{d.nombre}<small>{d.detalle}</small></span>
+      <main className="pantalla" key="adivinanzas-entrada">
+        <Cabecera titulo="Dicho de otra forma" extra={`${total} pts`} onVolver={onVolver} onMenu={onMenu} />
+
+        {ultima && (
+          <button className="secundario repetir" onClick={() => empezar({ modo: ultima.modo, categoria: ultima.categoria })}>
+            ↻ Repetir: {etiquetaDe(DIFICULTADES, dif).icono} {etiquetaDe(DIFICULTADES, dif).etiqueta} ·{' '}
+            {ultima.modo === 'palabras' ? 'Por palabras' : etiquetaDe(CATEGORIAS, ultima.categoria).etiqueta}
+          </button>
+        )}
+
+        <p className="etiqueta-grupo">1 · Modo</p>
+        <Fichas
+          nombre="Modo"
+          tarjetas
+          valor={modo}
+          opciones={MODOS_ADIVINANZA}
+          onElegir={(id) => (id === 'palabras' ? empezar({ modo: 'palabras', categoria: 'canciones' }) : setModo('dicho'))}
+        />
+
+        <p className="etiqueta-grupo">Dificultad</p>
+        <div className="segmentado" role="group" aria-label="Dificultad">
+          {DIFICULTADES.map((d) => (
+            <button key={d.id} aria-pressed={dif === d.id} onClick={() => cambiarDificultad(d.id)}>
+              {d.icono} {d.etiqueta}
             </button>
           ))}
         </div>
-        <h3 className="subtitulo">Modo</h3>
-        <div className="menu">
-          {Object.entries(MODOS).map(([id, m]) => (
-            <button key={id} className={`modo${config.modo === id ? ' elegido' : ''}`} aria-pressed={config.modo === id} onClick={() => elegir('modo', id)}>
-              <span>{m.nombre}<small>{m.detalle}</small></span>
-            </button>
-          ))}
-        </div>
-        <label className="selector">
-          <span>Disco</span>
-          <select value={config.disco} onChange={(e) => elegir('disco', e.target.value)}>
-            <option value="todos">Todos</option>
-            {datos.discos.map((d) => {
-              const ok = hayRonda(config.modo, d.id, config.tema)
-              return (
-                <option key={d.id} value={d.id} disabled={!ok}>
-                  {d.titulo} ({d.anio}){ok ? '' : ' – pocos datos'}
-                </option>
-              )
-            })}
-          </select>
-        </label>
-        <SelectorTema valor={config.tema} onCambio={(t) => elegir('tema', t)} tieneDatos={(t) => hayRonda(config.modo, config.disco, t)} />
-        <button className="nueva" onClick={() => empezar()} disabled={!hayRonda(config.modo, config.disco, config.tema)}>Jugar</button>
+
+        {modo === 'dicho' && (
+          <>
+            <p className="etiqueta-grupo">2 · Categoría: tocá una y arrancamos</p>
+            <Fichas
+              nombre="Categoría"
+              tarjetas
+              valor={null}
+              opciones={CATEGORIAS}
+              onElegir={(id) => empezar({ modo: 'dicho', categoria: id })}
+            />
+          </>
+        )}
+
+        <details className="filtros">
+          <summary>Filtrar por disco o tema (opcional)</summary>
+          <SelectorDisco valor={disco} onCambio={setDisco} />
+          <SelectorTema valor={tema} onCambio={setTema} />
+        </details>
       </main>
     )
   }
 
-  const { cancion, claves, grupos, solucion } = ronda
-  const dif = DIFICULTADES[config.dificultad]
-  const disco = datos.discos.find((d) => d.id === cancion.disco)
-  const mostrarDatos = config.dificultad === 'casual'
+  // ---------------- partida
+  const { grupos, solucion } = ronda
+  const maxPistas = PISTAS_LETRA[ronda.dif]
+  const extraDisponibles = ronda.modo === 'palabras' ? (extrasVistos ? 0 : 1) : ronda.extras.length - extrasVistos
 
   const terminar = (nuevasLetras, usadas) => {
     if (!nuevasLetras.every((l, i) => mismaLetra(l, solucion[i]))) return false
@@ -178,6 +207,18 @@ export default function Adivinanzas({ onVolver, desafio = null }) {
     }
   }
 
+  // revela una letra al azar (devuelve las letras nuevas)
+  const revelarLetra = (base) => {
+    const faltan = solucion.map((_, i) => i).filter((i) => !mismaLetra(base[i], solucion[i]))
+    if (!faltan.length) return null
+    const i = faltan[Math.floor(Math.random() * faltan.length)]
+    const nuevas = base.map((x, k) => (k === i ? solucion[i] : x))
+    setLetras(nuevas)
+    setFijas((prev) => prev.map((x, k) => (k === i ? true : x)))
+    limpiarRevision(i)
+    return nuevas
+  }
+
   const comprobar = () => {
     if (resultado) return
     const rev = letras.map((l, i) => (l ? (mismaLetra(l, solucion[i]) ? 'ok' : 'mal') : ''))
@@ -186,30 +227,45 @@ export default function Adivinanzas({ onVolver, desafio = null }) {
     const malas = rev.filter((x) => x === 'mal').length
     if (malas) sonar('error')
     else if (buenas) sonar('ok')
-    if (!terminar(letras, pistasLetra)) {
-      setMensaje(`✓ ${buenas} ${buenas === 1 ? 'letra correcta' : 'letras correctas'} · ✗ ${malas} ${malas === 1 ? 'incorrecta' : 'incorrectas'}. ${frase(malas ? 'error' : 'acierto')}`)
+    if (terminar(letras, pistasLetra)) return
+    let texto = `✓ ${buenas} ${buenas === 1 ? 'letra correcta' : 'letras correctas'} · ✗ ${malas} ${malas === 1 ? 'incorrecta' : 'incorrectas'}. ${frase(malas ? 'error' : 'acierto')}`
+    // pista automática tras 2 intentos fallidos seguidos: una letra gratis, sin restar puntos
+    const seguidos = malas ? erroresSeguidos + 1 : 0
+    if (seguidos >= ERRORES_PARA_PISTA) {
+      const nuevas = revelarLetra(letras)
+      if (nuevas) {
+        sonar('pista')
+        texto += ' Te regalo una letra para que sigas.'
+        terminar(nuevas, pistasLetra)
+      }
+      setErroresSeguidos(0)
+    } else {
+      setErroresSeguidos(seguidos)
     }
+    setMensaje(texto)
   }
 
   const pistaDeLetra = () => {
-    if (resultado || pistasLetra >= dif.pistasLetra) return
-    const faltan = solucion.map((_, i) => i).filter((i) => !mismaLetra(letras[i], solucion[i]))
-    if (!faltan.length) return
-    const i = faltan[Math.floor(Math.random() * faltan.length)]
-    const nuevas = letras.map((x, k) => (k === i ? solucion[i] : x))
-    setLetras(nuevas)
-    setFijas((prev) => prev.map((x, k) => (k === i ? true : x)))
-    limpiarRevision(i)
+    if (resultado || pistasLetra >= maxPistas) return
+    const nuevas = revelarLetra(letras)
+    if (!nuevas) return
     setPistasLetra(pistasLetra + 1)
     sonar('pista')
     if (!terminar(nuevas, pistasLetra + 1)) setMensaje(`Pista: te revelé una letra. ${frase('pista')}`)
+  }
+
+  const otraPista = () => {
+    if (extraDisponibles <= 0) return
+    setExtrasVistos(extrasVistos + 1)
+    sonar('pista')
+    setMensaje(`Otra pista. ${frase('pista')}`)
   }
 
   const rendirse = () => {
     sumarPartida()
     setLetras(solucion)
     setResultado({ acierto: false, puntos: 0 })
-    setMensaje(`✗ Te rendiste. La respuesta era: ${cancion.titulo}. ${frase('derrota')}`)
+    setMensaje(`✗ Te rendiste. La respuesta era: ${ronda.respuesta}. ${frase('derrota')}`)
   }
 
   acciones.current = (e) => {
@@ -256,67 +312,97 @@ export default function Adivinanzas({ onVolver, desafio = null }) {
     </div>
   ))
 
-  const palabrasVisibles = claves.slice(0, extra ? 5 : 3)
+  const categoria = etiquetaDe(CATEGORIAS, ronda.categoria)
+  const modoInfo = etiquetaDe(MODOS_ADIVINANZA, ronda.modo)
+  const difInfo = etiquetaDe(DIFICULTADES, ronda.dif)
+  const palabrasVisibles = ronda.palabras ? ronda.palabras.slice(0, extrasVistos ? 5 : 3) : []
 
   return (
-    <main className="pantalla">
-      <header className="barra">
-        <button className="volver" onClick={() => (desafio ? onVolver() : setJugando(false))} aria-label={desafio ? 'Volver al menú' : 'Cambiar dificultad o modo'}>←</button>
-        <h2>Adivinanzas</h2>
-        <span className="contador">{total} pts</span>
-      </header>
+    <main className="pantalla" key="adivinanzas-juego">
+      <Cabecera
+        titulo={modoInfo.etiqueta}
+        extra={`${total} pts`}
+        onVolver={() => (desafio ? onVolver() : setRonda(null))}
+        onMenu={onMenu}
+      />
+
+      <ul className="chips-juego" aria-label="Partida">
+        <li>{modoInfo.icono} {modoInfo.etiqueta}</li>
+        <li>{categoria.icono} {categoria.etiqueta}</li>
+        <li>{difInfo.icono} {difInfo.etiqueta}</li>
+        {disco !== 'todos' && <li>💿 {datos.discos.find((d) => d.id === disco)?.titulo}</li>}
+        {tema !== 'todos' && <li>{nombreDeTema(tema)}</li>}
+      </ul>
+
+      {ronda.completada && (
+        <p className="cartel" role="note">Este disco tiene pocas canciones cargadas: completamos con otras.</p>
+      )}
 
       <div className="pregunta">
-        <p>Adiviná la canción <small className="etiqueta">{dif.nombre} · {MODOS[config.modo].nombre}</small></p>
-        {config.modo === 'palabras' ? (
-          <ul className="lista">
-            {palabrasVisibles.map((w) => <li key={w}>{w}</li>)}
-          </ul>
+        {ronda.modo === 'palabras' ? (
+          <>
+            <p>Adiviná la canción por sus palabras</p>
+            <ul className="lista">{palabrasVisibles.map((w) => <li key={w}>{w}</li>)}</ul>
+          </>
         ) : (
-          <p className="parafrasis">«{cancion.titulo_parafraseado}»</p>
+          <>
+            <p className="parafrasis">{ronda.principal}</p>
+            {ronda.extras.slice(0, extrasVistos).map((t) => <p key={t} className="datos-disco">➕ {t}</p>)}
+          </>
         )}
-        {mostrarDatos && <p className="datos-disco">Disco: {disco.titulo} ({disco.anio})</p>}
+        {ronda.gratis.map((t) => <p key={t} className="datos-disco">{t}</p>)}
       </div>
 
-      <div className="casillas" aria-label="Título de la canción">{casillas}</div>
+      <div className="casillas" aria-label="Respuesta">{casillas}</div>
       <p className="feedback" role="status" aria-live="polite">{mensaje}</p>
+      <p className="contador-pistas">
+        Pistas de letra: <strong>{maxPistas - pistasLetra}</strong> · Otras pistas: <strong>{extraDisponibles}</strong>
+      </p>
 
       {!resultado && (
         <>
           <Teclado onTecla={ponerLetra} onBorrar={borrar} />
           <div className="herramientas">
-            <button className="secundario" onClick={comprobar}>Comprobar</button>
-            <button className="secundario" onClick={pistaDeLetra} disabled={pistasLetra >= dif.pistasLetra}>
-              Pista de letra ({dif.pistasLetra - pistasLetra})
-            </button>
+            <button className="nueva" onClick={comprobar}>Comprobar</button>
           </div>
           <div className="herramientas">
-            {config.modo === 'palabras' && (
-              <button className="secundario" onClick={() => { setExtra(true); sonar('pista'); setMensaje(`Dos palabras más. ${frase('pista')}`) }} disabled={extra || claves.length <= 3}>
-                Otra pista
-              </button>
-            )}
-            <button className="secundario" onClick={rendirse}>Me rindo</button>
+            <button className="secundario" onClick={pistaDeLetra} disabled={pistasLetra >= maxPistas}>
+              💡 Pista de letra ({maxPistas - pistasLetra})
+            </button>
+            <button className="secundario" onClick={otraPista} disabled={extraDisponibles <= 0}>
+              ➕ Otra pista ({extraDisponibles})
+            </button>
           </div>
+          <button className="secundario" onClick={rendirse}>🏳️ Me rindo</button>
         </>
       )}
 
       {resultado && (
         <Resultado
-          titulo={resultado.acierto ? 'Adivinanzas · ¡Correcto!' : `Era «${cancion.titulo}»`}
+          titulo={resultado.acierto ? 'Adivinanzas · ¡Correcto!' : `Era «${ronda.respuesta}»`}
           puntaje={resultado.acierto ? `+${resultado.puntos}` : '0'}
           detalle={resultado.acierto ? `Pistas de letra usadas: ${pistasLetra}` : 'Esta vez no sumaste puntos.'}
           mejor={{ etiqueta: 'Total acumulado', valor: `${total} pts` }}
           mensaje={resultado.acierto ? frase('victoria') : frase('derrota')}
           exito={resultado.acierto}
-          desafio={{ modo: 'adivinanzas', ronda: config.modo, disco: config.disco, tema: config.tema, dif: config.dificultad, semilla, puntaje: resultado.puntos }}
+          desafio={{
+            modo: 'adivinanzas',
+            ronda: rondaToken(ronda.modo, ronda.categoria),
+            disco,
+            tema,
+            dif: ronda.dif,
+            semilla,
+            puntaje: resultado.puntos,
+          }}
           rival={desafio ? { puntaje: desafio.puntaje } : null}
           compartir={`Sumé ${total} puntos adivinando canciones ricoteras 🎸 ¿Podés superarme?`}
         >
           {desafio ? (
             <button className="nueva" onClick={onVolver}>Volver al menú</button>
           ) : (
-            <button className="nueva" onClick={() => empezar(cancion)}>Otra canción</button>
+            <button className="nueva" onClick={() => empezar({ modo: ronda.modo, categoria: ronda.categoria, difi: ronda.dif, anterior: ronda.id })}>
+              Otra más
+            </button>
           )}
         </Resultado>
       )}

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import Cabecera from './Cabecera.jsx'
 import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
 import { hayCrucigrama, nuevoCrucigrama } from './crucigrama.js'
@@ -8,8 +9,10 @@ import { guardar, leer } from './storage.js'
 import { frase } from './textos.js'
 import { nuevaSemilla } from './desafio.js'
 import SelectorTema from './SelectorTema.jsx'
+import SelectorDisco from './SelectorDisco.jsx'
 
-const MAX_PISTAS = 5
+const MAX_PISTAS = 7 // incluye 2 extra
+const ERRORES_PARA_PISTA = 2
 const MAX_PALABRAS = 2
 const VECTOR = { across: [0, 1], down: [1, 0] }
 
@@ -23,7 +26,7 @@ function generar(id, dif, semilla, tema = 'todos') {
   return null
 }
 
-export default function Crucigrama({ onVolver, desafio = null }) {
+export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
   const inicial = useRef(null)
   if (!inicial.current) {
     const semilla = desafio ? desafio.semilla : nuevaSemilla()
@@ -44,6 +47,7 @@ export default function Crucigrama({ onVolver, desafio = null }) {
   const [pistas, setPistas] = useState(0)
   const [palabrasReveladas, setPalabrasReveladas] = useState(0)
   const [mensaje, setMensaje] = useState('')
+  const [erroresSeguidos, setErroresSeguidos] = useState(0)
   const [completados, setCompletados] = useState(() => leer().crucigramas)
   const entrada = useRef(null)
   const celdas = useRef({}) // referencias a las celdas, para moverles el foco con el teclado
@@ -59,6 +63,7 @@ export default function Crucigrama({ onVolver, desafio = null }) {
     setSemilla(sem)
     setJuego(generar(id, dif, sem, t))
     setMensaje('')
+    setErroresSeguidos(0)
     setLetras({}); setFijas({}); setRevision({}); setSel(null); setPistas(0); setPalabrasReveladas(0)
   }
 
@@ -193,9 +198,26 @@ export default function Crucigrama({ onVolver, desafio = null }) {
     setRevision(res)
     const buenas = Object.values(res).filter((x) => x === 'ok').length
     const malas = Object.values(res).filter((x) => x === 'mal').length
-    setMensaje(`✓ ${buenas} ${buenas === 1 ? 'letra correcta' : 'letras correctas'} · ✗ ${malas} ${malas === 1 ? 'incorrecta' : 'incorrectas'}. ${frase(malas ? 'error' : 'acierto')}`)
+    let texto = `✓ ${buenas} ${buenas === 1 ? 'letra correcta' : 'letras correctas'} · ✗ ${malas} ${malas === 1 ? 'incorrecta' : 'incorrectas'}. ${frase(malas ? 'error' : 'acierto')}`
     if (malas) sonar('error')
     else if (buenas) sonar('ok')
+    // pista automática tras 2 comprobaciones con errores seguidas: una letra gratis (no cuenta como pista)
+    const seguidos = malas ? erroresSeguidos + 1 : 0
+    if (seguidos >= ERRORES_PARA_PISTA) {
+      const faltan = Object.keys(solucion).filter((x) => letras[x] !== solucion[x])
+      if (faltan.length) {
+        const k = faltan[Math.floor(Math.random() * faltan.length)]
+        setLetras((prev) => ({ ...prev, [k]: solucion[k] }))
+        setFijas((prev) => ({ ...prev, [k]: true }))
+        setRevision((prev) => { const n = { ...prev }; delete n[k]; return n })
+        sonar('pista')
+        texto += ' Te regalo una letra para que sigas.'
+      }
+      setErroresSeguidos(0)
+    } else {
+      setErroresSeguidos(seguidos)
+    }
+    setMensaje(texto)
   }
 
   const revelarPalabra = () => {
@@ -254,36 +276,29 @@ export default function Crucigrama({ onVolver, desafio = null }) {
 
   return (
     <main className="pantalla juego">
-      <header className="barra">
-        <button className="volver" onClick={onVolver} aria-label="Volver al menú">←</button>
-        <h2>Crucigrama</h2>
-      </header>
+      <Cabecera titulo={<>Crucigrama</>} onVolver={onVolver} onMenu={onMenu} />
 
-      <label className="selector">
-        <span>Tema</span>
-        <select value={discoId} disabled={!!desafio} onChange={(e) => cambiarDisco(e.target.value)}>
-          <option value="todos">Todos</option>
-          {datos.discos.map((d) => (
-            <option key={d.id} value={d.id} disabled={!hayCrucigrama(d.id, temaId)}>
-              {d.titulo} ({d.anio}){hayCrucigrama(d.id, temaId) ? '' : ' – pocos datos'}
-            </option>
-          ))}
-        </select>
-      </label>
+      {juego.completado && (
+        <p className="cartel" role="note">Este disco tiene pocas canciones cargadas: completamos con otras.</p>
+      )}
 
-      <label className="selector">
-        <span>Nivel</span>
-        <select
-          value={dificultad}
-          disabled={!!desafio}
-          onChange={(e) => { setDificultad(e.target.value); guardar({ dificultad: e.target.value }); empezar(discoId, e.target.value) }}
-        >
-          <option value="casual">Casual (con la canción en la pista)</option>
-          <option value="fanatico">Fanático (solo la definición)</option>
-        </select>
-      </label>
+      <SelectorDisco valor={discoId} onCambio={cambiarDisco} deshabilitado={!!desafio} />
 
-      <SelectorTema valor={temaId} onCambio={cambiarTema} tieneDatos={(t) => hayCrucigrama(discoId, t)} deshabilitado={!!desafio} />
+      <p className="etiqueta-grupo">Dificultad</p>
+      <div className="segmentado" role="group" aria-label="Dificultad">
+        {[['casual', '🙂 Casual'], ['fanatico', '🔥 Fanático']].map(([id, etiqueta]) => (
+          <button
+            key={id}
+            aria-pressed={dificultad === id}
+            disabled={!!desafio}
+            onClick={() => { setDificultad(id); guardar({ dificultad: id }); empezar(discoId, id) }}
+          >
+            {etiqueta}
+          </button>
+        ))}
+      </div>
+
+      <SelectorTema valor={temaId} onCambio={cambiarTema} deshabilitado={!!desafio} />
 
       <div className="pista-actual">
         {activa ? <><b>{activa.num} {activa.dir === 'across' ? '→' : '↓'}</b> {activa.pista}</> : 'Tocá una celda para empezar'}
@@ -357,8 +372,12 @@ export default function Crucigrama({ onVolver, desafio = null }) {
 
       <p className="feedback" role="status" aria-live="polite">{ganaste ? '✓ ¡Completaste el crucigrama!' : mensaje}</p>
 
+      <p className="contador-pistas">
+        Letras: <strong>{MAX_PISTAS - pistas}</strong> · Palabras: <strong>{MAX_PALABRAS - palabrasReveladas}</strong>
+      </p>
+
       <div className="herramientas">
-        <button className="secundario" onClick={comprobar}>Comprobar</button>
+        <button className="nueva" onClick={comprobar}>Comprobar</button>
         <button className="secundario" onClick={borrar} aria-label="Borrar letra">⌫</button>
       </div>
       <div className="herramientas">

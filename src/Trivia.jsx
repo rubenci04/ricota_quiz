@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Cabecera from './Cabecera.jsx'
 import { PREGUNTAS_POR_NIVEL, armarNivel, armarNivelBanda, curiosidadAlAzar, triviaTieneTema } from './trivia.js'
 import { guardar, leer } from './storage.js'
 import Resultado from './Resultado.jsx'
@@ -9,7 +10,7 @@ import SelectorTema from './SelectorTema.jsx'
 
 const PUNTOS_PARA_PASAR = 6
 
-export default function Trivia({ onVolver, categoria = 'general', desafio = null }) {
+export default function Trivia({ onVolver, onMenu, categoria = 'general', desafio = null }) {
   const banda = categoria === 'banda'
   const kNivel = banda ? 'nivelBanda' : 'nivel'
   const kMejor = banda ? 'mejorBanda' : 'mejor'
@@ -29,6 +30,8 @@ export default function Trivia({ onVolver, categoria = 'general', desafio = null
   const [comodinUsado, setComodinUsado] = useState(false) // 50/50: una vez por nivel
   const [ocultas, setOcultas] = useState([]) // opciones eliminadas por el 50/50
   const [verAyuda, setVerAyuda] = useState(false)
+  const [erroresSeguidos, setErroresSeguidos] = useState(0) // 2 seguidos → se descarta una opción mala en la próxima
+  const [avisoAuto, setAvisoAuto] = useState('')
   const [fraseResp, setFraseResp] = useState('')
 
   const jugar = (n) => {
@@ -42,6 +45,8 @@ export default function Trivia({ onVolver, categoria = 'general', desafio = null
     setComodinUsado(false)
     setOcultas([])
     setVerAyuda(false)
+    setErroresSeguidos(0)
+    setAvisoAuto('')
     setVista('jugando')
   }
 
@@ -52,13 +57,16 @@ export default function Trivia({ onVolver, categoria = 'general', desafio = null
     sonar(acierto ? 'ok' : 'error')
     setFraseResp(frase(acierto ? 'acierto' : 'error'))
     if (acierto) setPuntos(puntos + 1)
+    setErroresSeguidos(acierto ? 0 : erroresSeguidos + 1)
   }
 
   const usarComodin = () => {
     if (comodinUsado || elegida !== null) return
     const p = preguntas[i]
     const malas = p.opciones.map((_, k) => k).filter((k) => k !== p.correcta)
-    setOcultas(malas.sort(() => Math.random() - 0.5).slice(0, 2))
+    // si la pista automática ya descartó una opción, el 50/50 deja solo una mala
+    const quedan = malas.filter((k) => !ocultas.includes(k)).sort(() => Math.random() - 0.5)
+    setOcultas([...ocultas, ...quedan.slice(0, Math.max(0, 2 - ocultas.length))])
     setComodinUsado(true)
     sonar('pista')
   }
@@ -67,7 +75,18 @@ export default function Trivia({ onVolver, categoria = 'general', desafio = null
     if (i + 1 < preguntas.length) {
       setI(i + 1)
       setElegida(null)
-      setOcultas([])
+      // pista automática tras 2 errores seguidos: en la próxima pregunta se descarta una opción incorrecta
+      const proxima = preguntas[i + 1]
+      if (erroresSeguidos >= 2 && proxima) {
+        const malas = proxima.opciones.map((_, k) => k).filter((k) => k !== proxima.correcta)
+        setOcultas([malas[Math.floor(Math.random() * malas.length)]])
+        setAvisoAuto('Te descarté una opción incorrecta para ayudarte.')
+        setErroresSeguidos(0)
+        sonar('pista')
+      } else {
+        setOcultas([])
+        setAvisoAuto('')
+      }
       setVerAyuda(false)
       return
     }
@@ -93,17 +112,14 @@ export default function Trivia({ onVolver, categoria = 'general', desafio = null
   if (vista === 'niveles') {
     return (
       <main className="pantalla" key="niveles">
-        <header className="barra">
-          <button className="volver" onClick={onVolver} aria-label="Volver al menú">←</button>
-          <h2>{banda ? 'La banda' : 'Trivia'}</h2>
-          <span className="contador">Récord {guardado[kMejor]}/{PREGUNTAS_POR_NIVEL}</span>
-        </header>
-        {!banda && <SelectorTema valor={temaId} onCambio={setTemaId} tieneDatos={triviaTieneTema} />}
-        <div className="menu">
-          {Array.from({ length: guardado[kNivel] }, (_, k) => k + 1).reverse().map((n) => (
-            <button key={n} className="modo" onClick={() => jugar(n)}>
-              <span>Nivel {n}</span>
-              {n === guardado[kNivel] && <em className="pronto nuevo">Nuevo</em>}
+        <Cabecera titulo={<>{banda ? 'La banda' : 'Trivia'}</>} extra={<>Récord {guardado[kMejor]}/{PREGUNTAS_POR_NIVEL}</>} onVolver={onVolver} onMenu={onMenu} />
+        {!banda && <SelectorTema valor={temaId} onCambio={setTemaId} />}
+        <div className="menu-grid">
+          {Array.from({ length: guardado[kNivel] }, (_, k) => k + 1).reverse().map((n, idx) => (
+            <button key={n} className="tarjeta-modo chica" style={{ '--c': 'var(--modo)', '--i': idx }} onClick={() => jugar(n)}>
+              {n === guardado[kNivel] && <span className="insignia">Nuevo</span>}
+              <span className="icono" aria-hidden="true">{n === guardado[kNivel] ? '🚀' : '✅'}</span>
+              <strong>Nivel {n}</strong>
             </button>
           ))}
         </div>
@@ -144,11 +160,7 @@ export default function Trivia({ onVolver, categoria = 'general', desafio = null
   const p = preguntas[i]
   return (
     <main className="pantalla" key="jugando">
-      <header className="barra">
-        <button className="volver" onClick={() => (desafio ? onVolver() : setVista('niveles'))} aria-label="Salir del nivel">←</button>
-        <h2>Nivel {nivel}</h2>
-        <span className="contador">{i + 1}/{preguntas.length}</span>
-      </header>
+      <Cabecera titulo={<>Nivel {nivel}</>} extra={<>{i + 1}/{preguntas.length}</>} onVolver={() => (desafio ? onVolver() : setVista('niveles'))} onMenu={onMenu} />
       <div className="pregunta">
         <p>{p.texto}</p>
         {p.pistas && (
@@ -162,10 +174,10 @@ export default function Trivia({ onVolver, categoria = 'general', desafio = null
       {elegida === null && (
         <div className="herramientas">
           <button className="secundario" onClick={usarComodin} disabled={comodinUsado}>
-            50/50 {comodinUsado ? '(usado)' : '(1)'}
+            ✂️ 50/50 ({comodinUsado ? 0 : 1})
           </button>
           <button className="secundario" onClick={() => { setVerAyuda(true); sonar('pista') }} disabled={verAyuda}>
-            Pista gratis
+            💡 Pista ({verAyuda ? 0 : 1})
           </button>
         </div>
       )}
@@ -191,12 +203,13 @@ export default function Trivia({ onVolver, categoria = 'general', desafio = null
           )
         })}
       </div>
+      {avisoAuto && elegida === null && <p className="cartel" role="note">{avisoAuto}</p>}
       <p className="feedback" role="status" aria-live="polite">
         {elegida === null ? '' : elegida === p.correcta ? `✓ Correcto. ${fraseResp}` : `✗ Incorrecto. La respuesta era: ${p.opciones[p.correcta]}. ${fraseResp}`}
       </p>
       {elegida !== null && (
-        <button className="nueva" onClick={siguiente}>
-          {i + 1 < preguntas.length ? 'Siguiente' : 'Terminar'}
+        <button className="btn-nav grande" onClick={siguiente}>
+          {i + 1 < preguntas.length ? '⏭ Siguiente' : '🏁 Terminar'}
         </button>
       )}
     </main>

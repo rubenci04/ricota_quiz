@@ -5,9 +5,7 @@
 // Los links anteriores (sin tema) siguen funcionando. El link no lleva datos personales.
 import { URL_JUEGO } from './config.js'
 import datos from './data/datos-ricotero.json'
-import { discoTieneJuego } from './sopa.js'
-import { hayCrucigrama } from './crucigrama.js'
-import { hayRonda } from './adivinanza.js'
+import { TOKENS } from './adivinanza.js'
 import { esTemaValido } from './temas.js'
 import { triviaTieneTema } from './trivia.js'
 
@@ -22,7 +20,6 @@ export const MODOS_DESAFIO = {
 }
 
 const DIFICULTADES = ['casual', 'fanatico']
-const RONDAS = ['palabras', 'parafraseado']
 const SEMILLA = /^[a-z0-9]{4,16}$/
 const esDisco = (id) => id === 'todos' || datos.discos.some((d) => d.id === id)
 
@@ -45,13 +42,12 @@ function leerSegmento(modo, segmento) {
   }
   if (modo === 'adivinanzas') {
     const [ronda, disco = 'todos', tema = 'todos'] = p
-    if (p.length > 3 || !RONDAS.includes(ronda) || !esDisco(disco) || !esTemaValido(tema)) return null
-    if (!hayRonda(ronda, disco, tema)) return null
+    if (p.length > 3 || !TOKENS.includes(ronda) || !esDisco(disco) || !esTemaValido(tema)) return null
     return { ronda, disco, tema }
   }
   const [disco, tema = 'todos'] = p // sopa y crucigrama
   if (p.length > 2 || !esDisco(disco) || !esTemaValido(tema)) return null
-  const hay = modo === 'sopa' ? discoTieneJuego(disco, tema) : hayCrucigrama(disco, tema)
+  const hay = true // sin datos suficientes, la partida se completa con otras canciones
   return hay ? { disco, tema } : null
 }
 

@@ -1,17 +1,14 @@
 import { LOGROS } from './logros.js'
+import Cabecera from './Cabecera.jsx'
 import { leer } from './storage.js'
 
-export default function Logros({ onVolver }) {
+export default function Logros({ onVolver, onMenu }) {
   const { logros } = leer()
   const conseguidos = LOGROS.filter((l) => logros[l.id]).length
 
   return (
     <main className="pantalla" key="logros">
-      <header className="barra">
-        <button className="volver" onClick={onVolver} aria-label="Volver al menú">←</button>
-        <h2>Logros</h2>
-        <span className="contador">{conseguidos}/{LOGROS.length}</span>
-      </header>
+      <Cabecera titulo={<>Logros</>} extra={<>{conseguidos}/{LOGROS.length}</>} onVolver={onVolver} onMenu={onMenu} />
       <ul className="logros">
         {LOGROS.map((l) => {
           const fecha = logros[l.id]

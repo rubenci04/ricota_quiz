@@ -1,6 +1,7 @@
 // Reto del día: una canción por día, igual para todos, según la fecha de Buenos Aires.
 import datos from './data/datos-ricotero.json'
 import { crearAzar } from './azar.js'
+import { acertijoDeCancion } from './adivinanza.js'
 import { guardar, leer } from './storage.js'
 
 export const ZONA = 'America/Argentina/Buenos_Aires'
@@ -46,7 +47,9 @@ export function retoDe(fecha) {
   const total = catalogo.length
   const cancion = catalogo[ordenDelCiclo(Math.floor(n / total))[n % total]]
   const azar = crearAzar(`reto-${fecha}`) // la fecha es la semilla del reto
-  return { fecha, numero: n + 1, cancion, palabras: azar.mezclar(cancion.palabras) }
+  // segunda pista: un acertijo de la canción (siempre el mismo para esa fecha)
+  const dicho = acertijoDeCancion(cancion.titulo, 'casual', crearAzar(`dicho-${fecha}`)) ?? cancion.titulo_parafraseado
+  return { fecha, numero: n + 1, cancion, dicho, palabras: azar.mezclar(cancion.palabras) }
 }
 
 // Cuadro por intento según el porcentaje de letras acertadas. No revela la respuesta.

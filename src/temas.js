@@ -2,12 +2,12 @@
 import datos from './data/datos-ricotero.json'
 
 export const TEMAS = [
-  { id: 'politica', nombre: 'Política y sociedad' },
-  { id: 'amor', nombre: 'Amor y desamor' },
-  { id: 'noche', nombre: 'Noche y bajos fondos' },
-  { id: 'rock', nombre: 'Rock y música' },
-  { id: 'personajes', nombre: 'Personajes y relatos' },
-  { id: 'vida', nombre: 'Vida, muerte y existencia' },
+  { id: 'politica', nombre: 'Política y sociedad', icono: '🏛️', color: 'var(--t-politica)' },
+  { id: 'amor', nombre: 'Amor y desamor', icono: '💔', color: 'var(--t-amor)' },
+  { id: 'noche', nombre: 'Noche y bajos fondos', icono: '🌙', color: 'var(--t-noche)' },
+  { id: 'rock', nombre: 'Rock y música', icono: '🎸', color: 'var(--t-rock)' },
+  { id: 'personajes', nombre: 'Personajes y relatos', icono: '🎭', color: 'var(--t-personajes)' },
+  { id: 'vida', nombre: 'Vida, muerte y existencia', icono: '✨', color: 'var(--t-vida)' },
 ]
 
 export const esTemaValido = (id) => id === 'todos' || TEMAS.some((t) => t.id === id)
