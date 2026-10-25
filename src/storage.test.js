@@ -74,6 +74,32 @@ describe('perfiles locales', () => {
     expect(s.leerPerfiles().errorPersistencia).toBe(true)
   })
 
+  it('no reemplaza v5 si falla el respaldo durante la adopción', async () => {
+    const anterior = JSON.stringify({ v: 5, partidas: 17, nivel: 4 })
+    localStorage.setItem('ricota_quiz', anterior)
+    vi.resetModules(); s = await import('./storage.js')
+    const fallo = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('quota') })
+    s.crearPerfil('Primer Alias')
+    expect(s.leerPerfiles().errorPersistencia).toBe(true)
+    expect(localStorage.getItem('ricota_quiz')).toBe(anterior)
+    fallo.mockRestore()
+    vi.resetModules(); s = await import('./storage.js')
+    expect(s.leerPerfiles().pendiente).toBe(true)
+    s.crearPerfil('Recuperado')
+    expect(s.leer().partidas).toBe(17)
+    s.crearPerfil('Otro Alias')
+    expect(s.leer().partidas).toBe(0)
+  })
+
+  it('conserva el sonido anterior y alias de longitud límite', async () => {
+    localStorage.setItem('ricota_quiz_sonido', 'off')
+    vi.resetModules(); s = await import('./storage.js')
+    s.crearPerfil('A'.repeat(18))
+    expect(s.leer().sonido).toBe(false)
+    expect(s.leer().alias).toHaveLength(18)
+    expect(s.normalizarAlias('Sol')).toBe('Sol')
+  })
+
   it('mantiene logros y reto del día en el perfil correcto', async () => {
     const { iniciarLogros } = await import('./logros.js')
     const { guardarReto } = await import('./reto.js')

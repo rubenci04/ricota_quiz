@@ -232,7 +232,7 @@ export default function App() {
   }
 
   return (
-    <div className="app" data-modo={modoActual || 'menu'} onClick={alClic}>
+    <div className="app" data-modo={modoActual || 'menu'} data-perfiles={verPerfiles && !pagina} onClick={alClic}>
       {contenido}
       {leerPerfiles().errorPersistencia && <p className="aviso-amable" role="alert">No se pudo guardar en este navegador. El avance actual solo está en memoria; evitá cerrar o recargar.</p>}
       <div className="avisos-logros" role="status" aria-live="polite">

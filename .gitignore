@@ -5,3 +5,6 @@ dist
 .DS_Store
 letras-privadas/
 letras_privadas/
+playwright-report/
+test-results/
+qa/*.png

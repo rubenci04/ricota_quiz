@@ -142,7 +142,9 @@ let errorPersistencia = false
 function publicar() {
   try {
     const anterior = localStorage.getItem(CLAVE)
-    if (anterior && JSON.parse(anterior)?.v !== VERSION && !localStorage.getItem(`${CLAVE}_pre_v6`)) {
+    let versionAnterior
+    try { versionAnterior = JSON.parse(anterior)?.v } catch { /* también respalda datos dañados */ }
+    if (anterior && versionAnterior !== VERSION && !localStorage.getItem(`${CLAVE}_pre_v6`)) {
       localStorage.setItem(`${CLAVE}_pre_v6`, anterior)
     }
     localStorage.setItem(CLAVE, JSON.stringify(almacen))
@@ -168,7 +170,7 @@ function aliasDisponible(valor, id) {
 
 export function crearPerfil(valor) {
   const alias = aliasDisponible(valor)
-  const id = globalThis.crypto.randomUUID()
+  const id = globalThis.crypto?.randomUUID?.() ?? `perfil-${Date.now()}-${Math.random().toString(36).slice(2)}`
   const progreso = clonar(almacen.pendiente ?? progresoDe(null))
   almacen.perfiles.push({ id, alias, progreso })
   almacen.pendiente = null // transferencia única: nunca se copia al segundo perfil

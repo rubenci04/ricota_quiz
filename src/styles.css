@@ -23,6 +23,9 @@ button, select, input { font: inherit; color: inherit; }
 .lista-perfiles li { display: flex; gap: 8px; }
 .lista-perfiles li button:first-child { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .tarjeta-modo:disabled { opacity: .55; cursor: not-allowed; }
+/* El formulario necesita toda la superficie táctil, también con el reproductor abierto. */
+.con-musica .app[data-perfiles='true'] .perfiles { min-height: 0; padding-bottom: 32px; }
+.app[data-perfiles='true'] .musica { position: relative; right: auto; bottom: auto; margin: 0 auto 140px; }
 
 .pantalla {
   max-width: 520px;
