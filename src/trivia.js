@@ -14,6 +14,7 @@ const hechos = hechosBanda.filter((h) => h.verificada === true)
 
 // azar de la generación en curso (con semilla si se pidió una)
 let R = crearAzar()
+let versionGenerador = 1
 const azar = (arr) => R.elegir(arr)
 
 const mezclar = (arr) => R.mezclar(arr)
@@ -57,6 +58,7 @@ function preguntaRol() {
 
 function preguntaPalabras() {
   const c = azar(canciones.filter((x) => x.palabras_verificadas && x.palabras.length >= 4))
+  if (!c) return null
   const cuantas = Math.min(c.palabras.length, 4 + R.entero(2))
   const mostradas = mezclar(c.palabras).slice(0, cuantas)
   const norm = mostradas.map(normalizar)
@@ -199,7 +201,7 @@ function intentar(gen, ctx) {
     const p = gen()
     if (!p) continue
     if (p.tipo === 'anio' && ctx.anios >= MAX_PREGUNTAS_ANIO) return null
-    const k = p.texto + (p.pistas || []).join()
+    const k = versionGenerador === 1 ? p.texto + (p.pistas || []).join() : clavePregunta(p)
     if (ctx.vistas.has(k)) continue
     ctx.vistas.add(k)
     if (p.tipo === 'anio') ctx.anios += 1
@@ -214,7 +216,13 @@ function pedir(preferido, alternativas, ctx) {
     const p = intentar(gen, ctx)
     if (p) return p
   }
-  return intentar(preguntaPrimero, ctx) || preguntaPrimero()
+  if (versionGenerador === 1) return intentar(preguntaPrimero, ctx) || preguntaPrimero()
+  // Banco amplio y existente como respaldo, sin saltar nunca la deduplicación.
+  for (const gen of [preguntaTitulo, preguntaPalabras, ...alternativas]) {
+    const p = intentar(gen, ctx)
+    if (p) return p
+  }
+  throw new Error('El banco no alcanza para diez preguntas distintas.')
 }
 
 const BASICOS = [preguntaAnio, preguntaDisco, preguntaRol, preguntaPrimero, preguntaUltimo, preguntaNoPertenece, preguntaEntre, preguntaDecada, preguntaCancionDeDisco, preguntaQuien]
@@ -292,7 +300,13 @@ export function curiosidadAlAzar() {
 }
 
 // Con la misma semilla y nivel dan siempre las mismas preguntas; sin semilla son al azar.
-export function armarNivel(nivel, semilla, tema = 'todos') {
+export function clavePregunta(p) {
+  // Las pistas reordenadas de la misma canción cuentan como la misma pregunta.
+  return p.pistas ? `${p.texto}:${p.opciones[p.correcta]}` : p.texto
+}
+
+export function armarNivel(nivel, semilla, tema = 'todos', version = 1) {
+  versionGenerador = version
   R = crearAzar(semilla)
   canciones = datos.canciones.filter((c) => cumpleTema(c, tema))
   try {
@@ -300,17 +314,20 @@ export function armarNivel(nivel, semilla, tema = 'todos') {
   } finally {
     R = crearAzar()
     canciones = datos.canciones
+    versionGenerador = 1
   }
 }
 
 // ¿Hay canciones suficientes con ese tema para armar un nivel?
 export const triviaTieneTema = (tema) => datos.canciones.filter((c) => cumpleTema(c, tema)).length >= 6
 
-export function armarNivelBanda(nivel, semilla) {
+export function armarNivelBanda(nivel, semilla, version = 1) {
+  versionGenerador = version
   R = crearAzar(semilla)
   try {
     return generarNivelBanda(nivel)
   } finally {
     R = crearAzar()
+    versionGenerador = 1
   }
 }

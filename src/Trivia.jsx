@@ -1,24 +1,25 @@
 import { useState } from 'react'
 import Cabecera from './Cabecera.jsx'
-import { PREGUNTAS_POR_NIVEL, armarNivel, armarNivelBanda, curiosidadAlAzar, triviaTieneTema } from './trivia.js'
+import { PREGUNTAS_POR_NIVEL, armarNivel, armarNivelBanda, curiosidadAlAzar } from './trivia.js'
+import { LIMITES, PUNTOS_PARA_PASAR, iniciarNivel, terminarNivel, maximoAlcanzado } from './niveles.js'
 import { guardar, leer } from './storage.js'
 import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
 import { nuevaSemilla } from './desafio.js'
 
-const PUNTOS_PARA_PASAR = 6
-
 export default function Trivia({ onVolver, onMenu, categoria = 'general', desafio = null }) {
   const banda = categoria === 'banda'
-  const kNivel = banda ? 'nivelBanda' : 'nivel'
+  const modo = banda ? 'banda' : 'trivia'
+  const limite = LIMITES[modo]
+  const version = desafio?.version ?? (desafio ? 1 : 2)
   const kMejor = banda ? 'mejorBanda' : 'mejor'
   const [vista, setVista] = useState(desafio ? 'jugando' : 'niveles') // niveles | jugando | fin
   const [nivel, setNivel] = useState(desafio ? desafio.nivel : 1)
-  const [temaId, setTemaId] = useState(desafio ? desafio.tema : 'todos')
+  const temaId = desafio ? desafio.tema : 'todos'
   const [semilla, setSemilla] = useState(desafio ? desafio.semilla : '') // con la misma semilla salen las mismas preguntas
   const [preguntas, setPreguntas] = useState(() =>
-    desafio ? (banda ? armarNivelBanda(desafio.nivel, desafio.semilla) : armarNivel(desafio.nivel, desafio.semilla, desafio.tema)) : [],
+    desafio ? (banda ? armarNivelBanda(desafio.nivel, desafio.semilla, version) : armarNivel(desafio.nivel, desafio.semilla, desafio.tema, version)) : [],
   )
   const [i, setI] = useState(0)
   const [elegida, setElegida] = useState(null)
@@ -35,9 +36,11 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
 
   const jugar = (n) => {
     const sem = nuevaSemilla()
+    const ronda = banda ? armarNivelBanda(n, sem, 2) : armarNivel(n, sem, temaId, 2)
+    setGuardado(iniciarNivel(modo, n))
     setSemilla(sem)
     setNivel(n)
-    setPreguntas(banda ? armarNivelBanda(n, sem) : armarNivel(n, sem, temaId))
+    setPreguntas(ronda)
     setI(0)
     setElegida(null)
     setPuntos(0)
@@ -96,14 +99,7 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
       setVista('fin')
       return
     }
-    const actual = leer()
-    setGuardado(
-      guardar({
-        [kNivel]: puntos >= PUNTOS_PARA_PASAR ? Math.max(actual[kNivel], nivel + 1) : actual[kNivel],
-        [kMejor]: Math.max(actual[kMejor], puntos),
-        partidas: actual.partidas + 1,
-      }),
-    )
+    setGuardado(terminarNivel(modo, nivel, puntos))
     setCuriosidad(puntos >= PUNTOS_PARA_PASAR ? curiosidadAlAzar() : null)
     setVista('fin')
   }
@@ -112,12 +108,15 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
     return (
       <main className="pantalla" key="niveles">
         <Cabecera titulo={<>{banda ? 'La banda' : 'Trivia'}</>} extra={<>Récord {guardado[kMejor]}/{PREGUNTAS_POR_NIVEL}</>} onVolver={onVolver} onMenu={onMenu} />
+        <p>Nivel máximo alcanzado: {maximoAlcanzado(guardado, modo)} de {limite}. Necesitás 6 de 10 para avanzar.</p>
+        <p className="aviso">{banda ? 'Aumentan las preguntas curadas de la banda.' : 'Aumentan las preguntas de palabras y títulos.'} Son {limite} etapas con un banco compartido; podés repetir las disponibles.</p>
         <div className="menu-grid">
-          {Array.from({ length: guardado[kNivel] }, (_, k) => k + 1).reverse().map((n, idx) => (
-            <button key={n} className="tarjeta-modo chica" style={{ '--c': 'var(--modo)', '--i': idx }} onClick={() => jugar(n)}>
-              {n === guardado[kNivel] && <span className="insignia">Nuevo</span>}
-              <span className="icono" aria-hidden="true">{n === guardado[kNivel] ? '🚀' : '✅'}</span>
+          {Array.from({ length: limite }, (_, k) => k + 1).map((n, idx) => (
+            <button key={n} disabled={n > maximoAlcanzado(guardado, modo)} className="tarjeta-modo chica" style={{ '--c': 'var(--modo)', '--i': idx }} onClick={() => jugar(n)}>
+              <span className="icono" aria-hidden="true">{n > maximoAlcanzado(guardado, modo) ? '🔒' : '🎸'}</span>
               <strong>Nivel {n}</strong>
+              <small>{n > maximoAlcanzado(guardado, modo) ? 'Bloqueado' : 'Disponible'}</small>
+              <small>Mejor: {guardado.niveles[modo][n]?.mejor ?? 0}/10 · Intentos: {guardado.niveles[modo][n]?.intentos ?? 0}</small>
             </button>
           ))}
         </div>
@@ -132,11 +131,11 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
         <Resultado
           titulo={`${banda ? 'La banda' : 'Trivia'} · Nivel ${nivel}`}
           puntaje={`${puntos}/${preguntas.length}`}
-          detalle={paso ? `Se desbloqueó el nivel ${nivel + 1}.` : `Intentá de nuevo: necesitás ${PUNTOS_PARA_PASAR} o más para pasar.`}
+          detalle={desafio ? 'Desafío terminado. No cambia tus niveles.' : paso ? (nivel === limite ? '¡Completaste todas las etapas! Podés repetirlas para mejorar tus récords.' : `Nivel ${nivel + 1} disponible.`) : `Intentá de nuevo: necesitás ${PUNTOS_PARA_PASAR} o más para pasar.`}
           mejor={{ etiqueta: 'Mejor puntaje', valor: `${guardado[kMejor]}/${PREGUNTAS_POR_NIVEL}` }}
           mensaje={paso ? frase('victoria') : frase('derrota')}
           exito={paso}
-          desafio={{ modo: banda ? 'banda' : 'trivia', nivel, tema: banda ? 'todos' : temaId, dif: 'casual', semilla, puntaje: puntos }}
+          desafio={{ modo, nivel, tema: banda ? 'todos' : temaId, dif: desafio?.dif ?? 'casual', version, semilla, puntaje: puntos }}
           rival={desafio ? { puntaje: desafio.puntaje } : null}
           compartir={`Hice ${puntos}/${preguntas.length} en ${banda ? 'el desafío de La banda' : 'la trivia'} 🎸 ¿Podés superarme?`}
         >
@@ -145,7 +144,7 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
           ) : (
             <>
               {curiosidad && <div className="curiosidad"><strong>Curiosidad:</strong> {curiosidad}</div>}
-              {paso && <button className="nueva" onClick={() => jugar(nivel + 1)}>Nivel {nivel + 1}</button>}
+              {paso && nivel < limite && <button className="nueva" onClick={() => jugar(nivel + 1)}>Nivel {nivel + 1}</button>}
               <button className="secundario" onClick={() => jugar(nivel)}>Repetir nivel</button>
               <button className="secundario" onClick={() => setVista('niveles')}>Elegir nivel</button>
             </>
