@@ -1,4 +1,4 @@
-import { ANALITICA, EMAIL_CONTACTO, NOMBRE_JUEGO } from './config.js'
+import { ANALITICA, DESARROLLADOR, EMAIL_CONTACTO, NOMBRE_JUEGO, PLAYLIST_YOUTUBE } from './config.js'
 import musica from './data/musica.json'
 
 const TITULOS = { aviso: 'Aviso legal', privacidad: 'Privacidad', contacto: 'Contacto' }
@@ -29,6 +29,10 @@ function Aviso() {
         textos propios. La música, si se incluye, se reproduce desde sus fuentes originales.
       </p>
       <p>
+        El código, el diseño y los textos propios del juego son obra de {DESARROLLADOR}, con derechos reservados. Esto no
+        incluye los nombres, marcas ni obras de terceros mencionados, que pertenecen a sus titulares.
+      </p>
+      <p>
         Los datos (discos, años, integrantes, curiosidades) se contrastaron con fuentes públicas, pero pueden tener
         errores. Si encontrás uno, avisanos. Si sos titular de derechos y querés que se corrija o retire algún
         contenido, escribinos a <a href={`mailto:${EMAIL_CONTACTO}`}>{EMAIL_CONTACTO}</a>: lo revisamos y lo resolvemos
@@ -57,8 +61,8 @@ function Privacidad() {
           : 'hoy está desactivada. Si se activa, será Cloudflare Web Analytics, que mide visitas de forma agregada, sin cookies y sin identificar a las personas.'}
       </p>
       <p>
-        {musica.length > 0
-          ? 'Si abrís el reproductor de música, el video se carga desde YouTube y se aplican las políticas de YouTube y Google.'
+        {PLAYLIST_YOUTUBE || musica.length > 0
+          ? 'El juego incluye un reproductor de música de YouTube que arranca al tocar «Entrar»: el video se carga desde YouTube y se aplican las políticas de YouTube y Google. Podés cerrarlo con la ✕ del reproductor.'
           : 'Hoy el juego no carga contenido de terceros. Si se agrega música de YouTube, el reproductor cargará el video desde YouTube y se aclarará acá.'}
       </p>
       <p>

@@ -41,6 +41,8 @@ export function alternarVibracion() {
 
 function vibrar(patron) {
   if (!habilitado || !vibracionDisponible() || !leer().vibracion) return
+  // el navegador solo permite vibrar después de un toque real del usuario
+  if (navigator.userActivation && !navigator.userActivation.hasBeenActive) return
   try { navigator.vibrate(patron) } catch { /* sin vibración */ }
 }
 

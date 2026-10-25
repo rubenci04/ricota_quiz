@@ -316,3 +316,7 @@ button, select { font: inherit; color: inherit; }
 .grilla:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
 .grilla:focus-visible .celda.cursor-teclado { outline: 3px solid #fff; outline-offset: -3px; }
 .letra:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
+
+/* pie con crédito del desarrollador */
+.pantalla { padding-bottom: 100px; }
+.pie span { display: block; }

@@ -11,7 +11,7 @@ import Ahorcado from './Ahorcado.jsx'
 import Legal from './Legal.jsx'
 import { MODOS_DESAFIO, leerDesafio, limpiarHash } from './desafio.js'
 import { efemeridesDeHoy } from './efemerides.js'
-import { MODOS, NOMBRE_JUEGO } from './config.js'
+import { DESARROLLADOR, MODOS, NOMBRE_JUEGO } from './config.js'
 import { alDesbloquear, iniciarLogros } from './logros.js'
 import { fechaBA, rachaCortada, rachaVigente } from './reto.js'
 import Musica from './Musica.jsx'
@@ -237,6 +237,7 @@ export default function App() {
       {entro && <Musica />}
       <footer className="pie">
         <span>Juego de fans, no oficial, sin relación con la banda.</span>
+        <span>Developer: {DESARROLLADOR} · Derechos reservados</span>
         <nav className="pie-enlaces" aria-label="Información legal">
           <button onClick={() => setPagina('aviso')}>Aviso legal</button>
           <button onClick={() => setPagina('privacidad')}>Privacidad</button>
