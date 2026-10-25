@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import Confeti from './Confeti.jsx'
-import { URL_JUEGO } from './config.js'
+import { NOMBRE_JUEGO, URL_JUEGO } from './config.js'
+import { MODOS_DESAFIO, comparar, crearLink, textoDesafio } from './desafio.js'
 
-// Pantalla final común: puntaje, mejor puntaje y botón para compartir.
+// Pantalla final común: puntaje, mejor puntaje, compartir y desafiar a un amigo.
 // `compartir` es el texto corto (sin letras ni versos); la URL sale de config.js.
-export default function Resultado({ titulo, puntaje, detalle, mejor, mensaje, compartir, exito = true, alMostrar, children }) {
+// `desafio` ({modo, tema, dif, semilla, puntaje}) habilita "Desafiar a un amigo".
+// `rival` ({puntaje}) aparece cuando se juega un desafío recibido: compara los dos puntajes.
+export default function Resultado({ titulo, puntaje, detalle, mejor, mensaje, compartir, exito = true, alMostrar, desafio, rival, children }) {
   const [estado, setEstado] = useState('')
   const avisado = useRef(false)
 
@@ -34,19 +37,25 @@ export default function Resultado({ titulo, puntaje, detalle, mejor, mensaje, co
     }
   }
 
-  const compartirResultado = async () => {
-    const texto = `${compartir} ${URL_JUEGO}`
+  const enviar = async (texto, url) => {
     try {
       if (navigator.share) {
-        await navigator.share({ text: compartir, url: URL_JUEGO })
+        await navigator.share({ text: texto, url })
         setEstado('✓ Compartido')
         return
       }
     } catch (e) {
       if (e?.name === 'AbortError') return
     }
-    setEstado((await copiar(texto)) ? '✓ Copiado al portapapeles' : `✗ No se pudo copiar. Copialo a mano: ${texto}`)
+    const completo = `${texto}\n${url}`
+    setEstado((await copiar(completo)) ? '✓ Copiado al portapapeles' : `✗ No se pudo copiar. Copialo a mano: ${completo}`)
   }
+
+  const compartirResultado = () => enviar(`${compartir} (${NOMBRE_JUEGO})`, URL_JUEGO)
+  const desafiar = () => enviar(textoDesafio(desafio), crearLink(desafio))
+
+  const m = desafio ? MODOS_DESAFIO[desafio.modo] : null
+  const veredicto = rival && desafio ? comparar(desafio.puntaje, rival.puntaje) : null
 
   return (
     <section className="resultado" aria-label="Resultado">
@@ -59,8 +68,19 @@ export default function Resultado({ titulo, puntaje, detalle, mejor, mensaje, co
           {mejor.etiqueta}: <strong>{mejor.valor}</strong>
         </p>
       )}
+      {veredicto && (
+        <div className={`comparacion ${veredicto}`} role="status">
+          <p>Tu amigo hizo <strong>{m.formato(rival.puntaje)}</strong> · vos hiciste <strong>{m.formato(desafio.puntaje)}</strong></p>
+          <p className="comparacion-veredicto">
+            {veredicto === 'gana' && '🏆 ¡Le ganaste! Se lo merecía.'}
+            {veredicto === 'empata' && '🤝 Empate técnico. ¿Revancha?'}
+            {veredicto === 'pierde' && '😅 Esta vez ganó tu amigo. ¡Pedí la revancha!'}
+          </p>
+        </div>
+      )}
       {mensaje && <p className="resultado-mensaje">{mensaje}</p>}
       <button className="secundario" onClick={compartirResultado}>Compartir</button>
+      {desafio && <button className="secundario" onClick={desafiar}>Desafiar a un amigo</button>}
       <p className="feedback" role="status" aria-live="polite">{estado}</p>
       {children}
     </section>

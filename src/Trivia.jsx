@@ -4,16 +4,20 @@ import { guardar, leer } from './storage.js'
 import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
+import { nuevaSemilla } from './desafio.js'
 
 const PUNTOS_PARA_PASAR = 6
 
-export default function Trivia({ onVolver, categoria = 'general' }) {
+export default function Trivia({ onVolver, categoria = 'general', desafio = null }) {
   const banda = categoria === 'banda'
   const kNivel = banda ? 'nivelBanda' : 'nivel'
   const kMejor = banda ? 'mejorBanda' : 'mejor'
-  const [vista, setVista] = useState('niveles') // niveles | jugando | fin
-  const [nivel, setNivel] = useState(1)
-  const [preguntas, setPreguntas] = useState([])
+  const [vista, setVista] = useState(desafio ? 'jugando' : 'niveles') // niveles | jugando | fin
+  const [nivel, setNivel] = useState(desafio ? Number(desafio.tema) : 1)
+  const [semilla, setSemilla] = useState(desafio ? desafio.semilla : '') // con la misma semilla salen las mismas preguntas
+  const [preguntas, setPreguntas] = useState(() =>
+    desafio ? (banda ? armarNivelBanda(Number(desafio.tema), desafio.semilla) : armarNivel(Number(desafio.tema), desafio.semilla)) : [],
+  )
   const [i, setI] = useState(0)
   const [elegida, setElegida] = useState(null)
   const [puntos, setPuntos] = useState(0)
@@ -26,8 +30,10 @@ export default function Trivia({ onVolver, categoria = 'general' }) {
   const [fraseResp, setFraseResp] = useState('')
 
   const jugar = (n) => {
+    const sem = nuevaSemilla()
+    setSemilla(sem)
     setNivel(n)
-    setPreguntas(banda ? armarNivelBanda(n) : armarNivel(n))
+    setPreguntas(banda ? armarNivelBanda(n, sem) : armarNivel(n, sem))
     setI(0)
     setElegida(null)
     setPuntos(0)
@@ -61,6 +67,13 @@ export default function Trivia({ onVolver, categoria = 'general' }) {
       setElegida(null)
       setOcultas([])
       setVerAyuda(false)
+      return
+    }
+    if (desafio) {
+      // un desafío recibido no toca el progreso de niveles
+      guardar({ partidas: leer().partidas + 1 })
+      setCuriosidad(null)
+      setVista('fin')
       return
     }
     const actual = leer()
@@ -106,12 +119,20 @@ export default function Trivia({ onVolver, categoria = 'general' }) {
           mejor={{ etiqueta: 'Mejor puntaje', valor: `${guardado[kMejor]}/${PREGUNTAS_POR_NIVEL}` }}
           mensaje={paso ? frase('victoria') : frase('derrota')}
           exito={paso}
+          desafio={{ modo: banda ? 'banda' : 'trivia', tema: String(nivel), dif: 'casual', semilla, puntaje: puntos }}
+          rival={desafio ? { puntaje: desafio.puntaje } : null}
           compartir={`Hice ${puntos}/${preguntas.length} en ${banda ? 'el desafío de La banda' : 'la trivia'} 🎸 ¿Podés superarme?`}
         >
-          {curiosidad && <div className="curiosidad"><strong>Curiosidad:</strong> {curiosidad}</div>}
-          {paso && <button className="nueva" onClick={() => jugar(nivel + 1)}>Nivel {nivel + 1}</button>}
-          <button className="secundario" onClick={() => jugar(nivel)}>Repetir nivel</button>
-          <button className="secundario" onClick={() => setVista('niveles')}>Elegir nivel</button>
+          {desafio ? (
+            <button className="nueva" onClick={onVolver}>Volver al menú</button>
+          ) : (
+            <>
+              {curiosidad && <div className="curiosidad"><strong>Curiosidad:</strong> {curiosidad}</div>}
+              {paso && <button className="nueva" onClick={() => jugar(nivel + 1)}>Nivel {nivel + 1}</button>}
+              <button className="secundario" onClick={() => jugar(nivel)}>Repetir nivel</button>
+              <button className="secundario" onClick={() => setVista('niveles')}>Elegir nivel</button>
+            </>
+          )}
         </Resultado>
       </main>
     )
@@ -121,7 +142,7 @@ export default function Trivia({ onVolver, categoria = 'general' }) {
   return (
     <main className="pantalla" key="jugando">
       <header className="barra">
-        <button className="volver" onClick={() => setVista('niveles')} aria-label="Salir del nivel">←</button>
+        <button className="volver" onClick={() => (desafio ? onVolver() : setVista('niveles'))} aria-label="Salir del nivel">←</button>
         <h2>Nivel {nivel}</h2>
         <span className="contador">{i + 1}/{preguntas.length}</span>
       </header>

@@ -3,6 +3,7 @@ import { leer, sumarSopa } from './storage.js'
 import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
+import { nuevaSemilla } from './desafio.js'
 import { SIZE, discos, discoTieneJuego, nuevaPartida } from './sopa.js'
 
 const COLORES = ['#e0a526', '#c0392b', '#3aa17e', '#5b8def', '#b455d6', '#e0742b', '#2bb7c9', '#d6567f', '#8fb339', '#9a8cff']
@@ -30,9 +31,17 @@ const MAX_PISTAS = 5
 const MAX_REVELAR = 1
 const clave = (r, c) => `${r},${c}`
 
-export default function SopaDeLetras({ onVolver }) {
-  const [discoId, setDiscoId] = useState('todos')
-  const [partida, setPartida] = useState(() => nuevaPartida('todos'))
+export default function SopaDeLetras({ onVolver, desafio = null }) {
+  // la semilla define la partida: con la misma semilla y disco sale la misma sopa
+  const inicial = useRef(null)
+  if (!inicial.current) {
+    const semilla = desafio ? desafio.semilla : nuevaSemilla()
+    const disco = desafio ? desafio.tema : 'todos'
+    inicial.current = { semilla, disco, partida: nuevaPartida(disco, semilla) }
+  }
+  const [semilla, setSemilla] = useState(inicial.current.semilla)
+  const [discoId, setDiscoId] = useState(inicial.current.disco)
+  const [partida, setPartida] = useState(inicial.current.partida)
   const [encontradas, setEncontradas] = useState({}) // norm -> índice de color
   const [seleccion, setSeleccion] = useState([])
   const gridRef = useRef(null)
@@ -43,7 +52,9 @@ export default function SopaDeLetras({ onVolver }) {
   const [reveladas, setReveladas] = useState([]) // norm de palabras resaltadas completas
 
   const empezar = (id) => {
-    setPartida(nuevaPartida(id))
+    const sem = nuevaSemilla()
+    setSemilla(sem)
+    setPartida(nuevaPartida(id, sem))
     setEncontradas({})
     setSeleccion([])
     setPistas([])
@@ -153,7 +164,7 @@ export default function SopaDeLetras({ onVolver }) {
 
       <label className="selector">
         <span>Disco</span>
-        <select value={discoId} onChange={(e) => cambiarDisco(e.target.value)}>
+        <select value={discoId} disabled={!!desafio} onChange={(e) => cambiarDisco(e.target.value)}>
           <option value="todos">Todos</option>
           {discos.map((d) => (
             <option key={d.id} value={d.id} disabled={!discoTieneJuego(d.id)}>
@@ -231,15 +242,21 @@ export default function SopaDeLetras({ onVolver }) {
       {ganaste && (
         <Resultado
           titulo="Sopa de letras"
-          puntaje={`${partida.palabras.length}/${partida.palabras.length}`}
-          detalle={`Pistas usadas: ${pistas.length}${reveladas.length ? ' · palabra revelada' : ''}`}
+          puntaje={`${Math.max(0, 100 - 10 * pistas.length - 25 * reveladas.length)} pts`}
+          detalle={`${partida.palabras.length}/${partida.palabras.length} palabras · pistas usadas: ${pistas.length}${reveladas.length ? ' · palabra revelada' : ''}`}
           mejor={{ etiqueta: 'Sopas completadas', valor: leer().sopas }}
+          desafio={{ modo: 'sopa', tema: discoId, dif: 'casual', semilla, puntaje: Math.max(0, 100 - 10 * pistas.length - 25 * reveladas.length) }}
+          rival={desafio ? { puntaje: desafio.puntaje } : null}
           mensaje={frase('victoria')}
           compartir={`Completé una sopa de letras ricotera (${partida.palabras.length}/${partida.palabras.length}) 🎸 ¿Podés superarme?`}
         />
       )}
 
-      <button className="nueva" onClick={() => empezar(discoId)}>Nueva partida</button>
+      {desafio ? (
+        <button className="nueva" onClick={onVolver}>Volver al menú</button>
+      ) : (
+        <button className="nueva" onClick={() => empezar(discoId)}>Nueva partida</button>
+      )}
     </main>
   )
 }

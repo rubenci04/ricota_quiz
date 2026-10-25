@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { guardar } from './storage.js'
+import { NOMBRE_JUEGO } from './config.js'
 
 const TARJETAS = [
   {
-    titulo: '¿Qué es ricota_quiz?',
+    titulo: `¿Qué es ${NOMBRE_JUEGO}?`,
     texto: 'Un juego de fans para jugar con la cultura ricotera: sopa de letras, trivia, crucigrama y adivinanzas. Es no oficial y no tiene relación con la banda.',
   },
   {

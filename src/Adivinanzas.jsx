@@ -7,6 +7,7 @@ import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
 import { mismaLetra, nuevaRonda } from './adivinanza.js'
 import { frase } from './textos.js'
+import { nuevaSemilla } from './desafio.js'
 
 const DIFICULTADES = {
   casual: { nombre: 'Casual', detalle: 'Año y disco desde el inicio, 3 pistas de letra', pistasLetra: 3 },
@@ -17,13 +18,21 @@ const MODOS = {
   parafraseado: { nombre: 'Dicho de otra forma', detalle: 'El título explicado con otras palabras' },
 }
 
-export default function Adivinanzas({ onVolver }) {
-  const [config, setConfig] = useState(() => ({ dificultad: leer().dificultad, modo: 'palabras' }))
-  const [jugando, setJugando] = useState(false)
-  const [ronda, setRonda] = useState(null)
-  const [letras, setLetras] = useState([])
-  const [fijas, setFijas] = useState([])
-  const [revision, setRevision] = useState([])
+export default function Adivinanzas({ onVolver, desafio = null }) {
+  // un desafío recibido arranca directo, con la misma ronda (misma semilla)
+  const inicial = useRef(undefined)
+  if (inicial.current === undefined) inicial.current = desafio ? nuevaRonda(desafio.tema, null, desafio.semilla) : null
+  const largo = inicial.current ? inicial.current.solucion.length : 0
+  const [semilla, setSemilla] = useState(desafio ? desafio.semilla : '')
+  const [config, setConfig] = useState(() => ({
+    dificultad: desafio ? desafio.dif : leer().dificultad,
+    modo: desafio ? desafio.tema : 'palabras',
+  }))
+  const [jugando, setJugando] = useState(!!desafio)
+  const [ronda, setRonda] = useState(inicial.current)
+  const [letras, setLetras] = useState(() => Array(largo).fill(''))
+  const [fijas, setFijas] = useState(() => Array(largo).fill(false))
+  const [revision, setRevision] = useState(() => Array(largo).fill(''))
   const [foco, setFoco] = useState(0)
   const [pistasLetra, setPistasLetra] = useState(0)
   const [extra, setExtra] = useState(false)
@@ -44,7 +53,9 @@ export default function Adivinanzas({ onVolver }) {
   }, [])
 
   const empezar = (anterior = null, cfg = config) => {
-    const r = nuevaRonda(cfg.modo, anterior)
+    const sem = nuevaSemilla()
+    setSemilla(sem)
+    const r = nuevaRonda(cfg.modo, anterior, sem)
     const n = r.solucion.length
     setRonda(r)
     setLetras(Array(n).fill(''))
@@ -232,7 +243,7 @@ export default function Adivinanzas({ onVolver }) {
   return (
     <main className="pantalla">
       <header className="barra">
-        <button className="volver" onClick={() => setJugando(false)} aria-label="Cambiar dificultad o modo">←</button>
+        <button className="volver" onClick={() => (desafio ? onVolver() : setJugando(false))} aria-label={desafio ? 'Volver al menú' : 'Cambiar dificultad o modo'}>←</button>
         <h2>Adivinanzas</h2>
         <span className="contador">{total} pts</span>
       </header>
@@ -280,9 +291,15 @@ export default function Adivinanzas({ onVolver }) {
           mejor={{ etiqueta: 'Total acumulado', valor: `${total} pts` }}
           mensaje={resultado.acierto ? frase('victoria') : frase('derrota')}
           exito={resultado.acierto}
+          desafio={{ modo: 'adivinanzas', tema: config.modo, dif: config.dificultad, semilla, puntaje: resultado.puntos }}
+          rival={desafio ? { puntaje: desafio.puntaje } : null}
           compartir={`Sumé ${total} puntos adivinando canciones ricoteras 🎸 ¿Podés superarme?`}
         >
-          <button className="nueva" onClick={() => empezar(cancion)}>Otra canción</button>
+          {desafio ? (
+            <button className="nueva" onClick={onVolver}>Volver al menú</button>
+          ) : (
+            <button className="nueva" onClick={() => empezar(cancion)}>Otra canción</button>
+          )}
         </Resultado>
       )}
     </main>

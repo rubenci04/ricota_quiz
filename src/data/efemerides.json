@@ -1,0 +1,17 @@
+[
+  { "dia": 26, "mes": 11, "anio": 1977, "tipo": "hecho", "frase": "el «Lozanazo», la primera presentación de la banda, en el Teatro Lozano de La Plata", "fuente": "https://es.wikipedia.org/wiki/Patricio_Rey_y_sus_Redonditos_de_Ricota" },
+  { "dia": 20, "mes": 7, "anio": 1985, "tipo": "disco", "frase": "la salida de «Gulp!», el primer disco de estudio de la banda", "fuente": "https://es.wikipedia.org/wiki/Gulp!" },
+  { "dia": 4, "mes": 10, "anio": 1986, "tipo": "disco", "frase": "la salida de «Oktubre»", "fuente": "https://es.wikipedia.org/wiki/Oktubre_(álbum)" },
+  { "dia": 18, "mes": 10, "anio": 1986, "tipo": "hecho", "frase": "la presentación oficial de «Oktubre» en el Paladium de Buenos Aires", "fuente": "https://es.wikipedia.org/wiki/Oktubre_(álbum)" },
+  { "dia": 9, "mes": 5, "anio": 1988, "tipo": "disco", "frase": "la salida de «Un baión para el ojo idiota»", "fuente": "https://es.wikipedia.org/wiki/Un_baión_para_el_ojo_idiota" },
+  { "dia": 7, "mes": 10, "anio": 1989, "tipo": "disco", "frase": "la salida de «¡Bang! ¡Bang!... Estás liquidado»", "fuente": "https://es.wikipedia.org/wiki/¡Bang!_¡Bang!..._Estás_liquidado" },
+  { "dia": 27, "mes": 10, "anio": 1991, "tipo": "disco", "frase": "la salida de «La mosca y la sopa»", "fuente": "https://es.wikipedia.org/wiki/La_mosca_y_la_sopa" },
+  { "dia": 14, "mes": 12, "anio": 1992, "tipo": "disco", "frase": "la salida del álbum en vivo «En directo»", "fuente": "https://www.perfil.com/noticias/cultura/misa-ricotera-rey-garufa-revive-el-clasico-album-en-directo-de-patricio-rey-y-sus-redonditos-de-ricota-a42.phtml" },
+  { "dia": 4, "mes": 10, "anio": 1993, "tipo": "disco", "frase": "la salida de «Lobo suelto» (y, según Wikipedia, de «Cordero atado» el mismo día)", "fuente": "https://es.wikipedia.org/wiki/Lobo_suelto,_cordero_atado,_vol._1" },
+  { "dia": 19, "mes": 11, "anio": 1993, "tipo": "hecho", "frase": "la primera de dos noches de recitales en el estadio de Huracán, con más de 70.000 personas en total", "fuente": "https://es.wikipedia.org/wiki/Patricio_Rey_y_sus_Redonditos_de_Ricota" },
+  { "dia": 16, "mes": 12, "anio": 1994, "tipo": "hecho", "frase": "la primera de dos noches de recitales en el estadio de Huracán, con 80.000 personas en total", "fuente": "https://es.wikipedia.org/wiki/Patricio_Rey_y_sus_Redonditos_de_Ricota" },
+  { "dia": 4, "mes": 10, "anio": 1997, "tipo": "hecho", "frase": "el recital en Tandil que reemplazó al que había frenado un decreto en Olavarría", "fuente": "https://es.wikipedia.org/wiki/Luzbelito" },
+  { "dia": 18, "mes": 11, "anio": 1998, "tipo": "disco", "frase": "la salida de «Último bondi a Finisterre»", "fuente": "https://es.wikipedia.org/wiki/Último_bondi_a_Finisterre" },
+  { "dia": 18, "mes": 12, "anio": 1998, "tipo": "hecho", "frase": "la primera noche de la presentación de «Último bondi a Finisterre» en la cancha de Racing", "fuente": "https://es.wikipedia.org/wiki/Último_bondi_a_Finisterre" },
+  { "dia": 17, "mes": 11, "anio": 2000, "tipo": "disco", "frase": "la salida de «Momo Sampler»", "fuente": "https://es.wikipedia.org/wiki/Momo_Sampler" }
+]

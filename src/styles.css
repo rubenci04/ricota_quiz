@@ -272,3 +272,18 @@ button, select { font: inherit; color: inherit; }
 .logro small { color: var(--tenue); }
 .avisos-logros { position: fixed; left: 8px; right: 8px; top: 8px; z-index: 40; display: flex; flex-direction: column; gap: 6px; pointer-events: none; }
 .aviso-logro { margin: 0 auto; max-width: 420px; padding: 10px 14px; background: #1f1708; border: 1px solid var(--acento); color: var(--texto); animation: entrar 0.25s ease-out; }
+
+/* pie legal, efemérides, desafíos */
+.pantalla { padding-bottom: 84px; }
+.pie { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.pie-enlaces { display: flex; gap: 14px; }
+.pie-enlaces button { background: none; border: 0; padding: 2px 0; color: var(--tenue); font-size: 0.72rem; text-decoration: underline; cursor: pointer; }
+.legal { width: 100%; line-height: 1.55; }
+.legal p { margin: 0 0 12px; }
+.legal a { color: var(--acento); }
+.efemeride { width: 100%; margin: 0; padding: 10px 12px; background: var(--panel); border: 1px solid var(--borde); border-left: 4px solid var(--rojo); font-size: 0.9rem; }
+.comparacion { width: 100%; max-width: 420px; padding: 10px 12px; background: var(--panel); border: 1px solid var(--borde); }
+.comparacion p { margin: 0; }
+.comparacion.gana { border-color: #3aa17e; }
+.comparacion.pierde { border-color: var(--rojo); }
+.comparacion-veredicto { margin-top: 4px; font-weight: 700; }
