@@ -52,8 +52,11 @@ export function candidatas(discoId, dificultad = 'casual') {
   return lista
 }
 
+// los datos no cambian durante la sesión: se calcula una vez por tema
+const cacheHay = new Map()
 export function hayCrucigrama(discoId) {
-  return candidatas(discoId).length >= 8
+  if (!cacheHay.has(discoId)) cacheHay.set(discoId, candidatas(discoId).length >= 8)
+  return cacheHay.get(discoId)
 }
 
 function intentar(cands, objetivo) {
@@ -123,12 +126,16 @@ export function nuevoCrucigrama(discoId, dificultad = 'casual') {
   const pool = candidatas(discoId, dificultad)
   const objetivo = 8 + Math.floor(Math.random() * 3)
   let mejor = []
-  for (let i = 0; i < 40; i++) {
-    // primero las más largas (con algo de azar) para tener más cruces posibles
-    const orden = mezclar(pool).sort((x, y) => y.respuesta.length - x.respuesta.length + (Math.random() - 0.5) * 6)
-    const puestas = intentar(orden, objetivo)
-    if (puestas.length > mejor.length) mejor = puestas
-    if (mejor.length >= objetivo) break
+  // varias rondas con otras semillas (órdenes al azar) antes de rendirse
+  for (let ronda = 0; ronda < 3 && mejor.length < MIN_PALABRAS; ronda++) {
+    for (let i = 0; i < 40; i++) {
+      // las palabras largas primero (cada grupo mezclado con Fisher–Yates) dejan más cruces posibles
+      const largas = mezclar(pool.filter((p) => p.respuesta.length >= 7))
+      const cortas = mezclar(pool.filter((p) => p.respuesta.length < 7))
+      const puestas = intentar([...largas, ...cortas], objetivo)
+      if (puestas.length > mejor.length) mejor = puestas
+      if (mejor.length >= objetivo) break
+    }
   }
   if (mejor.length < MIN_PALABRAS) return null
 

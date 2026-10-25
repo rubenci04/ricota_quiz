@@ -9,20 +9,31 @@ const MAX_PISTAS = 5
 const MAX_PALABRAS = 2
 const VECTOR = { across: [0, 1], down: [1, 0] }
 
+// si un intento no logra armar el tablero, se prueba con otras semillas antes de rendirse
+function generar(id, dif) {
+  for (let i = 0; i < 3; i++) {
+    const j = nuevoCrucigrama(id, dif)
+    if (j) return j
+  }
+  return null
+}
+
 export default function Crucigrama({ onVolver }) {
   const [discoId, setDiscoId] = useState('todos')
   const [dificultad, setDificultad] = useState('casual')
-  const [juego, setJuego] = useState(() => nuevoCrucigrama('todos', 'casual'))
+  const [juego, setJuego] = useState(() => generar('todos', 'casual'))
   const [letras, setLetras] = useState({})
   const [fijas, setFijas] = useState({})
   const [revision, setRevision] = useState({})
   const [sel, setSel] = useState(null) // { r, c, dir }
   const [pistas, setPistas] = useState(0)
   const [palabrasReveladas, setPalabrasReveladas] = useState(0)
+  const [mensaje, setMensaje] = useState('')
   const entrada = useRef(null)
 
   const empezar = (id, dif = dificultad) => {
-    setJuego(nuevoCrucigrama(id, dif))
+    setJuego(generar(id, dif))
+    setMensaje('')
     setLetras({}); setFijas({}); setRevision({}); setSel(null); setPistas(0); setPalabrasReveladas(0)
   }
 
@@ -106,8 +117,11 @@ export default function Crucigrama({ onVolver }) {
     const res = {}
     for (const [k, v] of Object.entries(letras)) res[k] = v === solucion[k] ? 'ok' : 'mal'
     setRevision(res)
-    if (Object.values(res).includes('mal')) sonar('error')
-    else if (Object.keys(res).length) sonar('ok')
+    const buenas = Object.values(res).filter((x) => x === 'ok').length
+    const malas = Object.values(res).filter((x) => x === 'mal').length
+    setMensaje(`✓ ${buenas} ${buenas === 1 ? 'letra correcta' : 'letras correctas'} · ✗ ${malas} ${malas === 1 ? 'incorrecta' : 'incorrectas'}`)
+    if (malas) sonar('error')
+    else if (buenas) sonar('ok')
   }
 
   const revelarPalabra = () => {
@@ -209,7 +223,13 @@ export default function Crucigrama({ onVolver }) {
           if (revision[k]) clases.push(revision[k])
           if (fijas[k]) clases.push('fija')
           return (
-            <div key={k} className={clases.join(' ')} onPointerDown={() => tocar(r, c)}>
+            <div
+              key={k}
+              className={clases.join(' ')}
+              onPointerDown={() => tocar(r, c)}
+              role="button"
+              aria-label={`Celda ${numeros[k] ? 'número ' + numeros[k] + ', ' : ''}fila ${r + 1}, columna ${c + 1}: ${letras[k] || 'vacía'}${revision[k] === 'ok' ? ', correcta' : revision[k] === 'mal' ? ', incorrecta' : ''}`}
+            >
               {numeros[k] && <small>{numeros[k]}</small>}
               {letras[k] || ''}
             </div>
@@ -232,6 +252,8 @@ export default function Crucigrama({ onVolver }) {
 
       {ganaste && <Confeti />}
       {ganaste && <div className="victoria" role="status"><strong>¡Completaste el crucigrama!</strong> Zafaste.</div>}
+
+      <p className="feedback" role="status" aria-live="polite">{ganaste ? '✓ ¡Completaste el crucigrama!' : mensaje}</p>
 
       <div className="herramientas">
         <button className="secundario" onClick={comprobar}>Comprobar</button>

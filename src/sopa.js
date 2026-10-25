@@ -42,8 +42,11 @@ export function palabrasDisponibles(discoId) {
   return [...mapa.values()]
 }
 
+// los datos no cambian durante la sesión: se calcula una vez por disco
+const cacheJuego = new Map()
 export function discoTieneJuego(discoId) {
-  return palabrasDisponibles(discoId).length >= 5
+  if (!cacheJuego.has(discoId)) cacheJuego.set(discoId, palabrasDisponibles(discoId).length >= 5)
+  return cacheJuego.get(discoId)
 }
 
 function intentarGrilla(candidatas, cantidad) {

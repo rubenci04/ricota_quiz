@@ -156,10 +156,15 @@ export default function Trivia({ onVolver, categoria = 'general' }) {
               onClick={() => responder(idx)}
             >
               {o}
+              {estado.includes('ok') && <span className="marca">✓ Correcto</span>}
+              {estado.includes('mal') && <span className="marca">✗ Incorrecto</span>}
             </button>
           )
         })}
       </div>
+      <p className="feedback" role="status" aria-live="polite">
+        {elegida === null ? '' : elegida === p.correcta ? '✓ Correcto' : `✗ Incorrecto. La respuesta era: ${p.opciones[p.correcta]}`}
+      </p>
       {elegida !== null && (
         <button className="nueva" onClick={siguiente}>
           {i + 1 < preguntas.length ? 'Siguiente' : 'Terminar'}

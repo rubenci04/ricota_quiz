@@ -3,12 +3,14 @@ import { normalizar } from './sopa.js'
 import hechosBanda from './data/banda.json'
 
 export const PREGUNTAS_POR_NIVEL = 10
+const MAX_PREGUNTAS_ANIO = 2
 const { discos, canciones, integrantes } = datos
 // solo se usan preguntas de la banda con fuente confirmada
 const hechos = hechosBanda.filter((h) => h.verificada === true)
 
 const azar = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
+// Fisher–Yates
 function mezclar(arr) {
   const a = [...arr]
   for (let i = a.length - 1; i > 0; i--) {
@@ -27,20 +29,24 @@ function armar(texto, correcta, pool, extra = {}) {
 }
 
 const tituloDisco = (id) => discos.find((d) => d.id === id).titulo
+const anioDe = (id) => discos.find((d) => d.id === id).anio
+const porAnio = [...discos].sort((a, b) => a.anio - b.anio)
+const cancionesDe = (id) => canciones.filter((c) => c.disco === id).map((c) => c.titulo)
 
+// ---------- preguntas generales (todas salen de datos del JSON)
 function preguntaAnio() {
   const d = azar(discos)
   const anios = discos.map((x) => String(x.anio))
   const tema = canciones.find((c) => c.disco === d.id)
   const ayuda = tema ? `Incluye la canción «${tema.titulo}»` : `Es de los años ${Math.floor(d.anio / 10) * 10}`
-  return armar(`¿En qué año salió el disco "${d.titulo}"?`, String(d.anio), anios, { ayuda })
+  const p = armar(`¿En qué año salió el disco "${d.titulo}"?`, String(d.anio), anios, { ayuda })
+  return p && { ...p, tipo: 'anio' }
 }
 
 function preguntaDisco() {
   const c = azar(canciones)
-  const anio = discos.find((d) => d.id === c.disco).anio
   return armar(`¿A qué disco pertenece la canción "${c.titulo}"?`, tituloDisco(c.disco), discos.map((d) => d.titulo), {
-    ayuda: `El disco salió en ${anio}`,
+    ayuda: `El disco salió en ${anioDe(c.disco)}`,
   })
 }
 
@@ -60,22 +66,107 @@ function preguntaPalabras() {
   const pool = canciones
     .filter((x) => x.titulo === c.titulo || !norm.every((n) => x.palabras.map(normalizar).includes(n)))
     .map((x) => x.titulo)
-  const anio = discos.find((d) => d.id === c.disco).anio
-  return armar('Adiviná la canción', c.titulo, pool, { pistas: mostradas, ayuda: `La canción salió en ${anio}` })
+  return armar('Adiviná la canción', c.titulo, pool, { pistas: mostradas, ayuda: `La canción salió en ${anioDe(c.disco)}` })
 }
 
-const palabrasTitulo = (t) => t.split(' ').filter((w) => normalizar(w).length >= 4)
+// "Completá el título": sin signos, sin títulos de una palabra ni con guion
+const limpiar = (w) => w.replace(/[^\p{L}\p{N}]/gu, '')
+const ocultables = (t) => t.split(' ').filter((w) => !w.includes('-') && limpiar(w).length >= 4)
+const titulosCompletables = canciones.filter((c) => c.titulo.split(' ').length >= 2 && ocultables(c.titulo).length > 0)
 
 function preguntaTitulo() {
-  const c = azar(canciones.filter((x) => palabrasTitulo(x.titulo).length > 0))
-  const oculta = azar(palabrasTitulo(c.titulo))
-  const enTitulo = c.titulo.split(' ').map(normalizar)
-  const pool = canciones
-    .flatMap((x) => palabrasTitulo(x.titulo))
-    .filter((w) => !enTitulo.includes(normalizar(w)))
-  const titulo = c.titulo.replace(oculta, '_____')
-  return armar(`Completá el título: "${titulo}"`, oculta, pool, {
+  const c = azar(titulosCompletables)
+  const token = azar(ocultables(c.titulo))
+  const oculta = limpiar(token).toLowerCase()
+  const enTitulo = c.titulo.split(' ').map((w) => normalizar(limpiar(w)))
+  const vistas = new Set()
+  const pool = []
+  for (const x of canciones) {
+    if (x.titulo.split(' ').length < 2) continue
+    for (const w of ocultables(x.titulo)) {
+      const l = limpiar(w).toLowerCase()
+      const k = normalizar(l)
+      if (enTitulo.includes(k) || vistas.has(k)) continue
+      vistas.add(k)
+      pool.push(l)
+    }
+  }
+  const mostrado = c.titulo
+    .split(' ')
+    .map((w) => (w === token ? w.replace(/[\p{L}\p{N}]+/u, '_____') : w))
+    .join(' ')
+  return armar(`Completá el título: "${mostrado}"`, oculta, pool, {
     ayuda: `Es de «${tituloDisco(c.disco)}» y la palabra tiene ${oculta.length} letras`,
+  })
+}
+
+// ---------- variantes sobre discos, canciones e integrantes
+function opcionesDe(lista, correctaFn) {
+  const opciones = mezclar(lista)
+  return { opciones: opciones.map((d) => d.titulo), correcta: opciones.findIndex(correctaFn) }
+}
+
+function preguntaPrimero() {
+  const cuatro = mezclar(discos).slice(0, 4)
+  const gana = cuatro.reduce((a, b) => (b.anio < a.anio ? b : a))
+  return { texto: '¿Cuál de estos discos salió primero?', ...opcionesDe(cuatro, (d) => d === gana), ayuda: 'El más antiguo es de los años ' + Math.floor(gana.anio / 10) * 10, dato: `«${gana.titulo}» salió en ${gana.anio}.` }
+}
+
+function preguntaUltimo() {
+  const cuatro = mezclar(discos).slice(0, 4)
+  const gana = cuatro.reduce((a, b) => (b.anio > a.anio ? b : a))
+  return { texto: '¿Cuál de estos discos salió último?', ...opcionesDe(cuatro, (d) => d === gana), ayuda: 'El más nuevo es de ' + gana.anio, dato: `«${gana.titulo}» salió en ${gana.anio}.` }
+}
+
+function preguntaNoPertenece() {
+  const d = azar(discos.filter((x) => cancionesDe(x.id).length >= 3))
+  const ajenas = canciones.filter((c) => c.disco !== d.id)
+  const extra = azar(ajenas)
+  return armar(`¿Qué canción NO pertenece al disco «${d.titulo}»?`, extra.titulo, [extra.titulo, ...cancionesDe(d.id)], {
+    ayuda: `La intrusa es de un disco de ${anioDe(extra.disco)}`,
+    dato: `«${extra.titulo}» es de «${tituloDisco(extra.disco)}».`,
+  })
+}
+
+function preguntaEntre() {
+  const i = 1 + Math.floor(Math.random() * (porAnio.length - 2))
+  const [antes, medio, despues] = [porAnio[i - 1], porAnio[i], porAnio[i + 1]]
+  return armar(
+    `¿Qué disco salió entre «${antes.titulo}» y «${despues.titulo}»?`,
+    medio.titulo,
+    porAnio.filter((d) => d !== antes && d !== despues).map((d) => d.titulo),
+    { ayuda: `Salió en ${medio.anio}`, dato: `«${medio.titulo}» salió en ${medio.anio}.` },
+  )
+}
+
+function preguntaDecada() {
+  const d = azar(discos)
+  const decada = Math.floor(d.anio / 10) * 10
+  const etiqueta = decada >= 2000 ? '2000' : String(decada % 100)
+  const otros = discos.filter((x) => Math.floor(x.anio / 10) * 10 !== decada).map((x) => x.titulo)
+  return armar(`¿Cuál de estos discos salió en los años ${etiqueta}?`, d.titulo, [d.titulo, ...otros], {
+    ayuda: `Es de ${d.anio}`,
+    dato: `«${d.titulo}» salió en ${d.anio}.`,
+  })
+}
+
+function preguntaCancionDeDisco() {
+  const d = azar(discos.filter((x) => cancionesDe(x.id).length >= 1))
+  const propia = azar(cancionesDe(d.id))
+  const ajenas = canciones.filter((c) => c.disco !== d.id).map((c) => c.titulo)
+  return armar(`¿Cuál de estas canciones pertenece a «${d.titulo}»?`, propia, [propia, ...ajenas], {
+    ayuda: `El disco salió en ${d.anio}`,
+  })
+}
+
+function preguntaQuien() {
+  const raiz = (r) => r.split(' ')[0]
+  const unicos = integrantes.filter((i) => integrantes.filter((x) => raiz(x.rol) === raiz(i.rol)).length === 1)
+  const i = azar(unicos)
+  const rol = i.rol.replace(/\s*\(.*\)/, '').toLowerCase()
+  return armar(`¿Qué integrante tenía el rol de «${rol}»?`, i.apodo, integrantes.map((x) => x.apodo), {
+    ayuda: `La respuesta empieza con «${i.apodo[0]}»`,
+    dato: `${i.apodo}: ${i.rol}.`,
   })
 }
 
@@ -85,30 +176,57 @@ const GENERADORES = {
   c: preguntaRol,
   d: preguntaPalabras,
   e: preguntaTitulo,
+  f: preguntaPrimero,
+  g: preguntaUltimo,
+  h: preguntaNoPertenece,
+  i: preguntaEntre,
+  j: preguntaDecada,
+  k: preguntaCancionDeDisco,
+  l: preguntaQuien,
 }
+
+// Evita repetidas dentro de la partida y limita las de tipo "año".
+function crearContexto() {
+  return { vistas: new Set(), anios: 0 }
+}
+
+function intentar(gen, ctx) {
+  for (let i = 0; i < 30; i++) {
+    const p = gen()
+    if (!p) continue
+    if (p.tipo === 'anio' && ctx.anios >= MAX_PREGUNTAS_ANIO) return null
+    const k = p.texto + (p.pistas || []).join()
+    if (ctx.vistas.has(k)) continue
+    ctx.vistas.add(k)
+    if (p.tipo === 'anio') ctx.anios += 1
+    return p
+  }
+  return null
+}
+
+// Prueba el generador preferido y, si no sirve, otros; respeta siempre las repetidas.
+function pedir(preferido, alternativas, ctx) {
+  for (const gen of [preferido, ...mezclar(alternativas)]) {
+    const p = intentar(gen, ctx)
+    if (p) return p
+  }
+  return intentar(preguntaPrimero, ctx) || preguntaPrimero()
+}
+
+const BASICOS = [preguntaAnio, preguntaDisco, preguntaRol, preguntaPrimero, preguntaUltimo, preguntaNoPertenece, preguntaEntre, preguntaDecada, preguntaCancionDeDisco, preguntaQuien]
 
 // Cuanto más alto el nivel, más preguntas de tipo d y e.
 export function armarNivel(nivel) {
+  const ctx = crearContexto()
   const dye = Math.min(PREGUNTAS_POR_NIVEL, 2 * nivel)
   const tipos = mezclar([
-    ...Array.from({ length: dye }, (_, i) => (i % 2 ? 'e' : 'd')),
-    ...Array.from({ length: PREGUNTAS_POR_NIVEL - dye }, () => azar(['a', 'b', 'c'])),
+    ...Array.from({ length: dye }, (_, i) => (i % 2 ? preguntaTitulo : preguntaPalabras)),
+    ...Array.from({ length: PREGUNTAS_POR_NIVEL - dye }, () => azar(BASICOS)),
   ])
-  const vistas = new Set()
-  return tipos.map((t) => {
-    for (let i = 0; i < 30; i++) {
-      const p = GENERADORES[t]()
-      if (!p) continue
-      const k = p.texto + (p.pistas || []).join()
-      if (vistas.has(k)) continue
-      vistas.add(k)
-      return p
-    }
-    return GENERADORES.a()
-  })
+  return tipos.map((gen) => pedir(gen, BASICOS, ctx))
 }
 
-// ---- La banda: preguntas de nicho (datos curados con fuente + generadas del JSON)
+// ---------- La banda: preguntas de nicho (datos curados con fuente + generadas del JSON)
 const unir = (autores) => autores.join(' y ')
 
 function preguntaAutor() {
@@ -123,12 +241,12 @@ function preguntaAutor() {
   ]
   return armar(`¿Quiénes figuran como autores de «${c.titulo}»?`, correcta, distractoras, {
     ayuda: `Figura en el disco «${tituloDisco(c.disco)}»`,
-    dato: `Autoría según el informe y Wikipedia: ${correcta}.`,
+    dato: `Autoría según Wikipedia: ${correcta}.`,
   })
 }
 
 function preguntaPrimerDisco() {
-  const primero = [...discos].sort((a, b) => a.anio - b.anio)[0]
+  const primero = porAnio[0]
   return armar('¿Cuál fue el primer disco de estudio de la banda?', primero.titulo, discos.map((d) => d.titulo), {
     ayuda: `Salió en ${primero.anio}`,
   })
@@ -146,24 +264,16 @@ function preguntaCurada() {
   }
 }
 
+const GENERADAS_BANDA = [preguntaAutor, preguntaRol, preguntaAnio, preguntaPrimerDisco, preguntaPrimero, preguntaUltimo, preguntaNoPertenece, preguntaEntre, preguntaDecada, preguntaQuien]
+
 export function armarNivelBanda(nivel) {
+  const ctx = crearContexto()
   const curadas = Math.min(PREGUNTAS_POR_NIVEL - 2, 4 + nivel)
   const tipos = mezclar([
     ...Array.from({ length: curadas }, () => preguntaCurada),
-    ...Array.from({ length: PREGUNTAS_POR_NIVEL - curadas }, () =>
-      azar([preguntaAutor, preguntaRol, preguntaAnio, preguntaPrimerDisco]),
-    ),
+    ...Array.from({ length: PREGUNTAS_POR_NIVEL - curadas }, () => azar(GENERADAS_BANDA)),
   ])
-  const vistas = new Set()
-  return tipos.map((gen) => {
-    for (let i = 0; i < 40; i++) {
-      const p = gen()
-      if (!p || vistas.has(p.texto)) continue
-      vistas.add(p.texto)
-      return p
-    }
-    return preguntaAnio()
-  })
+  return tipos.map((gen) => pedir(gen, GENERADAS_BANDA, ctx))
 }
 
 export function curiosidadAlAzar() {

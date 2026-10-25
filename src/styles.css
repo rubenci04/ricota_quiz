@@ -80,6 +80,7 @@ button, select { font: inherit; color: inherit; }
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 .celda {
   display: flex; align-items: center; justify-content: center;
@@ -227,3 +228,16 @@ button, select { font: inherit; color: inherit; }
 .musica-titulo { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.7rem; color: var(--tenue); }
 .musica-barra button { width: 28px; height: 28px; padding: 0; background: var(--bg); border: 1px solid var(--borde); cursor: pointer; }
 .con-musica .pantalla { padding-bottom: 270px; }
+
+/* accesibilidad: ícono y texto además del color */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.feedback { margin: 0; min-height: 1.4em; width: 100%; text-align: center; font-weight: 700; }
+.opcion { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.marca { font-size: 0.8rem; font-weight: 700; white-space: nowrap; }
+.opcion.ok .marca { color: #6fe0aa; }
+.opcion.mal .marca { color: #ff8a80; }
+.tecla.ok::after, .casilla.ok::after, .letra.ok::after { content: ' ✓'; font-size: 0.7em; }
+.tecla.mal::after, .casilla.mal::after, .letra.mal::after { content: ' ✗'; font-size: 0.7em; }
+.letra.ok::after, .letra.mal::after { position: absolute; right: 2px; bottom: 0; }
+.par-casillas { display: flex; align-items: flex-end; gap: 4px; }
+.guion { font-weight: 700; font-size: 1.3rem; color: var(--acento); padding-bottom: 4px; }
