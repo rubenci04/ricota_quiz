@@ -3,21 +3,21 @@ import SopaDeLetras from './SopaDeLetras.jsx'
 import Trivia from './Trivia.jsx'
 import Adivinanzas from './Adivinanzas.jsx'
 import Crucigrama from './Crucigrama.jsx'
-import Ahorcado from './Ahorcado.jsx'
 import Musica from './Musica.jsx'
 import { alternarSonido, sonar, sonidoActivo } from './sonido.js'
 import { leer } from './storage.js'
 
 const MODOS = [
+  { id: 'banda', nombre: 'La banda', detalle: 'Trivia de nicho para los que saben', activo: true },
   { id: 'sopa', nombre: 'Sopa de letras', activo: true },
   { id: 'trivia', nombre: 'Trivia', activo: true },
-  { id: 'adivinanzas', nombre: 'Adivinanzas', activo: true },
+  { id: 'adivinanzas', nombre: 'Adivinanzas', detalle: 'Dicho de otra forma', activo: true },
   { id: 'crucigrama', nombre: 'Crucigrama', activo: true },
-  { id: 'ahorcado', nombre: 'Ahorcado', activo: true },
 ]
 
 export default function App() {
   const [entro, setEntro] = useState(false)
+  const [jugadores, setJugadores] = useState(null) // 'solo' | null (vs amigo: próximamente)
   const [modo, setModo] = useState(null)
   const [sonido, setSonido] = useState(sonidoActivo)
   const volver = () => setModo(null)
@@ -33,11 +33,27 @@ export default function App() {
         <p className="aviso">Juego de fans, no oficial, sin relación con la banda.</p>
       </main>
     )
+  } else if (!jugadores) {
+    contenido = (
+      <main className="pantalla inicio">
+        <h1 className="logo">ricota_quiz</h1>
+        <p className="sub">¿Cómo querés jugar?</p>
+        <nav className="menu">
+          <button className="modo" onClick={() => setJugadores('solo')}>
+            <span>Un jugador<small>Practicá y sumá puntos</small></span>
+          </button>
+          <button className="modo" disabled>
+            <span>Contra un amigo<small>Sala online: elegís juegos y temática</small></span>
+            <em className="pronto">Próximamente</em>
+          </button>
+        </nav>
+      </main>
+    )
   } else if (modo === 'sopa') contenido = <SopaDeLetras onVolver={volver} />
   else if (modo === 'trivia') contenido = <Trivia onVolver={volver} />
   else if (modo === 'adivinanzas') contenido = <Adivinanzas onVolver={volver} />
   else if (modo === 'crucigrama') contenido = <Crucigrama onVolver={volver} />
-  else if (modo === 'ahorcado') contenido = <Ahorcado onVolver={volver} />
+  else if (modo === 'banda') contenido = <Trivia onVolver={volver} categoria="banda" />
   else {
     contenido = (
       <main className="pantalla inicio">
@@ -51,7 +67,7 @@ export default function App() {
               disabled={!m.activo}
               onClick={() => setModo(m.id)}
             >
-              <span>{m.nombre}</span>
+              <span>{m.nombre}{m.detalle && <small>{m.detalle}</small>}</span>
               {!m.activo && <em className="pronto">Próximamente</em>}
             </button>
           ))}
@@ -61,7 +77,7 @@ export default function App() {
           <div><b>{g.mejor}/10</b>Mejor trivia</div>
           <div><b>{g.sopas}</b>Sopas hechas</div>
           <div><b>{g.adivinanzas}</b>Pts adivinanzas</div>
-          <div><b>{g.racha}</b>Racha ahorcado</div>
+          <div><b>{g.nivelBanda}</b>Nivel banda</div>
         </section>
       </main>
     )

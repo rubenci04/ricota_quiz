@@ -1,5 +1,6 @@
 import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
+import hechos from './data/banda.json'
 
 export const PREGUNTAS_POR_NIVEL = 10
 const { discos, canciones, integrantes } = datos
@@ -102,6 +103,64 @@ export function armarNivel(nivel) {
       return p
     }
     return GENERADORES.a()
+  })
+}
+
+// ---- La banda: preguntas de nicho (datos curados con fuente + generadas del JSON)
+const unir = (autores) => autores.join(' y ')
+
+function preguntaAutor() {
+  const c = azar(canciones.filter((x) => x.autores?.length))
+  const correcta = unir(c.autores)
+  const distractoras = [
+    unir(['Eduardo "Skay" Beilinson', 'Walter Sidotti']),
+    unir(['Carlos "Indio" Solari', 'Sergio Dawi']),
+    unir(['Daniel "Semilla" Bucciarelli', 'Walter Sidotti']),
+    unir(['Carlos "Indio" Solari', 'Eduardo "Skay" Beilinson']),
+    unir(['Carlos "Indio" Solari', 'Eduardo "Skay" Beilinson', 'Daniel "Semilla" Bucciarelli']),
+  ]
+  return armar(`¿Quiénes figuran como autores de «${c.titulo}»?`, correcta, distractoras, {
+    ayuda: `Figura en el disco «${tituloDisco(c.disco)}»`,
+    dato: `Autoría según el informe y Wikipedia: ${correcta}.`,
+  })
+}
+
+function preguntaPrimerDisco() {
+  const primero = [...discos].sort((a, b) => a.anio - b.anio)[0]
+  return armar('¿Cuál fue el primer disco de estudio de la banda?', primero.titulo, discos.map((d) => d.titulo), {
+    ayuda: `Salió en ${primero.anio}`,
+  })
+}
+
+function preguntaCurada() {
+  const h = azar(hechos)
+  const opciones = mezclar([h.correcta, ...h.incorrectas])
+  return {
+    texto: h.pregunta,
+    opciones,
+    correcta: opciones.indexOf(h.correcta),
+    ayuda: `La respuesta empieza con «${h.correcta[0]}»`,
+    dato: h.dato,
+  }
+}
+
+export function armarNivelBanda(nivel) {
+  const curadas = Math.min(PREGUNTAS_POR_NIVEL - 2, 4 + nivel)
+  const tipos = mezclar([
+    ...Array.from({ length: curadas }, () => preguntaCurada),
+    ...Array.from({ length: PREGUNTAS_POR_NIVEL - curadas }, () =>
+      azar([preguntaAutor, preguntaRol, preguntaAnio, preguntaPrimerDisco]),
+    ),
+  ])
+  const vistas = new Set()
+  return tipos.map((gen) => {
+    for (let i = 0; i < 40; i++) {
+      const p = gen()
+      if (!p || vistas.has(p.texto)) continue
+      vistas.add(p.texto)
+      return p
+    }
+    return preguntaAnio()
   })
 }
 

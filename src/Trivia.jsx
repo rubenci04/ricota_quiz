@@ -1,12 +1,15 @@
 import { useState } from 'react'
-import { PREGUNTAS_POR_NIVEL, armarNivel, curiosidadAlAzar } from './trivia.js'
+import { PREGUNTAS_POR_NIVEL, armarNivel, armarNivelBanda, curiosidadAlAzar } from './trivia.js'
 import { guardar, leer } from './storage.js'
 import Confeti from './Confeti.jsx'
 import { sonar } from './sonido.js'
 
 const PUNTOS_PARA_PASAR = 6
 
-export default function Trivia({ onVolver }) {
+export default function Trivia({ onVolver, categoria = 'general' }) {
+  const banda = categoria === 'banda'
+  const kNivel = banda ? 'nivelBanda' : 'nivel'
+  const kMejor = banda ? 'mejorBanda' : 'mejor'
   const [vista, setVista] = useState('niveles') // niveles | jugando | fin
   const [nivel, setNivel] = useState(1)
   const [preguntas, setPreguntas] = useState([])
@@ -22,7 +25,7 @@ export default function Trivia({ onVolver }) {
 
   const jugar = (n) => {
     setNivel(n)
-    setPreguntas(armarNivel(n))
+    setPreguntas(banda ? armarNivelBanda(n) : armarNivel(n))
     setI(0)
     setElegida(null)
     setPuntos(0)
@@ -59,8 +62,8 @@ export default function Trivia({ onVolver }) {
     const actual = leer()
     setGuardado(
       guardar({
-        nivel: puntos >= PUNTOS_PARA_PASAR ? Math.max(actual.nivel, nivel + 1) : actual.nivel,
-        mejor: Math.max(actual.mejor, puntos),
+        [kNivel]: puntos >= PUNTOS_PARA_PASAR ? Math.max(actual[kNivel], nivel + 1) : actual[kNivel],
+        [kMejor]: Math.max(actual[kMejor], puntos),
       }),
     )
     setCuriosidad(puntos >= PUNTOS_PARA_PASAR ? curiosidadAlAzar() : null)
@@ -72,14 +75,14 @@ export default function Trivia({ onVolver }) {
       <main className="pantalla" key="niveles">
         <header className="barra">
           <button className="volver" onClick={onVolver} aria-label="Volver al menú">←</button>
-          <h2>Trivia</h2>
-          <span className="contador">Récord {guardado.mejor}/{PREGUNTAS_POR_NIVEL}</span>
+          <h2>{banda ? 'La banda' : 'Trivia'}</h2>
+          <span className="contador">Récord {guardado[kMejor]}/{PREGUNTAS_POR_NIVEL}</span>
         </header>
         <div className="menu">
-          {Array.from({ length: guardado.nivel }, (_, k) => k + 1).reverse().map((n) => (
+          {Array.from({ length: guardado[kNivel] }, (_, k) => k + 1).reverse().map((n) => (
             <button key={n} className="modo" onClick={() => jugar(n)}>
               <span>Nivel {n}</span>
-              {n === guardado.nivel && <em className="pronto nuevo">Nuevo</em>}
+              {n === guardado[kNivel] && <em className="pronto nuevo">Nuevo</em>}
             </button>
           ))}
         </div>
@@ -125,6 +128,7 @@ export default function Trivia({ onVolver }) {
           </ul>
         )}
         {verAyuda && <p className="datos-disco">Pista: {p.ayuda}</p>}
+        {elegida !== null && p.dato && <p className="datos-disco">{p.dato}</p>}
       </div>
       {elegida === null && (
         <div className="herramientas">

@@ -1,5 +1,5 @@
 {
-  "_aviso": "Discos, años, canciones por disco e integrantes contrastados con Wikipedia. Las palabras de las canciones con palabras_verificadas: true se comprobaron contra un informe privado de letras (no incluido en el repositorio); las demás siguen sin verificar.",
+  "_aviso": "Discos, años, canciones por disco e integrantes contrastados con Wikipedia. Las palabras de las 35 canciones se comprobaron contra un informe privado de letras (no incluido en el repositorio).",
   "banda": {
     "nombre": "Patricio Rey y sus Redonditos de Ricota",
     "apodo": "Los Redondos",
@@ -129,6 +129,10 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Rock y música",
+        "Vida, muerte y existencia"
       ]
     },
     {
@@ -172,6 +176,10 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Rock y música",
+        "Política y sociedad"
       ]
     },
     {
@@ -215,6 +223,10 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Rock y música",
+        "Política y sociedad"
       ]
     },
     {
@@ -254,6 +266,10 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Política y sociedad",
+        "Vida, muerte y existencia"
       ]
     },
     {
@@ -297,6 +313,9 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Vida, muerte y existencia"
       ]
     },
     {
@@ -340,6 +359,9 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Personajes y relatos"
       ]
     },
     {
@@ -383,6 +405,9 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Amor y desamor"
       ]
     },
     {
@@ -422,6 +447,10 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Personajes y relatos",
+        "Noche y bajos fondos"
       ]
     },
     {
@@ -465,6 +494,9 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Política y sociedad"
       ]
     },
     {
@@ -508,6 +540,10 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Vida, muerte y existencia",
+        "Rock y música"
       ]
     },
     {
@@ -551,6 +587,10 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Amor y desamor",
+        "Vida, muerte y existencia"
       ]
     },
     {
@@ -592,6 +632,9 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Amor y desamor"
       ]
     },
     {
@@ -631,6 +674,10 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Noche y bajos fondos",
+        "Política y sociedad"
       ]
     },
     {
@@ -674,6 +721,10 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Política y sociedad",
+        "Vida, muerte y existencia"
       ]
     },
     {
@@ -688,7 +739,10 @@
         "luna",
         "tipas",
         "lengua",
-        "rabia"
+        "rabia",
+        "remolque",
+        "premio",
+        "plomo"
       ],
       "frases": [
         "Salando las heridas"
@@ -703,11 +757,22 @@
         "luna": "Satélite natural de la Tierra",
         "tipas": "Mujeres, en el habla coloquial",
         "lengua": "Órgano de la boca; también, idioma",
-        "rabia": "Enojo violento"
+        "rabia": "Enojo violento",
+        "remolque": "Vehículo arrastrado por otro",
+        "premio": "Recompensa por un logro",
+        "plomo": "Metal pesado, gris y blando"
       },
       "titulo_parafraseado": "Echando condimento sobre las lesiones",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Noche y bajos fondos",
+        "Personajes y relatos"
+      ]
     },
     {
       "titulo": "Queso ruso",
@@ -746,6 +811,9 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Política y sociedad"
       ]
     },
     {
@@ -785,6 +853,9 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Amor y desamor"
       ]
     },
     {
@@ -792,9 +863,15 @@
       "disco": "lobo",
       "palabras": [
         "caníbal",
-        "carne",
-        "hambre",
-        "devorar"
+        "estilo",
+        "cordero",
+        "fuego",
+        "bolsillos",
+        "mordiscos",
+        "banquete",
+        "vermouth",
+        "bebiendo",
+        "coliseo"
       ],
       "frases": [
         "Yo caníbal"
@@ -802,13 +879,26 @@
       "verificar": true,
       "definiciones": {
         "caníbal": "Que come carne de su propia especie",
-        "carne": "Músculo animal que se come",
-        "hambre": "Ganas intensas de comer",
-        "devorar": "Tragar con mucha ansia"
+        "estilo": "Modo particular de hacer algo",
+        "cordero": "Cría de la oveja",
+        "fuego": "Calor y luz de una combustión",
+        "bolsillos": "Bolsas cosidas en la ropa",
+        "mordiscos": "Heridas hechas apretando con los dientes",
+        "banquete": "Comida abundante y festiva",
+        "vermouth": "Aperitivo de vino aromatizado",
+        "bebiendo": "Tomando un líquido",
+        "coliseo": "Gran anfiteatro romano"
       },
       "titulo_parafraseado": "Yo, devorador de personas",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Vida, muerte y existencia"
+      ]
     },
     {
       "titulo": "Nuestro amo juega al esclavo",
@@ -851,6 +941,9 @@
       "autores": [
         "Carlos \"Indio\" Solari",
         "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Política y sociedad"
       ]
     },
     {
@@ -859,9 +952,16 @@
       "palabras": [
         "hija",
         "fletero",
-        "rasgueo",
-        "melancólico",
-        "dolorida"
+        "recordar",
+        "endurece",
+        "corazón",
+        "rencor",
+        "ciegos",
+        "sordos",
+        "reputación",
+        "huérfano",
+        "buzón",
+        "cartas"
       ],
       "frases": [
         "La hija del fletero"
@@ -870,13 +970,28 @@
       "definiciones": {
         "hija": "Mujer respecto de sus padres",
         "fletero": "Quien transporta cargas a cambio de pago",
-        "rasgueo": "Modo de tocar rozando las cuerdas",
-        "melancólico": "Triste y soñador",
-        "dolorida": "Lastimada, que sufre"
+        "recordar": "Traer algo a la memoria",
+        "endurece": "Vuelve más duro o rígido",
+        "corazón": "Órgano que bombea la sangre",
+        "rencor": "Resentimiento profundo y duradero",
+        "ciegos": "Que carecen de vista",
+        "sordos": "Que no pueden oír",
+        "reputación": "Opinión que la gente tiene de alguien",
+        "huérfano": "Menor sin padres",
+        "buzón": "Caja donde se depositan cartas",
+        "cartas": "Escritos enviados por correo"
       },
       "titulo_parafraseado": "La nena del transportista",
-      "palabras_verificadas": false,
-      "disco_verificado": true
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Amor y desamor",
+        "Personajes y relatos"
+      ]
     },
     {
       "titulo": "El infierno está encantador esta noche",
@@ -912,7 +1027,11 @@
       "palabras_verificadas": true,
       "disco_verificado": true,
       "titulo_parafraseado": "Hoy el averno resulta fascinante entre sombras",
-      "verificar": false
+      "verificar": false,
+      "temas": [
+        "Rock y música",
+        "Noche y bajos fondos"
+      ]
     },
     {
       "titulo": "Gualicho",
@@ -948,7 +1067,10 @@
       "palabras_verificadas": true,
       "disco_verificado": true,
       "titulo_parafraseado": "Hechizo malévolo del folclore criollo",
-      "verificar": false
+      "verificar": false,
+      "temas": [
+        "Amor y desamor"
+      ]
     },
     {
       "titulo": "La parabellum del buen psicópata",
@@ -984,7 +1106,11 @@
       "palabras_verificadas": true,
       "disco_verificado": true,
       "titulo_parafraseado": "La pistola del demente amable",
-      "verificar": false
+      "verificar": false,
+      "temas": [
+        "Vida, muerte y existencia",
+        "Política y sociedad"
+      ]
     },
     {
       "titulo": "Caña seca y un membrillo",
@@ -1020,7 +1146,11 @@
       "palabras_verificadas": true,
       "disco_verificado": true,
       "titulo_parafraseado": "Aguardiente puro y una fruta amarilla",
-      "verificar": false
+      "verificar": false,
+      "temas": [
+        "Amor y desamor",
+        "Noche y bajos fondos"
+      ]
     },
     {
       "titulo": "Vamos las bandas",
@@ -1056,7 +1186,11 @@
       "palabras_verificadas": true,
       "disco_verificado": true,
       "titulo_parafraseado": "Adelante, grupos de seguidores",
-      "verificar": false
+      "verificar": false,
+      "temas": [
+        "Rock y música",
+        "Política y sociedad"
+      ]
     },
     {
       "titulo": "Mi perro dinamita",
@@ -1093,7 +1227,10 @@
       "palabras_verificadas": true,
       "disco_verificado": true,
       "titulo_parafraseado": "Mi can explosivo",
-      "verificar": false
+      "verificar": false,
+      "temas": [
+        "Rock y música"
+      ]
     },
     {
       "titulo": "Ya nadie va a escuchar tu remera",
@@ -1129,7 +1266,10 @@
       "palabras_verificadas": true,
       "disco_verificado": true,
       "titulo_parafraseado": "Ninguna persona prestará oído a tu prenda estampada",
-      "verificar": false
+      "verificar": false,
+      "temas": [
+        "Rock y música"
+      ]
     },
     {
       "titulo": "Me matan, Limón!",
@@ -1165,7 +1305,289 @@
       "palabras_verificadas": true,
       "disco_verificado": true,
       "titulo_parafraseado": "¡Me asesinan, fruto cítrico!",
-      "verificar": false
+      "verificar": false,
+      "temas": [
+        "Personajes y relatos"
+      ]
+    },
+    {
+      "titulo": "Mariposa Pontiac - rock del país",
+      "disco": "luzbelito",
+      "titulo_parafraseado": "Insecto alado de auto norteamericano y ritmo eléctrico nacional",
+      "verificar": false,
+      "palabras": [
+        "suburbana",
+        "obsesiona",
+        "caricias",
+        "prisión",
+        "rocanrol",
+        "recital",
+        "lechuza",
+        "boleto",
+        "ensayo",
+        "pavito"
+      ],
+      "definiciones": {
+        "suburbana": "Propia de las afueras de una ciudad",
+        "obsesiona": "Domina la mente de forma constante",
+        "caricias": "Roces suaves hechos con la mano",
+        "prisión": "Lugar donde se encierra a condenados",
+        "rocanrol": "Escritura criolla de cierto género musical",
+        "recital": "Concierto de un artista o grupo",
+        "lechuza": "Ave rapaz nocturna de ojos grandes",
+        "boleto": "Entrada o pasaje de transporte",
+        "ensayo": "Prueba previa de una obra",
+        "pavito": "Cría de un ave de corral grande"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "temas": [
+        "Rock y música",
+        "Amor y desamor"
+      ]
+    },
+    {
+      "titulo": "Todo preso es político",
+      "disco": "baion",
+      "titulo_parafraseado": "Cada encarcelado lo está por razones de poder",
+      "verificar": false,
+      "palabras": [
+        "confesión",
+        "ascensor",
+        "pestañear",
+        "obligados",
+        "propiedad",
+        "temerosos",
+        "esclavos",
+        "escapar",
+        "cárcel",
+        "quince"
+      ],
+      "definiciones": {
+        "confesión": "Reconocimiento de una culpa o secreto",
+        "ascensor": "Cabina que sube y baja por un edificio",
+        "pestañear": "Abrir y cerrar los párpados",
+        "obligados": "Forzados a hacer algo",
+        "propiedad": "Cosa que pertenece a alguien",
+        "temerosos": "Que sienten miedo",
+        "esclavos": "Personas sin libertad, propiedad de otros",
+        "escapar": "Huir para librarse de algo",
+        "cárcel": "Edificio donde se encierra a condenados",
+        "quince": "Número entre catorce y dieciséis"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "temas": [
+        "Política y sociedad"
+      ]
+    },
+    {
+      "titulo": "Aquella solitaria vaca cubana",
+      "disco": "baion",
+      "titulo_parafraseado": "Esa res aislada de la isla caribeña",
+      "verificar": false,
+      "palabras": [
+        "tiempo",
+        "justo",
+        "civilización",
+        "salvada",
+        "rumiaba",
+        "silbido",
+        "eterno",
+        "viento",
+        "cielo",
+        "motor"
+      ],
+      "definiciones": {
+        "tiempo": "Duración medida en horas y días",
+        "justo": "Que obra con equidad; exacto",
+        "civilización": "Conjunto de costumbres de una sociedad avanzada",
+        "salvada": "Librada de un peligro",
+        "rumiaba": "Masticaba de nuevo el alimento regurgitado",
+        "silbido": "Sonido agudo hecho con los labios",
+        "eterno": "Sin principio ni fin",
+        "viento": "Corriente de aire en movimiento",
+        "cielo": "Espacio sobre la Tierra donde están los astros",
+        "motor": "Máquina que produce movimiento"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "temas": [
+        "Política y sociedad",
+        "Personajes y relatos"
+      ]
+    },
+    {
+      "titulo": "Blues de la artillería",
+      "disco": "mosca",
+      "titulo_parafraseado": "Melancolía musical de los cañones",
+      "verificar": false,
+      "palabras": [
+        "sueño",
+        "maldita",
+        "valija",
+        "moneda",
+        "bares",
+        "aristócrata",
+        "aconsejar",
+        "cotillón",
+        "acento",
+        "bodega"
+      ],
+      "definiciones": {
+        "sueño": "Imagen mental que aparece al dormir",
+        "maldita": "Que merece una condena",
+        "valija": "Maleta de viaje",
+        "moneda": "Pieza de metal usada como dinero",
+        "bares": "Locales donde se sirven bebidas",
+        "aristócrata": "Miembro de la nobleza o clase alta",
+        "aconsejar": "Dar un parecer para orientar",
+        "cotillón": "Artículos para fiestas",
+        "acento": "Forma particular de pronunciar",
+        "bodega": "Lugar donde se guarda vino"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "temas": [
+        "Noche y bajos fondos",
+        "Personajes y relatos"
+      ]
+    },
+    {
+      "titulo": "Toxi-Taxi",
+      "disco": "mosca",
+      "titulo_parafraseado": "Vehículo de alquiler envenenado",
+      "verificar": false,
+      "palabras": [
+        "animal",
+        "detrás",
+        "fiera",
+        "lamentos",
+        "moscas",
+        "abandonado",
+        "feroz",
+        "notables",
+        "secretos",
+        "negocio"
+      ],
+      "definiciones": {
+        "animal": "Ser vivo que se mueve y siente",
+        "detrás": "En la parte posterior",
+        "fiera": "Animal salvaje y feroz",
+        "lamentos": "Quejas de dolor o pena",
+        "moscas": "Insectos voladores de dos alas",
+        "abandonado": "Dejado sin cuidado",
+        "feroz": "Salvaje y agresivo",
+        "notables": "Dignos de atención o fama",
+        "secretos": "Cosas que se mantienen ocultas",
+        "negocio": "Actividad comercial para ganar dinero"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "temas": [
+        "Política y sociedad",
+        "Noche y bajos fondos"
+      ]
+    },
+    {
+      "titulo": "Música para pastillas",
+      "disco": "oktubre",
+      "titulo_parafraseado": "Melodías para comprimidos medicinales",
+      "verificar": false,
+      "palabras": [
+        "educaditos",
+        "muchachitas",
+        "cuchillería",
+        "soviéticas",
+        "gimnastas",
+        "patricias",
+        "austeras",
+        "zoquetes",
+        "roqueros",
+        "joyas"
+      ],
+      "definiciones": {
+        "educaditos": "Con buenos modales, en diminutivo",
+        "muchachitas": "Chicas jóvenes",
+        "cuchillería": "Taller o comercio de hojas cortantes",
+        "soviéticas": "De la extinta URSS",
+        "gimnastas": "Deportistas de ejercicios corporales",
+        "patricias": "De la clase alta de la antigua Roma",
+        "austeras": "Sobrias, sin lujos",
+        "zoquetes": "Torpes, de poca inteligencia",
+        "roqueros": "Seguidores o intérpretes de cierto género eléctrico",
+        "joyas": "Adornos de metales y piedras preciosas"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "temas": [
+        "Rock y música",
+        "Política y sociedad"
+      ]
+    },
+    {
+      "titulo": "Una piba con la remera de Greenpeace",
+      "disco": "momo",
+      "titulo_parafraseado": "Una chica con la camiseta de una ONG ecologista",
+      "verificar": false,
+      "palabras": [
+        "corriendo",
+        "zoquetes",
+        "pipiolos",
+        "chisporrotea",
+        "infumable",
+        "hechicera",
+        "paredones",
+        "pajarraco",
+        "sillones",
+        "ingenuo"
+      ],
+      "definiciones": {
+        "corriendo": "Yendo muy rápido a pie",
+        "zoquetes": "Torpes, de poca inteligencia",
+        "pipiolos": "Jóvenes inexpertos",
+        "chisporrotea": "Despide chispas con chasquidos",
+        "infumable": "Insoportable o de pésima calidad",
+        "hechicera": "Mujer que practica la magia",
+        "paredones": "Muros grandes y gruesos",
+        "pajarraco": "Ave grande y de aspecto feo",
+        "sillones": "Asientos grandes y mullidos",
+        "ingenuo": "Cándido, sin malicia"
+      },
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "temas": [
+        "Personajes y relatos",
+        "Noche y bajos fondos"
+      ]
     }
   ],
   "curiosidades": [
