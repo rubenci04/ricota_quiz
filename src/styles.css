@@ -13,7 +13,19 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-button, select { font: inherit; color: inherit; }
+button, select, input { font: inherit; color: inherit; }
+
+.perfiles h1 { margin-bottom: 0; }
+.perfiles p, .perfil-activo { text-align: center; overflow-wrap: anywhere; }
+.form-perfil { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+.form-perfil input { width: 100%; min-width: 0; padding: 12px; background: var(--panel); border: 1px solid var(--borde); border-radius: 8px; }
+.lista-perfiles { list-style: none; padding: 0; width: 100%; display: grid; gap: 10px; }
+.lista-perfiles li { display: flex; gap: 8px; }
+.lista-perfiles li button:first-child { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.tarjeta-modo:disabled { opacity: .55; cursor: not-allowed; }
+/* El formulario necesita toda la superficie táctil, también con el reproductor abierto. */
+.con-musica .app[data-perfiles='true'] .perfiles { min-height: 0; padding-bottom: 32px; }
+.app[data-perfiles='true'] .musica { position: relative; right: auto; bottom: auto; margin: 0 auto 140px; }
 
 .pantalla {
   max-width: 520px;

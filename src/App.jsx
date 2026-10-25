@@ -6,6 +6,8 @@ import Crucigrama from './Crucigrama.jsx'
 import Tutorial from './Tutorial.jsx'
 import RetoDelDia from './RetoDelDia.jsx'
 import Logros from './Logros.jsx'
+import Perfiles from './Perfiles.jsx'
+import { maximoAlcanzado } from './niveles.js'
 import Discografia from './Discografia.jsx'
 import Ahorcado from './Ahorcado.jsx'
 import Legal from './Legal.jsx'
@@ -24,7 +26,7 @@ import {
   vibracionActiva,
   vibracionDisponible,
 } from './sonido.js'
-import { leer, marcarModo } from './storage.js'
+import { leer, leerPerfiles, marcarModo, suscribir } from './storage.js'
 
 // Menú: una tarjeta por modo, cada una con su ícono y su color. "Dicho de otra forma" es la destacada.
 const LISTA_MODOS = [
@@ -46,6 +48,9 @@ const NOMBRES_APARIENCIA = { auto: 'automático', claro: 'claro', oscuro: 'oscur
 const MODOS_MENU = LISTA_MODOS.filter((m) => m.activo)
 
 export default function App() {
+  const [, actualizar] = useState(0)
+  const [verPerfiles, setVerPerfiles] = useState(() => !leerPerfiles().activo)
+  useEffect(() => suscribir(() => actualizar((n) => n + 1)), [])
   const [entro, setEntro] = useState(false)
   const [verTutorial, setVerTutorial] = useState(() => !leer().tutorial)
   const [jugadores, setJugadores] = useState(null) // 'solo' | null (vs amigo: próximamente)
@@ -102,6 +107,10 @@ export default function App() {
   let contenido
   if (pagina) {
     contenido = <Legal seccion={pagina} onVolver={() => setPagina(null)} onMenu={() => setPagina(null)} />
+  } else if (verPerfiles) {
+    contenido = <Perfiles onElegir={() => {
+      setModo(null); setAvisos([]); setVerPerfiles(false); setEntro(true)
+    }} onVolver={() => setVerPerfiles(false)} />
   } else if (!entro) {
     contenido = (
       <main className="pantalla inicio" key="bienvenida">
@@ -187,15 +196,17 @@ export default function App() {
             </button>
           ))}
         </nav>
+        <p className="perfil-activo">Jugando como <strong>{g.alias}</strong></p>
+        <button className="secundario" onClick={() => setVerPerfiles(true)}>Cambiar o editar perfil</button>
         {efemerides.map((e) => (
           <p key={e.dia + e.frase} className="efemeride" role="note">🎂 {e.texto}</p>
         ))}
         <section className="stats">
-          <div><b>{g.nivel}</b>Nivel trivia</div>
+          <div><b>{maximoAlcanzado(g, 'trivia')}</b>Nivel trivia</div>
           <div><b>{g.mejor}/10</b>Mejor trivia</div>
           <div><b>{g.sopas}</b>Sopas hechas</div>
           <div><b>{g.adivinanzas}</b>Pts adivinanzas</div>
-          <div><b>{g.nivelBanda}</b>Nivel banda</div>
+          <div><b>{maximoAlcanzado(g, 'banda')}</b>Nivel banda</div>
           <div><b>{g.crucigramas}</b>Crucigramas</div>
           <div><b>{rachaVigente(g, fechaBA())}</b>Racha reto (máx. {g.rachaMax})</div>
         </section>
@@ -221,8 +232,9 @@ export default function App() {
   }
 
   return (
-    <div className="app" data-modo={modoActual || 'menu'} onClick={alClic}>
+    <div className="app" data-modo={modoActual || 'menu'} data-perfiles={verPerfiles && !pagina} onClick={alClic}>
       {contenido}
+      {leerPerfiles().errorPersistencia && <p className="aviso-amable" role="alert">No se pudo guardar en este navegador. El avance actual solo está en memoria; evitá cerrar o recargar.</p>}
       <div className="avisos-logros" role="status" aria-live="polite">
         {avisos.map((l) => (
           <p key={l.id} className="aviso-logro">🏆 ¡Logro desbloqueado! <strong>{l.nombre}</strong></p>

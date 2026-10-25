@@ -1,0 +1,30 @@
+[
+  {
+    "modo": "trivia",
+    "nivel": 1,
+    "tema": "todos",
+    "semilla": "abcd1234",
+    "hash": "52a22f4801b7812bc11208fa91f58c22d177a0ae41cbf75f2fec149280ed04fc"
+  },
+  {
+    "modo": "trivia",
+    "nivel": 99,
+    "tema": "amor",
+    "semilla": "viejo999",
+    "hash": "cc02c1de932a48fff1cb96272fc16bec3141e51285c02cabbcd6ab0f00e191f0"
+  },
+  {
+    "modo": "banda",
+    "nivel": 4,
+    "tema": "todos",
+    "semilla": "abcd1234",
+    "hash": "331ecebcc9e18bcd0aadaf7a82139acd9ba337fecfe1d299c93c49532d6789ec"
+  },
+  {
+    "modo": "banda",
+    "nivel": 99,
+    "tema": "todos",
+    "semilla": "viejo999",
+    "hash": "0e3194ba8da36ec2ea1edc656dcc8f5ff885276988f463c23054068710890872"
+  }
+]

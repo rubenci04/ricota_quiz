@@ -4,7 +4,7 @@ import { fechaBA } from './reto.js'
 
 export const LOGROS = [
   { id: 'primera', nombre: 'Primer pogo', descripcion: 'Terminá tu primera partida, en cualquier modo.', ok: (e) => e.partidas >= 1 },
-  { id: 'trivia5', nombre: 'Fanático de ley', descripcion: 'Superá el nivel 5 de la trivia.', ok: (e) => e.nivel >= 6 },
+  { id: 'trivia5', nombre: 'Fanático de ley', descripcion: 'Superá el nivel 5 de la trivia.', ok: (e) => e.nivel >= 6 || e.niveles.trivia[5]?.mejor >= 6 },
   { id: 'perfecta', nombre: 'Cero fallas', descripcion: 'Sacá 10 de 10 en una trivia.', ok: (e) => e.mejor >= 10 || e.mejorBanda >= 10 },
   { id: 'banda3', nombre: 'Culto del under', descripcion: 'Superá el nivel 3 de La banda.', ok: (e) => e.nivelBanda >= 4 },
   { id: 'sopaSola', nombre: 'Ojo de halcón', descripcion: 'Completá una sopa de letras sin usar pistas.', ok: (e) => e.sopaSinPistas },

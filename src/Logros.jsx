@@ -3,12 +3,13 @@ import Cabecera from './Cabecera.jsx'
 import { leer } from './storage.js'
 
 export default function Logros({ onVolver, onMenu }) {
-  const { logros } = leer()
+  const { logros, alias } = leer()
   const conseguidos = LOGROS.filter((l) => logros[l.id]).length
 
   return (
     <main className="pantalla" key="logros">
       <Cabecera titulo={<>Logros</>} extra={<>{conseguidos}/{LOGROS.length}</>} onVolver={onVolver} onMenu={onMenu} />
+      <p className="perfil-activo">Logros de <strong>{alias}</strong></p>
       <ul className="logros">
         {LOGROS.map((l) => {
           const fecha = logros[l.id]

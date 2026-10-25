@@ -8,6 +8,7 @@ import datos from './data/datos-ricotero.json'
 import { TOKENS } from './adivinanza.js'
 import { esTemaValido } from './temas.js'
 import { triviaTieneTema } from './trivia.js'
+import { LIMITES } from './niveles.js'
 
 const PREFIJO = '#/desafio/'
 
@@ -34,11 +35,12 @@ function leerSegmento(modo, segmento) {
   const p = segmento.split('.')
   if (p.some((x) => !/^[a-z0-9]{1,20}$/.test(x))) return null
   if (modo === 'trivia' || modo === 'banda') {
-    const [nivel, tema = 'todos'] = p
-    if (p.length > 2 || !/^\d{1,2}$/.test(nivel) || Number(nivel) < 1 || !esTemaValido(tema)) return null
+    const [nivel, tema = 'todos', version] = p
+    if (p.length > 3 || (version !== undefined && version !== 'v2') || !/^\d{1,2}$/.test(nivel) || Number(nivel) < 1 || !esTemaValido(tema)) return null
+    if (version === 'v2' && Number(nivel) > LIMITES[modo]) return null
     if (modo === 'banda' && tema !== 'todos') return null
     if (!triviaTieneTema(tema)) return null
-    return { nivel: Number(nivel), tema, disco: 'todos' }
+    return { nivel: Number(nivel), tema, disco: 'todos', version: version === 'v2' ? 2 : 1 }
   }
   if (modo === 'adivinanzas') {
     const [ronda, disco = 'todos', tema = 'todos'] = p
@@ -71,7 +73,7 @@ export function leerDesafio(hash = typeof location !== 'undefined' ? location.ha
 }
 
 function segmentoDe(d) {
-  if (d.modo === 'trivia' || d.modo === 'banda') return `${d.nivel}.${d.tema ?? 'todos'}`
+  if (d.modo === 'trivia' || d.modo === 'banda') return `${d.nivel}.${d.tema ?? 'todos'}${d.version === 2 ? '.v2' : ''}`
   if (d.modo === 'adivinanzas') return `${d.ronda}.${d.disco ?? 'todos'}.${d.tema ?? 'todos'}`
   return `${d.disco ?? 'todos'}.${d.tema ?? 'todos'}`
 }

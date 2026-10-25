@@ -46,7 +46,7 @@ function Aviso() {
 function Privacidad() {
   return (
     <>
-      <p><strong>No pedimos datos personales.</strong> No hay cuentas, registros ni formularios.</p>
+      <p>Elegí un alias ficticio para tu perfil local. No pedimos correo ni contraseña y no hay cuentas online.</p>
       <p>
         Tu progreso (niveles, puntajes, logros, racha y preferencias como el sonido) se guarda únicamente en tu
         dispositivo, en el almacenamiento local del navegador. No se envía a ningún servidor y podés borrarlo cuando

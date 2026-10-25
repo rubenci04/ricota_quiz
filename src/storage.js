@@ -1,7 +1,30 @@
 // Progreso y preferencias: se leen una sola vez al iniciar y viven en memoria.
 const CLAVE = 'ricota_quiz'
 const CLAVE_SONIDO_ANTERIOR = 'ricota_quiz_sonido' // versión previa guardaba el sonido aparte
-const VERSION = 5 // versiones anteriores se migran completando los campos nuevos con valores por defecto
+const VERSION = 6
+const PREFERENCIAS = ['sonido', 'volumen', 'apariencia', 'vibracion', 'tutorial', 'dificultad']
+
+export function normalizarAlias(valor) {
+  const alias = typeof valor === 'string' ? valor.normalize('NFKC').trim().replace(/\s+/gu, ' ') : ''
+  if ([...alias].length < 3 || [...alias].length > 18 || !/^[\p{L}\p{N}][\p{L}\p{N} _-]*$/u.test(alias)) {
+    throw new Error('Usá de 3 a 18 caracteres: letras, números, espacios, guion o guion bajo.')
+  }
+  return alias
+}
+
+function validarNiveles(v) {
+  const limpio = { trivia: {}, banda: {} }
+  for (const modo of ['trivia', 'banda']) {
+    for (const [n, dato] of Object.entries(v?.[modo] || {})) {
+      if (!/^[1-9]\d?$/.test(n) || !dato || typeof dato !== 'object') continue
+      limpio[modo][n] = {
+        mejor: Number.isFinite(dato.mejor) ? Math.max(0, Math.min(10, Math.floor(dato.mejor))) : 0,
+        intentos: Number.isFinite(dato.intentos) ? Math.max(0, Math.floor(dato.intentos)) : 0,
+      }
+    }
+  }
+  return limpio
+}
 
 export const MODOS_JUGABLES = ['reto', 'banda', 'sopa', 'trivia', 'adivinanzas', 'crucigrama']
 const FECHA = /^\d{4}-\d{2}-\d{2}$/
@@ -36,6 +59,7 @@ function validarLogros(v) {
 
 // n: entero >= min · b: booleano · s: texto entre valores válidos · f: función que valida y normaliza
 const ESQUEMA = {
+  niveles: { tipo: 'f', f: validarNiveles },
   nivel: { tipo: 'n', def: 1, min: 1 },
   mejor: { tipo: 'n', def: 0, min: 0 },
   sopas: { tipo: 'n', def: 0, min: 0 },
@@ -80,38 +104,106 @@ function validar(crudo) {
   return limpio
 }
 
+const clonar = (v) => JSON.parse(JSON.stringify(v))
+const preferenciasDe = (v) => Object.fromEntries(PREFERENCIAS.map((k) => [k, v[k]]))
+const progresoDe = (v) => Object.fromEntries(Object.entries(validar(v)).filter(([k]) => !PREFERENCIAS.includes(k)))
+
 function cargar() {
   try {
     const guardado = JSON.parse(localStorage.getItem(CLAVE) || 'null')
+    if (guardado?.v === VERSION && Array.isArray(guardado.perfiles)) {
+      const perfiles = []
+      for (const p of guardado.perfiles) {
+        try {
+          if (typeof p.id !== 'string' || perfiles.some((x) => x.id === p.id)) continue
+          perfiles.push({ id: p.id, alias: normalizarAlias(p.alias), progreso: progresoDe(p.progreso) })
+        } catch { /* un perfil inválido no impide leer los demás */ }
+      }
+      return { v: VERSION, preferencias: preferenciasDe(validar(guardado.preferencias)), perfiles,
+        activo: perfiles.some((p) => p.id === guardado.activo) ? guardado.activo : perfiles[0]?.id ?? null,
+        pendiente: guardado.pendiente ? progresoDe(guardado.pendiente) : null }
+    }
     const estado = validar(guardado)
     // migración: el sonido se guardaba en otra clave
     if (!guardado || typeof guardado.sonido !== 'boolean') {
       if (localStorage.getItem(CLAVE_SONIDO_ANTERIOR) === 'off') estado.sonido = false
     }
-    return estado
+    return { v: VERSION, preferencias: preferenciasDe(estado), perfiles: [], activo: null,
+      pendiente: guardado ? progresoDe(estado) : null }
   } catch {
-    return validar(null)
+    return { v: VERSION, preferencias: preferenciasDe(validar(null)), perfiles: [], activo: null, pendiente: null }
   }
 }
 
-let estado = cargar()
+let almacen = cargar()
 const oyentes = new Set()
+let errorPersistencia = false
 
-const copia = () => JSON.parse(JSON.stringify(estado))
+function publicar() {
+  try {
+    const anterior = localStorage.getItem(CLAVE)
+    let versionAnterior
+    try { versionAnterior = JSON.parse(anterior)?.v } catch { /* también respalda datos dañados */ }
+    if (anterior && versionAnterior !== VERSION && !localStorage.getItem(`${CLAVE}_pre_v6`)) {
+      localStorage.setItem(`${CLAVE}_pre_v6`, anterior)
+    }
+    localStorage.setItem(CLAVE, JSON.stringify(almacen))
+    errorPersistencia = false
+  } catch {
+    errorPersistencia = true
+  }
+  for (const fn of oyentes) fn()
+}
+
+export function leerPerfiles() {
+  return clonar({ perfiles: almacen.perfiles.map(({ id, alias }) => ({ id, alias })),
+    activo: almacen.activo, pendiente: !!almacen.pendiente, errorPersistencia })
+}
+
+function aliasDisponible(valor, id) {
+  const alias = normalizarAlias(valor)
+  if (almacen.perfiles.some((p) => p.id !== id && p.alias.toLocaleLowerCase('es') === alias.toLocaleLowerCase('es'))) {
+    throw new Error('Ese alias ya existe en este dispositivo.')
+  }
+  return alias
+}
+
+export function crearPerfil(valor) {
+  const alias = aliasDisponible(valor)
+  const id = globalThis.crypto?.randomUUID?.() ?? `perfil-${Date.now()}-${Math.random().toString(36).slice(2)}`
+  const progreso = clonar(almacen.pendiente ?? progresoDe(null))
+  almacen.perfiles.push({ id, alias, progreso })
+  almacen.pendiente = null // transferencia única: nunca se copia al segundo perfil
+  almacen.activo = id
+  publicar()
+  return id
+}
+
+export function seleccionarPerfil(id) {
+  if (!almacen.perfiles.some((p) => p.id === id)) throw new Error('Perfil inexistente.')
+  almacen.activo = id
+  publicar()
+}
+
+export function editarAlias(id, valor) {
+  const perfil = almacen.perfiles.find((p) => p.id === id)
+  if (!perfil) throw new Error('Perfil inexistente.')
+  perfil.alias = aliasDisponible(valor, id)
+  publicar()
+}
 
 export function leer() {
-  return copia()
+  const perfil = almacen.perfiles.find((p) => p.id === almacen.activo)
+  return clonar({ ...validar(null), ...perfil?.progreso, ...almacen.preferencias, alias: perfil?.alias ?? '' })
 }
 
 export function guardar(cambios) {
-  estado = validar({ ...estado, ...cambios })
-  try {
-    localStorage.setItem(CLAVE, JSON.stringify({ v: VERSION, ...estado }))
-  } catch {
-    // sin almacenamiento: se juega igual con el estado en memoria
-  }
-  for (const fn of oyentes) fn()
-  return copia()
+  const nuevo = validar({ ...leer(), ...cambios })
+  almacen.preferencias = preferenciasDe(nuevo)
+  const perfil = almacen.perfiles.find((p) => p.id === almacen.activo)
+  if (perfil) perfil.progreso = progresoDe(nuevo)
+  publicar()
+  return leer()
 }
 
 // Avisa cada vez que cambia el progreso (la usan los logros).
@@ -122,10 +214,11 @@ export function suscribir(fn) {
 
 // Una partida terminada en cualquier modo.
 export function sumarPartida() {
-  guardar({ partidas: estado.partidas + 1 })
+  guardar({ partidas: leer().partidas + 1 })
 }
 
 export function sumarSopa(sinPistas = false) {
+  const estado = leer()
   guardar({
     sopas: estado.sopas + 1,
     partidas: estado.partidas + 1,
@@ -134,5 +227,6 @@ export function sumarSopa(sinPistas = false) {
 }
 
 export function marcarModo(id) {
+  const estado = leer()
   if (!estado.modosProbados.includes(id)) guardar({ modosProbados: [...estado.modosProbados, id] })
 }
