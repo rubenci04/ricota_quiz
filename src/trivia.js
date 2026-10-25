@@ -1,9 +1,11 @@
 import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
-import hechos from './data/banda.json'
+import hechosBanda from './data/banda.json'
 
 export const PREGUNTAS_POR_NIVEL = 10
 const { discos, canciones, integrantes } = datos
+// solo se usan preguntas de la banda con fuente confirmada
+const hechos = hechosBanda.filter((h) => h.verificada === true)
 
 const azar = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
