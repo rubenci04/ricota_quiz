@@ -6,10 +6,12 @@ import Crucigrama from './Crucigrama.jsx'
 import Tutorial from './Tutorial.jsx'
 import RetoDelDia from './RetoDelDia.jsx'
 import Logros from './Logros.jsx'
+import Discografia from './Discografia.jsx'
+import Ahorcado from './Ahorcado.jsx'
 import Legal from './Legal.jsx'
 import { MODOS_DESAFIO, leerDesafio, limpiarHash } from './desafio.js'
 import { efemeridesDeHoy } from './efemerides.js'
-import { NOMBRE_JUEGO } from './config.js'
+import { MODOS, NOMBRE_JUEGO } from './config.js'
 import { alDesbloquear, iniciarLogros } from './logros.js'
 import { fechaBA, rachaCortada, rachaVigente } from './reto.js'
 import Musica from './Musica.jsx'
@@ -23,14 +25,19 @@ import {
 } from './sonido.js'
 import { leer, marcarModo } from './storage.js'
 
-const MODOS = [
+const LISTA_MODOS = [
   { id: 'reto', nombre: 'Reto del día', detalle: 'Una canción por día, igual para todos', activo: true },
   { id: 'banda', nombre: 'La banda', detalle: 'Trivia de nicho para los que saben', activo: true },
   { id: 'sopa', nombre: 'Sopa de letras', activo: true },
   { id: 'trivia', nombre: 'Trivia', activo: true },
   { id: 'adivinanzas', nombre: 'Adivinanzas', detalle: 'Dicho de otra forma', activo: true },
   { id: 'crucigrama', nombre: 'Crucigrama', activo: true },
+  { id: 'ahorcado', nombre: 'Ahorcado', detalle: 'Mantené las luces del escenario encendidas', activo: MODOS.ahorcado === true },
+  { id: 'discografia', nombre: 'Discografía', detalle: 'Discos, canciones, autores y curiosidades', activo: true },
 ]
+
+// los modos opcionales apagados en config.js no aparecen en el menú
+const MODOS_MENU = LISTA_MODOS.filter((m) => m.activo)
 
 export default function App() {
   const [entro, setEntro] = useState(false)
@@ -144,6 +151,8 @@ export default function App() {
     )
   } else if (modo === 'reto') contenido = <RetoDelDia onVolver={volver} />
   else if (modo === 'logros') contenido = <Logros onVolver={volver} />
+  else if (modo === 'discografia') contenido = <Discografia onVolver={volver} />
+  else if (modo === 'ahorcado' && MODOS.ahorcado) contenido = <Ahorcado onVolver={volver} />
   else if (modo === 'sopa') contenido = <SopaDeLetras onVolver={volver} />
   else if (modo === 'trivia') contenido = <Trivia onVolver={volver} />
   else if (modo === 'adivinanzas') contenido = <Adivinanzas onVolver={volver} />
@@ -155,7 +164,7 @@ export default function App() {
         <h1 className="logo">{NOMBRE_JUEGO}</h1>
         <p className="sub">Patricio Rey y sus Redonditos de Ricota</p>
         <nav className="menu">
-          {MODOS.map((m) => (
+          {MODOS_MENU.map((m) => (
             <button
               key={m.id}
               className="modo"

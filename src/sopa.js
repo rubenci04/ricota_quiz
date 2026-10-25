@@ -1,5 +1,6 @@
 import datos from './data/datos-ricotero.json'
 import { crearAzar } from './azar.js'
+import { cumpleTema } from './temas.js'
 
 export const SIZE = 12
 const MIN_LEN = 4
@@ -23,11 +24,12 @@ let R = crearAzar()
 const mezclar = (arr) => R.mezclar(arr)
 
 // Palabras únicas (por forma normalizada) de las canciones del disco elegido.
-export function palabrasDisponibles(discoId) {
+export function palabrasDisponibles(discoId, tema = 'todos') {
   const mapa = new Map()
   for (const c of datos.canciones) {
     if (!c.palabras_verificadas) continue
     if (discoId !== 'todos' && c.disco !== discoId) continue
+    if (!cumpleTema(c, tema)) continue
     for (const p of c.palabras) {
       const norm = normalizar(p)
       if (norm.length >= MIN_LEN && norm.length <= SIZE && !mapa.has(norm)) {
@@ -38,11 +40,12 @@ export function palabrasDisponibles(discoId) {
   return [...mapa.values()]
 }
 
-// los datos no cambian durante la sesión: se calcula una vez por disco
+// los datos no cambian durante la sesión: se calcula una vez por disco y tema
 const cacheJuego = new Map()
-export function discoTieneJuego(discoId) {
-  if (!cacheJuego.has(discoId)) cacheJuego.set(discoId, palabrasDisponibles(discoId).length >= 5)
-  return cacheJuego.get(discoId)
+export function discoTieneJuego(discoId, tema = 'todos') {
+  const k = `${discoId}|${tema}`
+  if (!cacheJuego.has(k)) cacheJuego.set(k, palabrasDisponibles(discoId, tema).length >= 5)
+  return cacheJuego.get(k)
 }
 
 function intentarGrilla(candidatas, cantidad) {
@@ -73,8 +76,8 @@ function intentarGrilla(candidatas, cantidad) {
   return { grilla, puestas }
 }
 
-function generarPartida(discoId) {
-  const pool = palabrasDisponibles(discoId)
+function generarPartida(discoId, tema) {
+  const pool = palabrasDisponibles(discoId, tema)
   const cantidad = Math.min(pool.length, 8 + R.entero(3))
   let mejor = null
   for (let i = 0; i < 20; i++) {
@@ -115,10 +118,10 @@ function contarApariciones(grilla, norm) {
 }
 
 // Con la misma semilla y disco da siempre la misma partida; sin semilla es al azar.
-export function nuevaPartida(discoId, semilla) {
+export function nuevaPartida(discoId, semilla, tema = 'todos') {
   R = crearAzar(semilla)
   try {
-    return generarPartida(discoId)
+    return generarPartida(discoId, tema)
   } finally {
     R = crearAzar()
   }

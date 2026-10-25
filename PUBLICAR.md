@@ -5,7 +5,7 @@ Todo se cambia en **`src/config.js`**, salvo lo que se indica. Nada de esto est�
 | Qué | Dónde | Valor hoy (de ejemplo) |
 |---|---|---|
 | Nombre del juego | `NOMBRE_JUEGO` en `src/config.js` | `ricota_quiz` |
-| URL pública (sin barra final) | `URL_JUEGO` en `src/config.js` | `https://ricota-quiz.pages.dev` |
+| URL pública (sin barra final) | `URL_JUEGO` en `src/config.js` | `https://ricota-quiz.rea-04.workers.dev` (la versión desplegada; cambiala si usás un dominio propio) |
 | Email de contacto y retiro de contenido | `EMAIL_CONTACTO` en `src/config.js` | `contacto@ejemplo.com` |
 | Analítica (Cloudflare Web Analytics) | `ANALITICA` en `src/config.js` | apagada, token `TOKEN_DE_EJEMPLO` |
 | Música de YouTube | `src/data/musica.json` | vacío (sin reproductor) |

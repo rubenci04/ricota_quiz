@@ -5,7 +5,8 @@ import { normalizarLetras } from './letras.js'
 import Teclado from './Teclado.jsx'
 import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
-import { mismaLetra, nuevaRonda } from './adivinanza.js'
+import { hayRonda, mismaLetra, nuevaRonda } from './adivinanza.js'
+import SelectorTema from './SelectorTema.jsx'
 import { frase } from './textos.js'
 import { nuevaSemilla } from './desafio.js'
 
@@ -21,12 +22,14 @@ const MODOS = {
 export default function Adivinanzas({ onVolver, desafio = null }) {
   // un desafío recibido arranca directo, con la misma ronda (misma semilla)
   const inicial = useRef(undefined)
-  if (inicial.current === undefined) inicial.current = desafio ? nuevaRonda(desafio.tema, null, desafio.semilla) : null
+  if (inicial.current === undefined) inicial.current = desafio ? nuevaRonda(desafio.ronda, null, desafio.semilla, desafio.disco, desafio.tema) : null
   const largo = inicial.current ? inicial.current.solucion.length : 0
   const [semilla, setSemilla] = useState(desafio ? desafio.semilla : '')
   const [config, setConfig] = useState(() => ({
     dificultad: desafio ? desafio.dif : leer().dificultad,
-    modo: desafio ? desafio.tema : 'palabras',
+    modo: desafio ? desafio.ronda : 'palabras',
+    disco: desafio ? desafio.disco : 'todos',
+    tema: desafio ? desafio.tema : 'todos',
   }))
   const [jugando, setJugando] = useState(!!desafio)
   const [ronda, setRonda] = useState(inicial.current)
@@ -55,7 +58,7 @@ export default function Adivinanzas({ onVolver, desafio = null }) {
   const empezar = (anterior = null, cfg = config) => {
     const sem = nuevaSemilla()
     setSemilla(sem)
-    const r = nuevaRonda(cfg.modo, anterior, sem)
+    const r = nuevaRonda(cfg.modo, anterior, sem, cfg.disco, cfg.tema)
     const n = r.solucion.length
     setRonda(r)
     setLetras(Array(n).fill(''))
@@ -99,7 +102,22 @@ export default function Adivinanzas({ onVolver, desafio = null }) {
             </button>
           ))}
         </div>
-        <button className="nueva" onClick={() => empezar()}>Jugar</button>
+        <label className="selector">
+          <span>Disco</span>
+          <select value={config.disco} onChange={(e) => elegir('disco', e.target.value)}>
+            <option value="todos">Todos</option>
+            {datos.discos.map((d) => {
+              const ok = hayRonda(config.modo, d.id, config.tema)
+              return (
+                <option key={d.id} value={d.id} disabled={!ok}>
+                  {d.titulo} ({d.anio}){ok ? '' : ' – pocos datos'}
+                </option>
+              )
+            })}
+          </select>
+        </label>
+        <SelectorTema valor={config.tema} onCambio={(t) => elegir('tema', t)} tieneDatos={(t) => hayRonda(config.modo, config.disco, t)} />
+        <button className="nueva" onClick={() => empezar()} disabled={!hayRonda(config.modo, config.disco, config.tema)}>Jugar</button>
       </main>
     )
   }
@@ -291,7 +309,7 @@ export default function Adivinanzas({ onVolver, desafio = null }) {
           mejor={{ etiqueta: 'Total acumulado', valor: `${total} pts` }}
           mensaje={resultado.acierto ? frase('victoria') : frase('derrota')}
           exito={resultado.acierto}
-          desafio={{ modo: 'adivinanzas', tema: config.modo, dif: config.dificultad, semilla, puntaje: resultado.puntos }}
+          desafio={{ modo: 'adivinanzas', ronda: config.modo, disco: config.disco, tema: config.tema, dif: config.dificultad, semilla, puntaje: resultado.puntos }}
           rival={desafio ? { puntaje: desafio.puntaje } : null}
           compartir={`Sumé ${total} puntos adivinando canciones ricoteras 🎸 ¿Podés superarme?`}
         >

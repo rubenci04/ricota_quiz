@@ -1,6 +1,7 @@
 import datos from './data/datos-ricotero.json'
 import { normalizarLetras } from './letras.js'
 import { crearAzar } from './azar.js'
+import { cumpleTema } from './temas.js'
 
 export const cancionesConPalabras = datos.canciones.filter((c) => c.palabras_verificadas && c.palabras.length >= 3)
 
@@ -32,10 +33,18 @@ export function rondaDeCancion(c, azar) {
 }
 
 // Con la misma semilla y modo da siempre la misma ronda; sin semilla es al azar.
-export function nuevaRonda(modo, anterior, semilla) {
-  const azar = crearAzar(semilla)
+function poolDe(modo, disco, tema) {
   // el modo por palabras usa solo canciones con palabras verificadas
-  const pool = modo === 'parafraseado' ? datos.canciones.filter((c) => c.titulo_parafraseado) : cancionesConPalabras
+  const base = modo === 'parafraseado' ? datos.canciones.filter((c) => c.titulo_parafraseado) : cancionesConPalabras
+  return base.filter((c) => (disco === 'todos' || c.disco === disco) && cumpleTema(c, tema))
+}
+
+// ¿Hay canciones suficientes para jugar con ese modo, disco y tema?
+export const hayRonda = (modo, disco = 'todos', tema = 'todos') => poolDe(modo, disco, tema).length >= 3
+
+export function nuevaRonda(modo, anterior, semilla, disco = 'todos', tema = 'todos') {
+  const azar = crearAzar(semilla)
+  const pool = poolDe(modo, disco, tema)
   let c
   do {
     c = azar.elegir(pool)

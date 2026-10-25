@@ -1,9 +1,15 @@
-// Desafío por link: viaja en el hash de la URL (#/desafio/modo/tema/dificultad/semilla/puntaje),
-// así funciona en hosting estático. El link no lleva datos personales.
+// Desafío por link: viaja en el hash de la URL, así funciona en hosting estático.
+//   #/desafio/trivia|banda/<nivel>[.<tema>]/<dificultad>/<semilla>/<puntaje>
+//   #/desafio/sopa|crucigrama/<disco>[.<tema>]/<dificultad>/<semilla>/<puntaje>
+//   #/desafio/adivinanzas/<ronda>[.<disco>[.<tema>]]/<dificultad>/<semilla>/<puntaje>
+// Los links anteriores (sin tema) siguen funcionando. El link no lleva datos personales.
 import { URL_JUEGO } from './config.js'
 import datos from './data/datos-ricotero.json'
 import { discoTieneJuego } from './sopa.js'
 import { hayCrucigrama } from './crucigrama.js'
+import { hayRonda } from './adivinanza.js'
+import { esTemaValido } from './temas.js'
+import { triviaTieneTema } from './trivia.js'
 
 const PREFIJO = '#/desafio/'
 
@@ -18,6 +24,7 @@ export const MODOS_DESAFIO = {
 const DIFICULTADES = ['casual', 'fanatico']
 const RONDAS = ['palabras', 'parafraseado']
 const SEMILLA = /^[a-z0-9]{4,16}$/
+const esDisco = (id) => id === 'todos' || datos.discos.some((d) => d.id === id)
 
 export const nuevaSemilla = () => {
   let s = ''
@@ -25,34 +32,56 @@ export const nuevaSemilla = () => {
   return s.slice(0, 8)
 }
 
-function temaValido(modo, tema) {
-  if (modo === 'trivia' || modo === 'banda') return /^\d{1,2}$/.test(tema) && Number(tema) >= 1
-  if (modo === 'adivinanzas') return RONDAS.includes(tema)
-  if (tema === 'todos') return true
-  if (!datos.discos.some((d) => d.id === tema)) return false
-  return modo === 'sopa' ? discoTieneJuego(tema) : hayCrucigrama(tema)
+// Interpreta el segmento "tema" según el modo. Devuelve los campos o null si no es válido.
+function leerSegmento(modo, segmento) {
+  const p = segmento.split('.')
+  if (p.some((x) => !/^[a-z0-9]{1,20}$/.test(x))) return null
+  if (modo === 'trivia' || modo === 'banda') {
+    const [nivel, tema = 'todos'] = p
+    if (p.length > 2 || !/^\d{1,2}$/.test(nivel) || Number(nivel) < 1 || !esTemaValido(tema)) return null
+    if (modo === 'banda' && tema !== 'todos') return null
+    if (!triviaTieneTema(tema)) return null
+    return { nivel: Number(nivel), tema, disco: 'todos' }
+  }
+  if (modo === 'adivinanzas') {
+    const [ronda, disco = 'todos', tema = 'todos'] = p
+    if (p.length > 3 || !RONDAS.includes(ronda) || !esDisco(disco) || !esTemaValido(tema)) return null
+    if (!hayRonda(ronda, disco, tema)) return null
+    return { ronda, disco, tema }
+  }
+  const [disco, tema = 'todos'] = p // sopa y crucigrama
+  if (p.length > 2 || !esDisco(disco) || !esTemaValido(tema)) return null
+  const hay = modo === 'sopa' ? discoTieneJuego(disco, tema) : hayCrucigrama(disco, tema)
+  return hay ? { disco, tema } : null
 }
 
 // Devuelve el desafío validado o null (nunca lanza error).
 export function leerDesafio(hash = typeof location !== 'undefined' ? location.hash : '') {
   try {
-    if (typeof hash !== 'string' || !hash.startsWith(PREFIJO) || hash.length > 120) return null
+    if (typeof hash !== 'string' || !hash.startsWith(PREFIJO) || hash.length > 140) return null
     const partes = hash.slice(PREFIJO.length).split('/')
     if (partes.length !== 5) return null
-    const [modo, tema, dif, semilla, puntaje] = partes
+    const [modo, segmento, dif, semilla, puntaje] = partes
     if (!Object.hasOwn(MODOS_DESAFIO, modo)) return null
-    if (!temaValido(modo, tema)) return null
+    const extra = leerSegmento(modo, segmento)
+    if (!extra) return null
     if (!DIFICULTADES.includes(dif)) return null
     if (!SEMILLA.test(semilla)) return null
     if (!/^\d{1,3}$/.test(puntaje) || Number(puntaje) > MODOS_DESAFIO[modo].max) return null
-    return { modo, tema, dif, semilla, puntaje: Number(puntaje) }
+    return { modo, ...extra, dif, semilla, puntaje: Number(puntaje) }
   } catch {
     return null
   }
 }
 
-export function crearLink({ modo, tema, dif, semilla, puntaje }) {
-  return `${URL_JUEGO}/${PREFIJO}${modo}/${tema}/${dif}/${semilla}/${puntaje}`
+function segmentoDe(d) {
+  if (d.modo === 'trivia' || d.modo === 'banda') return `${d.nivel}.${d.tema ?? 'todos'}`
+  if (d.modo === 'adivinanzas') return `${d.ronda}.${d.disco ?? 'todos'}.${d.tema ?? 'todos'}`
+  return `${d.disco ?? 'todos'}.${d.tema ?? 'todos'}`
+}
+
+export function crearLink(d) {
+  return `${URL_JUEGO}/${PREFIJO}${d.modo}/${segmentoDe(d)}/${d.dif}/${d.semilla}/${d.puntaje}`
 }
 
 export function textoDesafio(d) {

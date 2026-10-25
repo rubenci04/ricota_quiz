@@ -7,11 +7,15 @@ export const NOMBRE_JUEGO = 'ricota_quiz'
 export const DESCRIPCION =
   'Juego de fans con sopa de letras, trivia, crucigrama y adivinanzas sobre la cultura ricotera. No oficial.'
 
-// Dirección pública del juego, sin barra final (se usa al compartir y en los metadatos). VALOR DE EJEMPLO.
-export const URL_JUEGO = 'https://ricota-quiz.pages.dev'
+// Dirección pública del juego, sin barra final (se usa al compartir y en los metadatos).
+// Hoy apunta a la versión desplegada en Cloudflare Workers; cambiala si usás un dominio propio.
+export const URL_JUEGO = 'https://ricota-quiz.rea-04.workers.dev'
 
 // Correo para pedir correcciones o el retiro de contenido. VALOR DE EJEMPLO.
 export const EMAIL_CONTACTO = 'contacto@ejemplo.com'
 
 // Cloudflare Web Analytics (sin cookies). Apagada por defecto; el token es un valor de ejemplo.
 export const ANALITICA = { activa: false, token: 'TOKEN_DE_EJEMPLO' }
+
+// Modos opcionales. El Ahorcado está apagado por defecto: poné true para mostrarlo en el menú.
+export const MODOS = { ahorcado: false }

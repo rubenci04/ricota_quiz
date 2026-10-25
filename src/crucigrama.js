@@ -1,6 +1,7 @@
 import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
 import { crearAzar } from './azar.js'
+import { cumpleTema } from './temas.js'
 
 export const MAX = 13
 const MIN_PALABRAS = 6
@@ -11,7 +12,7 @@ let R = crearAzar()
 const mezclar = (arr) => R.mezclar(arr)
 
 // Respuestas de una sola palabra con su pista, todo sacado del JSON.
-export function candidatas(discoId, dificultad = 'casual') {
+export function candidatas(discoId, dificultad = 'casual', tema = 'todos') {
   const lista = []
   const vistas = new Set()
   const agregar = (respuesta, pista) => {
@@ -21,15 +22,16 @@ export function candidatas(discoId, dificultad = 'casual') {
   }
 
   const cancionesTema = datos.canciones.filter(
-    (c) => c.palabras_verificadas && (discoId === 'todos' || c.disco === discoId),
+    (c) => c.palabras_verificadas && (discoId === 'todos' || c.disco === discoId) && cumpleTema(c, tema),
   )
 
-  for (const d of datos.discos) {
+  // las pistas de discos e integrantes no dependen del tema: solo entran sin tema elegido
+  for (const d of tema === 'todos' ? datos.discos : []) {
     if (discoId !== 'todos' && d.id !== discoId) continue
     if (!/\s/.test(d.titulo.trim())) agregar(alnum(d.titulo), `Disco de ${d.anio} (${alnum(d.titulo).length})`)
   }
 
-  for (const i of datos.integrantes) {
+  for (const i of tema === 'todos' ? datos.integrantes : []) {
     const primera = (r) => r.split(' ')[0]
     const unico = datos.integrantes.filter((x) => primera(x.rol) === primera(i.rol)).length === 1
     const rol = i.rol.replace(/\s*\(.*\)/, '')
@@ -50,9 +52,10 @@ export function candidatas(discoId, dificultad = 'casual') {
 
 // los datos no cambian durante la sesión: se calcula una vez por tema
 const cacheHay = new Map()
-export function hayCrucigrama(discoId) {
-  if (!cacheHay.has(discoId)) cacheHay.set(discoId, candidatas(discoId).length >= 8)
-  return cacheHay.get(discoId)
+export function hayCrucigrama(discoId, tema = 'todos') {
+  const k = `${discoId}|${tema}`
+  if (!cacheHay.has(k)) cacheHay.set(k, candidatas(discoId, 'casual', tema).length >= 8)
+  return cacheHay.get(k)
 }
 
 function intentar(cands, objetivo) {
@@ -118,8 +121,8 @@ function intentar(cands, objetivo) {
   return puestas
 }
 
-function generarCrucigrama(discoId, dificultad) {
-  const pool = candidatas(discoId, dificultad)
+function generarCrucigrama(discoId, dificultad, tema) {
+  const pool = candidatas(discoId, dificultad, tema)
   const objetivo = 8 + R.entero(3)
   let mejor = []
   // varias rondas con otras semillas (órdenes al azar) antes de rendirse
@@ -167,10 +170,10 @@ function generarCrucigrama(discoId, dificultad) {
 }
 
 // Con la misma semilla, tema y dificultad da siempre el mismo crucigrama; sin semilla es al azar.
-export function nuevoCrucigrama(discoId, dificultad = 'casual', semilla) {
+export function nuevoCrucigrama(discoId, dificultad = 'casual', semilla, tema = 'todos') {
   R = crearAzar(semilla)
   try {
-    return generarCrucigrama(discoId, dificultad)
+    return generarCrucigrama(discoId, dificultad, tema)
   } finally {
     R = crearAzar()
   }

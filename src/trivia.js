@@ -1,11 +1,14 @@
 import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
 import { crearAzar } from './azar.js'
+import { cumpleTema } from './temas.js'
 import hechosBanda from './data/banda.json'
 
 export const PREGUNTAS_POR_NIVEL = 10
 const MAX_PREGUNTAS_ANIO = 2
-const { discos, canciones, integrantes } = datos
+const { discos, integrantes } = datos
+// canciones de la partida en curso (se acotan cuando se elige un tema)
+let canciones = datos.canciones
 // solo se usan preguntas de la banda con fuente confirmada
 const hechos = hechosBanda.filter((h) => h.verificada === true)
 
@@ -67,10 +70,12 @@ function preguntaPalabras() {
 // "Completá el título": sin signos, sin títulos de una palabra ni con guion
 const limpiar = (w) => w.replace(/[^\p{L}\p{N}]/gu, '')
 const ocultables = (t) => t.split(' ').filter((w) => !w.includes('-') && limpiar(w).length >= 4)
-const titulosCompletables = canciones.filter((c) => c.titulo.split(' ').length >= 2 && ocultables(c.titulo).length > 0)
+const titulosCompletables = () => canciones.filter((c) => c.titulo.split(' ').length >= 2 && ocultables(c.titulo).length > 0)
 
 function preguntaTitulo() {
-  const c = azar(titulosCompletables)
+  const posibles = titulosCompletables()
+  if (!posibles.length) return null
+  const c = azar(posibles)
   const token = azar(ocultables(c.titulo))
   const oculta = limpiar(token).toLowerCase()
   const enTitulo = c.titulo.split(' ').map((w) => normalizar(limpiar(w)))
@@ -114,7 +119,9 @@ function preguntaUltimo() {
 }
 
 function preguntaNoPertenece() {
-  const d = azar(discos.filter((x) => cancionesDe(x.id).length >= 3))
+  const grandes = discos.filter((x) => cancionesDe(x.id).length >= 3)
+  if (!grandes.length) return null
+  const d = azar(grandes)
   const ajenas = canciones.filter((c) => c.disco !== d.id)
   const extra = azar(ajenas)
   return armar(`¿Qué canción NO pertenece al disco «${d.titulo}»?`, extra.titulo, [extra.titulo, ...cancionesDe(d.id)], {
@@ -146,7 +153,9 @@ function preguntaDecada() {
 }
 
 function preguntaCancionDeDisco() {
-  const d = azar(discos.filter((x) => cancionesDe(x.id).length >= 1))
+  const conCanciones = discos.filter((x) => cancionesDe(x.id).length >= 1)
+  if (!conCanciones.length) return null
+  const d = azar(conCanciones)
   const propia = azar(cancionesDe(d.id))
   const ajenas = canciones.filter((c) => c.disco !== d.id).map((c) => c.titulo)
   return armar(`¿Cuál de estas canciones pertenece a «${d.titulo}»?`, propia, [propia, ...ajenas], {
@@ -210,15 +219,18 @@ function pedir(preferido, alternativas, ctx) {
 
 const BASICOS = [preguntaAnio, preguntaDisco, preguntaRol, preguntaPrimero, preguntaUltimo, preguntaNoPertenece, preguntaEntre, preguntaDecada, preguntaCancionDeDisco, preguntaQuien]
 
+// Con un tema elegido solo se usan preguntas que salen de las canciones de ese tema.
+const BASICOS_CANCION = [preguntaDisco, preguntaNoPertenece, preguntaCancionDeDisco]
+
 // Cuanto más alto el nivel, más preguntas de tipo d y e.
-function generarNivel(nivel) {
+function generarNivel(nivel, basicos = BASICOS) {
   const ctx = crearContexto()
   const dye = Math.min(PREGUNTAS_POR_NIVEL, 2 * nivel)
   const tipos = mezclar([
     ...Array.from({ length: dye }, (_, i) => (i % 2 ? preguntaTitulo : preguntaPalabras)),
-    ...Array.from({ length: PREGUNTAS_POR_NIVEL - dye }, () => azar(BASICOS)),
+    ...Array.from({ length: PREGUNTAS_POR_NIVEL - dye }, () => azar(basicos)),
   ])
-  return tipos.map((gen) => pedir(gen, BASICOS, ctx))
+  return tipos.map((gen) => pedir(gen, basicos, ctx))
 }
 
 // ---------- La banda: preguntas de nicho (datos curados con fuente + generadas del JSON)
@@ -280,14 +292,19 @@ export function curiosidadAlAzar() {
 }
 
 // Con la misma semilla y nivel dan siempre las mismas preguntas; sin semilla son al azar.
-export function armarNivel(nivel, semilla) {
+export function armarNivel(nivel, semilla, tema = 'todos') {
   R = crearAzar(semilla)
+  canciones = datos.canciones.filter((c) => cumpleTema(c, tema))
   try {
-    return generarNivel(nivel)
+    return generarNivel(nivel, tema === 'todos' ? BASICOS : BASICOS_CANCION)
   } finally {
     R = crearAzar()
+    canciones = datos.canciones
   }
 }
+
+// ¿Hay canciones suficientes con ese tema para armar un nivel?
+export const triviaTieneTema = (tema) => datos.canciones.filter((c) => cumpleTema(c, tema)).length >= 6
 
 export function armarNivelBanda(nivel, semilla) {
   R = crearAzar(semilla)

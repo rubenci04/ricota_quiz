@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { PREGUNTAS_POR_NIVEL, armarNivel, armarNivelBanda, curiosidadAlAzar } from './trivia.js'
+import { PREGUNTAS_POR_NIVEL, armarNivel, armarNivelBanda, curiosidadAlAzar, triviaTieneTema } from './trivia.js'
 import { guardar, leer } from './storage.js'
 import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
 import { nuevaSemilla } from './desafio.js'
+import SelectorTema from './SelectorTema.jsx'
 
 const PUNTOS_PARA_PASAR = 6
 
@@ -13,10 +14,11 @@ export default function Trivia({ onVolver, categoria = 'general', desafio = null
   const kNivel = banda ? 'nivelBanda' : 'nivel'
   const kMejor = banda ? 'mejorBanda' : 'mejor'
   const [vista, setVista] = useState(desafio ? 'jugando' : 'niveles') // niveles | jugando | fin
-  const [nivel, setNivel] = useState(desafio ? Number(desafio.tema) : 1)
+  const [nivel, setNivel] = useState(desafio ? desafio.nivel : 1)
+  const [temaId, setTemaId] = useState(desafio ? desafio.tema : 'todos')
   const [semilla, setSemilla] = useState(desafio ? desafio.semilla : '') // con la misma semilla salen las mismas preguntas
   const [preguntas, setPreguntas] = useState(() =>
-    desafio ? (banda ? armarNivelBanda(Number(desafio.tema), desafio.semilla) : armarNivel(Number(desafio.tema), desafio.semilla)) : [],
+    desafio ? (banda ? armarNivelBanda(desafio.nivel, desafio.semilla) : armarNivel(desafio.nivel, desafio.semilla, desafio.tema)) : [],
   )
   const [i, setI] = useState(0)
   const [elegida, setElegida] = useState(null)
@@ -33,7 +35,7 @@ export default function Trivia({ onVolver, categoria = 'general', desafio = null
     const sem = nuevaSemilla()
     setSemilla(sem)
     setNivel(n)
-    setPreguntas(banda ? armarNivelBanda(n, sem) : armarNivel(n, sem))
+    setPreguntas(banda ? armarNivelBanda(n, sem) : armarNivel(n, sem, temaId))
     setI(0)
     setElegida(null)
     setPuntos(0)
@@ -96,6 +98,7 @@ export default function Trivia({ onVolver, categoria = 'general', desafio = null
           <h2>{banda ? 'La banda' : 'Trivia'}</h2>
           <span className="contador">Récord {guardado[kMejor]}/{PREGUNTAS_POR_NIVEL}</span>
         </header>
+        {!banda && <SelectorTema valor={temaId} onCambio={setTemaId} tieneDatos={triviaTieneTema} />}
         <div className="menu">
           {Array.from({ length: guardado[kNivel] }, (_, k) => k + 1).reverse().map((n) => (
             <button key={n} className="modo" onClick={() => jugar(n)}>
@@ -119,7 +122,7 @@ export default function Trivia({ onVolver, categoria = 'general', desafio = null
           mejor={{ etiqueta: 'Mejor puntaje', valor: `${guardado[kMejor]}/${PREGUNTAS_POR_NIVEL}` }}
           mensaje={paso ? frase('victoria') : frase('derrota')}
           exito={paso}
-          desafio={{ modo: banda ? 'banda' : 'trivia', tema: String(nivel), dif: 'casual', semilla, puntaje: puntos }}
+          desafio={{ modo: banda ? 'banda' : 'trivia', nivel, tema: banda ? 'todos' : temaId, dif: 'casual', semilla, puntaje: puntos }}
           rival={desafio ? { puntaje: desafio.puntaje } : null}
           compartir={`Hice ${puntos}/${preguntas.length} en ${banda ? 'el desafío de La banda' : 'la trivia'} 🎸 ¿Podés superarme?`}
         >

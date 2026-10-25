@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
 import { hayCrucigrama, nuevoCrucigrama } from './crucigrama.js'
@@ -7,6 +7,7 @@ import { sonar } from './sonido.js'
 import { guardar, leer } from './storage.js'
 import { frase } from './textos.js'
 import { nuevaSemilla } from './desafio.js'
+import SelectorTema from './SelectorTema.jsx'
 
 const MAX_PISTAS = 5
 const MAX_PALABRAS = 2
@@ -14,9 +15,9 @@ const VECTOR = { across: [0, 1], down: [1, 0] }
 
 // si un intento no logra armar el tablero, se prueba con otras semillas antes de rendirse
 // (con la misma semilla, tema y dificultad sale siempre el mismo tablero)
-function generar(id, dif, semilla) {
+function generar(id, dif, semilla, tema = 'todos') {
   for (let i = 0; i < 3; i++) {
-    const j = nuevoCrucigrama(id, dif, i === 0 ? semilla : `${semilla}-${i}`)
+    const j = nuevoCrucigrama(id, dif, i === 0 ? semilla : `${semilla}-${i}`, tema)
     if (j) return j
   }
   return null
@@ -26,12 +27,14 @@ export default function Crucigrama({ onVolver, desafio = null }) {
   const inicial = useRef(null)
   if (!inicial.current) {
     const semilla = desafio ? desafio.semilla : nuevaSemilla()
-    const disco = desafio ? desafio.tema : 'todos'
+    const disco = desafio ? desafio.disco : 'todos'
+    const tema = desafio ? desafio.tema : 'todos'
     const dif = desafio ? desafio.dif : leer().dificultad
-    inicial.current = { semilla, disco, dif, juego: generar(disco, dif, semilla) }
+    inicial.current = { semilla, disco, tema, dif, juego: generar(disco, dif, semilla, tema) }
   }
   const [semilla, setSemilla] = useState(inicial.current.semilla)
   const [discoId, setDiscoId] = useState(inicial.current.disco)
+  const [temaId, setTemaId] = useState(inicial.current.tema)
   const [dificultad, setDificultad] = useState(inicial.current.dif)
   const [juego, setJuego] = useState(inicial.current.juego)
   const [letras, setLetras] = useState({})
@@ -43,13 +46,25 @@ export default function Crucigrama({ onVolver, desafio = null }) {
   const [mensaje, setMensaje] = useState('')
   const [completados, setCompletados] = useState(() => leer().crucigramas)
   const entrada = useRef(null)
+  const celdas = useRef({}) // referencias a las celdas, para moverles el foco con el teclado
+  const porTeclado = useRef(false)
 
-  const empezar = (id, dif = dificultad) => {
+  // si se navega con el teclado, el foco acompaña a la celda seleccionada
+  useEffect(() => {
+    if (porTeclado.current && sel) celdas.current[`${sel.r},${sel.c}`]?.focus()
+  }, [sel])
+
+  const empezar = (id, dif = dificultad, t = temaId) => {
     const sem = nuevaSemilla()
     setSemilla(sem)
-    setJuego(generar(id, dif, sem))
+    setJuego(generar(id, dif, sem, t))
     setMensaje('')
     setLetras({}); setFijas({}); setRevision({}); setSel(null); setPistas(0); setPalabrasReveladas(0)
+  }
+
+  const cambiarTema = (t) => {
+    setTemaId(t)
+    empezar(discoId, dificultad, t)
   }
 
   const cambiarDisco = (id) => {
@@ -84,8 +99,52 @@ export default function Crucigrama({ onVolver, desafio = null }) {
     if (sel && sel.r === r && sel.c === c && a && d) dir = sel.dir === 'across' ? 'down' : 'across'
     else if (sel && ((sel.dir === 'across' && a) || (sel.dir === 'down' && d))) dir = sel.dir
     else dir = a ? 'across' : 'down'
+    porTeclado.current = false
     setSel({ r, c, dir })
     entrada.current?.focus()
+  }
+
+  // sin tocar el campo oculto: la usa la navegación con teclado
+  const seleccionarCelda = (r, c, preferida) => {
+    const a = entradaEn(r, c, 'across')
+    const d = entradaEn(r, c, 'down')
+    if (!a && !d) return
+    const dir = preferida === 'across' && a ? 'across' : preferida === 'down' && d ? 'down' : a ? 'across' : 'down'
+    setSel({ r, c, dir })
+  }
+
+  const moverA = (r, c, dr, dc, preferida) => {
+    for (let k = 1; k <= Math.max(filas, cols); k++) {
+      const nr = r + dr * k
+      const nc = c + dc * k
+      if (nr < 0 || nc < 0 || nr >= filas || nc >= cols) return
+      if (`${nr},${nc}` in solucion) return seleccionarCelda(nr, nc, preferida)
+    }
+  }
+
+  const alTeclaCelda = (e, r, c) => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return
+    const mov = { ArrowUp: [-1, 0, 'down'], ArrowDown: [1, 0, 'down'], ArrowLeft: [0, -1, 'across'], ArrowRight: [0, 1, 'across'] }[e.key]
+    if (mov) {
+      e.preventDefault()
+      porTeclado.current = true
+      moverA(r, c, mov[0], mov[1], mov[2])
+    } else if (e.key === 'Backspace') {
+      e.preventDefault()
+      porTeclado.current = true
+      borrar()
+    } else if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault()
+      porTeclado.current = true
+      // sobre la celda ya seleccionada alterna la dirección
+      if (sel && sel.r === r && sel.c === c) tocar(r, c)
+      else seleccionarCelda(r, c, sel?.dir)
+    } else if (e.key.length === 1 && /\p{L}/u.test(e.key)) {
+      e.preventDefault()
+      porTeclado.current = true
+      const n = normalizar(e.key)
+      if (/^[A-Z]$/.test(n)) ponerLetra(n)
+    }
   }
 
   const tocarPista = (e) => {
@@ -167,6 +226,11 @@ export default function Crucigrama({ onVolver, desafio = null }) {
     setMensaje(`Letra revelada. ${frase('pista')}`)
   }
 
+  // la celda que recibe el foco al llegar con Tab: la seleccionada o, si no hay, la primera
+  const clavePrimera = Object.keys(solucion)
+    .map((k) => k.split(',').map(Number))
+    .sort((a, b) => a[0] - b[0] || a[1] - b[1])[0]
+    .join(',')
   const ganaste = Object.keys(solucion).every((k) => letras[k] === solucion[k])
   const puntajeCruci = Math.max(0, 100 - 8 * pistas - 20 * palabrasReveladas)
   const lado = Math.max(filas, cols)
@@ -200,8 +264,8 @@ export default function Crucigrama({ onVolver, desafio = null }) {
         <select value={discoId} disabled={!!desafio} onChange={(e) => cambiarDisco(e.target.value)}>
           <option value="todos">Todos</option>
           {datos.discos.map((d) => (
-            <option key={d.id} value={d.id} disabled={!hayCrucigrama(d.id)}>
-              {d.titulo} ({d.anio}){hayCrucigrama(d.id) ? '' : ' – pocos datos'}
+            <option key={d.id} value={d.id} disabled={!hayCrucigrama(d.id, temaId)}>
+              {d.titulo} ({d.anio}){hayCrucigrama(d.id, temaId) ? '' : ' – pocos datos'}
             </option>
           ))}
         </select>
@@ -218,6 +282,8 @@ export default function Crucigrama({ onVolver, desafio = null }) {
           <option value="fanatico">Fanático (solo la definición)</option>
         </select>
       </label>
+
+      <SelectorTema valor={temaId} onCambio={cambiarTema} tieneDatos={(t) => hayCrucigrama(discoId, t)} deshabilitado={!!desafio} />
 
       <div className="pista-actual">
         {activa ? <><b>{activa.num} {activa.dir === 'across' ? '→' : '↓'}</b> {activa.pista}</> : 'Tocá una celda para empezar'}
@@ -247,6 +313,10 @@ export default function Crucigrama({ onVolver, desafio = null }) {
             <div
               key={k}
               className={clases.join(' ')}
+              ref={(el) => { celdas.current[k] = el }}
+              tabIndex={(sel ? sel.r === r && sel.c === c : k === clavePrimera) ? 0 : -1}
+              onKeyDown={(e) => alTeclaCelda(e, r, c)}
+              onFocus={() => { if (!sel || sel.r !== r || sel.c !== c) seleccionarCelda(r, c, sel?.dir) }}
               onPointerDown={() => tocar(r, c)}
               role="button"
               aria-label={`Celda ${numeros[k] ? 'número ' + numeros[k] + ', ' : ''}fila ${r + 1}, columna ${c + 1}: ${letras[k] || 'vacía'}${revision[k] === 'ok' ? ', correcta' : revision[k] === 'mal' ? ', incorrecta' : ''}`}
@@ -276,7 +346,7 @@ export default function Crucigrama({ onVolver, desafio = null }) {
           titulo="Crucigrama"
           puntaje={`${puntajeCruci} pts`}
           detalle={`${entradas.length}/${entradas.length} palabras · letras reveladas: ${pistas} · palabras reveladas: ${palabrasReveladas}`}
-          desafio={{ modo: 'crucigrama', tema: discoId, dif: dificultad, semilla, puntaje: puntajeCruci }}
+          desafio={{ modo: 'crucigrama', disco: discoId, tema: temaId, dif: dificultad, semilla, puntaje: puntajeCruci }}
           rival={desafio ? { puntaje: desafio.puntaje } : null}
           mejor={{ etiqueta: 'Crucigramas completados', valor: completados }}
           mensaje={frase('victoria')}

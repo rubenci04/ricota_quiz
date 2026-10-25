@@ -287,3 +287,32 @@ button, select { font: inherit; color: inherit; }
 .comparacion.gana { border-color: #3aa17e; }
 .comparacion.pierde { border-color: var(--rojo); }
 .comparacion-veredicto { margin-top: 4px; font-weight: 700; }
+
+/* discografía, ahorcado con luces */
+.discos-lista, .curiosidades-lista { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+.disco-ficha, .cancion-ficha { background: var(--panel); border: 1px solid var(--borde); }
+.disco-ficha > summary, .cancion-ficha > summary { display: flex; flex-direction: column; gap: 2px; padding: 12px; cursor: pointer; }
+.disco-ficha > summary strong { color: var(--acento); }
+.disco-ficha > summary small, .cancion-ficha > summary small { color: var(--tenue); font-size: 0.78rem; }
+.ficha-cuerpo { padding: 0 12px 12px; display: flex; flex-direction: column; gap: 8px; }
+.cancion-ficha { background: #1b1b1d; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+.chip { padding: 2px 8px; border: 1px solid var(--borde); border-radius: 999px; font-size: 0.72rem; color: var(--tenue); }
+.ficha-cuerpo h4 { margin: 4px 0 0; font-size: 0.78rem; color: var(--tenue); text-transform: uppercase; letter-spacing: 0.08em; }
+.definiciones { margin: 0; display: grid; gap: 4px; font-size: 0.88rem; }
+.definiciones div { display: flex; gap: 8px; }
+.definiciones dt { font-weight: 700; min-width: 7.5em; color: var(--acento); }
+.definiciones dd { margin: 0; }
+.interpretacion { margin: 0; font-size: 0.9rem; line-height: 1.45; }
+.interpretacion a, .curiosidades-lista a { color: var(--acento); }
+.curiosidades-lista h3 { margin: 8px 0 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--tenue); }
+.curiosidades-lista ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 0.9rem; }
+.luces { width: min(100%, 320px); height: auto; color: var(--texto); }
+@keyframes apagar { from { filter: brightness(2); } to { filter: none; } }
+.luz-apagada { animation: apagar 0.4s ease-out; }
+.luz-encendida { filter: drop-shadow(0 0 4px #e0a526); }
+
+/* navegación con teclado */
+.grilla:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+.grilla:focus-visible .celda.cursor-teclado { outline: 3px solid #fff; outline-offset: -3px; }
+.letra:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
