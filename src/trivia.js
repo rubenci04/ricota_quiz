@@ -1,5 +1,6 @@
 import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
+import { crearAzar } from './azar.js'
 import hechosBanda from './data/banda.json'
 
 export const PREGUNTAS_POR_NIVEL = 10
@@ -8,17 +9,11 @@ const { discos, canciones, integrantes } = datos
 // solo se usan preguntas de la banda con fuente confirmada
 const hechos = hechosBanda.filter((h) => h.verificada === true)
 
-const azar = (arr) => arr[Math.floor(Math.random() * arr.length)]
+// azar de la generación en curso (con semilla si se pidió una)
+let R = crearAzar()
+const azar = (arr) => R.elegir(arr)
 
-// Fisher–Yates
-function mezclar(arr) {
-  const a = [...arr]
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[a[i], a[j]] = [a[j], a[i]]
-  }
-  return a
-}
+const mezclar = (arr) => R.mezclar(arr)
 
 // Arma 4 opciones: la correcta + 3 distractores únicos del pool.
 function armar(texto, correcta, pool, extra = {}) {
@@ -59,7 +54,7 @@ function preguntaRol() {
 
 function preguntaPalabras() {
   const c = azar(canciones.filter((x) => x.palabras_verificadas && x.palabras.length >= 4))
-  const cuantas = Math.min(c.palabras.length, 4 + Math.floor(Math.random() * 2))
+  const cuantas = Math.min(c.palabras.length, 4 + R.entero(2))
   const mostradas = mezclar(c.palabras).slice(0, cuantas)
   const norm = mostradas.map(normalizar)
   // un distractor que contenga todas las palabras mostradas sería ambiguo
@@ -129,7 +124,7 @@ function preguntaNoPertenece() {
 }
 
 function preguntaEntre() {
-  const i = 1 + Math.floor(Math.random() * (porAnio.length - 2))
+  const i = 1 + R.entero(porAnio.length - 2)
   const [antes, medio, despues] = [porAnio[i - 1], porAnio[i], porAnio[i + 1]]
   return armar(
     `¿Qué disco salió entre «${antes.titulo}» y «${despues.titulo}»?`,
@@ -216,7 +211,7 @@ function pedir(preferido, alternativas, ctx) {
 const BASICOS = [preguntaAnio, preguntaDisco, preguntaRol, preguntaPrimero, preguntaUltimo, preguntaNoPertenece, preguntaEntre, preguntaDecada, preguntaCancionDeDisco, preguntaQuien]
 
 // Cuanto más alto el nivel, más preguntas de tipo d y e.
-export function armarNivel(nivel) {
+function generarNivel(nivel) {
   const ctx = crearContexto()
   const dye = Math.min(PREGUNTAS_POR_NIVEL, 2 * nivel)
   const tipos = mezclar([
@@ -266,7 +261,7 @@ function preguntaCurada() {
 
 const GENERADAS_BANDA = [preguntaAutor, preguntaRol, preguntaAnio, preguntaPrimerDisco, preguntaPrimero, preguntaUltimo, preguntaNoPertenece, preguntaEntre, preguntaDecada, preguntaQuien]
 
-export function armarNivelBanda(nivel) {
+function generarNivelBanda(nivel) {
   const ctx = crearContexto()
   const curadas = Math.min(PREGUNTAS_POR_NIVEL - 2, 4 + nivel)
   const tipos = mezclar([
@@ -282,4 +277,23 @@ export function curiosidadAlAzar() {
   const c = azar(lista)
   if (typeof c === 'string') return c
   return c?.texto || c?.curiosidad || null
+}
+
+// Con la misma semilla y nivel dan siempre las mismas preguntas; sin semilla son al azar.
+export function armarNivel(nivel, semilla) {
+  R = crearAzar(semilla)
+  try {
+    return generarNivel(nivel)
+  } finally {
+    R = crearAzar()
+  }
+}
+
+export function armarNivelBanda(nivel, semilla) {
+  R = crearAzar(semilla)
+  try {
+    return generarNivelBanda(nivel)
+  } finally {
+    R = crearAzar()
+  }
 }

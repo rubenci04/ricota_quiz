@@ -68,6 +68,7 @@ export default function Trivia({ onVolver, categoria = 'general' }) {
       guardar({
         [kNivel]: puntos >= PUNTOS_PARA_PASAR ? Math.max(actual[kNivel], nivel + 1) : actual[kNivel],
         [kMejor]: Math.max(actual[kMejor], puntos),
+        partidas: actual.partidas + 1,
       }),
     )
     setCuriosidad(puntos >= PUNTOS_PARA_PASAR ? curiosidadAlAzar() : null)

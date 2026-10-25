@@ -1,9 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SopaDeLetras from './SopaDeLetras.jsx'
 import Trivia from './Trivia.jsx'
 import Adivinanzas from './Adivinanzas.jsx'
 import Crucigrama from './Crucigrama.jsx'
 import Tutorial from './Tutorial.jsx'
+import RetoDelDia from './RetoDelDia.jsx'
+import Logros from './Logros.jsx'
+import { alDesbloquear, iniciarLogros } from './logros.js'
+import { fechaBA, rachaCortada, rachaVigente } from './reto.js'
 import Musica from './Musica.jsx'
 import {
   alternarSonido,
@@ -13,9 +17,10 @@ import {
   vibracionActiva,
   vibracionDisponible,
 } from './sonido.js'
-import { leer } from './storage.js'
+import { leer, marcarModo } from './storage.js'
 
 const MODOS = [
+  { id: 'reto', nombre: 'Reto del día', detalle: 'Una canción por día, igual para todos', activo: true },
   { id: 'banda', nombre: 'La banda', detalle: 'Trivia de nicho para los que saben', activo: true },
   { id: 'sopa', nombre: 'Sopa de letras', activo: true },
   { id: 'trivia', nombre: 'Trivia', activo: true },
@@ -30,7 +35,24 @@ export default function App() {
   const [modo, setModo] = useState(null)
   const [sonido, setSonido] = useState(sonidoActivo)
   const [vibracion, setVibracion] = useState(vibracionActiva)
+  const [avisos, setAvisos] = useState([]) // logros recién desbloqueados
   const volver = () => setModo(null)
+  const elegirModo = (id) => {
+    marcarModo(id)
+    setModo(id)
+  }
+
+  useEffect(() => {
+    const quitarAviso = alDesbloquear((logro) => {
+      setAvisos((prev) => [...prev, logro])
+      setTimeout(() => setAvisos((prev) => prev.filter((l) => l.id !== logro.id)), 5000)
+    })
+    const detener = iniciarLogros()
+    return () => {
+      quitarAviso()
+      detener()
+    }
+  }, [])
   const g = leer()
 
   let contenido
@@ -61,7 +83,9 @@ export default function App() {
         </nav>
       </main>
     )
-  } else if (modo === 'sopa') contenido = <SopaDeLetras onVolver={volver} />
+  } else if (modo === 'reto') contenido = <RetoDelDia onVolver={volver} />
+  else if (modo === 'logros') contenido = <Logros onVolver={volver} />
+  else if (modo === 'sopa') contenido = <SopaDeLetras onVolver={volver} />
   else if (modo === 'trivia') contenido = <Trivia onVolver={volver} />
   else if (modo === 'adivinanzas') contenido = <Adivinanzas onVolver={volver} />
   else if (modo === 'crucigrama') contenido = <Crucigrama onVolver={volver} />
@@ -77,7 +101,7 @@ export default function App() {
               key={m.id}
               className="modo"
               disabled={!m.activo}
-              onClick={() => setModo(m.id)}
+              onClick={() => elegirModo(m.id)}
             >
               <span>{m.nombre}{m.detalle && <small>{m.detalle}</small>}</span>
               {!m.activo && <em className="pronto">Próximamente</em>}
@@ -91,8 +115,17 @@ export default function App() {
           <div><b>{g.adivinanzas}</b>Pts adivinanzas</div>
           <div><b>{g.nivelBanda}</b>Nivel banda</div>
           <div><b>{g.crucigramas}</b>Crucigramas</div>
+          <div><b>{rachaVigente(g, fechaBA())}</b>Racha reto (máx. {g.rachaMax})</div>
         </section>
-        <button className="secundario" onClick={() => setVerTutorial(true)}>Ayuda</button>
+        {rachaCortada(g, fechaBA()) && (
+          <p className="aviso-amable" role="note">
+            Ayer no jugaste el reto y la racha se reinició. ¡Pasa en las mejores familias! Hoy arrancás otra. 💪
+          </p>
+        )}
+        <div className="herramientas">
+          <button className="secundario" onClick={() => setModo('logros')}>Logros ({Object.keys(g.logros).length})</button>
+          <button className="secundario" onClick={() => setVerTutorial(true)}>Ayuda</button>
+        </div>
       </main>
     )
   }
@@ -105,6 +138,11 @@ export default function App() {
   return (
     <div onClick={alClic}>
       {contenido}
+      <div className="avisos-logros" role="status" aria-live="polite">
+        {avisos.map((l) => (
+          <p key={l.id} className="aviso-logro">🏆 ¡Logro desbloqueado! <strong>{l.nombre}</strong></p>
+        ))}
+      </div>
       <div className="interruptores">
         <button
           className="sonido"

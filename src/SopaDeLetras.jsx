@@ -104,7 +104,7 @@ export default function SopaDeLetras({ onVolver }) {
       (p) => !(p.norm in encontradas) && (p.norm === letras || p.norm === alReves),
     )
     if (hallada) {
-      if (Object.keys(encontradas).length + 1 === partida.palabras.length) sumarSopa()
+      if (Object.keys(encontradas).length + 1 === partida.palabras.length) sumarSopa(pistas.length === 0 && reveladas.length === 0)
       setEncontradas((prev) => ({ ...prev, [hallada.norm]: Object.keys(prev).length % COLORES.length }))
       sonar('ok')
       setMensaje(`✓ Encontraste «${hallada.original}». ${frase('acierto')}`)

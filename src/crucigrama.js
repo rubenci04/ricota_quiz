@@ -1,18 +1,14 @@
 import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
+import { crearAzar } from './azar.js'
 
 export const MAX = 13
 const MIN_PALABRAS = 6
 const alnum = (t) => normalizar(t).replace(/[^A-Z0-9]/g, '')
 
-function mezclar(arr) {
-  const a = [...arr]
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[a[i], a[j]] = [a[j], a[i]]
-  }
-  return a
-}
+// azar de la generación en curso (con semilla si se pidió una)
+let R = crearAzar()
+const mezclar = (arr) => R.mezclar(arr)
 
 // Respuestas de una sola palabra con su pista, todo sacado del JSON.
 export function candidatas(discoId, dificultad = 'casual') {
@@ -115,16 +111,16 @@ function intentar(cands, objetivo) {
       }
     }
     if (mejor.length) {
-      const [r, c, dir] = mejor[Math.floor(Math.random() * mejor.length)]
+      const [r, c, dir] = mejor[R.entero(mejor.length)]
       colocar(cand, r, c, dir)
     }
   }
   return puestas
 }
 
-export function nuevoCrucigrama(discoId, dificultad = 'casual') {
+function generarCrucigrama(discoId, dificultad) {
   const pool = candidatas(discoId, dificultad)
-  const objetivo = 8 + Math.floor(Math.random() * 3)
+  const objetivo = 8 + R.entero(3)
   let mejor = []
   // varias rondas con otras semillas (órdenes al azar) antes de rendirse
   for (let ronda = 0; ronda < 3 && mejor.length < MIN_PALABRAS; ronda++) {
@@ -168,4 +164,14 @@ export function nuevoCrucigrama(discoId, dificultad = 'casual') {
   for (const e of entradas) e.num = numeros[`${e.r},${e.c}`]
 
   return { filas, cols, entradas, solucion, numeros }
+}
+
+// Con la misma semilla, tema y dificultad da siempre el mismo crucigrama; sin semilla es al azar.
+export function nuevoCrucigrama(discoId, dificultad = 'casual', semilla) {
+  R = crearAzar(semilla)
+  try {
+    return generarCrucigrama(discoId, dificultad)
+  } finally {
+    R = crearAzar()
+  }
 }

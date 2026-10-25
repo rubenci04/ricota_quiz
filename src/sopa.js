@@ -1,4 +1,5 @@
 import datos from './data/datos-ricotero.json'
+import { crearAzar } from './azar.js'
 
 export const SIZE = 12
 const MIN_LEN = 4
@@ -17,14 +18,9 @@ export function normalizar(texto) {
     .toUpperCase()
 }
 
-function mezclar(arr) {
-  const a = [...arr]
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[a[i], a[j]] = [a[j], a[i]]
-  }
-  return a
-}
+// azar de la generación en curso (con semilla si se pidió una)
+let R = crearAzar()
+const mezclar = (arr) => R.mezclar(arr)
 
 // Palabras únicas (por forma normalizada) de las canciones del disco elegido.
 export function palabrasDisponibles(discoId) {
@@ -57,9 +53,9 @@ function intentarGrilla(candidatas, cantidad) {
     if (puestas.some((p) => p.norm.includes(palabra.norm) || palabra.norm.includes(p.norm))) continue
     const len = palabra.norm.length
     for (let intento = 0; intento < 80; intento++) {
-      const [dr, dc] = DIRS[Math.floor(Math.random() * DIRS.length)]
-      const r0 = Math.floor(Math.random() * SIZE)
-      const c0 = Math.floor(Math.random() * SIZE)
+      const [dr, dc] = DIRS[R.entero(DIRS.length)]
+      const r0 = R.entero(SIZE)
+      const c0 = R.entero(SIZE)
       const rf = r0 + dr * (len - 1)
       const cf = c0 + dc * (len - 1)
       if (rf < 0 || rf >= SIZE || cf < 0 || cf >= SIZE) continue
@@ -77,9 +73,9 @@ function intentarGrilla(candidatas, cantidad) {
   return { grilla, puestas }
 }
 
-export function nuevaPartida(discoId) {
+function generarPartida(discoId) {
   const pool = palabrasDisponibles(discoId)
-  const cantidad = Math.min(pool.length, 8 + Math.floor(Math.random() * 3))
+  const cantidad = Math.min(pool.length, 8 + R.entero(3))
   let mejor = null
   for (let i = 0; i < 20; i++) {
     const res = intentarGrilla(mezclar(pool), cantidad)
@@ -91,7 +87,7 @@ export function nuevaPartida(discoId) {
   // el relleno al azar no debe formar una segunda copia de ninguna palabra
   for (let i = 0; i < 60; i++) {
     grilla = mejor.grilla.map((fila) =>
-      fila.map((x) => x || letras[Math.floor(Math.random() * letras.length)]),
+      fila.map((x) => x || letras[R.entero(letras.length)]),
     )
     if (mejor.puestas.every((p) => contarApariciones(grilla, p.norm) === 1)) break
   }
@@ -116,4 +112,14 @@ function contarApariciones(grilla, norm) {
     }
   }
   return norm === alReves ? n / 2 : n
+}
+
+// Con la misma semilla y disco da siempre la misma partida; sin semilla es al azar.
+export function nuevaPartida(discoId, semilla) {
+  R = crearAzar(semilla)
+  try {
+    return generarPartida(discoId)
+  } finally {
+    R = crearAzar()
+  }
 }

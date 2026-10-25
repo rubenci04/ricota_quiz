@@ -257,3 +257,18 @@ button, select { font: inherit; color: inherit; }
 .resultado-mejor strong { color: var(--acento); }
 .resultado-mensaje { font-style: italic; }
 .resultado > .secundario, .resultado > .nueva, .resultado > .curiosidad { max-width: 420px; }
+
+/* reto del día, logros y avisos */
+.cuenta { margin: 0; color: var(--tenue); }
+.cuenta strong { color: var(--acento); font-variant-numeric: tabular-nums; }
+.cuadros { margin: 0; font-size: 1.6rem; letter-spacing: 0.15em; }
+.bloqueada { opacity: 0.6; }
+.aviso-amable { width: 100%; margin: 0; padding: 10px 12px; background: #1f1708; border: 1px solid var(--acento); font-size: 0.9rem; }
+.logros { list-style: none; margin: 0; padding: 0; width: 100%; display: flex; flex-direction: column; gap: 8px; }
+.logro { display: flex; gap: 12px; padding: 12px; background: var(--panel); border: 1px solid var(--borde); opacity: 0.65; }
+.logro.hecho { opacity: 1; border-color: var(--acento); }
+.logro-icono { font-size: 1.6rem; }
+.logro p { margin: 2px 0; font-size: 0.9rem; }
+.logro small { color: var(--tenue); }
+.avisos-logros { position: fixed; left: 8px; right: 8px; top: 8px; z-index: 40; display: flex; flex-direction: column; gap: 6px; pointer-events: none; }
+.aviso-logro { margin: 0 auto; max-width: 420px; padding: 10px 14px; background: #1f1708; border: 1px solid var(--acento); color: var(--texto); animation: entrar 0.25s ease-out; }

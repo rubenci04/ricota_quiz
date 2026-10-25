@@ -14,7 +14,7 @@ const FRASES = {
     'Tranqui, hasta los que más saben se equivocan.',
     'Eso no se lo esperaba nadie.',
     'Fallaste una, no pasa nada.',
-    'Esa se te escapó. A la que viene.',
+    'Esa se te fue. La próxima la clavás.',
   ],
   victoria: [
     '¡Misión cumplida! Merecés un pogo virtual.',
@@ -31,7 +31,7 @@ const FRASES = {
   pista: [
     'Una ayudita de parte de la casa.',
     'Ahí va un empujoncito.',
-    'Pista al toque. Que no se diga.',
+    'Pista al toque, cortesía de la casa.',
   ],
 }
 

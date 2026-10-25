@@ -264,7 +264,7 @@ export default function Crucigrama({ onVolver }) {
           detalle={`Letras reveladas: ${pistas} · palabras reveladas: ${palabrasReveladas}`}
           mejor={{ etiqueta: 'Crucigramas completados', valor: completados }}
           mensaje={frase('victoria')}
-          alMostrar={() => setCompletados(guardar({ crucigramas: leer().crucigramas + 1 }).crucigramas)}
+          alMostrar={() => setCompletados(guardar({ crucigramas: leer().crucigramas + 1, partidas: leer().partidas + 1 }).crucigramas)}
           compartir={`Completé un crucigrama ricotero (${entradas.length} palabras) 🎸 ¿Podés superarme?`}
         />
       )}

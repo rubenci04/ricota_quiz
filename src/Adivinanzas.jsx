@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import datos from './data/datos-ricotero.json'
-import { guardar, leer } from './storage.js'
+import { guardar, leer, sumarPartida } from './storage.js'
 import { normalizarLetras } from './letras.js'
 import Teclado from './Teclado.jsx'
 import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
+import { mismaLetra, nuevaRonda } from './adivinanza.js'
 import { frase } from './textos.js'
 
 const DIFICULTADES = {
@@ -14,51 +15,6 @@ const DIFICULTADES = {
 const MODOS = {
   palabras: { nombre: 'Por palabras', detalle: 'Palabras clave de la canción' },
   parafraseado: { nombre: 'Dicho de otra forma', detalle: 'El título explicado con otras palabras' },
-}
-
-const canciones = datos.canciones.filter((c) => c.palabras_verificadas && c.palabras.length >= 3)
-
-// La Ñ se muestra como Ñ pero se acepta como N.
-const clave = (l) => (l === 'Ñ' ? 'N' : l)
-const mismaLetra = (a, b) => clave(a) === clave(b)
-
-// Una casilla por letra del título completo, agrupadas por palabra; el guion separa grupos y se ve.
-function armarCasillas(titulo) {
-  return titulo
-    .split(/\s+/)
-    .flatMap((pal) =>
-      pal.split('-').map((parte, i, partes) => ({
-        letras: [...parte].filter((ch) => /\p{L}/u.test(ch)).map(normalizarLetras),
-        guionDespues: i < partes.length - 1,
-      })),
-    )
-    .filter((g) => g.letras.length > 0)
-}
-
-// Fisher–Yates
-function mezclar(arr) {
-  const a = [...arr]
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[a[i], a[j]] = [a[j], a[i]]
-  }
-  return a
-}
-
-function nuevaRonda(modo, anterior) {
-  // el modo por palabras usa solo canciones con palabras verificadas
-  const pool = modo === 'parafraseado' ? datos.canciones.filter((c) => c.titulo_parafraseado) : canciones
-  let c
-  do {
-    c = pool[Math.floor(Math.random() * pool.length)]
-  } while (c === anterior && pool.length > 1)
-  const grupos = armarCasillas(c.titulo)
-  return {
-    cancion: c,
-    claves: mezclar(c.palabras),
-    grupos,
-    solucion: grupos.flatMap((g) => g.letras),
-  }
 }
 
 export default function Adivinanzas({ onVolver }) {
@@ -145,7 +101,14 @@ export default function Adivinanzas({ onVolver }) {
   const terminar = (nuevasLetras, usadas) => {
     if (!nuevasLetras.every((l, i) => mismaLetra(l, solucion[i]))) return false
     const puntos = usadas === 0 ? 3 : usadas === 1 ? 2 : 1
-    setTotal(guardar({ adivinanzas: leer().adivinanzas + puntos }).adivinanzas)
+    const e = leer()
+    setTotal(
+      guardar({
+        adivinanzas: e.adivinanzas + puntos,
+        partidas: e.partidas + 1,
+        adivinanzaSinPistas: e.adivinanzaSinPistas || usadas === 0,
+      }).adivinanzas,
+    )
     setResultado({ acierto: true, puntos })
     setMensaje(`✓ Correcto. Sumaste ${puntos} ${puntos === 1 ? 'punto' : 'puntos'}. ${frase('acierto')}`)
     return true
@@ -214,6 +177,7 @@ export default function Adivinanzas({ onVolver }) {
   }
 
   const rendirse = () => {
+    sumarPartida()
     setLetras(solucion)
     setResultado({ acierto: false, puntos: 0 })
     setMensaje(`✗ Te rendiste. La respuesta era: ${cancion.titulo}. ${frase('derrota')}`)
