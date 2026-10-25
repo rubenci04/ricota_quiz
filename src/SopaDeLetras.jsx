@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react'
-import { sumarSopa } from './storage.js'
-import Confeti from './Confeti.jsx'
+import { leer, sumarSopa } from './storage.js'
+import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
+import { frase } from './textos.js'
 import { SIZE, discos, discoTieneJuego, nuevaPartida } from './sopa.js'
 
 const COLORES = ['#e0a526', '#c0392b', '#3aa17e', '#5b8def', '#b455d6', '#e0742b', '#2bb7c9', '#d6567f', '#8fb339', '#9a8cff']
@@ -38,6 +39,7 @@ export default function SopaDeLetras({ onVolver }) {
   const inicio = useRef(null)
   const [pistas, setPistas] = useState([]) // norm de palabras con letra inicial revelada
   const [facil, setFacil] = useState(false)
+  const [mensaje, setMensaje] = useState('')
   const [reveladas, setReveladas] = useState([]) // norm de palabras resaltadas completas
 
   const empezar = (id) => {
@@ -46,18 +48,23 @@ export default function SopaDeLetras({ onVolver }) {
     setSeleccion([])
     setPistas([])
     setReveladas([])
+    setMensaje('')
   }
 
   const revelarPalabra = () => {
     const libres = partida.palabras.filter((p) => !(p.norm in encontradas) && !reveladas.includes(p.norm))
     if (reveladas.length >= MAX_REVELAR || libres.length === 0) return
     setReveladas([...reveladas, libres[Math.floor(Math.random() * libres.length)].norm])
+    sonar('pista')
+    setMensaje(`Palabra resaltada. ${frase('pista')}`)
   }
 
   const pedirPista = () => {
     const libres = partida.palabras.filter((p) => !(p.norm in encontradas) && !pistas.includes(p.norm))
     if (pistas.length >= MAX_PISTAS || libres.length === 0) return
     setPistas([...pistas, libres[Math.floor(Math.random() * libres.length)].norm])
+    sonar('pista')
+    setMensaje(`Pista: mirá la celda que destella. ${frase('pista')}`)
   }
 
   const cambiarDisco = (id) => {
@@ -100,8 +107,10 @@ export default function SopaDeLetras({ onVolver }) {
       if (Object.keys(encontradas).length + 1 === partida.palabras.length) sumarSopa()
       setEncontradas((prev) => ({ ...prev, [hallada.norm]: Object.keys(prev).length % COLORES.length }))
       sonar('ok')
+      setMensaje(`✓ Encontraste «${hallada.original}». ${frase('acierto')}`)
     } else if (seleccion.length > 1) {
       sonar('error')
+      setMensaje(`✗ Esa no es. ${frase('error')}`)
     }
     setSeleccion([])
   }
@@ -217,11 +226,17 @@ export default function SopaDeLetras({ onVolver }) {
         </ul>
       )}
 
-      {ganaste && <Confeti />}
+      <p className="feedback" role="status" aria-live="polite">{mensaje}</p>
+
       {ganaste && (
-        <div className="victoria" role="status">
-          <strong>¡Ganaste!</strong> Encontraste todas las palabras. ¡Que viva el Indio!
-        </div>
+        <Resultado
+          titulo="Sopa de letras"
+          puntaje={`${partida.palabras.length}/${partida.palabras.length}`}
+          detalle={`Pistas usadas: ${pistas.length}${reveladas.length ? ' · palabra revelada' : ''}`}
+          mejor={{ etiqueta: 'Sopas completadas', valor: leer().sopas }}
+          mensaje={frase('victoria')}
+          compartir={`Completé una sopa de letras ricotera (${partida.palabras.length}/${partida.palabras.length}) 🎸 ¿Podés superarme?`}
+        />
       )}
 
       <button className="nueva" onClick={() => empezar(discoId)}>Nueva partida</button>

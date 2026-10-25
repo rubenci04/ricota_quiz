@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { PREGUNTAS_POR_NIVEL, armarNivel, armarNivelBanda, curiosidadAlAzar } from './trivia.js'
 import { guardar, leer } from './storage.js'
-import Confeti from './Confeti.jsx'
+import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
+import { frase } from './textos.js'
 
 const PUNTOS_PARA_PASAR = 6
 
@@ -22,6 +23,7 @@ export default function Trivia({ onVolver, categoria = 'general' }) {
   const [comodinUsado, setComodinUsado] = useState(false) // 50/50: una vez por nivel
   const [ocultas, setOcultas] = useState([]) // opciones eliminadas por el 50/50
   const [verAyuda, setVerAyuda] = useState(false)
+  const [fraseResp, setFraseResp] = useState('')
 
   const jugar = (n) => {
     setNivel(n)
@@ -40,6 +42,7 @@ export default function Trivia({ onVolver, categoria = 'general' }) {
     setElegida(idx)
     const acierto = idx === preguntas[i].correcta
     sonar(acierto ? 'ok' : 'error')
+    setFraseResp(frase(acierto ? 'acierto' : 'error'))
     if (acierto) setPuntos(puntos + 1)
   }
 
@@ -49,6 +52,7 @@ export default function Trivia({ onVolver, categoria = 'general' }) {
     const malas = p.opciones.map((_, k) => k).filter((k) => k !== p.correcta)
     setOcultas(malas.sort(() => Math.random() - 0.5).slice(0, 2))
     setComodinUsado(true)
+    sonar('pista')
   }
 
   const siguiente = () => {
@@ -91,23 +95,23 @@ export default function Trivia({ onVolver, categoria = 'general' }) {
   }
 
   if (vista === 'fin') {
+    const paso = puntos >= PUNTOS_PARA_PASAR
     return (
       <main className="pantalla" key="fin">
-        {puntos >= PUNTOS_PARA_PASAR && <Confeti />}
-        <h2 className="logo chico">Nivel {nivel}</h2>
-        <div className="victoria">
-          <strong>{puntos}/{preguntas.length}</strong> respuestas correctas
-          <br />
-          {puntos >= PUNTOS_PARA_PASAR
-            ? `Se desbloqueó el nivel ${nivel + 1}.`
-            : `Intentá de nuevo: necesitás ${PUNTOS_PARA_PASAR} o más para pasar.`}
-        </div>
-        {curiosidad && <div className="curiosidad"><strong>Curiosidad:</strong> {curiosidad}</div>}
-        {puntos >= PUNTOS_PARA_PASAR && (
-          <button className="nueva" onClick={() => jugar(nivel + 1)}>Nivel {nivel + 1}</button>
-        )}
-        <button className="secundario" onClick={() => jugar(nivel)}>Repetir nivel</button>
-        <button className="secundario" onClick={() => setVista('niveles')}>Elegir nivel</button>
+        <Resultado
+          titulo={`${banda ? 'La banda' : 'Trivia'} · Nivel ${nivel}`}
+          puntaje={`${puntos}/${preguntas.length}`}
+          detalle={paso ? `Se desbloqueó el nivel ${nivel + 1}.` : `Intentá de nuevo: necesitás ${PUNTOS_PARA_PASAR} o más para pasar.`}
+          mejor={{ etiqueta: 'Mejor puntaje', valor: `${guardado[kMejor]}/${PREGUNTAS_POR_NIVEL}` }}
+          mensaje={paso ? frase('victoria') : frase('derrota')}
+          exito={paso}
+          compartir={`Hice ${puntos}/${preguntas.length} en ${banda ? 'el desafío de La banda' : 'la trivia'} 🎸 ¿Podés superarme?`}
+        >
+          {curiosidad && <div className="curiosidad"><strong>Curiosidad:</strong> {curiosidad}</div>}
+          {paso && <button className="nueva" onClick={() => jugar(nivel + 1)}>Nivel {nivel + 1}</button>}
+          <button className="secundario" onClick={() => jugar(nivel)}>Repetir nivel</button>
+          <button className="secundario" onClick={() => setVista('niveles')}>Elegir nivel</button>
+        </Resultado>
       </main>
     )
   }
@@ -135,7 +139,7 @@ export default function Trivia({ onVolver, categoria = 'general' }) {
           <button className="secundario" onClick={usarComodin} disabled={comodinUsado}>
             50/50 {comodinUsado ? '(usado)' : '(1)'}
           </button>
-          <button className="secundario" onClick={() => setVerAyuda(true)} disabled={verAyuda}>
+          <button className="secundario" onClick={() => { setVerAyuda(true); sonar('pista') }} disabled={verAyuda}>
             Pista gratis
           </button>
         </div>
@@ -163,7 +167,7 @@ export default function Trivia({ onVolver, categoria = 'general' }) {
         })}
       </div>
       <p className="feedback" role="status" aria-live="polite">
-        {elegida === null ? '' : elegida === p.correcta ? '✓ Correcto' : `✗ Incorrecto. La respuesta era: ${p.opciones[p.correcta]}`}
+        {elegida === null ? '' : elegida === p.correcta ? `✓ Correcto. ${fraseResp}` : `✗ Incorrecto. La respuesta era: ${p.opciones[p.correcta]}. ${fraseResp}`}
       </p>
       {elegida !== null && (
         <button className="nueva" onClick={siguiente}>

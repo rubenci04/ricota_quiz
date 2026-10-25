@@ -3,8 +3,9 @@ import datos from './data/datos-ricotero.json'
 import { guardar, leer } from './storage.js'
 import { normalizarLetras } from './letras.js'
 import Teclado from './Teclado.jsx'
-import Confeti from './Confeti.jsx'
+import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
+import { frase } from './textos.js'
 
 const DIFICULTADES = {
   casual: { nombre: 'Casual', detalle: 'Año y disco desde el inicio, 3 pistas de letra', pistasLetra: 3 },
@@ -61,7 +62,7 @@ function nuevaRonda(modo, anterior) {
 }
 
 export default function Adivinanzas({ onVolver }) {
-  const [config, setConfig] = useState({ dificultad: 'casual', modo: 'palabras' })
+  const [config, setConfig] = useState(() => ({ dificultad: leer().dificultad, modo: 'palabras' }))
   const [jugando, setJugando] = useState(false)
   const [ronda, setRonda] = useState(null)
   const [letras, setLetras] = useState([])
@@ -101,7 +102,10 @@ export default function Adivinanzas({ onVolver }) {
     setJugando(true)
   }
 
-  const elegir = (campo, valor) => setConfig({ ...config, [campo]: valor })
+  const elegir = (campo, valor) => {
+    setConfig({ ...config, [campo]: valor })
+    if (campo === 'dificultad') guardar({ dificultad: valor })
+  }
 
   if (!jugando) {
     acciones.current = null
@@ -143,7 +147,7 @@ export default function Adivinanzas({ onVolver }) {
     const puntos = usadas === 0 ? 3 : usadas === 1 ? 2 : 1
     setTotal(guardar({ adivinanzas: leer().adivinanzas + puntos }).adivinanzas)
     setResultado({ acierto: true, puntos })
-    setMensaje(`✓ Correcto. Sumaste ${puntos} ${puntos === 1 ? 'punto' : 'puntos'}.`)
+    setMensaje(`✓ Correcto. Sumaste ${puntos} ${puntos === 1 ? 'punto' : 'puntos'}. ${frase('acierto')}`)
     return true
   }
 
@@ -191,7 +195,7 @@ export default function Adivinanzas({ onVolver }) {
     if (malas) sonar('error')
     else if (buenas) sonar('ok')
     if (!terminar(letras, pistasLetra)) {
-      setMensaje(`✓ ${buenas} ${buenas === 1 ? 'letra correcta' : 'letras correctas'} · ✗ ${malas} ${malas === 1 ? 'incorrecta' : 'incorrectas'}`)
+      setMensaje(`✓ ${buenas} ${buenas === 1 ? 'letra correcta' : 'letras correctas'} · ✗ ${malas} ${malas === 1 ? 'incorrecta' : 'incorrectas'}. ${frase(malas ? 'error' : 'acierto')}`)
     }
   }
 
@@ -205,13 +209,14 @@ export default function Adivinanzas({ onVolver }) {
     setFijas((prev) => prev.map((x, k) => (k === i ? true : x)))
     limpiarRevision(i)
     setPistasLetra(pistasLetra + 1)
-    terminar(nuevas, pistasLetra + 1)
+    sonar('pista')
+    if (!terminar(nuevas, pistasLetra + 1)) setMensaje(`Pista: te revelé una letra. ${frase('pista')}`)
   }
 
   const rendirse = () => {
     setLetras(solucion)
     setResultado({ acierto: false, puntos: 0 })
-    setMensaje(`✗ Te rendiste. La respuesta era: ${cancion.titulo}`)
+    setMensaje(`✗ Te rendiste. La respuesta era: ${cancion.titulo}. ${frase('derrota')}`)
   }
 
   acciones.current = (e) => {
@@ -294,7 +299,7 @@ export default function Adivinanzas({ onVolver }) {
           </div>
           <div className="herramientas">
             {config.modo === 'palabras' && (
-              <button className="secundario" onClick={() => setExtra(true)} disabled={extra || claves.length <= 3}>
+              <button className="secundario" onClick={() => { setExtra(true); sonar('pista'); setMensaje(`Dos palabras más. ${frase('pista')}`) }} disabled={extra || claves.length <= 3}>
                 Otra pista
               </button>
             )}
@@ -303,16 +308,18 @@ export default function Adivinanzas({ onVolver }) {
         </>
       )}
 
-      {resultado?.acierto && <Confeti />}
       {resultado && (
-        <>
-          <div className="victoria">
-            {resultado.acierto
-              ? <><strong>¡Correcto!</strong> +{resultado.puntos} {resultado.puntos === 1 ? 'punto' : 'puntos'}</>
-              : <>La respuesta era: <strong>{cancion.titulo}</strong></>}
-          </div>
+        <Resultado
+          titulo={resultado.acierto ? 'Adivinanzas · ¡Correcto!' : `Era «${cancion.titulo}»`}
+          puntaje={resultado.acierto ? `+${resultado.puntos}` : '0'}
+          detalle={resultado.acierto ? `Pistas de letra usadas: ${pistasLetra}` : 'Esta vez no sumaste puntos.'}
+          mejor={{ etiqueta: 'Total acumulado', valor: `${total} pts` }}
+          mensaje={resultado.acierto ? frase('victoria') : frase('derrota')}
+          exito={resultado.acierto}
+          compartir={`Sumé ${total} puntos adivinando canciones ricoteras 🎸 ¿Podés superarme?`}
+        >
           <button className="nueva" onClick={() => empezar(cancion)}>Otra canción</button>
-        </>
+        </Resultado>
       )}
     </main>
   )

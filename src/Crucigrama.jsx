@@ -2,8 +2,10 @@ import { useRef, useState } from 'react'
 import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
 import { hayCrucigrama, nuevoCrucigrama } from './crucigrama.js'
-import Confeti from './Confeti.jsx'
+import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
+import { guardar, leer } from './storage.js'
+import { frase } from './textos.js'
 
 const MAX_PISTAS = 5
 const MAX_PALABRAS = 2
@@ -20,7 +22,7 @@ function generar(id, dif) {
 
 export default function Crucigrama({ onVolver }) {
   const [discoId, setDiscoId] = useState('todos')
-  const [dificultad, setDificultad] = useState('casual')
+  const [dificultad, setDificultad] = useState(() => leer().dificultad)
   const [juego, setJuego] = useState(() => generar('todos', 'casual'))
   const [letras, setLetras] = useState({})
   const [fijas, setFijas] = useState({})
@@ -29,6 +31,7 @@ export default function Crucigrama({ onVolver }) {
   const [pistas, setPistas] = useState(0)
   const [palabrasReveladas, setPalabrasReveladas] = useState(0)
   const [mensaje, setMensaje] = useState('')
+  const [completados, setCompletados] = useState(() => leer().crucigramas)
   const entrada = useRef(null)
 
   const empezar = (id, dif = dificultad) => {
@@ -119,7 +122,7 @@ export default function Crucigrama({ onVolver }) {
     setRevision(res)
     const buenas = Object.values(res).filter((x) => x === 'ok').length
     const malas = Object.values(res).filter((x) => x === 'mal').length
-    setMensaje(`✓ ${buenas} ${buenas === 1 ? 'letra correcta' : 'letras correctas'} · ✗ ${malas} ${malas === 1 ? 'incorrecta' : 'incorrectas'}`)
+    setMensaje(`✓ ${buenas} ${buenas === 1 ? 'letra correcta' : 'letras correctas'} · ✗ ${malas} ${malas === 1 ? 'incorrecta' : 'incorrectas'}. ${frase(malas ? 'error' : 'acierto')}`)
     if (malas) sonar('error')
     else if (buenas) sonar('ok')
   }
@@ -132,6 +135,8 @@ export default function Crucigrama({ onVolver }) {
     setFijas((prev) => ({ ...prev, ...Object.fromEntries(celdas.map((k) => [k, true])) }))
     setRevision((prev) => { const n = { ...prev }; celdas.forEach((k) => delete n[k]); return n })
     setPalabrasReveladas(palabrasReveladas + 1)
+    sonar('pista')
+    setMensaje(`Palabra revelada. ${frase('pista')}`)
   }
 
   const pedirPista = () => {
@@ -146,6 +151,8 @@ export default function Crucigrama({ onVolver }) {
     setFijas((prev) => ({ ...prev, [k]: true }))
     setRevision((prev) => { const n = { ...prev }; delete n[k]; return n })
     setPistas(pistas + 1)
+    sonar('pista')
+    setMensaje(`Letra revelada. ${frase('pista')}`)
   }
 
   const ganaste = Object.keys(solucion).every((k) => letras[k] === solucion[k])
@@ -191,7 +198,7 @@ export default function Crucigrama({ onVolver }) {
         <span>Nivel</span>
         <select
           value={dificultad}
-          onChange={(e) => { setDificultad(e.target.value); empezar(discoId, e.target.value) }}
+          onChange={(e) => { setDificultad(e.target.value); guardar({ dificultad: e.target.value }); empezar(discoId, e.target.value) }}
         >
           <option value="casual">Casual (con la canción en la pista)</option>
           <option value="fanatico">Fanático (solo la definición)</option>
@@ -250,8 +257,17 @@ export default function Crucigrama({ onVolver }) {
         aria-label="Escribir letra"
       />
 
-      {ganaste && <Confeti />}
-      {ganaste && <div className="victoria" role="status"><strong>¡Completaste el crucigrama!</strong> Zafaste.</div>}
+      {ganaste && (
+        <Resultado
+          titulo="Crucigrama"
+          puntaje={`${entradas.length}/${entradas.length}`}
+          detalle={`Letras reveladas: ${pistas} · palabras reveladas: ${palabrasReveladas}`}
+          mejor={{ etiqueta: 'Crucigramas completados', valor: completados }}
+          mensaje={frase('victoria')}
+          alMostrar={() => setCompletados(guardar({ crucigramas: leer().crucigramas + 1 }).crucigramas)}
+          compartir={`Completé un crucigrama ricotero (${entradas.length} palabras) 🎸 ¿Podés superarme?`}
+        />
+      )}
 
       <p className="feedback" role="status" aria-live="polite">{ganaste ? '✓ ¡Completaste el crucigrama!' : mensaje}</p>
 

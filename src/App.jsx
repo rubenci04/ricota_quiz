@@ -3,8 +3,16 @@ import SopaDeLetras from './SopaDeLetras.jsx'
 import Trivia from './Trivia.jsx'
 import Adivinanzas from './Adivinanzas.jsx'
 import Crucigrama from './Crucigrama.jsx'
+import Tutorial from './Tutorial.jsx'
 import Musica from './Musica.jsx'
-import { alternarSonido, sonar, sonidoActivo } from './sonido.js'
+import {
+  alternarSonido,
+  alternarVibracion,
+  sonar,
+  sonidoActivo,
+  vibracionActiva,
+  vibracionDisponible,
+} from './sonido.js'
 import { leer } from './storage.js'
 
 const MODOS = [
@@ -17,25 +25,29 @@ const MODOS = [
 
 export default function App() {
   const [entro, setEntro] = useState(false)
+  const [verTutorial, setVerTutorial] = useState(() => !leer().tutorial)
   const [jugadores, setJugadores] = useState(null) // 'solo' | null (vs amigo: próximamente)
   const [modo, setModo] = useState(null)
   const [sonido, setSonido] = useState(sonidoActivo)
+  const [vibracion, setVibracion] = useState(vibracionActiva)
   const volver = () => setModo(null)
   const g = leer()
 
   let contenido
   if (!entro) {
     contenido = (
-      <main className="pantalla inicio">
+      <main className="pantalla inicio" key="bienvenida">
         <h1 className="logo">ricota_quiz</h1>
         <p className="sub">Patricio Rey y sus Redonditos de Ricota</p>
         <button className="nueva entrar" onClick={() => setEntro(true)}>Entrar</button>
         <p className="aviso">Juego de fans, no oficial, sin relación con la banda.</p>
       </main>
     )
+  } else if (verTutorial) {
+    contenido = <Tutorial onTerminar={() => setVerTutorial(false)} />
   } else if (!jugadores) {
     contenido = (
-      <main className="pantalla inicio">
+      <main className="pantalla inicio" key="jugadores">
         <h1 className="logo">ricota_quiz</h1>
         <p className="sub">¿Cómo querés jugar?</p>
         <nav className="menu">
@@ -56,7 +68,7 @@ export default function App() {
   else if (modo === 'banda') contenido = <Trivia onVolver={volver} categoria="banda" />
   else {
     contenido = (
-      <main className="pantalla inicio">
+      <main className="pantalla inicio" key="menu">
         <h1 className="logo">ricota_quiz</h1>
         <p className="sub">Patricio Rey y sus Redonditos de Ricota</p>
         <nav className="menu">
@@ -78,7 +90,9 @@ export default function App() {
           <div><b>{g.sopas}</b>Sopas hechas</div>
           <div><b>{g.adivinanzas}</b>Pts adivinanzas</div>
           <div><b>{g.nivelBanda}</b>Nivel banda</div>
+          <div><b>{g.crucigramas}</b>Crucigramas</div>
         </section>
+        <button className="secundario" onClick={() => setVerTutorial(true)}>Ayuda</button>
       </main>
     )
   }
@@ -91,14 +105,26 @@ export default function App() {
   return (
     <div onClick={alClic}>
       {contenido}
-      <button
-        className="sonido"
-        onClick={() => setSonido(alternarSonido())}
-        aria-label={sonido ? 'Silenciar efectos' : 'Activar efectos'}
-        aria-pressed={sonido}
-      >
-        {sonido ? '🔊' : '🔇'}
-      </button>
+      <div className="interruptores">
+        <button
+          className="sonido"
+          onClick={() => setSonido(alternarSonido())}
+          aria-label={sonido ? 'Silenciar efectos' : 'Activar efectos'}
+          aria-pressed={sonido}
+        >
+          {sonido ? '🔊' : '🔇'}
+        </button>
+        {vibracionDisponible() && (
+          <button
+            className="sonido"
+            onClick={() => setVibracion(alternarVibracion())}
+            aria-label={vibracion ? 'Desactivar vibración' : 'Activar vibración'}
+            aria-pressed={vibracion}
+          >
+            {vibracion ? '📳' : '📴'}
+          </button>
+        )}
+      </div>
       {entro && <Musica />}
       <footer className="pie">Juego de fans, no oficial, sin relación con la banda.</footer>
     </div>

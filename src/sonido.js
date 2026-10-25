@@ -1,26 +1,10 @@
-// Efectos generados con la Web Audio API (sin archivos de audio).
-const CLAVE = 'ricota_quiz_sonido'
+// Efectos generados con la Web Audio API (sin archivos de audio) y vibración corta.
+// Nada suena ni vibra hasta la primera interacción del usuario.
+import { guardar, leer } from './storage.js'
+
 let ctx = null
-let activo = true
+let habilitado = false
 let ultimaVictoria = 0
-
-try {
-  activo = localStorage.getItem(CLAVE) !== 'off'
-} catch {
-  // sin almacenamiento: queda activado
-}
-
-export const sonidoActivo = () => activo
-
-export function alternarSonido() {
-  activo = !activo
-  try {
-    localStorage.setItem(CLAVE, activo ? 'on' : 'off')
-  } catch {
-    // no se pudo guardar
-  }
-  return activo
-}
 
 function contexto() {
   if (!ctx) {
@@ -30,6 +14,34 @@ function contexto() {
   }
   if (ctx.state === 'suspended') ctx.resume()
   return ctx
+}
+
+if (typeof window !== 'undefined') {
+  const alPrimerContacto = () => {
+    habilitado = true
+    for (const ev of EVENTOS) window.removeEventListener(ev, alPrimerContacto)
+    try { contexto() } catch { /* el audio es opcional */ }
+  }
+  const EVENTOS = ['pointerdown', 'keydown', 'touchstart']
+  for (const ev of EVENTOS) window.addEventListener(ev, alPrimerContacto, { passive: true })
+}
+
+export const sonidoActivo = () => leer().sonido
+
+export function alternarSonido() {
+  return guardar({ sonido: !leer().sonido }).sonido
+}
+
+export const vibracionDisponible = () => typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function'
+export const vibracionActiva = () => leer().vibracion
+
+export function alternarVibracion() {
+  return guardar({ vibracion: !leer().vibracion }).vibracion
+}
+
+function vibrar(patron) {
+  if (!habilitado || !vibracionDisponible() || !leer().vibracion) return
+  try { navigator.vibrate(patron) } catch { /* sin vibración */ }
 }
 
 function tono(freq, inicio, duracion, tipo = 'sine', volumen = 0.15) {
@@ -48,8 +60,11 @@ function tono(freq, inicio, duracion, tipo = 'sine', volumen = 0.15) {
   osc.stop(t0 + duracion + 0.05)
 }
 
+// tipos: clic, ok (acierto), error, pista, victoria
 export function sonar(tipo) {
-  if (!activo) return
+  if (tipo === 'ok') vibrar(15)
+  else if (tipo === 'error') vibrar([40, 40, 40])
+  if (!habilitado || !leer().sonido) return
   try {
     if (tipo === 'clic') {
       tono(700, 0, 0.05, 'square', 0.04)
@@ -59,6 +74,10 @@ export function sonar(tipo) {
     } else if (tipo === 'error') {
       tono(180, 0, 0.18, 'sawtooth', 0.1)
       tono(130, 0.14, 0.25, 'sawtooth', 0.1)
+    } else if (tipo === 'pista') {
+      tono(520, 0, 0.1, 'sine', 0.1)
+      tono(780, 0.09, 0.1, 'sine', 0.1)
+      tono(1040, 0.18, 0.16, 'sine', 0.08)
     } else if (tipo === 'victoria') {
       const ahora = Date.now()
       if (ahora - ultimaVictoria < 600) return
