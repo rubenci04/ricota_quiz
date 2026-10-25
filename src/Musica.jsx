@@ -36,8 +36,9 @@ export default function Musica() {
   const player = useRef(null)
   const indice = useRef(0)
   const erroresSeguidos = useRef(0)
-  const [volumen, setVolumen] = useState(() => leer().volumen) // arranca en 40%
+  const [volumen, setVolumen] = useState(() => leer().volumen) // arranca en 30%
   const volumenActual = useRef(volumen) // para usarlo dentro de los eventos del reproductor
+  const gesto = useRef(false) // ya hubo una interacción: se puede sacar el silencio
   const arrancando = useRef(false) // ya se cargó la lista desde un video al azar
   const barajado = useRef(false) // ya se activó el orden aleatorio
 
@@ -83,7 +84,7 @@ export default function Musica() {
       const destino = document.createElement('div')
       contenedor.current.appendChild(destino)
       // con lista de YouTube no se autoarranca: se espera a leer la lista para empezar desde un video al azar
-      const base = { autoplay: PLAYLIST_YOUTUBE ? 0 : 1, playsinline: 1, rel: 0, origin: window.location.origin }
+      const base = { autoplay: PLAYLIST_YOUTUBE ? 0 : 1, mute: 1, playsinline: 1, rel: 0, origin: window.location.origin }
       const opciones = {
         width: 200,
         height: 200,
@@ -92,6 +93,8 @@ export default function Musica() {
         playerVars: PLAYLIST_YOUTUBE ? { ...base, listType: 'playlist', list: PLAYLIST_YOUTUBE } : base,
         events: {
           onReady: (e) => {
+            // arranca silenciado (los navegadores bloquean el audio antes de una interacción)
+            if (!gesto.current) e.target.mute()
             e.target.setVolume(volumenActual.current)
             if (PLAYLIST_YOUTUBE) {
               empezarAlAzar(e.target, () => cancelado)
@@ -104,6 +107,7 @@ export default function Musica() {
             if (e.data === YT.PlayerState.PLAYING) {
               erroresSeguidos.current = 0
               e.target.setVolume(volumenActual.current) // en cada cambio de video
+              if (gesto.current && volumenActual.current > 0) e.target.unMute()
               // setShuffle solo funciona con la lista ya cargada: se activa en la primera reproducción
               if (PLAYLIST_YOUTUBE && arrancando.current && !barajado.current) {
                 barajado.current = true
@@ -135,6 +139,25 @@ export default function Musica() {
       if (contenedor.current) contenedor.current.innerHTML = ''
     }
   }, [abierto])
+
+  // el primer toque, clic o tecla en cualquier parte de la página saca el silencio (una sola vez)
+  useEffect(() => {
+    if (!hayMusica) return undefined
+    const eventos = ['pointerdown', 'touchstart', 'keydown']
+    const quitar = () => eventos.forEach((n) => window.removeEventListener(n, alGesto, true))
+    function alGesto() {
+      gesto.current = true
+      quitar()
+      const p = player.current
+      try {
+        p?.setVolume?.(volumenActual.current)
+        if (volumenActual.current > 0) p?.unMute?.()
+        if (p?.getPlayerState?.() !== 1 && p?.getPlayerState?.() !== 3) p?.playVideo?.()
+      } catch { /* el reproductor todavía no está listo: se destapa al empezar */ }
+    }
+    eventos.forEach((n) => window.addEventListener(n, alGesto, true))
+    return quitar
+  }, [])
 
   // cambia el volumen (0–100), lo aplica al reproductor y lo guarda
   const cambiarVolumen = (delta) => {

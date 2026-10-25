@@ -8,7 +8,6 @@ import { sonar } from './sonido.js'
 import { guardar, leer } from './storage.js'
 import { frase } from './textos.js'
 import { nuevaSemilla } from './desafio.js'
-import SelectorTema from './SelectorTema.jsx'
 import SelectorDisco from './SelectorDisco.jsx'
 
 const MAX_PISTAS = 7 // incluye 2 extra
@@ -298,7 +297,6 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
         ))}
       </div>
 
-      <SelectorTema valor={temaId} onCambio={cambiarTema} deshabilitado={!!desafio} />
 
       <div className="pista-actual">
         {activa ? <><b>{activa.num} {activa.dir === 'across' ? '→' : '↓'}</b> {activa.pista}</> : 'Tocá una celda para empezar'}

@@ -1120,6 +1120,294 @@
   "revisada": false
  },
  {
+  "id": "c36-1",
+  "tipo": "cancion",
+  "respuesta": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
+  "nivel": "facil",
+  "texto": "Las hazañas inverosímiles de un superhéroe de los petardos, en una tierra digital helada.",
+  "revisada": false
+ },
+ {
+  "id": "c36-2",
+  "tipo": "cancion",
+  "respuesta": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
+  "nivel": "medio",
+  "texto": "Tema de un disco de 1998 con videoclip de 1999, protagonizado por un héroe pirotécnico.",
+  "revisada": false
+ },
+ {
+  "id": "c36-3",
+  "tipo": "cancion",
+  "respuesta": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
+  "nivel": "medio",
+  "texto": "Aventuras asombrosas de un personaje cuyo nombre es un cohete de feria, en un reino virtual.",
+  "revisada": false
+ },
+ {
+  "id": "c36-4",
+  "tipo": "cancion",
+  "respuesta": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
+  "nivel": "dificil",
+  "texto": "Un mártir de la pirotecnia explora Siberia, pero con prefijo de red informática.",
+  "revisada": false
+ },
+ {
+  "id": "c37-1",
+  "tipo": "cancion",
+  "respuesta": "Alien duce",
+  "nivel": "facil",
+  "texto": "Un extraterrestre con rango de caudillo.",
+  "revisada": false
+ },
+ {
+  "id": "c37-2",
+  "tipo": "cancion",
+  "respuesta": "Alien duce",
+  "nivel": "medio",
+  "texto": "Tema de un disco de 1998 que habla de tecnología y máquinas.",
+  "revisada": false
+ },
+ {
+  "id": "c37-3",
+  "tipo": "cancion",
+  "respuesta": "Alien duce",
+  "nivel": "medio",
+  "texto": "Forastero espacial y líder supremo en una sola expresión.",
+  "revisada": false
+ },
+ {
+  "id": "c37-4",
+  "tipo": "cancion",
+  "respuesta": "Alien duce",
+  "nivel": "dificil",
+  "texto": "Mezcla inglesa y latina: el que viene de afuera y el que conduce.",
+  "revisada": false
+ },
+ {
+  "id": "c38-1",
+  "tipo": "cancion",
+  "respuesta": "Pogo",
+  "nivel": "facil",
+  "texto": "Baile de rebotes y empujones en los recitales.",
+  "revisada": false
+ },
+ {
+  "id": "c38-2",
+  "tipo": "cancion",
+  "respuesta": "Pogo",
+  "nivel": "medio",
+  "texto": "Tema de un disco de 1998; un juguete de saltos con resorte lleva el mismo nombre.",
+  "revisada": false
+ },
+ {
+  "id": "c38-3",
+  "tipo": "cancion",
+  "respuesta": "Pogo",
+  "nivel": "medio",
+  "texto": "Se baila saltando como si el piso fuera un trampolín.",
+  "revisada": false
+ },
+ {
+  "id": "c38-4",
+  "tipo": "cancion",
+  "respuesta": "Pogo",
+  "nivel": "dificil",
+  "texto": "Cuatro letras, una sola vocal repetida, y un salto que no avanza.",
+  "revisada": false
+ },
+ {
+  "id": "c39-1",
+  "tipo": "cancion",
+  "respuesta": "La pequeña novia del Carioca",
+  "nivel": "facil",
+  "texto": "La diminuta prometida del nativo de Río de Janeiro.",
+  "revisada": false
+ },
+ {
+  "id": "c39-2",
+  "tipo": "cancion",
+  "respuesta": "La pequeña novia del Carioca",
+  "nivel": "medio",
+  "texto": "Clásico de un disco de 1998 destacado por la crítica.",
+  "revisada": false
+ },
+ {
+  "id": "c39-3",
+  "tipo": "cancion",
+  "respuesta": "La pequeña novia del Carioca",
+  "nivel": "medio",
+  "texto": "Una joven comprometida con un brasileño, bien chiquita.",
+  "revisada": false
+ },
+ {
+  "id": "c39-4",
+  "tipo": "cancion",
+  "respuesta": "La pequeña novia del Carioca",
+  "nivel": "dificil",
+  "texto": "Mujer en miniatura, casi esposa de un hijo de Copacabana.",
+  "revisada": false
+ },
+ {
+  "id": "c40-1",
+  "tipo": "cancion",
+  "respuesta": "El templo de Momo",
+  "nivel": "facil",
+  "texto": "El santuario del dios griego de la burla.",
+  "revisada": false
+ },
+ {
+  "id": "c40-2",
+  "tipo": "cancion",
+  "respuesta": "El templo de Momo",
+  "nivel": "medio",
+  "texto": "Primer simple del último disco de estudio, del año 2000.",
+  "revisada": false
+ },
+ {
+  "id": "c40-3",
+  "tipo": "cancion",
+  "respuesta": "El templo de Momo",
+  "nivel": "medio",
+  "texto": "Iglesia pagana dedicada al patrono del sarcasmo.",
+  "revisada": false
+ },
+ {
+  "id": "c40-4",
+  "tipo": "cancion",
+  "respuesta": "El templo de Momo",
+  "nivel": "dificil",
+  "texto": "Edificio sagrado cuyo dios es el que se ríe de todos, incluidos los demás dioses.",
+  "revisada": false
+ },
+ {
+  "id": "c41-1",
+  "tipo": "cancion",
+  "respuesta": "La murga de los renegados",
+  "nivel": "facil",
+  "texto": "El conjunto carnavalesco de los descreídos.",
+  "revisada": false
+ },
+ {
+  "id": "c41-2",
+  "tipo": "cancion",
+  "respuesta": "La murga de los renegados",
+  "nivel": "medio",
+  "texto": "Tema de un disco de 2000 con ritmo de bombo y platillo.",
+  "revisada": false
+ },
+ {
+  "id": "c41-3",
+  "tipo": "cancion",
+  "respuesta": "La murga de los renegados",
+  "nivel": "medio",
+  "texto": "Comparsa de carnaval integrada por quienes abandonaron su fe.",
+  "revisada": false
+ },
+ {
+  "id": "c41-4",
+  "tipo": "cancion",
+  "respuesta": "La murga de los renegados",
+  "nivel": "dificil",
+  "texto": "Redoblante, bombo y apostasía: un desfile de arrepentidos en las calles.",
+  "revisada": false
+ },
+ {
+  "id": "c42-1",
+  "tipo": "cancion",
+  "respuesta": "Sheriff",
+  "nivel": "facil",
+  "texto": "Autoridad con estrella de latón en un pueblo del lejano oeste.",
+  "revisada": false
+ },
+ {
+  "id": "c42-2",
+  "tipo": "cancion",
+  "respuesta": "Sheriff",
+  "nivel": "medio",
+  "texto": "Tema de un disco de 2000 con el nombre de un policía de películas de vaqueros.",
+  "revisada": false
+ },
+ {
+  "id": "c42-3",
+  "tipo": "cancion",
+  "respuesta": "Sheriff",
+  "nivel": "medio",
+  "texto": "Representante del orden en las películas con pistolas y caballos.",
+  "revisada": false
+ },
+ {
+  "id": "c42-4",
+  "tipo": "cancion",
+  "respuesta": "Sheriff",
+  "nivel": "dificil",
+  "texto": "Alguien con placa, sombrero y revólver, y la ley del polvo del desierto.",
+  "revisada": false
+ },
+ {
+  "id": "c43-1",
+  "tipo": "cancion",
+  "respuesta": "Morta punto com",
+  "nivel": "facil",
+  "texto": "Muerta, pero con dirección de internet.",
+  "revisada": false
+ },
+ {
+  "id": "c43-2",
+  "tipo": "cancion",
+  "respuesta": "Morta punto com",
+  "nivel": "medio",
+  "texto": "Tema de un disco de 2000 con un dominio comercial en el título.",
+  "revisada": false
+ },
+ {
+  "id": "c43-3",
+  "tipo": "cancion",
+  "respuesta": "Morta punto com",
+  "nivel": "medio",
+  "texto": "Fallecida con terminación de página web.",
+  "revisada": false
+ },
+ {
+  "id": "c43-4",
+  "tipo": "cancion",
+  "respuesta": "Morta punto com",
+  "nivel": "dificil",
+  "texto": "El deceso más digital: una difunta con extensión de sitio comercial.",
+  "revisada": false
+ },
+ {
+  "id": "c44-1",
+  "tipo": "cancion",
+  "respuesta": "Pool, Averna y Papusa",
+  "nivel": "facil",
+  "texto": "Un juego de mesa con bolillas, un licor italiano y una chica bonita.",
+  "revisada": false
+ },
+ {
+  "id": "c44-2",
+  "tipo": "cancion",
+  "respuesta": "Pool, Averna y Papusa",
+  "nivel": "medio",
+  "texto": "Tema de un disco de 2000 que junta tres nombres propios con una conjunción.",
+  "revisada": false
+ },
+ {
+  "id": "c44-3",
+  "tipo": "cancion",
+  "respuesta": "Pool, Averna y Papusa",
+  "nivel": "medio",
+  "texto": "Tres nombres juntos: un billar, un amargo de Sicilia y un apodo cariñoso.",
+  "revisada": false
+ },
+ {
+  "id": "c44-4",
+  "tipo": "cancion",
+  "respuesta": "Pool, Averna y Papusa",
+  "nivel": "dificil",
+  "texto": "Taco, aperitivo siciliano y muñequita: una barra de bar en una sola frase.",
+  "revisada": false
+ },
+ {
   "id": "d-gulp-1",
   "tipo": "disco",
   "respuesta": "Gulp!",

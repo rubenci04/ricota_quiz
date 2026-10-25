@@ -257,7 +257,7 @@ export default function App() {
           </button>
         )}
       </div>
-      {entro && <Musica />}
+      <Musica />
       <footer className="pie">
         <span>Juego de fans, no oficial, sin relación con la banda.</span>
         <span>Developer: {DESARROLLADOR} · Derechos reservados</span>

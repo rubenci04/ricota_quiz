@@ -6,7 +6,6 @@ import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
 import { nuevaSemilla } from './desafio.js'
-import SelectorTema from './SelectorTema.jsx'
 
 const PUNTOS_PARA_PASAR = 6
 
@@ -113,7 +112,6 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
     return (
       <main className="pantalla" key="niveles">
         <Cabecera titulo={<>{banda ? 'La banda' : 'Trivia'}</>} extra={<>Récord {guardado[kMejor]}/{PREGUNTAS_POR_NIVEL}</>} onVolver={onVolver} onMenu={onMenu} />
-        {!banda && <SelectorTema valor={temaId} onCambio={setTemaId} />}
         <div className="menu-grid">
           {Array.from({ length: guardado[kNivel] }, (_, k) => k + 1).reverse().map((n, idx) => (
             <button key={n} className="tarjeta-modo chica" style={{ '--c': 'var(--modo)', '--i': idx }} onClick={() => jugar(n)}>

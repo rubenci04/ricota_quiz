@@ -5,7 +5,6 @@ import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
 import { nuevaSemilla } from './desafio.js'
-import SelectorTema from './SelectorTema.jsx'
 import SelectorDisco from './SelectorDisco.jsx'
 import { nombreDeTema } from './temas.js'
 import { SIZE, discos, discoTieneJuego, nuevaPartida } from './sopa.js'
@@ -235,7 +234,6 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
 
       <SelectorDisco valor={discoId} onCambio={cambiarDisco} deshabilitado={!!desafio} />
 
-      <SelectorTema valor={temaId} onCambio={cambiarTema} deshabilitado={!!desafio} />
 
       <div
         className="grilla"

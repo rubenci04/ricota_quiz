@@ -295,3 +295,34 @@ button:not(:disabled):active, .ficha:not(:disabled):active, .tarjeta-modo:not(:d
 /* los interruptores (sonido, vibración, tema) van en una fila abajo a la izquierda, sin tapar el contenido */
 .interruptores { top: auto; right: auto; left: 8px; bottom: 72px; transform: none; flex-direction: row; flex-wrap: wrap; max-width: 150px; }
 .pantalla { padding-bottom: 140px; }
+
+/* Fichas de disco: una sola fila que se desliza en horizontal */
+.fichas.desliza { flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity; padding: 4px 2px 8px; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
+.fichas.desliza .ficha { flex: 0 0 auto; scroll-snap-align: center; white-space: nowrap; flex-direction: column; text-align: center; gap: 0; padding: 8px 14px; }
+
+/* Tema claro: mismo carácter que el oscuro. Cabecera y pie son franjas oscuras sobre el fondo de papel. */
+:root[data-tema='claro'] .barra,
+:root[data-tema='claro'] .pie {
+  --bg: #0b0b0c;
+  --panel: #161617;
+  --panel-2: #1d1d20;
+  --borde: #2f2f33;
+  --borde-fuerte: #5a5a62;
+  --texto: #ece8de;
+  --tenue: #b9b4a8;
+  --acento: #e0a526;
+  --foco-anillo: #ffffff;
+  color: var(--texto);
+  background: #0b0b0c;
+  border-radius: var(--radio);
+  padding: 8px 10px;
+}
+:root[data-tema='claro'] .pie { border-radius: 0; border-top: 2px solid var(--acento-fill); }
+:root[data-tema='claro'] .barra .btn-nav { background: #1d1d20; color: #ece8de; border-color: #5a5a62; }
+.musica { bottom: 100px; }
+
+/* Títulos largos ("…Capitán Buscapina en Cybersiberia") en casillas y textos, también a 360 px */
+body { overflow-wrap: break-word; }
+.par-casillas { gap: 2px; }
+.par-casillas .casilla, .casillas > .casilla { width: clamp(17px, calc((100vw - 64px) / 12 - 2px), 28px); height: 34px; font-size: clamp(0.85rem, 4vw, 1.1rem); }
+.opcion, .tarjeta-modo strong, .barra h2 { overflow-wrap: anywhere; }

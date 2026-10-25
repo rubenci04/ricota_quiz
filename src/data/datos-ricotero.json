@@ -1497,7 +1497,7 @@
       "palabras": [
         "corriendo",
         "zoquetes",
-        "pipiolos",
+        "dormida",
         "chisporrotea",
         "infumable",
         "hechicera",
@@ -1509,14 +1509,14 @@
       "definiciones": {
         "corriendo": "Yendo muy rápido a pie",
         "zoquetes": "Torpes, de poca inteligencia",
-        "pipiolos": "Jóvenes inexpertos",
         "chisporrotea": "Despide chispas con chasquidos",
         "infumable": "Insoportable o de pésima calidad",
         "hechicera": "Mujer que practica la magia",
         "paredones": "Muros grandes y gruesos",
         "pajarraco": "Ave grande y de aspecto feo",
         "sillones": "Asientos grandes y mullidos",
-        "ingenuo": "Cándido, sin malicia"
+        "ingenuo": "Cándido, sin malicia",
+        "dormida": "Que está en pleno sueño"
       },
       "autores": [
         "Carlos \"Indio\" Solari",
@@ -1527,6 +1527,366 @@
       "temas": [
         "Personajes y relatos",
         "Noche y bajos fondos"
+      ]
+    },
+    {
+      "titulo": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
+      "disco": "finisterre",
+      "palabras": [
+        "avalanchas",
+        "bocado",
+        "campeón",
+        "canallas",
+        "cinturones",
+        "clones",
+        "deudas",
+        "farándula",
+        "resacas",
+        "surfeando"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "avalanchas": "Desprendimientos violentos de nieve o tierra",
+        "bocado": "Porción pequeña de comida",
+        "campeón": "Ganador de una competencia",
+        "canallas": "Personas ruines y despreciables",
+        "cinturones": "Tiras de cuero que sujetan el pantalón",
+        "clones": "Copias genéticas idénticas",
+        "deudas": "Dinero que se debe",
+        "farándula": "Mundo del espectáculo y los famosos",
+        "resacas": "Malestar posterior a beber en exceso",
+        "surfeando": "Deslizándose sobre las olas en tabla"
+      },
+      "titulo_parafraseado": "Las hazañas inverosímiles de un superhéroe de los petardos, en una tierra digital helada",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Personajes y relatos",
+        "Rock y música"
+      ]
+    },
+    {
+      "titulo": "Alien duce",
+      "disco": "finisterre",
+      "palabras": [
+        "esclavitud",
+        "evangelio",
+        "flotando",
+        "gavilán",
+        "hígado",
+        "minestrón",
+        "nadando",
+        "sobrevuela",
+        "escupe",
+        "edificio"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "esclavitud": "Condición de quien carece de libertad",
+        "evangelio": "Libro sagrado cristiano sobre la vida de Jesús",
+        "flotando": "Sostenido sobre la superficie del agua",
+        "gavilán": "Ave rapaz de tamaño mediano",
+        "hígado": "Órgano que filtra la sangre",
+        "minestrón": "Sopa espesa italiana de verduras",
+        "nadando": "Desplazándose dentro del agua con brazos",
+        "sobrevuela": "Pasa por el aire por encima",
+        "escupe": "Arroja saliva por la boca",
+        "edificio": "Construcción de varios pisos"
+      },
+      "titulo_parafraseado": "Un extraterrestre con rango de caudillo",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Política y sociedad",
+        "Personajes y relatos"
+      ]
+    },
+    {
+      "titulo": "Pogo",
+      "disco": "finisterre",
+      "palabras": [
+        "acechando",
+        "adiestrados",
+        "atropellan",
+        "bolsillos",
+        "cajita",
+        "corazones",
+        "engañan",
+        "payaso",
+        "prudentes",
+        "rebotan"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "acechando": "Vigilando para sorprender a alguien",
+        "adiestrados": "Entrenados para una tarea",
+        "atropellan": "Pasan por encima de alguien con un vehículo",
+        "bolsillos": "Bolsas cosidas en la ropa",
+        "cajita": "Recipiente pequeño con tapa",
+        "corazones": "Órganos que bombean la sangre",
+        "engañan": "Hacen creer algo falso",
+        "payaso": "Artista de circo con nariz roja",
+        "prudentes": "Cautelosos, que obran con cuidado",
+        "rebotan": "Vuelven tras chocar contra algo"
+      },
+      "titulo_parafraseado": "Baile de rebotes y empujones en los recitales",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Rock y música",
+        "Noche y bajos fondos"
+      ]
+    },
+    {
+      "titulo": "La pequeña novia del Carioca",
+      "disco": "finisterre",
+      "palabras": [
+        "apostamos",
+        "barca",
+        "castillo",
+        "consuelo",
+        "huellas",
+        "licor",
+        "naipes",
+        "nocturno",
+        "vagabundeando",
+        "espalda"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "apostamos": "Jugamos dinero a un resultado",
+        "barca": "Bote pequeño para remar",
+        "castillo": "Fortaleza medieval con torres",
+        "consuelo": "Alivio en una pena",
+        "huellas": "Marcas que deja un pie",
+        "licor": "Bebida alcohólica dulce",
+        "naipes": "Cartas de la baraja",
+        "nocturno": "Propio de la noche",
+        "vagabundeando": "Andando sin rumbo fijo",
+        "espalda": "Parte posterior del tronco"
+      },
+      "titulo_parafraseado": "La diminuta prometida del nativo de Río de Janeiro",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Amor y desamor",
+        "Personajes y relatos"
+      ]
+    },
+    {
+      "titulo": "El templo de Momo",
+      "disco": "momo",
+      "palabras": [
+        "baladas",
+        "desfilar",
+        "embaucar",
+        "embriaguez",
+        "festín",
+        "galpón",
+        "letargo",
+        "mostaza",
+        "ponzoña",
+        "tambaleando"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "baladas": "Canciones lentas y románticas",
+        "desfilar": "Marchar en fila ante el público",
+        "embaucar": "Engañar aprovechando la ingenuidad",
+        "embriaguez": "Estado de quien bebió demasiado",
+        "festín": "Banquete espléndido",
+        "galpón": "Construcción amplia y techada",
+        "letargo": "Sueño profundo y prolongado",
+        "mostaza": "Condimento amarillo y picante",
+        "ponzoña": "Veneno de animales",
+        "tambaleando": "Moviéndose sin equilibrio, a punto de caer"
+      },
+      "titulo_parafraseado": "El santuario del dios griego de la burla",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Rock y música",
+        "Noche y bajos fondos"
+      ]
+    },
+    {
+      "titulo": "La murga de los renegados",
+      "disco": "momo",
+      "palabras": [
+        "bendición",
+        "bingo",
+        "bodega",
+        "ciegas",
+        "desencantada",
+        "envenenó",
+        "modorras",
+        "oscuridad",
+        "siglos",
+        "serenas"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "bendición": "Gracia invocada por un sacerdote",
+        "bingo": "Juego de números sorteados en cartones",
+        "bodega": "Lugar donde se guarda el vino",
+        "ciegas": "Sin vista",
+        "desencantada": "Decepcionada, sin ilusión",
+        "envenenó": "Dio tóxico para dañar",
+        "modorras": "Somnolencias pesadas",
+        "oscuridad": "Falta total de luz",
+        "siglos": "Períodos de cien años",
+        "serenas": "Tranquilas, sin agitación"
+      },
+      "titulo_parafraseado": "El conjunto carnavalesco de los descreídos",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Política y sociedad",
+        "Personajes y relatos"
+      ]
+    },
+    {
+      "titulo": "Sheriff",
+      "disco": "momo",
+      "palabras": [
+        "afilando",
+        "buñuelo",
+        "cañaveral",
+        "despiadado",
+        "eternidad",
+        "guadaña",
+        "hocico",
+        "rastreador",
+        "rehenes",
+        "salvación"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "afilando": "Dando punta cortante a un cuchillo",
+        "buñuelo": "Fritura dulce de masa esponjosa",
+        "cañaveral": "Sembrado de tallos altos para azúcar",
+        "despiadado": "Cruel, sin compasión",
+        "eternidad": "Tiempo sin principio ni fin",
+        "guadaña": "Herramienta curva de la Muerte",
+        "hocico": "Parte saliente de la cara animal",
+        "rastreador": "Quien sigue pistas de alguien",
+        "rehenes": "Personas retenidas como garantía",
+        "salvación": "Rescate de un peligro grave"
+      },
+      "titulo_parafraseado": "Autoridad con estrella de latón en un pueblo del lejano oeste",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Política y sociedad",
+        "Personajes y relatos"
+      ]
+    },
+    {
+      "titulo": "Morta punto com",
+      "disco": "momo",
+      "palabras": [
+        "aceite",
+        "burbujas",
+        "cascote",
+        "diluvio",
+        "estribor",
+        "guateque",
+        "hinchado",
+        "picante",
+        "serrín",
+        "toallón"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "aceite": "Líquido graso para cocinar",
+        "burbujas": "Esferas de aire en un líquido",
+        "cascote": "Fragmento de material de obra",
+        "diluvio": "Lluvia torrencial y abundante",
+        "estribor": "Lado derecho de una nave",
+        "guateque": "Fiesta animada con baile",
+        "hinchado": "Con volumen aumentado por aire",
+        "picante": "Que arde en la lengua",
+        "serrín": "Polvo fino de madera cortada",
+        "toallón": "Paño grande para secarse"
+      },
+      "titulo_parafraseado": "Muerta, pero con dirección de internet",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Vida, muerte y existencia",
+        "Noche y bajos fondos"
+      ]
+    },
+    {
+      "titulo": "Pool, Averna y Papusa",
+      "disco": "momo",
+      "palabras": [
+        "abismo",
+        "cabina",
+        "camaleón",
+        "claridad",
+        "confesión",
+        "contestador",
+        "corazonada",
+        "desbarrancó",
+        "espolón",
+        "lágrimas"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "abismo": "Precipicio profundo e insondable",
+        "cabina": "Cuarto pequeño para una función",
+        "camaleón": "Reptil que cambia de color",
+        "claridad": "Cualidad de lo luminoso o nítido",
+        "confesión": "Declaración de culpas o secretos",
+        "contestador": "Aparato que graba mensajes telefónicos",
+        "corazonada": "Presentimiento sin pruebas",
+        "desbarrancó": "Cayó por un precipicio",
+        "espolón": "Punta saliente en la proa",
+        "lágrimas": "Gotas que brotan de los ojos"
+      },
+      "titulo_parafraseado": "Un juego de bolillas, un licor italiano y una chica bonita",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Noche y bajos fondos",
+        "Personajes y relatos"
       ]
     }
   ],

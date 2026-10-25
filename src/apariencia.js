@@ -4,7 +4,7 @@ import { guardar, leer } from './storage.js'
 const COLORES = { oscuro: '#0b0b0c', claro: '#f7f3ea' } // meta theme-color
 const consulta = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null
 
-export const ORDEN = ['auto', 'claro', 'oscuro']
+export const ORDEN = ['oscuro', 'claro', 'auto']
 
 export function temaEfectivo(valor = leer().apariencia) {
   if (valor === 'claro' || valor === 'oscuro') return valor
@@ -25,7 +25,7 @@ export function aplicarApariencia(valor = leer().apariencia) {
   return tema
 }
 
-// Pasa al siguiente: automático → claro → oscuro → automático.
+// Pasa al siguiente: oscuro → claro → automático → oscuro.
 export function siguienteApariencia() {
   const actual = leer().apariencia
   const nueva = ORDEN[(ORDEN.indexOf(actual) + 1) % ORDEN.length]

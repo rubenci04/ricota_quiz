@@ -51,8 +51,8 @@ const ESQUEMA = {
   sopaSinPistas: { tipo: 'b', def: false },
   adivinanzaSinPistas: { tipo: 'b', def: false },
   sonido: { tipo: 'b', def: true },
-  volumen: { tipo: 'n', def: 40, min: 0, max: 100 }, // volumen de la música de YouTube
-  apariencia: { tipo: 's', def: 'auto', validos: ['auto', 'claro', 'oscuro'] },
+  volumen: { tipo: 'n', def: 30, min: 0, max: 100 }, // volumen de la música de YouTube
+  apariencia: { tipo: 's', def: 'oscuro', validos: ['auto', 'claro', 'oscuro'] },
   ultimaEleccion: { tipo: 'f', def: null, f: validarEleccion },
   vibracion: { tipo: 'b', def: true },
   tutorial: { tipo: 'b', def: false },

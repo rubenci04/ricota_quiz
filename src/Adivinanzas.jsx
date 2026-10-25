@@ -5,7 +5,6 @@ import Teclado from './Teclado.jsx'
 import Resultado from './Resultado.jsx'
 import Cabecera from './Cabecera.jsx'
 import Fichas from './Fichas.jsx'
-import SelectorTema from './SelectorTema.jsx'
 import SelectorDisco from './SelectorDisco.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
@@ -143,9 +142,8 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
         )}
 
         <details className="filtros">
-          <summary>Filtrar por disco o tema (opcional)</summary>
+          <summary>Filtrar por disco (opcional)</summary>
           <SelectorDisco valor={disco} onCambio={setDisco} />
-          <SelectorTema valor={tema} onCambio={setTema} />
         </details>
       </main>
     )
