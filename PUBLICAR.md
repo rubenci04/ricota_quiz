@@ -19,8 +19,8 @@ Todo se cambia en **`src/config.js`**, salvo lo que se indica. Estado actual:
 
 - El nombre, la descripción y la URL salen de `src/config.js` hacia `index.html` (título, Open Graph, Twitter) y el manifest de la PWA.
 - `public/og.png` tiene el nombre dibujado: si cambiás el nombre, hay que rehacerla. Los íconos no llevan texto.
-- Música: el reproductor usa la lista de YouTube de `PLAYLIST_YOUTUBE` (si queda vacía, usa `src/data/musica.json`). Salta al siguiente video si uno no se puede incrustar. Cambiar `PLAYLIST_YOUTUBE` ajusta solo la página de Privacidad.
+- Música: el reproductor usa la lista de YouTube de `PLAYLIST_YOUTUBE` (si queda vacía, usa `src/data/musica.json`), arranca desde un video al azar y sigue en orden aleatorio y en bucle. Salta al siguiente video si uno no se puede incrustar. Cambiar `PLAYLIST_YOUTUBE` ajusta solo la página de Privacidad.
 - `public/_headers` evita que el HTML, el service worker y el manifest queden en caché vieja; la PWA se actualiza sola (`autoUpdate`).
-- Para que Cloudflare use `404.html` en rutas inexistentes (Workers con assets), la configuración del proyecto debe tener `not_found_handling: "404-page"`.
+- Página 404: el repositorio no tiene archivo de configuración de Cloudflare (no hay `wrangler.jsonc`). Para que se use `404.html` en rutas inexistentes hay que activar `assets.not_found_handling = "404-page"` en la configuración del proyecto en Cloudflare, o agregar un `wrangler.jsonc` con ese valor y `assets.directory = "./dist"` (el `name` debe coincidir con el del Worker). Las rutas con `#` de desafío no se ven afectadas: el servidor solo recibe `/`.
 - Las efemérides (`src/data/efemerides.json`) solo incluyen fechas confirmadas con fuente.
 - Fuera del build quedan `datos-pendientes/`, `.claude/` y las letras privadas (que además están fuera del proyecto).

@@ -33,6 +33,8 @@ export default function Musica() {
   const player = useRef(null)
   const indice = useRef(0)
   const erroresSeguidos = useRef(0)
+  const arrancando = useRef(false) // ya se cargó la lista desde un video al azar
+  const barajado = useRef(false) // ya se activó el orden aleatorio
 
   // pasa al siguiente video (en bucle)
   const siguiente = () => {
@@ -47,6 +49,26 @@ export default function Musica() {
     }
   }
 
+  // Espera a que la lista esté cargada, lee cuántos videos tiene y la arranca desde uno elegido al azar.
+  const empezarAlAzar = (p, cancelado) => {
+    let intentos = 0
+    const esperar = () => {
+      if (cancelado()) return
+      const ids = p.getPlaylist?.()
+      if (Array.isArray(ids) && ids.length > 0) {
+        arrancando.current = true
+        p.loadPlaylist({ listType: 'playlist', list: PLAYLIST_YOUTUBE, index: Math.floor(Math.random() * ids.length), startSeconds: 0 })
+      } else if (++intentos < 50) {
+        setTimeout(esperar, 200)
+      } else {
+        // plan B: no se pudo leer la lista; arranca desde el principio pero igual barajada
+        arrancando.current = true
+        p.playVideo()
+      }
+    }
+    esperar()
+  }
+
   useEffect(() => {
     if (!hayMusica || !abierto) return
     let cancelado = false
@@ -55,7 +77,8 @@ export default function Musica() {
       if (cancelado || !contenedor.current) return
       const destino = document.createElement('div')
       contenedor.current.appendChild(destino)
-      const base = { autoplay: 1, playsinline: 1, rel: 0, origin: window.location.origin }
+      // con lista de YouTube no se autoarranca: se espera a leer la lista para empezar desde un video al azar
+      const base = { autoplay: PLAYLIST_YOUTUBE ? 0 : 1, playsinline: 1, rel: 0, origin: window.location.origin }
       const opciones = {
         width: 200,
         height: 200,
@@ -64,13 +87,22 @@ export default function Musica() {
         playerVars: PLAYLIST_YOUTUBE ? { ...base, listType: 'playlist', list: PLAYLIST_YOUTUBE } : base,
         events: {
           onReady: (e) => {
-            if (PLAYLIST_YOUTUBE) e.target.setLoop(true) // bucle por toda la lista
-            else setTitulo(lista[0].titulo)
-            e.target.playVideo()
+            if (PLAYLIST_YOUTUBE) {
+              empezarAlAzar(e.target, () => cancelado)
+            } else {
+              setTitulo(lista[0].titulo)
+              e.target.playVideo()
+            }
           },
           onStateChange: (e) => {
             if (e.data === YT.PlayerState.PLAYING) {
               erroresSeguidos.current = 0
+              // setShuffle solo funciona con la lista ya cargada: se activa en la primera reproducción
+              if (PLAYLIST_YOUTUBE && arrancando.current && !barajado.current) {
+                barajado.current = true
+                e.target.setShuffle(true)
+                e.target.setLoop(true)
+              }
               const datos = e.target.getVideoData?.()
               if (PLAYLIST_YOUTUBE && datos?.title) setTitulo(datos.title)
             }
@@ -86,6 +118,7 @@ export default function Musica() {
         },
       }
       player.current = new YT.Player(destino, opciones)
+      if (import.meta.env.DEV) window.__playerMusica = player.current // solo para probar en desarrollo
     })
     return () => {
       cancelado = true
