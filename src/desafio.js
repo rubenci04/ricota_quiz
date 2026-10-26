@@ -24,11 +24,7 @@ const DIFICULTADES = ['casual', 'fanatico']
 const SEMILLA = /^[a-z0-9]{4,16}$/
 const esDisco = (id) => id === 'todos' || datos.discos.some((d) => d.id === id)
 
-export const nuevaSemilla = () => {
-  let s = ''
-  while (s.length < 8) s += Math.random().toString(36).slice(2)
-  return s.slice(0, 8)
-}
+export { nuevaSemilla } from './azar.js'
 
 // Interpreta el segmento "tema" según el modo. Devuelve los campos o null si no es válido.
 function leerSegmento(modo, segmento) {
@@ -56,9 +52,9 @@ function leerSegmento(modo, segmento) {
 // Devuelve el desafío validado o null (nunca lanza error).
 export function leerDesafio(hash = typeof location !== 'undefined' ? location.hash : '') {
   try {
-    if (typeof hash !== 'string' || !hash.startsWith(PREFIJO) || hash.length > 140) return null
+    if (typeof hash !== 'string' || !hash.startsWith(PREFIJO) || hash.length > 20000) return null
     const partes = hash.slice(PREFIJO.length).split('/')
-    if (partes.length !== 5) return null
+    if (partes.length !== 5 && partes.length !== 7) return null
     const [modo, segmento, dif, semilla, puntaje] = partes
     if (!Object.hasOwn(MODOS_DESAFIO, modo)) return null
     const extra = leerSegmento(modo, segmento)
@@ -66,7 +62,18 @@ export function leerDesafio(hash = typeof location !== 'undefined' ? location.ha
     if (!DIFICULTADES.includes(dif)) return null
     if (!SEMILLA.test(semilla)) return null
     if (!/^\d{1,3}$/.test(puntaje) || Number(puntaje) > MODOS_DESAFIO[modo].max) return null
-    return { modo, ...extra, dif, semilla, puntaje: Number(puntaje) }
+    let plan
+    if (partes.length === 7) {
+      if (partes[5] !== 'v3') return null
+      plan = JSON.parse(atob(partes[6].replace(/-/g, '+').replace(/_/g, '/')))
+      if (!plan || typeof plan !== 'object') return null
+      for (const [k, max] of [['vistos', 150], ['recientes', 150], ['ciclo', 1000]]) {
+        if (!Array.isArray(plan[k]) || plan[k].length > max || plan[k].some((id) => typeof id !== 'string' || !/^[a-z0-9:_-]{1,40}$/i.test(id))) return null
+      }
+      plan = { vistos: plan.vistos, recientes: plan.recientes, ciclo: plan.ciclo }
+      if ((modo === 'trivia' || modo === 'banda') && extra.nivel > LIMITES[modo]) return null
+    }
+    return { modo, ...extra, dif, semilla, puntaje: Number(puntaje), ...(plan ? { plan, version: 3 } : {}) }
   } catch {
     return null
   }
@@ -79,7 +86,8 @@ function segmentoDe(d) {
 }
 
 export function crearLink(d) {
-  return `${URL_JUEGO}/${PREFIJO}${d.modo}/${segmentoDe(d)}/${d.dif}/${d.semilla}/${d.puntaje}`
+  const plan = d.plan ? `/v3/${btoa(JSON.stringify({ vistos: d.plan.vistos, recientes: d.plan.recientes, ciclo: d.plan.ciclo })).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}` : ''
+  return `${URL_JUEGO}/${PREFIJO}${d.modo}/${segmentoDe(d)}/${d.dif}/${d.semilla}/${d.puntaje}${plan}`
 }
 
 export function textoDesafio(d) {

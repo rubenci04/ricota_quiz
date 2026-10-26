@@ -1,4 +1,7 @@
-// Azar con semilla (mulberry32). Sin semilla se comporta como Math.random.
+// Mulberry32 para reproducir partidas; las partidas nuevas parten de entropía del navegador.
+export function nuevaSemilla() {
+  return [...crypto.getRandomValues(new Uint32Array(2))].map((n) => n.toString(16).padStart(8, '0')).join('')
+}
 
 export function mulberry32(a) {
   return function () {
@@ -25,7 +28,7 @@ export function hashSemilla(texto) {
 export function crearAzar(semilla) {
   const rnd =
     semilla === undefined || semilla === null
-      ? Math.random
+      ? mulberry32(crypto.getRandomValues(new Uint32Array(1))[0])
       : mulberry32(typeof semilla === 'number' ? semilla >>> 0 : hashSemilla(String(semilla)))
   const entero = (n) => Math.floor(rnd() * n)
   return {

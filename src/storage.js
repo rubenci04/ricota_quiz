@@ -1,8 +1,8 @@
 // Progreso y preferencias: se leen una sola vez al iniciar y viven en memoria.
 const CLAVE = 'ricota_quiz'
 const CLAVE_SONIDO_ANTERIOR = 'ricota_quiz_sonido' // versión previa guardaba el sonido aparte
-const VERSION = 6
-const PREFERENCIAS = ['sonido', 'volumen', 'apariencia', 'vibracion', 'tutorial', 'dificultad']
+const VERSION = 7
+const PREFERENCIAS = ['sonido', 'volumen', 'vibracion', 'tutorial', 'dificultad']
 
 export function normalizarAlias(valor) {
   const alias = typeof valor === 'string' ? valor.normalize('NFKC').trim().replace(/\s+/gu, ' ') : ''
@@ -59,6 +59,16 @@ function validarLogros(v) {
 
 // n: entero >= min · b: booleano · s: texto entre valores válidos · f: función que valida y normaliza
 const ESQUEMA = {
+  historial: { tipo: 'f', f: (v) => {
+    const resultado = {}
+    for (const modo of ['trivia', 'banda', 'sopa', 'crucigrama', 'palabras', 'dichocanciones', 'dichodiscos', 'dichopalabras', 'dichointegrantes']) {
+      const h = v?.[modo]
+      if (!h || typeof h !== 'object') continue
+      const ids = (a, max = 150) => Array.isArray(a) ? a.filter((x) => typeof x === 'string' && /^[a-z0-9:_-]{1,40}$/i.test(x)).slice(-max) : []
+      resultado[modo] = { vistos: ids(h.vistos), partidas: Array.isArray(h.partidas) ? h.partidas.slice(-3).map((p) => ids(p)) : [], ciclo: ids(h.ciclo, 1000) }
+    }
+    return resultado
+  } },
   niveles: { tipo: 'f', f: validarNiveles },
   nivel: { tipo: 'n', def: 1, min: 1 },
   mejor: { tipo: 'n', def: 0, min: 0 },
@@ -76,7 +86,6 @@ const ESQUEMA = {
   adivinanzaSinPistas: { tipo: 'b', def: false },
   sonido: { tipo: 'b', def: true },
   volumen: { tipo: 'n', def: 30, min: 0, max: 100 }, // volumen de la música de YouTube
-  apariencia: { tipo: 's', def: 'oscuro', validos: ['auto', 'claro', 'oscuro'] },
   ultimaEleccion: { tipo: 'f', def: null, f: validarEleccion },
   vibracion: { tipo: 'b', def: true },
   tutorial: { tipo: 'b', def: false },
@@ -111,7 +120,7 @@ const progresoDe = (v) => Object.fromEntries(Object.entries(validar(v)).filter((
 function cargar() {
   try {
     const guardado = JSON.parse(localStorage.getItem(CLAVE) || 'null')
-    if (guardado?.v === VERSION && Array.isArray(guardado.perfiles)) {
+    if ([6, VERSION].includes(guardado?.v) && Array.isArray(guardado.perfiles)) {
       const perfiles = []
       for (const p of guardado.perfiles) {
         try {
@@ -144,8 +153,9 @@ function publicar() {
     const anterior = localStorage.getItem(CLAVE)
     let versionAnterior
     try { versionAnterior = JSON.parse(anterior)?.v } catch { /* también respalda datos dañados */ }
-    if (anterior && versionAnterior !== VERSION && !localStorage.getItem(`${CLAVE}_pre_v6`)) {
-      localStorage.setItem(`${CLAVE}_pre_v6`, anterior)
+    const respaldo = `${CLAVE}_pre_v${versionAnterior === 6 ? 7 : 6}`
+    if (anterior && versionAnterior !== VERSION && !localStorage.getItem(respaldo)) {
+      localStorage.setItem(respaldo, anterior)
     }
     localStorage.setItem(CLAVE, JSON.stringify(almacen))
     errorPersistencia = false

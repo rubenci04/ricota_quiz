@@ -1,6 +1,7 @@
 import datos from './data/datos-ricotero.json'
 import { crearAzar } from './azar.js'
 import { cumpleTema } from './temas.js'
+import { idCancion, idTexto, ordenarNovedad } from './identidad.js'
 
 export const SIZE = 12
 const MIN_LEN = 4
@@ -21,7 +22,8 @@ export function normalizar(texto) {
 
 // azar de la generación en curso (con semilla si se pidió una)
 let R = crearAzar()
-const mezclar = (arr) => R.mezclar(arr)
+let planActual
+const mezclar = (arr) => ordenarNovedad(R.mezclar(arr), (p) => [idTexto('w', p.norm), idCancion(p.cancion)], planActual)
 
 // Palabras únicas (por forma normalizada) de las canciones del disco elegido.
 export function palabrasDisponibles(discoId, tema = 'todos') {
@@ -69,6 +71,7 @@ function intentarGrilla(candidatas, cantidad) {
   for (const palabra of candidatas) {
     if (puestas.length >= cantidad) break
     if (puestas.some((p) => p.norm.includes(palabra.norm) || palabra.norm.includes(p.norm))) continue
+    if (planActual && new Set(candidatas.map((p) => p.cancion)).size >= cantidad && puestas.some((p) => p.cancion === palabra.cancion)) continue
     const len = palabra.norm.length
     for (let intento = 0; intento < 80; intento++) {
       const [dr, dc] = DIRS[R.entero(DIRS.length)]
@@ -134,11 +137,13 @@ function contarApariciones(grilla, norm) {
 }
 
 // Con la misma semilla y disco da siempre la misma partida; sin semilla es al azar.
-export function nuevaPartida(discoId, semilla, tema = 'todos') {
+export function nuevaPartida(discoId, semilla, tema = 'todos', plan) {
+  planActual = plan
   R = crearAzar(semilla)
   try {
     return generarPartida(discoId, tema)
   } finally {
     R = crearAzar()
+    planActual = undefined
   }
 }

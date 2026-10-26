@@ -1,5 +1,5 @@
 /* =========================================================
-   Sistema visual: tokens (tema oscuro y claro), familias de controles y animaciones.
+   Sistema visual: tema oscuro, familias de controles y animaciones.
    Se carga después de styles.css y tiene la última palabra.
    ========================================================= */
 
@@ -15,7 +15,7 @@
   --borde: #2f2f33;
   --borde-fuerte: #5a5a62;
   --texto: #ece8de;
-  --tenue: #a8a398;
+  --tenue: #e2dbcc;
 
   --acento: #e0a526; /* texto y bordes dorados */
   --acento-fill: #e0a526; /* rellenos dorados */
@@ -41,45 +41,6 @@
   --foco-anillo: #ffffff;
   --pie-bg: rgba(11, 11, 12, 0.92);
   --sombra: rgba(0, 0, 0, 0.55);
-}
-
-/* ---------- Tokens: claro ---------- */
-:root[data-tema='claro'] {
-  color-scheme: light;
-  --bg: #f7f3ea;
-  --degradado: #efe6d2;
-  --panel: #ffffff;
-  --panel-2: #f0eadc;
-  --celda-bg: #f2ede1;
-  --borde: #d9d1bf;
-  --borde-fuerte: #8c846f;
-  --texto: #1d1b17;
-  --tenue: #5d584d;
-
-  --acento: #8a5600;
-  --acento-fill: #e0a526;
-  --sobre-acento: #1d1b17;
-  --rojo: #b3301f;
-
-  --accion: #b3301f;
-  --accion-2: #c8402a;
-  --accion-texto: #ffffff;
-
-  --ok: #1f8a5b;
-  --ok-bg: #d8f1e3;
-  --ok-texto: #0b5d3b;
-  --mal: #b3301f;
-  --mal-bg: #fbdad5;
-  --mal-texto: #8e1f12;
-
-  --fondo-suave: #f3e9d6;
-  --aviso-bg: #fff3d4;
-  --revelada-bg: #f8e6b0;
-  --foco-bg: #fdecc0;
-  --activa-bg: #f8e3ae;
-  --foco-anillo: #1d1b17;
-  --pie-bg: rgba(247, 243, 234, 0.94);
-  --sombra: rgba(60, 40, 10, 0.25);
 }
 
 /* ---------- Un color de acento por modo y por tema (rellenos y bordes, no texto) ---------- */
@@ -282,47 +243,40 @@ button:not(:disabled):active, .ficha:not(:disabled):active, .tarjeta-modo:not(:d
 .musica-barra button { background: var(--bg); color: var(--texto); border-radius: 8px; }
 .musica { background: var(--panel); border-radius: var(--radio-chico); overflow: hidden; }
 
-/* modo claro/oscuro del menú de interruptores */
-.interruptores .sonido[data-tema-btn] { font-size: 1rem; }
 
 /* respetar el movimiento reducido (también en las animaciones nuevas) */
 @media (prefers-reduced-motion: reduce) {
   .tarjeta-modo, .tarjeta-modo.destacada, .ficha.elegida, .segmentado button { animation: none !important; }
   button:not(:disabled):active, .tarjeta-modo:active { transform: none; }
 }
-.con-musica .pantalla { padding-bottom: 320px; }
 
-/* los interruptores (sonido, vibración, tema) van en una fila abajo a la izquierda, sin tapar el contenido */
-.interruptores { top: auto; right: auto; left: 8px; bottom: 72px; transform: none; flex-direction: row; flex-wrap: wrap; max-width: 150px; }
-.pantalla { padding-bottom: 140px; }
+
+
 
 /* Fichas de disco: una sola fila que se desliza en horizontal */
 .fichas.desliza { flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity; padding: 4px 2px 8px; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
 .fichas.desliza .ficha { flex: 0 0 auto; scroll-snap-align: center; white-space: nowrap; flex-direction: column; text-align: center; gap: 0; padding: 8px 14px; }
-
-/* Tema claro: mismo carácter que el oscuro. Cabecera y pie son franjas oscuras sobre el fondo de papel. */
-:root[data-tema='claro'] .barra,
-:root[data-tema='claro'] .pie {
-  --bg: #0b0b0c;
-  --panel: #161617;
-  --panel-2: #1d1d20;
-  --borde: #2f2f33;
-  --borde-fuerte: #5a5a62;
-  --texto: #ece8de;
-  --tenue: #b9b4a8;
-  --acento: #e0a526;
-  --foco-anillo: #ffffff;
-  color: var(--texto);
-  background: #0b0b0c;
-  border-radius: var(--radio);
-  padding: 8px 10px;
-}
-:root[data-tema='claro'] .pie { border-radius: 0; border-top: 2px solid var(--acento-fill); }
-:root[data-tema='claro'] .barra .btn-nav { background: #1d1d20; color: #ece8de; border-color: #5a5a62; }
-.musica { bottom: 100px; }
 
 /* Títulos largos ("…Capitán Buscapina en Cybersiberia") en casillas y textos, también a 360 px */
 body { overflow-wrap: break-word; }
 .par-casillas { gap: 2px; }
 .par-casillas .casilla, .casillas > .casilla { width: clamp(17px, calc((100vw - 64px) / 12 - 2px), 28px); height: 34px; font-size: clamp(0.85rem, 4vw, 1.1rem); }
 .opcion, .tarjeta-modo strong, .barra h2 { overflow-wrap: anywhere; }
+
+/* Barra y pie dentro del flujo: nunca interceptan los controles del juego. */
+.interruptores { position: relative; inset: auto; transform: none; flex-direction: row; justify-content: center; flex-wrap: wrap; max-width: none; padding: 10px 12px; gap: 12px; }
+.pie { position: static; padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
+.pantalla, .con-musica .pantalla { padding-bottom: 24px; }
+.inicio { min-height: min(75vh, 650px); }
+.musica { position: static; margin: 24px auto calc(24px + env(safe-area-inset-bottom)); width: 202px; }
+@media (min-width: 701px) {
+  .con-musica .app { padding-right: 228px; }
+  .con-musica .pie { margin-right: -228px; padding-right: 240px; }
+  .musica { position: fixed; right: 12px; top: 72px; bottom: auto; margin: 0; }
+}
+.casilla.inicial { background: #163b36; color: #9ff0dc; border-color: #6fe0aa; opacity: 1; }
+.casilla.inicial::after { content: ''; }
+.tarjeta-modo:disabled, .logro, .bloqueada { opacity: 1; }
+.tarjeta-modo .insignia { color: var(--texto); background: #221b12; border: 1px solid var(--c); }
+.herramientas .secundario:disabled, .ficha:disabled, .nueva:disabled { opacity: 1; }
+.avisos-logros { position: static; padding: 0 12px; }

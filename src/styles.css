@@ -23,9 +23,6 @@ button, select, input { font: inherit; color: inherit; }
 .lista-perfiles li { display: flex; gap: 8px; }
 .lista-perfiles li button:first-child { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .tarjeta-modo:disabled { opacity: .55; cursor: not-allowed; }
-/* El formulario necesita toda la superficie táctil, también con el reproductor abierto. */
-.con-musica .app[data-perfiles='true'] .perfiles { min-height: 0; padding-bottom: 32px; }
-.app[data-perfiles='true'] .musica { position: relative; right: auto; bottom: auto; margin: 0 auto 140px; }
 
 .pantalla {
   max-width: 520px;
@@ -232,7 +229,7 @@ button, select, input { font: inherit; color: inherit; }
 .musica-barra { display: flex; align-items: center; gap: 4px; padding: 4px; }
 .musica-titulo { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.7rem; color: var(--tenue); }
 .musica-barra button { width: 28px; height: 28px; padding: 0; background: var(--bg); border: 1px solid var(--borde); cursor: pointer; }
-.con-musica .pantalla { padding-bottom: 310px; }
+
 
 /* accesibilidad: ícono y texto además del color */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

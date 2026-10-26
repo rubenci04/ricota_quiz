@@ -2,6 +2,7 @@ import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
 import { crearAzar } from './azar.js'
 import { cumpleTema } from './temas.js'
+import { idTexto, idCancion, ordenarNovedad } from './identidad.js'
 
 export const MAX = 13
 const MIN_PALABRAS = 5
@@ -9,16 +10,17 @@ const alnum = (t) => normalizar(t).replace(/[^A-Z0-9]/g, '')
 
 // azar de la generación en curso (con semilla si se pidió una)
 let R = crearAzar()
+let planActual
 const mezclar = (arr) => R.mezclar(arr)
 
 // Respuestas de una sola palabra con su pista, todo sacado del JSON.
 export function candidatas(discoId, dificultad = 'casual', tema = 'todos') {
   const lista = []
   const vistas = new Set()
-  const agregar = (respuesta, pista) => {
+  const agregar = (respuesta, pista, cancion) => {
     if (respuesta.length < 3 || respuesta.length > MAX || vistas.has(respuesta)) return
     vistas.add(respuesta)
-    lista.push({ respuesta, pista })
+    lista.push({ respuesta, pista, ...(planActual && cancion ? { cancion } : {}) })
   }
 
   const cancionesTema = datos.canciones.filter(
@@ -44,7 +46,7 @@ export function candidatas(discoId, dificultad = 'casual', tema = 'todos') {
       const def = c.definiciones?.[p]
       if (!def) continue
       const a = alnum(p)
-      agregar(a, dificultad === 'casual' ? `${c.titulo}: ${def} (${a.length})` : `${def} (${a.length})`)
+      agregar(a, dificultad === 'casual' ? `${c.titulo}: ${def} (${a.length})` : `${def} (${a.length})`, c.titulo)
     }
   }
   return lista
@@ -92,6 +94,7 @@ function intentar(cands, objetivo) {
 
   for (const cand of cands) {
     if (puestas.length >= objetivo) break
+    if (planActual && cand.cancion && new Set(cands.map((p) => p.cancion).filter(Boolean)).size >= objetivo && puestas.some((p) => p.cancion === cand.cancion)) continue
     const a = cand.respuesta
     if (puestas.length === 0) {
       colocar(cand, Math.floor(MAX / 2), Math.floor((MAX - a.length) / 2), 'across')
@@ -132,7 +135,9 @@ function generarCrucigrama(discoId, dificultad, tema) {
       if (propias.length + extras.length >= MIN_CANDIDATAS + 8) break
     }
   }
-  const pool = [...propias, ...extras]
+  const todas = [...propias, ...extras]
+  const frescas = planActual ? todas.filter((p) => !planActual.recientes.includes(idTexto('w', p.respuesta)) && (!p.cancion || !planActual.recientes.includes(idCancion(p.cancion)))) : todas
+  const pool = frescas.length >= MIN_CANDIDATAS ? frescas : todas
   const propiasSet = new Set(propias.map((p) => p.respuesta))
   const objetivo = 8 + R.entero(3)
   let mejor = []
@@ -143,7 +148,8 @@ function generarCrucigrama(discoId, dificultad, tema) {
       // y dentro de cada grupo, las del disco elegido antes que las de relleno
       const grupo = (largas) => pool.filter((p) => (p.respuesta.length >= 7) === largas)
       const orden = (lista) => [...mezclar(lista.filter((p) => propiasSet.has(p.respuesta))), ...mezclar(lista.filter((p) => !propiasSet.has(p.respuesta)))]
-      const puestas = intentar([...orden(grupo(true)), ...orden(grupo(false))], objetivo)
+      const candidatos = [...orden(grupo(true)), ...orden(grupo(false))]
+      const puestas = intentar(ordenarNovedad(candidatos, (p) => [idTexto('w', p.respuesta), ...(p.cancion ? [idCancion(p.cancion)] : [])], planActual), objetivo)
       if (puestas.length > mejor.length) mejor = puestas
       if (mejor.length >= objetivo) break
     }
@@ -182,11 +188,13 @@ function generarCrucigrama(discoId, dificultad, tema) {
 }
 
 // Con la misma semilla, tema y dificultad da siempre el mismo crucigrama; sin semilla es al azar.
-export function nuevoCrucigrama(discoId, dificultad = 'casual', semilla, tema = 'todos') {
+export function nuevoCrucigrama(discoId, dificultad = 'casual', semilla, tema = 'todos', plan) {
+  planActual = plan
   R = crearAzar(semilla)
   try {
     return generarCrucigrama(discoId, dificultad, tema)
   } finally {
     R = crearAzar()
+    planActual = undefined
   }
 }

@@ -81,11 +81,7 @@ test('otros modos, logros, temas y jugador migrado', async ({ page }, info) => {
   await expect(page.getByText('Logros de Heredero')).toBeVisible()
   await expect(page.getByText('Primer pogo')).toBeVisible()
   await page.screenshot({ path: `qa/${info.project.name}-logros.png`, fullPage: true, animations: 'disabled' })
-  for (const tema of ['claro', 'auto', 'oscuro']) {
-    await page.getByRole('button', { name: /^Tema / }).click()
-    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ricota_quiz')).preferencias.apariencia)).toBe(tema)
-    await sinDesborde(page)
-  }
+  expect(await page.locator('html').getAttribute('data-tema')).toBe('oscuro')
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ricota_quiz')).perfiles[0].progreso.sopas)).toBe(3)
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ricota_quiz_pre_v6')).nivel)).toBe(9)
 })

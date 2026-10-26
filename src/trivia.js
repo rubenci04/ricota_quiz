@@ -3,6 +3,7 @@ import { normalizar } from './sopa.js'
 import { crearAzar } from './azar.js'
 import { cumpleTema } from './temas.js'
 import hechosBanda from './data/banda.json'
+import { idPregunta, idCancion, prioridad } from './identidad.js'
 
 export const PREGUNTAS_POR_NIVEL = 10
 const MAX_PREGUNTAS_ANIO = 2
@@ -15,6 +16,7 @@ const hechos = hechosBanda.filter((h) => h.verificada === true)
 // azar de la generación en curso (con semilla si se pidió una)
 let R = crearAzar()
 let versionGenerador = 1
+let planActual
 const azar = (arr) => R.elegir(arr)
 
 const mezclar = (arr) => R.mezclar(arr)
@@ -24,7 +26,9 @@ function armar(texto, correcta, pool, extra = {}) {
   const distractores = mezclar([...new Set(pool)].filter((x) => x !== correcta)).slice(0, 3)
   if (distractores.length < 3) return null
   const opciones = mezclar([correcta, ...distractores])
-  return { texto, opciones, correcta: opciones.indexOf(correcta), ...extra }
+  const p = { texto, opciones, correcta: opciones.indexOf(correcta), ...extra }
+  if (versionGenerador < 3) delete p.cancion
+  return p
 }
 
 const tituloDisco = (id) => discos.find((d) => d.id === id).titulo
@@ -45,6 +49,7 @@ function preguntaAnio() {
 function preguntaDisco() {
   const c = azar(canciones)
   return armar(`¿A qué disco pertenece la canción "${c.titulo}"?`, tituloDisco(c.disco), discos.map((d) => d.titulo), {
+    cancion: c.titulo,
     ayuda: `El disco salió en ${anioDe(c.disco)}`,
   })
 }
@@ -66,7 +71,7 @@ function preguntaPalabras() {
   const pool = canciones
     .filter((x) => x.titulo === c.titulo || !norm.every((n) => x.palabras.map(normalizar).includes(n)))
     .map((x) => x.titulo)
-  return armar('Adiviná la canción', c.titulo, pool, { pistas: mostradas, ayuda: `La canción salió en ${anioDe(c.disco)}` })
+  return armar('Adiviná la canción', c.titulo, pool, { cancion: c.titulo, pistas: mostradas, ayuda: `La canción salió en ${anioDe(c.disco)}` })
 }
 
 // "Completá el título": sin signos, sin títulos de una palabra ni con guion
@@ -98,6 +103,7 @@ function preguntaTitulo() {
     .map((w) => (w === token ? w.replace(/[\p{L}\p{N}]+/u, '_____') : w))
     .join(' ')
   return armar(`Completá el título: "${mostrado}"`, oculta, pool, {
+    cancion: c.titulo,
     ayuda: `Es de «${tituloDisco(c.disco)}» y la palabra tiene ${oculta.length} letras`,
   })
 }
@@ -127,6 +133,7 @@ function preguntaNoPertenece() {
   const ajenas = canciones.filter((c) => c.disco !== d.id)
   const extra = azar(ajenas)
   return armar(`¿Qué canción NO pertenece al disco «${d.titulo}»?`, extra.titulo, [extra.titulo, ...cancionesDe(d.id)], {
+    cancion: extra.titulo,
     ayuda: `La intrusa es de un disco de ${anioDe(extra.disco)}`,
     dato: `«${extra.titulo}» es de «${tituloDisco(extra.disco)}».`,
   })
@@ -161,6 +168,7 @@ function preguntaCancionDeDisco() {
   const propia = azar(cancionesDe(d.id))
   const ajenas = canciones.filter((c) => c.disco !== d.id).map((c) => c.titulo)
   return armar(`¿Cuál de estas canciones pertenece a «${d.titulo}»?`, propia, [propia, ...ajenas], {
+    cancion: propia,
     ayuda: `El disco salió en ${d.anio}`,
   })
 }
@@ -193,10 +201,28 @@ const GENERADORES = {
 
 // Evita repetidas dentro de la partida y limita las de tipo "año".
 function crearContexto() {
-  return { vistas: new Set(), anios: 0 }
+  return { vistas: new Set(), canciones: new Set(), anios: 0 }
 }
 
 function intentar(gen, ctx) {
+  if (planActual) {
+    let mejor = null, valor = Infinity
+    for (let i = 0; i < 80; i++) {
+      const p = gen()
+      if (!p || ctx.vistas.has(clavePregunta(p)) || (p.tipo === 'anio' && ctx.anios >= MAX_PREGUNTAS_ANIO)) continue
+      if (p.cancion && canciones.length >= 10 && ctx.canciones.has(p.cancion)) continue
+      if (planActual.recientes.includes(idPregunta(p))) continue
+      const ids = [idPregunta(p), ...(p.cancion ? [idCancion(p.cancion)] : [])]
+      const puntaje = prioridad(ids, planActual)
+      if (puntaje < valor) { mejor = p; valor = puntaje }
+      if (valor === 0) break
+    }
+    if (!mejor) return null
+    ctx.vistas.add(clavePregunta(mejor))
+    if (mejor.cancion) ctx.canciones.add(mejor.cancion)
+    if (mejor.tipo === 'anio') ctx.anios++
+    return mejor
+  }
   for (let i = 0; i < 30; i++) {
     const p = gen()
     if (!p) continue
@@ -255,6 +281,7 @@ function preguntaAutor() {
     unir(['Carlos "Indio" Solari', 'Eduardo "Skay" Beilinson', 'Daniel "Semilla" Bucciarelli']),
   ]
   return armar(`¿Quiénes figuran como autores de «${c.titulo}»?`, correcta, distractoras, {
+    cancion: c.titulo,
     ayuda: `Figura en el disco «${tituloDisco(c.disco)}»`,
     dato: `Autoría según Wikipedia: ${correcta}.`,
   })
@@ -305,8 +332,9 @@ export function clavePregunta(p) {
   return p.pistas ? `${p.texto}:${p.opciones[p.correcta]}` : p.texto
 }
 
-export function armarNivel(nivel, semilla, tema = 'todos', version = 1) {
+export function armarNivel(nivel, semilla, tema = 'todos', version = 1, plan) {
   versionGenerador = version
+  planActual = plan
   R = crearAzar(semilla)
   canciones = datos.canciones.filter((c) => cumpleTema(c, tema))
   try {
@@ -315,19 +343,22 @@ export function armarNivel(nivel, semilla, tema = 'todos', version = 1) {
     R = crearAzar()
     canciones = datos.canciones
     versionGenerador = 1
+    planActual = undefined
   }
 }
 
 // ¿Hay canciones suficientes con ese tema para armar un nivel?
 export const triviaTieneTema = (tema) => datos.canciones.filter((c) => cumpleTema(c, tema)).length >= 6
 
-export function armarNivelBanda(nivel, semilla, version = 1) {
+export function armarNivelBanda(nivel, semilla, version = 1, plan) {
   versionGenerador = version
+  planActual = plan
   R = crearAzar(semilla)
   try {
     return generarNivelBanda(nivel)
   } finally {
     R = crearAzar()
     versionGenerador = 1
+    planActual = undefined
   }
 }

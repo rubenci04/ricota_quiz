@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import { DESCRIPCION, NOMBRE_JUEGO, URL_JUEGO } from './src/config.js'
+import { readFileSync } from 'node:fs'
 
 // Reemplaza {{NOMBRE}}, {{DESCRIPCION}} y {{URL}} en index.html con los valores de src/config.js
 const REEMPLAZOS = { '{{NOMBRE}}': NOMBRE_JUEGO, '{{DESCRIPCION}}': DESCRIPCION, '{{URL}}': URL_JUEGO }
@@ -17,6 +18,15 @@ function datosDeConfig() {
 
 export default defineConfig({
   plugins: [
+    {
+      name: 'solo-interpretaciones-verificadas',
+      enforce: 'pre',
+      load(id) {
+        if (id.replace(/\\/g, '/').endsWith('/src/data/interpretaciones.json')) {
+          return JSON.stringify(JSON.parse(readFileSync(id, 'utf8')).filter((i) => i.verificada === true && i.fuente?.url))
+        }
+      },
+    },
     react(),
     datosDeConfig(),
     VitePWA({

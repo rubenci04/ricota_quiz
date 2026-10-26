@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { guardar, leer, sumarPartida } from './storage.js'
 import { normalizarLetras } from './letras.js'
+import { prepararLetras } from './letrasIniciales.js'
 import Teclado from './Teclado.jsx'
 import Resultado from './Resultado.jsx'
 import Cabecera from './Cabecera.jsx'
@@ -8,7 +9,10 @@ import Fichas from './Fichas.jsx'
 import SelectorDisco from './SelectorDisco.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
-import { nuevaSemilla } from './desafio.js'
+import { crearAzar } from './azar.js'
+import { crearPartida, registrarVista } from './historial.js'
+import { useRegistrarInicial } from './useHistorial.js'
+import { idsAdivinanza } from './identidad.js'
 import {
   CATEGORIAS,
   DIFICULTADES,
@@ -26,31 +30,39 @@ import datos from './data/datos-ricotero.json'
 const PISTAS_LETRA = { casual: 5, fanatico: 3 }
 const ERRORES_PARA_PISTA = 2
 
+function prepararRonda(opciones) {
+  const p = crearPartida(opciones.modo === 'palabras' ? 'palabras' : `dicho${opciones.categoria}`, (semilla, plan) => nuevaRonda({ ...opciones, semilla, plan }), idsAdivinanza)
+  return { ...p.juego, plan: p.plan, ids: p.ids }
+}
+
 export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio = 'dicho' }) {
   // un desafío recibido arranca directo, con la misma ronda (misma semilla)
   const desafioToken = desafio ? leerToken(desafio.ronda) : null
   const inicial = useRef(undefined)
   if (inicial.current === undefined) {
     if (desafio && desafioToken) {
-      inicial.current = nuevaRonda({ ...desafioToken, dif: desafio.dif, semilla: desafio.semilla, disco: desafio.disco, tema: desafio.tema })
+      inicial.current = nuevaRonda({ ...desafioToken, dif: desafio.dif, semilla: desafio.semilla, disco: desafio.disco, tema: desafio.tema, plan: desafio.plan, curado: !!desafio.plan })
     } else if (inicio === 'palabras') {
-      inicial.current = nuevaRonda({ modo: 'palabras', categoria: 'canciones', dif: leer().dificultad, semilla: nuevaSemilla() })
+      inicial.current = prepararRonda({ modo: 'palabras', categoria: 'canciones', dif: leer().dificultad })
     } else {
       inicial.current = null
     }
   }
   const largo = inicial.current ? inicial.current.solucion.length : 0
+  useRegistrarInicial('palabras', inicial.current?.ids, !desafio)
+  const ayudaInicial = inicial.current ? prepararLetras(inicial.current.grupos, inicial.current.dif, inicial.current.semilla) : { letras: [], fijas: [], iniciales: [], foco: 0 }
 
   const [dif, setDif] = useState(desafio ? desafio.dif : leer().dificultad)
   const [modo, setModo] = useState(desafioToken ? desafioToken.modo : inicio)
   const [disco, setDisco] = useState(desafio ? desafio.disco : 'todos')
   const [tema, setTema] = useState(desafio ? desafio.tema : 'todos')
-  const [semilla, setSemilla] = useState(desafio ? desafio.semilla : '')
+  const [semilla, setSemilla] = useState(inicial.current?.semilla ?? '')
   const [ronda, setRonda] = useState(inicial.current)
-  const [letras, setLetras] = useState(() => Array(largo).fill(''))
-  const [fijas, setFijas] = useState(() => Array(largo).fill(false))
+  const [letras, setLetras] = useState(ayudaInicial.letras)
+  const [fijas, setFijas] = useState(ayudaInicial.fijas)
+  const [iniciales, setIniciales] = useState(ayudaInicial.iniciales)
   const [revision, setRevision] = useState(() => Array(largo).fill(''))
-  const [foco, setFoco] = useState(0)
+  const [foco, setFoco] = useState(ayudaInicial.foco)
   const [pistasLetra, setPistasLetra] = useState(0)
   const [extrasVistos, setExtrasVistos] = useState(0)
   const [erroresSeguidos, setErroresSeguidos] = useState(0)
@@ -73,16 +85,19 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
 
   // arranca una partida: la última elección queda guardada para ofrecer "Repetir"
   const empezar = ({ modo: m = modo, categoria = 'canciones', difi = dif, anterior = null } = {}) => {
-    const sem = nuevaSemilla()
-    const r = nuevaRonda({ modo: m, categoria, dif: difi, anterior, semilla: sem, disco, tema })
+    const r = prepararRonda({ modo: m, categoria, dif: difi, anterior, disco, tema })
+    const sem = r.semilla
+    registrarVista(m === 'palabras' ? 'palabras' : `dicho${categoria}`, r.ids)
     const n = r.solucion.length
     setSemilla(sem)
     setModo(m)
     setRonda(r)
-    setLetras(Array(n).fill(''))
-    setFijas(Array(n).fill(false))
+    const ayuda = prepararLetras(r.grupos, difi, sem)
+    setLetras(ayuda.letras)
+    setFijas(ayuda.fijas)
+    setIniciales(ayuda.iniciales)
     setRevision(Array(n).fill(''))
-    setFoco(0)
+    setFoco(ayuda.foco)
     setPistasLetra(0)
     setExtrasVistos(0)
     setErroresSeguidos(0)
@@ -209,7 +224,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
   const revelarLetra = (base) => {
     const faltan = solucion.map((_, i) => i).filter((i) => !mismaLetra(base[i], solucion[i]))
     if (!faltan.length) return null
-    const i = faltan[Math.floor(Math.random() * faltan.length)]
+    const i = crearAzar(`${semilla}-pista-${fijas.filter(Boolean).length}`).elegir(faltan)
     const nuevas = base.map((x, k) => (k === i ? solucion[i] : x))
     setLetras(nuevas)
     setFijas((prev) => prev.map((x, k) => (k === i ? true : x)))
@@ -293,11 +308,14 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
           if (i === foco && !resultado) clases.push('foco')
           if (revision[i]) clases.push(revision[i])
           if (fijas[i]) clases.push('fija')
+          if (iniciales[i]) clases.push('inicial')
           const estado = revision[i] === 'ok' ? ', correcta' : revision[i] === 'mal' ? ', incorrecta' : ''
           return (
             <button
               key={i}
               className={clases.join(' ')}
+              disabled={fijas[i]}
+              aria-description={iniciales[i] ? 'Letra inicial gratuita, bloqueada' : undefined}
               onClick={() => setFoco(i)}
               aria-label={`Letra ${i + 1}: ${letras[i] || 'vacía'}${estado}`}
             >
@@ -390,6 +408,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
             tema,
             dif: ronda.dif,
             semilla,
+            plan: desafio ? desafio.plan : ronda.plan,
             puntaje: resultado.puntos,
           }}
           rival={desafio ? { puntaje: desafio.puntaje } : null}

@@ -3,6 +3,7 @@ import acertijos from './data/adivinanzas.json'
 import { normalizarLetras } from './letras.js'
 import { crearAzar } from './azar.js'
 import { cumpleTema } from './temas.js'
+import { idTexto, idCancion, ordenarNovedad } from './identidad.js'
 
 export const cancionesConPalabras = datos.canciones.filter((c) => c.palabras_verificadas && c.palabras.length >= 3)
 
@@ -55,8 +56,8 @@ export const TOKENS = ['palabras', 'parafraseado', ...CATEGORIAS.map((c) => `dic
 // ---- acertijos con textos propios (src/data/adivinanzas.json)
 const ORDEN_NIVEL = { facil: 0, medio: 1, dificil: 2 }
 const NIVELES_POR_DIFICULTAD = { casual: ['facil', 'medio'], fanatico: ['medio', 'dificil'] }
-const deRespuesta = (tipo, respuesta) =>
-  acertijos.filter((a) => a.tipo === tipo && a.respuesta === respuesta).sort((a, b) => ORDEN_NIVEL[a.nivel] - ORDEN_NIVEL[b.nivel])
+const deRespuesta = (tipo, respuesta, curado = true) =>
+  acertijos.filter((a) => (!curado || !a.descartada) && a.tipo === tipo && a.respuesta === respuesta).sort((a, b) => ORDEN_NIVEL[a.nivel] - ORDEN_NIVEL[b.nivel])
 
 // Devuelve el acertijo de una canción adecuado a la dificultad, para usarlo también en el reto del día.
 export function acertijoDeCancion(titulo, dif, azar) {
@@ -77,7 +78,13 @@ function cancionesParaRonda(disco, tema) {
   return { lista: [...propias, ...mismoTema, ...resto.filter((c) => !mismoTema.includes(c))].slice(0, Math.max(6, propias.length)), completada: true }
 }
 
-function elegirDistinta(azar, lista, claveDe, anterior) {
+function elegirDistinta(azar, lista, claveDe, anterior, plan, categoria, cancionDe = () => null) {
+  if (plan) {
+    const ids = (x) => [idTexto('r', `${categoria}:${claveDe(x)}`), ...(cancionDe(x) ? [idCancion(cancionDe(x))] : [])]
+    const ciclo = plan.ciclo ?? []
+    const sinVer = lista.filter((x) => !ciclo.includes(ids(x)[0]))
+    return ordenarNovedad(azar.mezclar(sinVer.length ? sinVer : lista), ids, plan)[0]
+  }
   let x
   let intentos = 0
   do {
@@ -88,7 +95,7 @@ function elegirDistinta(azar, lista, claveDe, anterior) {
 }
 
 // Con la misma semilla, modo, categoría, dificultad, disco y tema da siempre la misma ronda.
-export function nuevaRonda({ modo, categoria = 'canciones', dif = 'casual', anterior = null, semilla, disco = 'todos', tema = 'todos' }) {
+export function nuevaRonda({ modo, categoria = 'canciones', dif = 'casual', anterior = null, semilla, disco = 'todos', tema = 'todos', plan, curado = true }) {
   const azar = crearAzar(semilla)
   const casual = dif === 'casual'
   let respuesta = ''
@@ -99,11 +106,12 @@ export function nuevaRonda({ modo, categoria = 'canciones', dif = 'casual', ante
   let completada = false
   let id = ''
   let cancion = null
+  let acertijoId = null
 
   if (modo === 'palabras' || categoria === 'canciones') {
     const { lista, completada: c } = cancionesParaRonda(disco, tema)
     completada = c
-    cancion = elegirDistinta(azar, lista, (x) => x.titulo, anterior)
+    cancion = elegirDistinta(azar, lista, (x) => x.titulo, anterior, plan, categoria, (x) => x.titulo)
     respuesta = cancion.titulo
     id = respuesta
     const d = discoDe(cancion.disco)
@@ -111,20 +119,22 @@ export function nuevaRonda({ modo, categoria = 'canciones', dif = 'casual', ante
     if (modo === 'palabras') {
       palabras = azar.mezclar(cancion.palabras)
     } else {
-      const todos = deRespuesta('cancion', respuesta)
+      const todos = deRespuesta('cancion', respuesta, curado)
       const permitidos = todos.filter((a) => NIVELES_POR_DIFICULTAD[dif].includes(a.nivel))
       const primero = azar.elegir(permitidos.length ? permitidos : todos)
+      acertijoId = primero?.id
       principal = primero?.texto ?? cancion.titulo_parafraseado
       for (const a of todos) if (a !== primero) extras.push(a.texto)
       if (!casual) extras.push(`Disco: ${d.titulo} (${d.anio})`)
     }
   } else if (categoria === 'discos') {
     const lista = disco === 'todos' ? datos.discos : datos.discos.filter((x) => x.id === disco)
-    const d = elegirDistinta(azar, lista, (x) => x.titulo, anterior)
+    const d = elegirDistinta(azar, lista, (x) => x.titulo, anterior, plan, categoria)
     respuesta = d.titulo
     id = respuesta
-    const todos = deRespuesta('disco', respuesta)
+    const todos = deRespuesta('disco', respuesta, curado)
     const primero = casual ? todos[0] : todos[todos.length - 1]
+    acertijoId = primero?.id
     principal = primero?.texto ?? `Disco de ${d.anio}`
     for (const a of todos) if (a !== primero) extras.push(a.texto)
     if (casual) gratis.push(`Salió en ${d.anio}`)
@@ -133,7 +143,7 @@ export function nuevaRonda({ modo, categoria = 'canciones', dif = 'casual', ante
     const { lista, completada: c } = cancionesParaRonda(disco, tema)
     completada = c
     const pares = lista.flatMap((x) => x.palabras.filter((p) => p.length >= 4 && x.definiciones?.[p]).map((p) => ({ x, p })))
-    const par = elegirDistinta(azar, pares, (q) => q.p, anterior)
+    const par = elegirDistinta(azar, pares, (q) => q.p, anterior, plan, categoria, (q) => q.x.titulo)
     respuesta = par.p
     id = respuesta
     cancion = par.x
@@ -142,7 +152,7 @@ export function nuevaRonda({ modo, categoria = 'canciones', dif = 'casual', ante
     else extras.push(`De la canción «${par.x.titulo}»`)
   } else {
     // integrantes: solo nombres y roles ya cargados en los datos
-    const i = elegirDistinta(azar, datos.integrantes, (x) => x.apodo, anterior)
+    const i = elegirDistinta(azar, datos.integrantes, (x) => x.apodo, anterior, plan, categoria)
     respuesta = i.apodo
     id = respuesta
     principal = `¿Quién soy? ${i.rol}.`
@@ -150,7 +160,7 @@ export function nuevaRonda({ modo, categoria = 'canciones', dif = 'casual', ante
   }
 
   const grupos = armarCasillas(respuesta)
-  return { modo, categoria, dif, respuesta, id, principal, palabras, gratis, extras, completada, cancion, grupos, solucion: grupos.flatMap((g) => g.letras) }
+  return { modo, categoria, dif, semilla, acertijoId, respuesta, id, principal, palabras, gratis, extras, completada, cancion, grupos, solucion: grupos.flatMap((g) => g.letras) }
 }
 
 // Siempre hay con qué armar una ronda (si faltan datos, se completa con otros discos).

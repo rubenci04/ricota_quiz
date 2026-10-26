@@ -4,7 +4,11 @@ import { leer, sumarSopa } from './storage.js'
 import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
-import { nuevaSemilla } from './desafio.js'
+import { crearAzar } from './azar.js'
+import { crearPartida, registrarVista } from './historial.js'
+import { useRegistrarInicial } from './useHistorial.js'
+import { idsSopa } from './identidad.js'
+import { textoSobre } from './contraste.js'
 import SelectorDisco from './SelectorDisco.jsx'
 import { nombreDeTema } from './temas.js'
 import { SIZE, discos, discoTieneJuego, nuevaPartida } from './sopa.js'
@@ -39,11 +43,13 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
   // la semilla define la partida: con la misma semilla y disco sale la misma sopa
   const inicial = useRef(null)
   if (!inicial.current) {
-    const semilla = desafio ? desafio.semilla : nuevaSemilla()
     const disco = desafio ? desafio.disco : 'todos'
     const tema = desafio ? desafio.tema : 'todos'
-    inicial.current = { semilla, disco, tema, partida: nuevaPartida(disco, semilla, tema) }
+    const p = desafio ? { semilla: desafio.semilla, plan: desafio.plan, juego: nuevaPartida(disco, desafio.semilla, tema, desafio.plan) } : crearPartida('sopa', (sem, plan) => nuevaPartida(disco, sem, tema, plan), idsSopa)
+    inicial.current = { ...p, disco, tema, partida: p.juego }
   }
+  useRegistrarInicial('sopa', inicial.current.ids, !desafio)
+  const [plan, setPlan] = useState(inicial.current.plan)
   const [semilla, setSemilla] = useState(inicial.current.semilla)
   const [discoId, setDiscoId] = useState(inicial.current.disco)
   const [temaId, setTemaId] = useState(inicial.current.tema)
@@ -62,9 +68,11 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
   const [reveladas, setReveladas] = useState([]) // norm de palabras resaltadas completas
 
   const empezar = (id, t = temaId) => {
-    const sem = nuevaSemilla()
-    setSemilla(sem)
-    setPartida(nuevaPartida(id, sem, t))
+    const p = crearPartida('sopa', (sem, plan) => nuevaPartida(id, sem, t, plan), idsSopa)
+    registrarVista('sopa', p.ids)
+    setSemilla(p.semilla)
+    setPlan(p.plan)
+    setPartida(p.juego)
     setEncontradas({})
     setSeleccion([])
     setPistas([])
@@ -77,7 +85,7 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
   const revelarPalabra = () => {
     const libres = partida.palabras.filter((p) => !(p.norm in encontradas) && !reveladas.includes(p.norm))
     if (reveladas.length >= MAX_REVELAR || libres.length === 0) return
-    setReveladas([...reveladas, libres[Math.floor(Math.random() * libres.length)].norm])
+    setReveladas([...reveladas, crearAzar(`${semilla}-ayuda-${pistas.length}-${reveladas.length}-${auto.length}`).elegir(libres).norm])
     sonar('pista')
     setMensaje(`Palabra resaltada. ${frase('pista')}`)
   }
@@ -85,7 +93,7 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
   const pedirPista = () => {
     const libres = partida.palabras.filter((p) => !(p.norm in encontradas) && !pistas.includes(p.norm))
     if (pistas.length >= MAX_PISTAS || libres.length === 0) return
-    setPistas([...pistas, libres[Math.floor(Math.random() * libres.length)].norm])
+    setPistas([...pistas, crearAzar(`${semilla}-ayuda-${pistas.length}-${reveladas.length}-${auto.length}`).elegir(libres).norm])
     sonar('pista')
     setMensaje(`Pista: mirá la celda que destella. ${frase('pista')}`)
   }
@@ -144,7 +152,7 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
         // pista automática tras 2 fallos seguidos: el inicio de una palabra, gratis
         const libres = partida.palabras.filter((p) => !(p.norm in encontradas) && !pistas.includes(p.norm) && !auto.includes(p.norm))
         if (libres.length) {
-          setAuto([...auto, libres[Math.floor(Math.random() * libres.length)].norm])
+          setAuto([...auto, crearAzar(`${semilla}-ayuda-${pistas.length}-${reveladas.length}-${auto.length}`).elegir(libres).norm])
           sonar('pista')
           texto += ' Te marqué el inicio de una palabra para ayudarte.'
         }
@@ -256,7 +264,7 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
               <div
                 key={k}
                 className={`celda${cursor && cursor.r === r && cursor.c === c ? ' cursor-teclado' : ''}${enSeleccion.has(k) ? ' sel' : ''}${color ? ' hallada' : ''}${destellos.has(k) ? ' destello' : ''}${resaltadas.has(k) ? ' revelada' : ''}`}
-                style={color ? { background: color } : undefined}
+                style={color ? { background: color, color: textoSobre(color) } : undefined}
               >
                 {letra}
               </div>
@@ -314,7 +322,7 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
           puntaje={`${Math.max(0, 100 - 10 * pistas.length - 25 * reveladas.length)} pts`}
           detalle={`${partida.palabras.length}/${partida.palabras.length} palabras · pistas usadas: ${pistas.length}${reveladas.length ? ' · palabra revelada' : ''}`}
           mejor={{ etiqueta: 'Sopas completadas', valor: leer().sopas }}
-          desafio={{ modo: 'sopa', disco: discoId, tema: temaId, dif: 'casual', semilla, puntaje: Math.max(0, 100 - 10 * pistas.length - 25 * reveladas.length) }}
+          desafio={{ modo: 'sopa', disco: discoId, tema: temaId, dif: 'casual', semilla, plan, puntaje: Math.max(0, 100 - 10 * pistas.length - 25 * reveladas.length) }}
           rival={desafio ? { puntaje: desafio.puntaje } : null}
           mensaje={frase('victoria')}
           compartir={`Completé una sopa de letras ricotera (${partida.palabras.length}/${partida.palabras.length}) 🎸 ¿Podés superarme?`}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import SopaDeLetras from './SopaDeLetras.jsx'
 import Trivia from './Trivia.jsx'
 import Adivinanzas from './Adivinanzas.jsx'
@@ -17,7 +17,6 @@ import { DESARROLLADOR, MODOS, NOMBRE_JUEGO } from './config.js'
 import { alDesbloquear, iniciarLogros } from './logros.js'
 import { fechaBA, rachaCortada, rachaVigente } from './reto.js'
 import Musica from './Musica.jsx'
-import { ORDEN, seguirSistema, siguienteApariencia } from './apariencia.js'
 import {
   alternarSonido,
   alternarVibracion,
@@ -41,13 +40,12 @@ const LISTA_MODOS = [
   { id: 'ahorcado', nombre: 'Ahorcado', detalle: 'Mantené las luces encendidas', icono: '💡', color: 'var(--c-ahorcado)', chica: true, activo: MODOS.ahorcado === true },
 ].map((m) => ({ activo: true, ...m }))
 
-const ICONOS_APARIENCIA = { auto: '🌓', claro: '☀️', oscuro: '🌙' }
-const NOMBRES_APARIENCIA = { auto: 'automático', claro: 'claro', oscuro: 'oscuro' }
 
 // los modos opcionales apagados en config.js no aparecen en el menú
 const MODOS_MENU = LISTA_MODOS.filter((m) => m.activo)
 
 export default function App() {
+  const musica = useRef(null)
   const [, actualizar] = useState(0)
   const [verPerfiles, setVerPerfiles] = useState(() => !leerPerfiles().activo)
   useEffect(() => suscribir(() => actualizar((n) => n + 1)), [])
@@ -62,7 +60,6 @@ export default function App() {
   const [sonido, setSonido] = useState(sonidoActivo)
   const [vibracion, setVibracion] = useState(vibracionActiva)
   const [avisos, setAvisos] = useState([]) // logros recién desbloqueados
-  const [apariencia, setApariencia] = useState(() => leer().apariencia)
   const volver = () => setModo(null)
   const elegirModo = (id) => {
     marcarModo(id === 'dicho' || id === 'palabras' ? 'adivinanzas' : id)
@@ -89,7 +86,6 @@ export default function App() {
     return () => window.removeEventListener('hashchange', alCambiarHash)
   }, [])
 
-  useEffect(() => seguirSistema(), [])
 
   useEffect(() => {
     const quitarAviso = alDesbloquear((logro) => {
@@ -233,14 +229,7 @@ export default function App() {
 
   return (
     <div className="app" data-modo={modoActual || 'menu'} data-perfiles={verPerfiles && !pagina} onClick={alClic}>
-      {contenido}
-      {leerPerfiles().errorPersistencia && <p className="aviso-amable" role="alert">No se pudo guardar en este navegador. El avance actual solo está en memoria; evitá cerrar o recargar.</p>}
-      <div className="avisos-logros" role="status" aria-live="polite">
-        {avisos.map((l) => (
-          <p key={l.id} className="aviso-logro">🏆 ¡Logro desbloqueado! <strong>{l.nombre}</strong></p>
-        ))}
-      </div>
-      <div className="interruptores">
+      <div className="interruptores" aria-label="Sonido y música">
         <button
           className="sonido"
           onClick={() => setSonido(alternarSonido())}
@@ -249,15 +238,8 @@ export default function App() {
         >
           {sonido ? '🔊' : '🔇'}
         </button>
-        <button
-          className="sonido"
-          data-tema-btn
-          onClick={() => setApariencia(siguienteApariencia())}
-          aria-label={`Tema ${NOMBRES_APARIENCIA[apariencia]}. Tocar para cambiar a ${NOMBRES_APARIENCIA[ORDEN[(ORDEN.indexOf(apariencia) + 1) % ORDEN.length]]}.`}
-          title={`Tema: ${NOMBRES_APARIENCIA[apariencia]}`}
-        >
-          {ICONOS_APARIENCIA[apariencia]}
-        </button>
+        <button className="sonido" onClick={() => musica.current?.alternar()} aria-label="Pausar o reanudar música">♪</button>
+        <button className="sonido" onClick={() => musica.current?.siguiente()} aria-label="Siguiente canción">⏭</button>
         {vibracionDisponible() && (
           <button
             className="sonido"
@@ -269,7 +251,12 @@ export default function App() {
           </button>
         )}
       </div>
-      <Musica />
+      {contenido}
+      {leerPerfiles().errorPersistencia && <p className="aviso-amable" role="alert">No se pudo guardar en este navegador. El avance actual solo está en memoria; evitá cerrar o recargar.</p>}
+      <div className="avisos-logros" role="status" aria-live="polite">
+        {avisos.map((l) => <p key={l.id} className="aviso-logro">🏆 ¡Logro desbloqueado! <strong>{l.nombre}</strong></p>)}
+      </div>
+      <Musica controlRef={musica} />
       <footer className="pie">
         <span>Juego de fans, no oficial, sin relación con la banda.</span>
         <span>Developer: {DESARROLLADOR} · Derechos reservados</span>

@@ -6,20 +6,23 @@ import { guardar, leer } from './storage.js'
 import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
-import { nuevaSemilla } from './desafio.js'
+import { crearAzar } from './azar.js'
+import { crearPartida, registrarVista } from './historial.js'
+import { idsTrivia } from './identidad.js'
 
 export default function Trivia({ onVolver, onMenu, categoria = 'general', desafio = null }) {
   const banda = categoria === 'banda'
   const modo = banda ? 'banda' : 'trivia'
   const limite = LIMITES[modo]
-  const version = desafio?.version ?? (desafio ? 1 : 2)
+  const version = desafio?.version ?? (desafio ? 1 : 3)
+  const [plan, setPlan] = useState(desafio?.plan)
   const kMejor = banda ? 'mejorBanda' : 'mejor'
   const [vista, setVista] = useState(desafio ? 'jugando' : 'niveles') // niveles | jugando | fin
   const [nivel, setNivel] = useState(desafio ? desafio.nivel : 1)
   const temaId = desafio ? desafio.tema : 'todos'
   const [semilla, setSemilla] = useState(desafio ? desafio.semilla : '') // con la misma semilla salen las mismas preguntas
   const [preguntas, setPreguntas] = useState(() =>
-    desafio ? (banda ? armarNivelBanda(desafio.nivel, desafio.semilla, version) : armarNivel(desafio.nivel, desafio.semilla, desafio.tema, version)) : [],
+    desafio ? (banda ? armarNivelBanda(desafio.nivel, desafio.semilla, version, desafio.plan) : armarNivel(desafio.nivel, desafio.semilla, desafio.tema, version, desafio.plan)) : [],
   )
   const [i, setI] = useState(0)
   const [elegida, setElegida] = useState(null)
@@ -35,9 +38,11 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
   const [fraseResp, setFraseResp] = useState('')
 
   const jugar = (n) => {
-    const sem = nuevaSemilla()
-    const ronda = banda ? armarNivelBanda(n, sem, 2) : armarNivel(n, sem, temaId, 2)
+    const partida = crearPartida(modo, (sem, p) => banda ? armarNivelBanda(n, sem, 3, p) : armarNivel(n, sem, temaId, 3, p), idsTrivia)
+    const sem = partida.semilla, ronda = partida.juego
     setGuardado(iniciarNivel(modo, n))
+    registrarVista(modo, partida.ids)
+    setPlan(partida.plan)
     setSemilla(sem)
     setNivel(n)
     setPreguntas(ronda)
@@ -67,7 +72,7 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
     const p = preguntas[i]
     const malas = p.opciones.map((_, k) => k).filter((k) => k !== p.correcta)
     // si la pista automática ya descartó una opción, el 50/50 deja solo una mala
-    const quedan = malas.filter((k) => !ocultas.includes(k)).sort(() => Math.random() - 0.5)
+    const quedan = crearAzar(`${semilla}-comodin-${i}`).mezclar(malas.filter((k) => !ocultas.includes(k)))
     setOcultas([...ocultas, ...quedan.slice(0, Math.max(0, 2 - ocultas.length))])
     setComodinUsado(true)
     sonar('pista')
@@ -81,7 +86,7 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
       const proxima = preguntas[i + 1]
       if (erroresSeguidos >= 2 && proxima) {
         const malas = proxima.opciones.map((_, k) => k).filter((k) => k !== proxima.correcta)
-        setOcultas([malas[Math.floor(Math.random() * malas.length)]])
+        setOcultas([crearAzar(`${semilla}-auto-${i}`).elegir(malas)])
         setAvisoAuto('Te descarté una opción incorrecta para ayudarte.')
         setErroresSeguidos(0)
         sonar('pista')
@@ -135,7 +140,7 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
           mejor={{ etiqueta: 'Mejor puntaje', valor: `${guardado[kMejor]}/${PREGUNTAS_POR_NIVEL}` }}
           mensaje={paso ? frase('victoria') : frase('derrota')}
           exito={paso}
-          desafio={{ modo, nivel, tema: banda ? 'todos' : temaId, dif: desafio?.dif ?? 'casual', version, semilla, puntaje: puntos }}
+          desafio={{ modo, nivel, tema: banda ? 'todos' : temaId, dif: desafio?.dif ?? 'casual', version, semilla, plan, puntaje: puntos }}
           rival={desafio ? { puntaje: desafio.puntaje } : null}
           compartir={`Hice ${puntos}/${preguntas.length} en ${banda ? 'el desafío de La banda' : 'la trivia'} 🎸 ¿Podés superarme?`}
         >

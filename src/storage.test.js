@@ -28,7 +28,7 @@ describe('perfiles locales', () => {
       niveles: { trivia: { 1: { intentos: 2, mejor: 8 } }, banda: {} } }
     s.guardar({ ...progreso, apariencia: 'claro', volumen: 60, sonido: false, dificultad: 'fanatico', tutorial: true })
     const b = s.crearPerfil('Luz Roja')
-    expect(s.leer()).toMatchObject({ partidas: 0, nivel: 1, logros: {}, niveles: { trivia: {}, banda: {} }, apariencia: 'claro', volumen: 60, sonido: false, dificultad: 'fanatico', tutorial: true })
+    expect(s.leer()).toMatchObject({ partidas: 0, nivel: 1, logros: {}, niveles: { trivia: {}, banda: {} }, volumen: 60, sonido: false, dificultad: 'fanatico', tutorial: true })
     s.sumarSopa()
     s.editarAlias(a, 'Pogo Verde')
     s.seleccionarPerfil(a)
@@ -53,7 +53,7 @@ describe('perfiles locales', () => {
     vi.resetModules()
     s = await import('./storage.js')
     const a = s.crearPerfil('Heredero')
-    expect(s.leer()).toMatchObject({ nivel: 32, nivelBanda: 12, partidas: 42, sopas: 8, logros: { primera: '2026-10-20' }, apariencia: 'auto', volumen: 50 })
+    expect(s.leer()).toMatchObject({ nivel: 32, nivelBanda: 12, partidas: 42, sopas: 8, logros: { primera: '2026-10-20' }, volumen: 50 })
     expect(s.leer().niveles.trivia).toEqual({}) // no inventa un historial inexistente
     s.crearPerfil('Segundo')
     expect(s.leer().partidas).toBe(0)

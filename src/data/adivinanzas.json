@@ -5,7 +5,8 @@
   "respuesta": "Ji ji ji",
   "nivel": "facil",
   "texto": "Una risita escrita en onomatopeya, repetida tres veces.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c1-2",
@@ -13,7 +14,8 @@
   "respuesta": "Ji ji ji",
   "nivel": "medio",
   "texto": "Séptimo tema de un disco de 1986 cuyo nombre suena a mes de la primavera argentina.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c1-3",
@@ -21,7 +23,8 @@
   "respuesta": "Ji ji ji",
   "nivel": "medio",
   "texto": "Risa corta, tres veces seguida, de un disco del año 1986.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c1-4",
@@ -29,7 +32,8 @@
   "respuesta": "Ji ji ji",
   "nivel": "dificil",
   "texto": "Teclado atascado: la letra décima y la novena, sumadas tres veces.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c2-1",
@@ -37,7 +41,8 @@
   "respuesta": "Juguetes perdidos",
   "nivel": "facil",
   "texto": "Objetos de la infancia que quedaron en algún rincón y nadie encuentra.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c2-2",
@@ -45,7 +50,8 @@
   "respuesta": "Juguetes perdidos",
   "nivel": "medio",
   "texto": "Cierra un disco de 1996 que cuenta la historia de un hijo del diablo.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c2-3",
@@ -53,7 +59,8 @@
   "respuesta": "Juguetes perdidos",
   "nivel": "medio",
   "texto": "Cosas de nene que no aparecen ni revolviendo el baúl entero.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c2-4",
@@ -61,7 +68,8 @@
   "respuesta": "Juguetes perdidos",
   "nivel": "dificil",
   "texto": "Inventario de la infancia: todo lo que hubo, nada de lo que queda.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c3-1",
@@ -69,7 +77,8 @@
   "respuesta": "La bestia pop",
   "nivel": "facil",
   "texto": "Fiera de la música masiva.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c3-2",
@@ -77,7 +86,8 @@
   "respuesta": "La bestia pop",
   "nivel": "medio",
   "texto": "Segundo tema del primer disco de estudio, el de 1985.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c3-3",
@@ -85,7 +95,8 @@
   "respuesta": "La bestia pop",
   "nivel": "medio",
   "texto": "Animal salvaje que habita las listas de éxitos y los escenarios iluminados.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c3-4",
@@ -93,7 +104,8 @@
   "respuesta": "La bestia pop",
   "nivel": "dificil",
   "texto": "Es el monstruo que se alimenta de aplausos y de radios.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c4-1",
@@ -101,7 +113,8 @@
   "respuesta": "Todo un palo",
   "nivel": "facil",
   "texto": "Algo enorme, de gran magnitud, dicho en lunfardo.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c4-2",
@@ -109,7 +122,8 @@
   "respuesta": "Todo un palo",
   "nivel": "medio",
   "texto": "Cierra un disco de 1988 y dura más de siete minutos: la más larga de toda la discografía.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c4-3",
@@ -117,7 +131,8 @@
   "respuesta": "Todo un palo",
   "nivel": "medio",
   "texto": "En la jerga de la plata, una suma muy grande: un millón.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c4-4",
@@ -125,7 +140,8 @@
   "respuesta": "Todo un palo",
   "nivel": "dificil",
   "texto": "Vara larga de madera, pero en versión superlativa.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c5-1",
@@ -133,7 +149,8 @@
   "respuesta": "Motor psico",
   "nivel": "facil",
   "texto": "Máquina de la mente.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c5-2",
@@ -141,7 +158,8 @@
   "respuesta": "Motor psico",
   "nivel": "medio",
   "texto": "Sexto tema del disco de 1986 que lleva nombre de mes.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c5-3",
@@ -149,7 +167,8 @@
   "respuesta": "Motor psico",
   "nivel": "medio",
   "texto": "Aparato que mueve cosas, con prefijo de lo mental.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c5-4",
@@ -157,7 +176,8 @@
   "respuesta": "Motor psico",
   "nivel": "dificil",
   "texto": "Dínamo del pensamiento: lo que enciende la cabeza cuando arranca.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c6-1",
@@ -165,7 +185,8 @@
   "respuesta": "El pibe de los astilleros",
   "nivel": "facil",
   "texto": "El muchacho de los talleres donde se construyen barcos.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c6-2",
@@ -173,7 +194,8 @@
   "respuesta": "El pibe de los astilleros",
   "nivel": "medio",
   "texto": "Séptimo tema de un disco de 1991 que lleva un insecto y un plato caliente en el nombre.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c6-3",
@@ -181,7 +203,8 @@
   "respuesta": "El pibe de los astilleros",
   "nivel": "medio",
   "texto": "Chico del puerto, y su lugar de trabajo naval.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c6-4",
@@ -189,7 +212,8 @@
   "respuesta": "El pibe de los astilleros",
   "nivel": "dificil",
   "texto": "Quien nació entre grúas y cascos de acero, sin ser capitán.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c7-1",
@@ -197,7 +221,8 @@
   "respuesta": "Esa estrella era mi lujo",
   "nivel": "facil",
   "texto": "Aquel astro fue mi mayor privilegio.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c7-2",
@@ -205,7 +230,8 @@
   "respuesta": "Esa estrella era mi lujo",
   "nivel": "medio",
   "texto": "Sexto tema de un disco de 1989 con tapa inspirada en un cuadro de Goya.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c7-3",
@@ -213,7 +239,8 @@
   "respuesta": "Esa estrella era mi lujo",
   "nivel": "medio",
   "texto": "Un cuerpo celeste que hoy se recuerda como algo caro y exclusivo.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c7-4",
@@ -221,7 +248,8 @@
   "respuesta": "Esa estrella era mi lujo",
   "nivel": "dificil",
   "texto": "Brillaba lejos y costaba caro: ahora solo queda el recuerdo de su luz.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c8-1",
@@ -229,7 +257,8 @@
   "respuesta": "Etiqueta negra",
   "nivel": "facil",
   "texto": "Rótulo oscuro.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c8-2",
@@ -237,7 +266,8 @@
   "respuesta": "Etiqueta negra",
   "nivel": "medio",
   "texto": "Cierra el segundo volumen del disco doble de 1993.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c8-3",
@@ -245,7 +275,8 @@
   "respuesta": "Etiqueta negra",
   "nivel": "medio",
   "texto": "Marca de un producto, pero de color carbón.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c8-4",
@@ -253,7 +284,8 @@
   "respuesta": "Etiqueta negra",
   "nivel": "dificil",
   "texto": "El sello de una botella o un frasco, vestido de luto.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c9-1",
@@ -261,7 +293,8 @@
   "respuesta": "Vencedores vencidos",
   "nivel": "facil",
   "texto": "Ganadores derrotados.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c9-2",
@@ -269,7 +302,8 @@
   "respuesta": "Vencedores vencidos",
   "nivel": "medio",
   "texto": "Quinto tema de un disco de 1988 con un ritmo brasileño en el título.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c9-3",
@@ -277,7 +311,8 @@
   "respuesta": "Vencedores vencidos",
   "nivel": "medio",
   "texto": "Los que celebran el triunfo con cara de quien perdió.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c9-4",
@@ -285,7 +320,8 @@
   "respuesta": "Vencedores vencidos",
   "nivel": "dificil",
   "texto": "Oxímoron en plural: los que ganan perdiendo, o pierden ganando.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c10-1",
@@ -293,7 +329,8 @@
   "respuesta": "Un ángel para tu soledad",
   "nivel": "facil",
   "texto": "Un ser celestial a modo de compañía en tu aislamiento.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c10-2",
@@ -301,7 +338,8 @@
   "respuesta": "Un ángel para tu soledad",
   "nivel": "medio",
   "texto": "Tema del primer volumen del disco doble de 1993.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c10-3",
@@ -309,7 +347,8 @@
   "respuesta": "Un ángel para tu soledad",
   "nivel": "medio",
   "texto": "Mensajero con alas, enviado a hacerle compañía a quien está sin nadie.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c10-4",
@@ -317,7 +356,8 @@
   "respuesta": "Un ángel para tu soledad",
   "nivel": "dificil",
   "texto": "Querubín en misión humanitaria contra el silencio de una pieza vacía.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c11-1",
@@ -325,7 +365,8 @@
   "respuesta": "Ropa sucia",
   "nivel": "facil",
   "texto": "Prendas manchadas.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c11-2",
@@ -333,7 +374,8 @@
   "respuesta": "Ropa sucia",
   "nivel": "medio",
   "texto": "Octavo tema de un disco de 1989 con tapa inspirada en Goya.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c11-3",
@@ -341,7 +383,8 @@
   "respuesta": "Ropa sucia",
   "nivel": "medio",
   "texto": "Lo que se acumula en el canasto del lavadero.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c11-4",
@@ -349,7 +392,8 @@
   "respuesta": "Ropa sucia",
   "nivel": "dificil",
   "texto": "Los trapitos al sol, pero antes del jabón.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c12-1",
@@ -357,7 +401,8 @@
   "respuesta": "Un poco de amor francés",
   "nivel": "facil",
   "texto": "Algo de cariño galo.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c12-2",
@@ -365,7 +410,8 @@
   "respuesta": "Un poco de amor francés",
   "nivel": "medio",
   "texto": "Tercer tema de un disco de 1991.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c12-3",
@@ -373,7 +419,8 @@
   "respuesta": "Un poco de amor francés",
   "nivel": "medio",
   "texto": "Una porción de afecto nacido en París.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c12-4",
@@ -381,7 +428,8 @@
   "respuesta": "Un poco de amor francés",
   "nivel": "dificil",
   "texto": "Besos con acento, medidos en cucharaditas.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c13-1",
@@ -389,7 +437,8 @@
   "respuesta": "Masacre en el puticlub",
   "nivel": "facil",
   "texto": "Carnicería en el local nocturno.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c13-2",
@@ -397,7 +446,8 @@
   "respuesta": "Masacre en el puticlub",
   "nivel": "medio",
   "texto": "Abre un disco de 1988.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c13-3",
@@ -405,7 +455,8 @@
   "respuesta": "Masacre en el puticlub",
   "nivel": "medio",
   "texto": "Matanza en un boliche de mala fama.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c13-4",
@@ -413,7 +464,8 @@
   "respuesta": "Masacre en el puticlub",
   "nivel": "dificil",
   "texto": "Noche de copas con final de película de terror.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c14-1",
@@ -421,7 +473,8 @@
   "respuesta": "Preso en mi ciudad",
   "nivel": "facil",
   "texto": "Cautivo en mi urbe.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c14-2",
@@ -429,7 +482,8 @@
   "respuesta": "Preso en mi ciudad",
   "nivel": "medio",
   "texto": "Segundo tema del disco de 1986 que lleva nombre de mes.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c14-3",
@@ -437,7 +491,8 @@
   "respuesta": "Preso en mi ciudad",
   "nivel": "medio",
   "texto": "Encerrado sin muros: la cárcel es el barrio entero.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c14-4",
@@ -445,7 +500,8 @@
   "respuesta": "Preso en mi ciudad",
   "nivel": "dificil",
   "texto": "Reo con domicilio fijo: cumple condena en su propia casa grande.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c15-1",
@@ -453,7 +509,8 @@
   "respuesta": "Salando las heridas",
   "nivel": "facil",
   "texto": "Echando condimento sobre las lesiones.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c15-2",
@@ -461,7 +518,8 @@
   "respuesta": "Salando las heridas",
   "nivel": "medio",
   "texto": "Noveno tema de un disco de 1991.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c15-3",
@@ -469,7 +527,8 @@
   "respuesta": "Salando las heridas",
   "nivel": "medio",
   "texto": "Agregar sufrimiento a lo que ya duele.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c15-4",
@@ -477,7 +536,8 @@
   "respuesta": "Salando las heridas",
   "nivel": "dificil",
   "texto": "Cloruro de sodio y lesión abierta: una receta de dolor.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c16-1",
@@ -485,7 +545,8 @@
   "respuesta": "Queso ruso",
   "nivel": "facil",
   "texto": "Lácteo de Moscú.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c16-2",
@@ -493,7 +554,8 @@
   "respuesta": "Queso ruso",
   "nivel": "medio",
   "texto": "Cierra un disco de 1991.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c16-3",
@@ -501,7 +563,8 @@
   "respuesta": "Queso ruso",
   "nivel": "medio",
   "texto": "Producto de las vacas que lleva pasaporte soviético.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c16-4",
@@ -509,7 +572,8 @@
   "respuesta": "Queso ruso",
   "nivel": "dificil",
   "texto": "Lo que se ofrece en una tabla fría, con acento de la estepa.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c17-1",
@@ -517,7 +581,8 @@
   "respuesta": "Tarea fina",
   "nivel": "facil",
   "texto": "Trabajo delicado.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c17-2",
@@ -525,7 +590,8 @@
   "respuesta": "Tarea fina",
   "nivel": "medio",
   "texto": "Sexto tema de un disco de 1991.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c17-3",
@@ -533,7 +599,8 @@
   "respuesta": "Tarea fina",
   "nivel": "medio",
   "texto": "Labor que pide guantes de seda y mucha paciencia.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c17-4",
@@ -541,7 +608,8 @@
   "respuesta": "Tarea fina",
   "nivel": "dificil",
   "texto": "Bordado de orfebre aplicado a cualquier oficio.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c18-1",
@@ -549,7 +617,8 @@
   "respuesta": "Yo caníbal",
   "nivel": "facil",
   "texto": "Yo, devorador de personas.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c18-2",
@@ -557,7 +626,8 @@
   "respuesta": "Yo caníbal",
   "nivel": "medio",
   "texto": "Abre el segundo volumen del disco doble de 1993.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c18-3",
@@ -565,7 +635,8 @@
   "respuesta": "Yo caníbal",
   "nivel": "medio",
   "texto": "El que se come a sus semejantes, contado en primera persona.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c18-4",
@@ -573,7 +644,8 @@
   "respuesta": "Yo caníbal",
   "nivel": "dificil",
   "texto": "Menú único: carne humana; quien lo cuenta es también el cocinero.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c19-1",
@@ -581,7 +653,8 @@
   "respuesta": "Nuestro amo juega al esclavo",
   "nivel": "facil",
   "texto": "El patrón hace de siervo.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c19-2",
@@ -589,7 +662,8 @@
   "respuesta": "Nuestro amo juega al esclavo",
   "nivel": "medio",
   "texto": "Cierra un disco de 1989 con tapa inspirada en Goya.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c19-3",
@@ -597,7 +671,8 @@
   "respuesta": "Nuestro amo juega al esclavo",
   "nivel": "medio",
   "texto": "Cuando el dueño de todo se disfraza de víctima.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c19-4",
@@ -605,7 +680,8 @@
   "respuesta": "Nuestro amo juega al esclavo",
   "nivel": "dificil",
   "texto": "Inversión de roles: el que manda finge obedecer.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c20-1",
@@ -613,7 +689,8 @@
   "respuesta": "La hija del fletero",
   "nivel": "facil",
   "texto": "La nena del transportista.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c20-2",
@@ -621,7 +698,8 @@
   "respuesta": "La hija del fletero",
   "nivel": "medio",
   "texto": "Tema del primer volumen del disco doble de 1993.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c20-3",
@@ -629,7 +707,8 @@
   "respuesta": "La hija del fletero",
   "nivel": "medio",
   "texto": "Descendiente de quien acarrea mercadería por contrato.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c20-4",
@@ -637,7 +716,8 @@
   "respuesta": "La hija del fletero",
   "nivel": "dificil",
   "texto": "Heredera de un camión y de un oficio de rutas.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c21-1",
@@ -645,7 +725,8 @@
   "respuesta": "El infierno está encantador esta noche",
   "nivel": "facil",
   "texto": "Hoy el averno resulta fascinante entre sombras.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c21-2",
@@ -653,7 +734,8 @@
   "respuesta": "El infierno está encantador esta noche",
   "nivel": "medio",
   "texto": "Décimo tema del primer disco de estudio de la banda, el de 1985.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c21-3",
@@ -661,7 +743,8 @@
   "respuesta": "El infierno está encantador esta noche",
   "nivel": "medio",
   "texto": "El peor de los destinos, pero seductor: una velada de fuego.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c21-4",
@@ -669,7 +752,8 @@
   "respuesta": "El infierno está encantador esta noche",
   "nivel": "dificil",
   "texto": "Satán te invita a su casa y vos le agradecés la hospitalidad.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c22-1",
@@ -677,7 +761,8 @@
   "respuesta": "Gualicho",
   "nivel": "facil",
   "texto": "Hechizo malévolo del folclore criollo.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c22-2",
@@ -685,7 +770,8 @@
   "respuesta": "Gualicho",
   "nivel": "medio",
   "texto": "Cuarto tema de un disco de 1998 con un colectivo en el título.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c22-3",
@@ -693,7 +779,8 @@
   "respuesta": "Gualicho",
   "nivel": "medio",
   "texto": "Maleficio o mal de ojo, en el habla del campo argentino.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c22-4",
@@ -701,7 +788,8 @@
   "respuesta": "Gualicho",
   "nivel": "dificil",
   "texto": "Embrujo que viaja sin pasaje: se pega, no se compra.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c23-1",
@@ -709,7 +797,8 @@
   "respuesta": "La parabellum del buen psicópata",
   "nivel": "facil",
   "texto": "La pistola del demente amable.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c23-2",
@@ -717,7 +806,8 @@
   "respuesta": "La parabellum del buen psicópata",
   "nivel": "medio",
   "texto": "Tercer tema de un disco de 1989 con tapa inspirada en Goya.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c23-3",
@@ -725,7 +815,8 @@
   "respuesta": "La parabellum del buen psicópata",
   "nivel": "medio",
   "texto": "Arma automática de un loco con buenos modales.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c23-4",
@@ -733,7 +824,8 @@
   "respuesta": "La parabellum del buen psicópata",
   "nivel": "dificil",
   "texto": "Si querés paz, preparate para la guerra... y sonreí.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c24-1",
@@ -741,7 +833,8 @@
   "respuesta": "Caña seca y un membrillo",
   "nivel": "facil",
   "texto": "Aguardiente puro y una fruta amarilla.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c24-2",
@@ -749,7 +842,8 @@
   "respuesta": "Caña seca y un membrillo",
   "nivel": "medio",
   "texto": "Quinto tema del segundo volumen de un disco de 1993.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c24-3",
@@ -757,7 +851,8 @@
   "respuesta": "Caña seca y un membrillo",
   "nivel": "medio",
   "texto": "Un trago fuerte y el fruto de un dulce de postre: combo de cantina.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c24-4",
@@ -765,7 +860,8 @@
   "respuesta": "Caña seca y un membrillo",
   "nivel": "dificil",
   "texto": "Licor de azúcar sin añejar y la fruta del postre llamado «vigilante».",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c25-1",
@@ -773,7 +869,8 @@
   "respuesta": "Vamos las bandas",
   "nivel": "facil",
   "texto": "Adelante, grupos de seguidores.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c25-2",
@@ -781,7 +878,8 @@
   "respuesta": "Vamos las bandas",
   "nivel": "medio",
   "texto": "Sexto tema de un disco de 1988.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c25-3",
@@ -789,7 +887,8 @@
   "respuesta": "Vamos las bandas",
   "nivel": "medio",
   "texto": "Arenga para que los grupos del barrio se pongan en marcha.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c25-4",
@@ -797,7 +896,8 @@
   "respuesta": "Vamos las bandas",
   "nivel": "dificil",
   "texto": "Grito de largada para orquestas, patotas y peñas.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c26-1",
@@ -805,7 +905,8 @@
   "respuesta": "Mi perro dinamita",
   "nivel": "facil",
   "texto": "Mi can explosivo.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c26-2",
@@ -813,7 +914,8 @@
   "respuesta": "Mi perro dinamita",
   "nivel": "medio",
   "texto": "Cuarto tema de un disco de 1991; entre sus autores figura el bajista.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c26-3",
@@ -821,7 +923,8 @@
   "respuesta": "Mi perro dinamita",
   "nivel": "medio",
   "texto": "Animal de cuatro patas con la mecha corta.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c26-4",
@@ -829,7 +932,8 @@
   "respuesta": "Mi perro dinamita",
   "nivel": "dificil",
   "texto": "Mascota con detonador: ladra primero, explota después.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c27-1",
@@ -837,7 +941,8 @@
   "respuesta": "Ya nadie va a escuchar tu remera",
   "nivel": "facil",
   "texto": "Ninguna persona prestará oído a tu prenda estampada.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c27-2",
@@ -845,7 +950,8 @@
   "respuesta": "Ya nadie va a escuchar tu remera",
   "nivel": "medio",
   "texto": "Cierra un disco de 1986.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c27-3",
@@ -853,7 +959,8 @@
   "respuesta": "Ya nadie va a escuchar tu remera",
   "nivel": "medio",
   "texto": "Camiseta con mensaje que a la gente ya no le interesa.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c27-4",
@@ -861,7 +968,8 @@
   "respuesta": "Ya nadie va a escuchar tu remera",
   "nivel": "dificil",
   "texto": "Algodón estampado, pero el mensaje se quedó sin público.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c28-1",
@@ -869,7 +977,8 @@
   "respuesta": "Me matan, Limón!",
   "nivel": "facil",
   "texto": "¡Me asesinan, fruto cítrico!",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c28-2",
@@ -877,7 +986,8 @@
   "respuesta": "Me matan, Limón!",
   "nivel": "medio",
   "texto": "Octavo tema de un disco de 1996 sobre un hijo del diablo.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c28-3",
@@ -885,7 +995,8 @@
   "respuesta": "Me matan, Limón!",
   "nivel": "medio",
   "texto": "Un grito de alarma dirigido a un cítrico amarillo.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c28-4",
@@ -893,7 +1004,8 @@
   "respuesta": "Me matan, Limón!",
   "nivel": "dificil",
   "texto": "Pedido de auxilio con destinatario agrio.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c29-1",
@@ -901,7 +1013,8 @@
   "respuesta": "Mariposa Pontiac - rock del país",
   "nivel": "facil",
   "texto": "Insecto alado de auto norteamericano y ritmo eléctrico nacional.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c29-2",
@@ -909,7 +1022,8 @@
   "respuesta": "Mariposa Pontiac - rock del país",
   "nivel": "medio",
   "texto": "Décimo tema de un disco de 1996.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c29-3",
@@ -917,7 +1031,8 @@
   "respuesta": "Mariposa Pontiac - rock del país",
   "nivel": "medio",
   "texto": "Dos canciones pegadas: una con alas y marca de coche, otra patriótica.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c29-4",
@@ -925,7 +1040,8 @@
   "respuesta": "Mariposa Pontiac - rock del país",
   "nivel": "dificil",
   "texto": "Lepidóptero de chapa y cromo que revolotea sobre la patria.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c30-1",
@@ -933,7 +1049,8 @@
   "respuesta": "Todo preso es político",
   "nivel": "facil",
   "texto": "Cada encarcelado lo está por razones de poder.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c30-2",
@@ -941,7 +1058,8 @@
   "respuesta": "Todo preso es político",
   "nivel": "medio",
   "texto": "Cuarto tema de un disco de 1988.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c30-3",
@@ -949,7 +1067,8 @@
   "respuesta": "Todo preso es político",
   "nivel": "medio",
   "texto": "Frase de manifiesto: tras las rejas, cada uno tiene una causa de Estado.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c30-4",
@@ -957,7 +1076,8 @@
   "respuesta": "Todo preso es político",
   "nivel": "dificil",
   "texto": "Equivalencia sin silogismo: celda igual a ideología.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c31-1",
@@ -965,7 +1085,8 @@
   "respuesta": "Aquella solitaria vaca cubana",
   "nivel": "facil",
   "texto": "Esa res aislada de la isla caribeña.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c31-2",
@@ -973,7 +1094,8 @@
   "respuesta": "Aquella solitaria vaca cubana",
   "nivel": "medio",
   "texto": "Tercer tema de un disco de 1988.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c31-3",
@@ -981,7 +1103,8 @@
   "respuesta": "Aquella solitaria vaca cubana",
   "nivel": "medio",
   "texto": "Un bovino sin manada, nacido en el Caribe.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c31-4",
@@ -989,7 +1112,8 @@
   "respuesta": "Aquella solitaria vaca cubana",
   "nivel": "dificil",
   "texto": "Rumiante de ron y habano que pasta sin compañía.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c32-1",
@@ -997,7 +1121,8 @@
   "respuesta": "Blues de la artillería",
   "nivel": "facil",
   "texto": "Melancolía musical de los cañones.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c32-2",
@@ -1005,7 +1130,8 @@
   "respuesta": "Blues de la artillería",
   "nivel": "medio",
   "texto": "Quinto tema de un disco de 1991.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c32-3",
@@ -1013,7 +1139,8 @@
   "respuesta": "Blues de la artillería",
   "nivel": "medio",
   "texto": "Lamento lento de los que disparan proyectiles.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c32-4",
@@ -1021,7 +1148,8 @@
   "respuesta": "Blues de la artillería",
   "nivel": "dificil",
   "texto": "Doce compases de tristeza en el polígono de tiro.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c33-1",
@@ -1029,7 +1157,8 @@
   "respuesta": "Toxi-Taxi",
   "nivel": "facil",
   "texto": "Vehículo de alquiler envenenado.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c33-2",
@@ -1037,7 +1166,8 @@
   "respuesta": "Toxi-Taxi",
   "nivel": "medio",
   "texto": "Abre un disco de 1991.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c33-3",
@@ -1045,7 +1175,8 @@
   "respuesta": "Toxi-Taxi",
   "nivel": "medio",
   "texto": "Coche de la parada que lleva un veneno adentro.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c33-4",
@@ -1053,7 +1184,8 @@
   "respuesta": "Toxi-Taxi",
   "nivel": "dificil",
   "texto": "Se pide con la mano levantada, pero el viaje te intoxica.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c34-1",
@@ -1061,7 +1193,8 @@
   "respuesta": "Música para pastillas",
   "nivel": "facil",
   "texto": "Melodías dedicadas a comprimidos medicinales.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c34-2",
@@ -1069,7 +1202,8 @@
   "respuesta": "Música para pastillas",
   "nivel": "medio",
   "texto": "Tercer tema de un disco de 1986.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c34-3",
@@ -1077,7 +1211,8 @@
   "respuesta": "Música para pastillas",
   "nivel": "medio",
   "texto": "Banda sonora pensada a la hora de tragar con un vaso de agua.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c34-4",
@@ -1085,7 +1220,8 @@
   "respuesta": "Música para pastillas",
   "nivel": "dificil",
   "texto": "Partitura de botiquín.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c35-1",
@@ -1093,7 +1229,8 @@
   "respuesta": "Una piba con la remera de Greenpeace",
   "nivel": "facil",
   "texto": "Una chica con la camiseta de una ONG ecologista.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c35-2",
@@ -1101,7 +1238,8 @@
   "respuesta": "Una piba con la remera de Greenpeace",
   "nivel": "medio",
   "texto": "Décimo tema del último disco de estudio, el de 2000.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c35-3",
@@ -1109,7 +1247,8 @@
   "respuesta": "Una piba con la remera de Greenpeace",
   "nivel": "medio",
   "texto": "Joven con una prenda que defiende las ballenas.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c35-4",
@@ -1117,7 +1256,8 @@
   "respuesta": "Una piba con la remera de Greenpeace",
   "nivel": "dificil",
   "texto": "Prenda con conciencia planetaria, puesta sobre una chica.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c36-1",
@@ -1125,7 +1265,8 @@
   "respuesta": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
   "nivel": "facil",
   "texto": "Las hazañas inverosímiles de un superhéroe de los petardos, en una tierra digital helada.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c36-2",
@@ -1133,7 +1274,8 @@
   "respuesta": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
   "nivel": "medio",
   "texto": "Tema de un disco de 1998 con videoclip de 1999, protagonizado por un héroe pirotécnico.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c36-3",
@@ -1141,7 +1283,8 @@
   "respuesta": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
   "nivel": "medio",
   "texto": "Aventuras asombrosas de un personaje cuyo nombre es un cohete de feria, en un reino virtual.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c36-4",
@@ -1149,7 +1292,8 @@
   "respuesta": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
   "nivel": "dificil",
   "texto": "Un mártir de la pirotecnia explora Siberia, pero con prefijo de red informática.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c37-1",
@@ -1157,7 +1301,8 @@
   "respuesta": "Alien duce",
   "nivel": "facil",
   "texto": "Un extraterrestre con rango de caudillo.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c37-2",
@@ -1165,7 +1310,8 @@
   "respuesta": "Alien duce",
   "nivel": "medio",
   "texto": "Tema de un disco de 1998 que habla de tecnología y máquinas.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c37-3",
@@ -1173,7 +1319,8 @@
   "respuesta": "Alien duce",
   "nivel": "medio",
   "texto": "Forastero espacial y líder supremo en una sola expresión.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c37-4",
@@ -1181,7 +1328,8 @@
   "respuesta": "Alien duce",
   "nivel": "dificil",
   "texto": "Mezcla inglesa y latina: el que viene de afuera y el que conduce.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c38-1",
@@ -1189,7 +1337,8 @@
   "respuesta": "Pogo",
   "nivel": "facil",
   "texto": "Baile de rebotes y empujones en los recitales.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c38-2",
@@ -1197,7 +1346,8 @@
   "respuesta": "Pogo",
   "nivel": "medio",
   "texto": "Tema de un disco de 1998; un juguete de saltos con resorte lleva el mismo nombre.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c38-3",
@@ -1205,7 +1355,8 @@
   "respuesta": "Pogo",
   "nivel": "medio",
   "texto": "Se baila saltando como si el piso fuera un trampolín.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c38-4",
@@ -1213,7 +1364,8 @@
   "respuesta": "Pogo",
   "nivel": "dificil",
   "texto": "Cuatro letras, una sola vocal repetida, y un salto que no avanza.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c39-1",
@@ -1221,7 +1373,8 @@
   "respuesta": "La pequeña novia del Carioca",
   "nivel": "facil",
   "texto": "La diminuta prometida del nativo de Río de Janeiro.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c39-2",
@@ -1229,7 +1382,8 @@
   "respuesta": "La pequeña novia del Carioca",
   "nivel": "medio",
   "texto": "Clásico de un disco de 1998 destacado por la crítica.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c39-3",
@@ -1237,7 +1391,8 @@
   "respuesta": "La pequeña novia del Carioca",
   "nivel": "medio",
   "texto": "Una joven comprometida con un brasileño, bien chiquita.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c39-4",
@@ -1245,7 +1400,8 @@
   "respuesta": "La pequeña novia del Carioca",
   "nivel": "dificil",
   "texto": "Mujer en miniatura, casi esposa de un hijo de Copacabana.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c40-1",
@@ -1253,7 +1409,8 @@
   "respuesta": "El templo de Momo",
   "nivel": "facil",
   "texto": "El santuario del dios griego de la burla.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c40-2",
@@ -1261,7 +1418,8 @@
   "respuesta": "El templo de Momo",
   "nivel": "medio",
   "texto": "Primer simple del último disco de estudio, del año 2000.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c40-3",
@@ -1269,7 +1427,8 @@
   "respuesta": "El templo de Momo",
   "nivel": "medio",
   "texto": "Iglesia pagana dedicada al patrono del sarcasmo.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c40-4",
@@ -1277,7 +1436,8 @@
   "respuesta": "El templo de Momo",
   "nivel": "dificil",
   "texto": "Edificio sagrado cuyo dios es el que se ríe de todos, incluidos los demás dioses.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c41-1",
@@ -1285,7 +1445,8 @@
   "respuesta": "La murga de los renegados",
   "nivel": "facil",
   "texto": "El conjunto carnavalesco de los descreídos.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c41-2",
@@ -1293,7 +1454,8 @@
   "respuesta": "La murga de los renegados",
   "nivel": "medio",
   "texto": "Tema de un disco de 2000 con ritmo de bombo y platillo.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c41-3",
@@ -1301,7 +1463,8 @@
   "respuesta": "La murga de los renegados",
   "nivel": "medio",
   "texto": "Comparsa de carnaval integrada por quienes abandonaron su fe.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c41-4",
@@ -1309,7 +1472,8 @@
   "respuesta": "La murga de los renegados",
   "nivel": "dificil",
   "texto": "Redoblante, bombo y apostasía: un desfile de arrepentidos en las calles.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c42-1",
@@ -1317,7 +1481,8 @@
   "respuesta": "Sheriff",
   "nivel": "facil",
   "texto": "Autoridad con estrella de latón en un pueblo del lejano oeste.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c42-2",
@@ -1325,7 +1490,8 @@
   "respuesta": "Sheriff",
   "nivel": "medio",
   "texto": "Tema de un disco de 2000 con el nombre de un policía de películas de vaqueros.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c42-3",
@@ -1333,7 +1499,8 @@
   "respuesta": "Sheriff",
   "nivel": "medio",
   "texto": "Representante del orden en las películas con pistolas y caballos.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c42-4",
@@ -1341,7 +1508,8 @@
   "respuesta": "Sheriff",
   "nivel": "dificil",
   "texto": "Alguien con placa, sombrero y revólver, y la ley del polvo del desierto.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c43-1",
@@ -1349,7 +1517,8 @@
   "respuesta": "Morta punto com",
   "nivel": "facil",
   "texto": "Muerta, pero con dirección de internet.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c43-2",
@@ -1357,7 +1526,8 @@
   "respuesta": "Morta punto com",
   "nivel": "medio",
   "texto": "Tema de un disco de 2000 con un dominio comercial en el título.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c43-3",
@@ -1365,7 +1535,8 @@
   "respuesta": "Morta punto com",
   "nivel": "medio",
   "texto": "Fallecida con terminación de página web.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c43-4",
@@ -1373,7 +1544,8 @@
   "respuesta": "Morta punto com",
   "nivel": "dificil",
   "texto": "El deceso más digital: una difunta con extensión de sitio comercial.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "c44-1",
@@ -1381,7 +1553,8 @@
   "respuesta": "Pool, Averna y Papusa",
   "nivel": "facil",
   "texto": "Un juego de mesa con bolillas, un licor italiano y una chica bonita.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c44-2",
@@ -1389,7 +1562,8 @@
   "respuesta": "Pool, Averna y Papusa",
   "nivel": "medio",
   "texto": "Tema de un disco de 2000 que junta tres nombres propios con una conjunción.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c44-3",
@@ -1397,7 +1571,8 @@
   "respuesta": "Pool, Averna y Papusa",
   "nivel": "medio",
   "texto": "Tres nombres juntos: un billar, un amargo de Sicilia y un apodo cariñoso.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "c44-4",
@@ -1405,7 +1580,8 @@
   "respuesta": "Pool, Averna y Papusa",
   "nivel": "dificil",
   "texto": "Taco, aperitivo siciliano y muñequita: una barra de bar en una sola frase.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "d-gulp-1",
@@ -1413,7 +1589,8 @@
   "respuesta": "Gulp!",
   "nivel": "facil",
   "texto": "Onomatopeya de un trago o un bocado, con admiración.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "d-gulp-2",
@@ -1421,7 +1598,8 @@
   "respuesta": "Gulp!",
   "nivel": "medio",
   "texto": "Primer disco de estudio de la banda, de 1985, con nombre de sonido al tragar.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "d-oktubre-1",
@@ -1429,7 +1607,8 @@
   "respuesta": "Oktubre",
   "nivel": "facil",
   "texto": "Mes de la primavera argentina escrito con k, año 1986.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "d-oktubre-2",
@@ -1437,7 +1616,8 @@
   "respuesta": "Oktubre",
   "nivel": "medio",
   "texto": "Disco de 1986 que incluye «Ji ji ji».",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "d-baion-1",
@@ -1445,7 +1625,8 @@
   "respuesta": "Un baión para el ojo idiota",
   "nivel": "facil",
   "texto": "Danza del nordeste brasileño dedicada a la mirada de un tonto.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "d-baion-2",
@@ -1453,7 +1634,8 @@
   "respuesta": "Un baión para el ojo idiota",
   "nivel": "medio",
   "texto": "El que contiene la canción más larga de la discografía, editado en 1988.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "d-bang-1",
@@ -1461,7 +1643,8 @@
   "respuesta": "¡Bang! ¡Bang!... Estás liquidado",
   "nivel": "facil",
   "texto": "Dos disparos y una sentencia: ya no tenés salvación.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "d-bang-2",
@@ -1469,7 +1652,8 @@
   "respuesta": "¡Bang! ¡Bang!... Estás liquidado",
   "nivel": "medio",
   "texto": "Disco de 1989 cuya tapa remite a un fusilamiento pintado por Goya.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "d-mosca-1",
@@ -1477,7 +1661,8 @@
   "respuesta": "La mosca y la sopa",
   "nivel": "facil",
   "texto": "Insecto volador en el plato caliente del almuerzo, 1991.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "d-mosca-2",
@@ -1485,7 +1670,8 @@
   "respuesta": "La mosca y la sopa",
   "nivel": "medio",
   "texto": "Disco de 1991 con un gato momificado en su arte.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "d-lobo-1",
@@ -1493,7 +1679,8 @@
   "respuesta": "Lobo suelto / Cordero atado",
   "nivel": "facil",
   "texto": "Fiera en libertad y oveja joven sujeta: disco doble de 1993.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "d-lobo-2",
@@ -1501,7 +1688,8 @@
   "respuesta": "Lobo suelto / Cordero atado",
   "nivel": "medio",
   "texto": "Doble álbum de 1993, en dos volúmenes.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "d-luzbelito-1",
@@ -1509,7 +1697,8 @@
   "respuesta": "Luzbelito",
   "nivel": "facil",
   "texto": "Diminutivo de Lucifer: hijo ficticio del diablo en un disco de 1996.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "d-luzbelito-2",
@@ -1517,7 +1706,8 @@
   "respuesta": "Luzbelito",
   "nivel": "medio",
   "texto": "Primer disco de la banda sin caja de plástico, con un mini libro ilustrado, 1996.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "d-finisterre-1",
@@ -1525,7 +1715,8 @@
   "respuesta": "Último bondi a Finisterre",
   "nivel": "facil",
   "texto": "El colectivo que sale al fin de la tierra, edición de 1998.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "d-finisterre-2",
@@ -1533,7 +1724,8 @@
   "respuesta": "Último bondi a Finisterre",
   "nivel": "medio",
   "texto": "Disco de 1998 donde la banda aparece en la tapa convertida en clones digitales.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  },
  {
   "id": "d-momo-1",
@@ -1541,7 +1733,8 @@
   "respuesta": "Momo sampler",
   "nivel": "facil",
   "texto": "Muestrario del dios griego de la burla, de 2000.",
-  "revisada": false
+  "revisada": false,
+  "descartada": true
  },
  {
   "id": "d-momo-2",
@@ -1549,6 +1742,7 @@
   "respuesta": "Momo sampler",
   "nivel": "medio",
   "texto": "Último disco de estudio, en una caja de goma EVA con un medallón, 2000.",
-  "revisada": false
+  "revisada": false,
+  "descartada": false
  }
 ]

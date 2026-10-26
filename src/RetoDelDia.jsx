@@ -5,6 +5,7 @@ import Teclado from './Teclado.jsx'
 import Resultado from './Resultado.jsx'
 import { armarCasillas, mismaLetra } from './adivinanza.js'
 import { normalizarLetras } from './letras.js'
+import { prepararLetras } from './letrasIniciales.js'
 import { INTENTOS_MAX, cuadro, fechaBA, guardarReto, msHastaProximo, rachaCortada, rachaVigente, retoDe, retoGuardadoDeHoy, textoCompartir } from './reto.js'
 import { leer } from './storage.js'
 import { sonar } from './sonido.js'
@@ -33,13 +34,14 @@ export default function RetoDelDia({ onVolver, onMenu }) {
   const grupos = useMemo(() => armarCasillas(reto.cancion.titulo), [reto])
   const solucion = useMemo(() => grupos.flatMap((g) => g.letras), [grupos])
   const guardado = useRef(retoGuardadoDeHoy(fecha)).current
+  const iniciales = useMemo(() => prepararLetras(grupos, 'casual', `reto-${fecha}`), [grupos, fecha])
 
   const [resultados, setResultados] = useState(guardado?.resultados ?? [])
   const [terminado, setTerminado] = useState(guardado?.terminado ?? false)
   const [gano, setGano] = useState(guardado?.gano ?? false)
-  const [letras, setLetras] = useState(() => (guardado?.terminado ? solucion : Array(solucion.length).fill('')))
+  const [letras, setLetras] = useState(() => (guardado?.terminado ? solucion : iniciales.letras))
   const [revision, setRevision] = useState(() => Array(solucion.length).fill(''))
-  const [foco, setFoco] = useState(0)
+  const [foco, setFoco] = useState(iniciales.foco)
   const [mensaje, setMensaje] = useState('')
   const yaTerminadoAlEntrar = useRef(guardado?.terminado === true).current
   const estadoInicial = useRef(leer()).current
@@ -49,22 +51,25 @@ export default function RetoDelDia({ onVolver, onMenu }) {
   const limpiarRevision = (i) => setRevision((prev) => prev.map((x, k) => (k === i ? '' : x)))
 
   const ponerLetra = (l) => {
-    if (terminado) return
+    if (terminado || iniciales.fijas[foco]) return
     const guardada = mismaLetra(l, solucion[foco]) ? solucion[foco] : l
     setLetras((prev) => prev.map((x, k) => (k === foco ? guardada : x)))
     limpiarRevision(foco)
-    setFoco(Math.min(foco + 1, solucion.length - 1))
+    const siguiente = iniciales.fijas.findIndex((f, i) => i > foco && !f)
+    if (siguiente >= 0) setFoco(siguiente)
   }
 
   const borrar = () => {
     if (terminado) return
-    if (letras[foco]) {
+    if (letras[foco] && !iniciales.fijas[foco]) {
       setLetras((prev) => prev.map((x, k) => (k === foco ? '' : x)))
       limpiarRevision(foco)
-    } else if (foco > 0) {
-      setFoco(foco - 1)
-      setLetras((prev) => prev.map((x, k) => (k === foco - 1 ? '' : x)))
-      limpiarRevision(foco - 1)
+    } else {
+      const anterior = iniciales.fijas.map((f, i) => !f && i < foco ? i : -1).filter((i) => i >= 0).at(-1)
+      if (anterior === undefined) return
+      setFoco(anterior)
+      setLetras((prev) => prev.map((x, k) => (k === anterior ? '' : x)))
+      limpiarRevision(anterior)
     }
   }
 
@@ -146,9 +151,10 @@ export default function RetoDelDia({ onVolver, onMenu }) {
           const clases = ['casilla']
           if (i === foco && !terminado) clases.push('foco')
           if (revision[i]) clases.push(revision[i])
+          if (iniciales.fijas[i]) clases.push('inicial')
           const estado = revision[i] === 'ok' ? ', correcta' : revision[i] === 'mal' ? ', incorrecta' : ''
           return (
-            <button key={i} className={clases.join(' ')} onClick={() => setFoco(i)} aria-label={`Letra ${i + 1}: ${letras[i] || 'vacía'}${estado}`}>
+            <button key={i} disabled={iniciales.fijas[i]} className={clases.join(' ')} onClick={() => setFoco(i)} aria-label={`Letra ${i + 1}: ${letras[i] || 'vacía'}${estado}`}>
               {letras[i]}
             </button>
           )

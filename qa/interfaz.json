@@ -1,0 +1,30 @@
+[
+  {
+    "width": 360,
+    "height": 640,
+    "pantallas": 22,
+    "solapamientos": 0,
+    "apiMusica": "pausa/reanuda/siguiente/cierre OK"
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "pantallas": 22,
+    "solapamientos": 0,
+    "apiMusica": "pausa/reanuda/siguiente/cierre OK"
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "pantallas": 22,
+    "solapamientos": 0,
+    "apiMusica": "pausa/reanuda/siguiente/cierre OK"
+  },
+  {
+    "width": 1024,
+    "height": 600,
+    "pantallas": 22,
+    "solapamientos": 0,
+    "apiMusica": "pausa/reanuda/siguiente/cierre OK"
+  }
+]

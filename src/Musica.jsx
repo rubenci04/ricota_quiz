@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import lista from './data/musica.json'
 import { PLAYLIST_YOUTUBE } from './config.js'
 import { guardar, leer } from './storage.js'
@@ -28,7 +28,7 @@ function cargarApi() {
 const hayMusica = Boolean(PLAYLIST_YOUTUBE) || lista.length > 0
 
 // Mini reproductor visible (mínimo 200x200) con controles propios. Se cierra, no se esconde.
-export default function Musica() {
+export default function Musica({ controlRef }) {
   const [abierto, setAbierto] = useState(true)
   const [titulo, setTitulo] = useState('')
   const [fallo, setFallo] = useState(false)
@@ -134,7 +134,7 @@ export default function Musica() {
     return () => {
       cancelado = true
       document.body.classList.remove('con-musica')
-      try { player.current?.destroy() } catch { /* ya destruido */ }
+      try { player.current?.stopVideo?.(); player.current?.destroy() } catch { /* ya destruido */ }
       player.current = null
       if (contenedor.current) contenedor.current.innerHTML = ''
     }
@@ -169,14 +169,15 @@ export default function Musica() {
     guardar({ volumen: nuevo })
   }
 
-  if (!hayMusica || !abierto) return null
-
   const alternar = () => {
     const p = player.current
     if (!p?.getPlayerState) return
     if (p.getPlayerState() === 1) p.pauseVideo()
     else p.playVideo()
   }
+
+  useImperativeHandle(controlRef, () => ({ alternar, siguiente }))
+  if (!hayMusica || !abierto) return null
 
   return (
     <aside className="musica" aria-label="Reproductor de música">

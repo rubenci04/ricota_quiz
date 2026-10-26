@@ -7,7 +7,10 @@ import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
 import { guardar, leer } from './storage.js'
 import { frase } from './textos.js'
-import { nuevaSemilla } from './desafio.js'
+import { crearAzar } from './azar.js'
+import { crearPartida, registrarVista } from './historial.js'
+import { useRegistrarInicial } from './useHistorial.js'
+import { idsCrucigrama } from './identidad.js'
 import SelectorDisco from './SelectorDisco.jsx'
 
 const MAX_PISTAS = 7 // incluye 2 extra
@@ -17,9 +20,9 @@ const VECTOR = { across: [0, 1], down: [1, 0] }
 
 // si un intento no logra armar el tablero, se prueba con otras semillas antes de rendirse
 // (con la misma semilla, tema y dificultad sale siempre el mismo tablero)
-function generar(id, dif, semilla, tema = 'todos') {
+function generar(id, dif, semilla, tema = 'todos', plan) {
   for (let i = 0; i < 3; i++) {
-    const j = nuevoCrucigrama(id, dif, i === 0 ? semilla : `${semilla}-${i}`, tema)
+    const j = nuevoCrucigrama(id, dif, i === 0 ? semilla : `${semilla}-${i}`, tema, plan)
     if (j) return j
   }
   return null
@@ -28,12 +31,14 @@ function generar(id, dif, semilla, tema = 'todos') {
 export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
   const inicial = useRef(null)
   if (!inicial.current) {
-    const semilla = desafio ? desafio.semilla : nuevaSemilla()
     const disco = desafio ? desafio.disco : 'todos'
     const tema = desafio ? desafio.tema : 'todos'
     const dif = desafio ? desafio.dif : leer().dificultad
-    inicial.current = { semilla, disco, tema, dif, juego: generar(disco, dif, semilla, tema) }
+    const p = desafio ? { semilla: desafio.semilla, plan: desafio.plan, juego: generar(disco, dif, desafio.semilla, tema, desafio.plan) } : crearPartida('crucigrama', (sem, plan) => generar(disco, dif, sem, tema, plan), idsCrucigrama)
+    inicial.current = { ...p, disco, tema, dif }
   }
+  useRegistrarInicial('crucigrama', inicial.current.ids, !desafio)
+  const [plan, setPlan] = useState(inicial.current.plan)
   const [semilla, setSemilla] = useState(inicial.current.semilla)
   const [discoId, setDiscoId] = useState(inicial.current.disco)
   const [temaId, setTemaId] = useState(inicial.current.tema)
@@ -58,9 +63,11 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
   }, [sel])
 
   const empezar = (id, dif = dificultad, t = temaId) => {
-    const sem = nuevaSemilla()
-    setSemilla(sem)
-    setJuego(generar(id, dif, sem, t))
+    const p = crearPartida('crucigrama', (sem, plan) => generar(id, dif, sem, t, plan), idsCrucigrama)
+    registrarVista('crucigrama', p.ids)
+    setSemilla(p.semilla)
+    setPlan(p.plan)
+    setJuego(p.juego)
     setMensaje('')
     setErroresSeguidos(0)
     setLetras({}); setFijas({}); setRevision({}); setSel(null); setPistas(0); setPalabrasReveladas(0)
@@ -205,7 +212,7 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
     if (seguidos >= ERRORES_PARA_PISTA) {
       const faltan = Object.keys(solucion).filter((x) => letras[x] !== solucion[x])
       if (faltan.length) {
-        const k = faltan[Math.floor(Math.random() * faltan.length)]
+        const k = crearAzar(`${semilla}-ayuda-${pistas}-${palabrasReveladas}`).elegir(faltan)
         setLetras((prev) => ({ ...prev, [k]: solucion[k] }))
         setFijas((prev) => ({ ...prev, [k]: true }))
         setRevision((prev) => { const n = { ...prev }; delete n[k]; return n })
@@ -237,7 +244,7 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
     if (!k) {
       const faltan = Object.keys(solucion).filter((x) => letras[x] !== solucion[x])
       if (!faltan.length) return
-      k = faltan[Math.floor(Math.random() * faltan.length)]
+      k = crearAzar(`${semilla}-ayuda-${pistas}-${palabrasReveladas}`).elegir(faltan)
     }
     setLetras((prev) => ({ ...prev, [k]: solucion[k] }))
     setFijas((prev) => ({ ...prev, [k]: true }))
@@ -359,7 +366,7 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
           titulo="Crucigrama"
           puntaje={`${puntajeCruci} pts`}
           detalle={`${entradas.length}/${entradas.length} palabras · letras reveladas: ${pistas} · palabras reveladas: ${palabrasReveladas}`}
-          desafio={{ modo: 'crucigrama', disco: discoId, tema: temaId, dif: dificultad, semilla, puntaje: puntajeCruci }}
+          desafio={{ modo: 'crucigrama', disco: discoId, tema: temaId, dif: dificultad, semilla, plan, puntaje: puntajeCruci }}
           rival={desafio ? { puntaje: desafio.puntaje } : null}
           mejor={{ etiqueta: 'Crucigramas completados', valor: completados }}
           mensaje={frase('victoria')}
