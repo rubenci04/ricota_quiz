@@ -20,7 +20,7 @@ Todo se cambia en **`src/config.js`**, salvo lo que se indica. Estado actual:
 - El juego usa solamente tema oscuro; las preferencias antiguas de apariencia se eliminan al migrar a v7 sin perder perfiles ni progreso.
 - Hasta 700 px la música está en el flujo, después del contenido. En escritorio se reserva una columna lateral. La barra superior permite pausar/reanudar y avanzar; cerrar detiene y destruye el reproductor.
 - QA rápida: `npm run build`, `node scripts/ejecutar.mjs scripts/verificar.mjs`, `node scripts/ejecutar.mjs scripts/simular.mjs --despues` y `node scripts/qa-ui.mjs` (requiere Chromium de Playwright instalado).
-- Los desafíos nuevos incluyen un plan de selección v3 con identificadores de contenido, sin alias. Los anteriores conservan su generación. El historial guarda 150 identificadores por modo y perfil y las tres últimas partidas; las categorías de Dicho conservan además el ciclo del catálogo.
+- Los desafíos nuevos incluyen un plan de selección v3 con identificadores de contenido, sin alias. Los enlaces anteriores siguen aceptándose; sus pistas también respetan el catálogo curado. El historial guarda 150 identificadores por modo y perfil y las tres últimas partidas; las categorías de Dicho conservan además el ciclo del catálogo.
 
 - El nombre, la descripción y la URL salen de `src/config.js` hacia `index.html` (título, Open Graph, Twitter) y el manifest de la PWA.
 - `public/og.png` tiene el nombre dibujado: si cambiás el nombre, hay que rehacerla. Los íconos no llevan texto.

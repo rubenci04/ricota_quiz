@@ -45,6 +45,10 @@ assert.equal(leerDesafio('#/desafio/trivia/99/casual/abcd1234/6').version, 1)
 const catalogo = JSON.parse(readFileSync('src/data/adivinanzas.json', 'utf8')).filter((a) => !a.descartada)
 assert.equal(catalogo.filter((a) => a.tipo === 'cancion').length, 44)
 assert.equal(new Set(catalogo.filter((a) => a.tipo === 'cancion').map((a) => a.respuesta)).size, 44)
+for (let i = 0; i < 50; i++) {
+  const r = nuevaRonda({ modo: 'dicho', semilla: `legado${i}` })
+  assert.ok(catalogo.some((a) => a.id === r.acertijoId), 'Un enlace antiguo usó una alusión descartada')
+}
 const js = readdirSync('dist/assets').filter((f) => f.endsWith('.js')).map((f) => readFileSync('dist/assets/' + f, 'utf8')).join('\n')
 for (const ruta of ['letras_privadas', 'letras-privadas', 'datos-pendientes', 'C:\\Users', 'D:\\proyectos']) assert.ok(!js.includes(ruta), 'Ruta privada en bundle')
 for (const i of JSON.parse(readFileSync('src/data/interpretaciones.json', 'utf8')).filter((i) => !i.verificada || !i.fuente?.url)) assert.ok(!js.includes(i.resumen), 'Interpretación sin verificar en bundle')

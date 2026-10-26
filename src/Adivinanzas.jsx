@@ -41,7 +41,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
   const inicial = useRef(undefined)
   if (inicial.current === undefined) {
     if (desafio && desafioToken) {
-      inicial.current = nuevaRonda({ ...desafioToken, dif: desafio.dif, semilla: desafio.semilla, disco: desafio.disco, tema: desafio.tema, plan: desafio.plan, curado: !!desafio.plan })
+      inicial.current = nuevaRonda({ ...desafioToken, dif: desafio.dif, semilla: desafio.semilla, disco: desafio.disco, tema: desafio.tema, plan: desafio.plan })
     } else if (inicio === 'palabras') {
       inicial.current = prepararRonda({ modo: 'palabras', categoria: 'canciones', dif: leer().dificultad })
     } else {

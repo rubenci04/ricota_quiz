@@ -29,7 +29,7 @@ for (const modo of ['trivia', 'banda', 'sopa', 'crucigrama', 'palabras', 'dichoc
       ids = r.entradas.map((p) => idTexto('w', p.respuesta))
       titulos = r.entradas.flatMap((p) => p.cancion ? [p.cancion] : datos.canciones.filter((c) => p.pista.startsWith(c.titulo + ':')).map((c) => c.titulo))
     } else {
-      const r = nuevaRonda({ modo: modo === 'palabras' ? 'palabras' : 'dicho', categoria: modo === 'palabras' ? 'canciones' : modo.slice(5), semilla, plan, curado: despues })
+      const r = nuevaRonda({ modo: modo === 'palabras' ? 'palabras' : 'dicho', categoria: modo === 'palabras' ? 'canciones' : modo.slice(5), semilla, plan })
       ids = [idTexto('r', `${r.categoria}:${r.id}`)]
       extras = r.acertijoId ? [`a:${r.acertijoId}`] : []
       titulos = r.cancion ? [r.cancion.titulo] : []

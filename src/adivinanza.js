@@ -56,8 +56,8 @@ export const TOKENS = ['palabras', 'parafraseado', ...CATEGORIAS.map((c) => `dic
 // ---- acertijos con textos propios (src/data/adivinanzas.json)
 const ORDEN_NIVEL = { facil: 0, medio: 1, dificil: 2 }
 const NIVELES_POR_DIFICULTAD = { casual: ['facil', 'medio'], fanatico: ['medio', 'dificil'] }
-const deRespuesta = (tipo, respuesta, curado = true) =>
-  acertijos.filter((a) => (!curado || !a.descartada) && a.tipo === tipo && a.respuesta === respuesta).sort((a, b) => ORDEN_NIVEL[a.nivel] - ORDEN_NIVEL[b.nivel])
+const deRespuesta = (tipo, respuesta) =>
+  acertijos.filter((a) => !a.descartada && a.tipo === tipo && a.respuesta === respuesta).sort((a, b) => ORDEN_NIVEL[a.nivel] - ORDEN_NIVEL[b.nivel])
 
 // Devuelve el acertijo de una canción adecuado a la dificultad, para usarlo también en el reto del día.
 export function acertijoDeCancion(titulo, dif, azar) {
@@ -95,7 +95,7 @@ function elegirDistinta(azar, lista, claveDe, anterior, plan, categoria, cancion
 }
 
 // Con la misma semilla, modo, categoría, dificultad, disco y tema da siempre la misma ronda.
-export function nuevaRonda({ modo, categoria = 'canciones', dif = 'casual', anterior = null, semilla, disco = 'todos', tema = 'todos', plan, curado = true }) {
+export function nuevaRonda({ modo, categoria = 'canciones', dif = 'casual', anterior = null, semilla, disco = 'todos', tema = 'todos', plan }) {
   const azar = crearAzar(semilla)
   const casual = dif === 'casual'
   let respuesta = ''
@@ -119,7 +119,7 @@ export function nuevaRonda({ modo, categoria = 'canciones', dif = 'casual', ante
     if (modo === 'palabras') {
       palabras = azar.mezclar(cancion.palabras)
     } else {
-      const todos = deRespuesta('cancion', respuesta, curado)
+      const todos = deRespuesta('cancion', respuesta)
       const permitidos = todos.filter((a) => NIVELES_POR_DIFICULTAD[dif].includes(a.nivel))
       const primero = azar.elegir(permitidos.length ? permitidos : todos)
       acertijoId = primero?.id
@@ -132,7 +132,7 @@ export function nuevaRonda({ modo, categoria = 'canciones', dif = 'casual', ante
     const d = elegirDistinta(azar, lista, (x) => x.titulo, anterior, plan, categoria)
     respuesta = d.titulo
     id = respuesta
-    const todos = deRespuesta('disco', respuesta, curado)
+    const todos = deRespuesta('disco', respuesta)
     const primero = casual ? todos[0] : todos[todos.length - 1]
     acertijoId = primero?.id
     principal = primero?.texto ?? `Disco de ${d.anio}`
