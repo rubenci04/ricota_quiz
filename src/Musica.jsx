@@ -28,7 +28,7 @@ function cargarApi() {
 const hayMusica = Boolean(PLAYLIST_YOUTUBE) || lista.length > 0
 
 // Mini reproductor visible (mínimo 200x200) con controles propios. Se cierra, no se esconde.
-export default function Musica({ controlRef }) {
+export default function Musica({ controlRef, onEstado }) {
   const [abierto, setAbierto] = useState(true)
   const [titulo, setTitulo] = useState('')
   const [fallo, setFallo] = useState(false)
@@ -41,6 +41,32 @@ export default function Musica({ controlRef }) {
   const gesto = useRef(false) // ya hubo una interacción: se puede sacar el silencio
   const arrancando = useRef(false) // ya se cargó la lista desde un video al azar
   const barajado = useRef(false) // ya se activó el orden aleatorio
+  const [bloqueado, setBloqueado] = useState(false) // el autoplay no arrancó: se pide un toque
+  const vigilancia = useRef(null)
+
+  const sonando = () => [1, 3].includes(player.current?.getPlayerState?.())
+
+  // estado real del reproductor: reproduciendo, silenciado o pausado
+  const reportar = () => {
+    const p = player.current
+    if (!p?.getPlayerState) return
+    const mudo = p.isMuted?.() || volumenActual.current === 0
+    onEstado?.(!sonando() ? 'pausado' : mudo ? 'silenciado' : 'reproduciendo')
+  }
+
+  // saca el silencio y aplica el volumen DESPUÉS del unMute (unMute puede devolver el volumen anterior)
+  const sonar = () => {
+    const p = player.current
+    if (!p) return
+    if (volumenActual.current > 0) p.unMute?.()
+    p.setVolume?.(volumenActual.current)
+  }
+
+  // si pasado 1,5 segundos no está reproduciendo, el navegador bloqueó el autoplay
+  const vigilar = () => {
+    clearTimeout(vigilancia.current)
+    vigilancia.current = setTimeout(() => { if (!sonando()) setBloqueado(true) }, 1500)
+  }
 
   // pasa al siguiente video (en bucle)
   const siguiente = () => {
@@ -64,12 +90,14 @@ export default function Musica({ controlRef }) {
       if (Array.isArray(ids) && ids.length > 0) {
         arrancando.current = true
         p.loadPlaylist({ listType: 'playlist', list: PLAYLIST_YOUTUBE, index: Math.floor(Math.random() * ids.length), startSeconds: 0 })
+        vigilar()
       } else if (++intentos < 50) {
         setTimeout(esperar, 200)
       } else {
         // plan B: no se pudo leer la lista; arranca desde el principio pero igual barajada
         arrancando.current = true
         p.playVideo()
+        vigilar()
       }
     }
     esperar()
@@ -84,6 +112,7 @@ export default function Musica({ controlRef }) {
       const destino = document.createElement('div')
       contenedor.current.appendChild(destino)
       // con lista de YouTube no se autoarranca: se espera a leer la lista para empezar desde un video al azar
+      // autoplay silenciado: los navegadores lo permiten; el primer gesto del usuario saca el silencio
       const base = { autoplay: PLAYLIST_YOUTUBE ? 0 : 1, mute: 1, playsinline: 1, rel: 0, origin: window.location.origin }
       const opciones = {
         width: 200,
@@ -96,18 +125,23 @@ export default function Musica({ controlRef }) {
             // arranca silenciado (los navegadores bloquean el audio antes de una interacción)
             if (!gesto.current) e.target.mute()
             e.target.setVolume(volumenActual.current)
+            reportar()
             if (PLAYLIST_YOUTUBE) {
               empezarAlAzar(e.target, () => cancelado)
             } else {
               setTitulo(lista[0].titulo)
               e.target.playVideo()
+              vigilar()
             }
           },
           onStateChange: (e) => {
             if (e.data === YT.PlayerState.PLAYING) {
               erroresSeguidos.current = 0
-              e.target.setVolume(volumenActual.current) // en cada cambio de video
+              setBloqueado(false)
+              clearTimeout(vigilancia.current)
+              // en cada cambio de video: primero el unMute y después el volumen
               if (gesto.current && volumenActual.current > 0) e.target.unMute()
+              e.target.setVolume(volumenActual.current)
               // setShuffle solo funciona con la lista ya cargada: se activa en la primera reproducción
               if (PLAYLIST_YOUTUBE && arrancando.current && !barajado.current) {
                 barajado.current = true
@@ -118,6 +152,7 @@ export default function Musica({ controlRef }) {
               if (PLAYLIST_YOUTUBE && datos?.title) setTitulo(datos.title)
             }
             if (e.data === YT.PlayerState.ENDED && !PLAYLIST_YOUTUBE) siguiente() // bucle por la lista local
+            reportar()
           },
           onError: (e) => {
             if (!ERRORES_DE_INCRUSTACION.includes(e.data) && e.data !== 2 && e.data !== 5) return
@@ -133,6 +168,7 @@ export default function Musica({ controlRef }) {
     })
     return () => {
       cancelado = true
+      clearTimeout(vigilancia.current)
       document.body.classList.remove('con-musica')
       try { player.current?.stopVideo?.(); player.current?.destroy() } catch { /* ya destruido */ }
       player.current = null
@@ -150,9 +186,10 @@ export default function Musica({ controlRef }) {
       quitar()
       const p = player.current
       try {
-        p?.setVolume?.(volumenActual.current)
-        if (volumenActual.current > 0) p?.unMute?.()
-        if (p?.getPlayerState?.() !== 1 && p?.getPlayerState?.() !== 3) p?.playVideo?.()
+        sonar()
+        if (!sonando()) p?.playVideo?.()
+        setBloqueado(false)
+        setTimeout(reportar, 300)
       } catch { /* el reproductor todavía no está listo: se destapa al empezar */ }
     }
     eventos.forEach((n) => window.addEventListener(n, alGesto, true))
@@ -164,23 +201,36 @@ export default function Musica({ controlRef }) {
     const nuevo = Math.min(100, Math.max(0, volumen + delta))
     setVolumen(nuevo)
     volumenActual.current = nuevo
-    player.current?.setVolume?.(nuevo)
     if (nuevo > 0) player.current?.unMute?.()
+    player.current?.setVolume?.(nuevo)
     guardar({ volumen: nuevo })
+    setTimeout(reportar, 300)
   }
 
   const alternar = () => {
     const p = player.current
     if (!p?.getPlayerState) return
-    if (p.getPlayerState() === 1) p.pauseVideo()
-    else p.playVideo()
+    if (sonando() && p.isMuted?.()) sonar() // estaba silenciado: se activa el sonido
+    else if (sonando()) p.pauseVideo()
+    else {
+      p.playVideo()
+      sonar()
+    }
+    setTimeout(reportar, 300)
   }
+
+  // el silencio no avisa con un evento: se consulta el estado real una vez por segundo
+  useEffect(() => {
+    const id = setInterval(reportar, 1000)
+    return () => clearInterval(id)
+  })
 
   useImperativeHandle(controlRef, () => ({ alternar, siguiente }))
   if (!hayMusica || !abierto) return null
 
   return (
     <aside className="musica" aria-label="Reproductor de música">
+      {bloqueado && <button className="musica-aviso" onClick={() => { gesto.current = true; sonar(); player.current?.playVideo?.(); setBloqueado(false) }}>Tocá para activar la música</button>}
       <div ref={contenedor} className="musica-video" />
       <div className="musica-volumen" role="group" aria-label="Volumen de la música">
         <button onClick={() => cambiarVolumen(-PASO_VOLUMEN)} aria-label="Bajar el volumen" disabled={volumen <= 0}>−</button>

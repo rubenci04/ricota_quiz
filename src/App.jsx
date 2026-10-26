@@ -17,6 +17,8 @@ import { DESARROLLADOR, MODOS, NOMBRE_JUEGO } from './config.js'
 import { alDesbloquear, iniciarLogros } from './logros.js'
 import { fechaBA, rachaCortada, rachaVigente } from './reto.js'
 import Musica from './Musica.jsx'
+import Fondo from './Fondo.jsx'
+import { Contador } from './Animados.jsx'
 import {
   alternarSonido,
   alternarVibracion,
@@ -25,7 +27,7 @@ import {
   vibracionActiva,
   vibracionDisponible,
 } from './sonido.js'
-import { leer, leerPerfiles, marcarModo, suscribir } from './storage.js'
+import { guardar, leer, leerPerfiles, marcarModo, suscribir } from './storage.js'
 
 // Menú: una tarjeta por modo, cada una con su ícono y su color. "Dicho de otra forma" es la destacada.
 const LISTA_MODOS = [
@@ -59,8 +61,22 @@ export default function App() {
   const [efemerides] = useState(() => efemeridesDeHoy())
   const [sonido, setSonido] = useState(sonidoActivo)
   const [vibracion, setVibracion] = useState(vibracionActiva)
+  const [estadoMusica, setEstadoMusica] = useState('pausado') // reproduciendo | silenciado | pausado
   const [avisos, setAvisos] = useState([]) // logros recién desbloqueados
   const volver = () => setModo(null)
+  // inclinación leve de las tarjetas del menú con el puntero o el toque
+  const inclinar = (e) => {
+    const t = e.target.closest?.('.tarjeta-modo')
+    if (!t || t.disabled || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+    const r = t.getBoundingClientRect()
+    t.style.setProperty('--ry', `${((e.clientX - r.left) / r.width - 0.5) * 12}deg`)
+    t.style.setProperty('--rx', `${-((e.clientY - r.top) / r.height - 0.5) * 12}deg`)
+  }
+  const enderezar = (e) => {
+    const t = e.target.closest?.('.tarjeta-modo')
+    t?.style.removeProperty('--rx')
+    t?.style.removeProperty('--ry')
+  }
   const elegirModo = (id) => {
     marcarModo(id === 'dicho' || id === 'palabras' ? 'adivinanzas' : id)
     setModo(id)
@@ -177,7 +193,7 @@ export default function App() {
       <main className="pantalla inicio" key="menu">
         <h1 className="logo">{NOMBRE_JUEGO}</h1>
         <p className="sub">Patricio Rey y sus Redonditos de Ricota</p>
-        <nav className="menu-grid" aria-label="Modos de juego">
+        <nav className="menu-grid" aria-label="Modos de juego" onPointerMove={inclinar} onPointerDown={inclinar} onPointerLeave={enderezar} onPointerUp={enderezar} onPointerCancel={enderezar} onPointerOut={enderezar}>
           {MODOS_MENU.map((m, i) => (
             <button
               key={m.id}
@@ -198,13 +214,13 @@ export default function App() {
           <p key={e.dia + e.frase} className="efemeride" role="note">🎂 {e.texto}</p>
         ))}
         <section className="stats">
-          <div><b>{maximoAlcanzado(g, 'trivia')}</b>Nivel trivia</div>
-          <div><b>{g.mejor}/10</b>Mejor trivia</div>
-          <div><b>{g.sopas}</b>Sopas hechas</div>
-          <div><b>{g.adivinanzas}</b>Pts adivinanzas</div>
-          <div><b>{maximoAlcanzado(g, 'banda')}</b>Nivel banda</div>
-          <div><b>{g.crucigramas}</b>Crucigramas</div>
-          <div><b>{rachaVigente(g, fechaBA())}</b>Racha reto (máx. {g.rachaMax})</div>
+          <div><b><Contador valor={maximoAlcanzado(g, 'trivia')} /></b>Nivel trivia</div>
+          <div><b><Contador valor={`${g.mejor}/10`} /></b>Mejor trivia</div>
+          <div><b><Contador valor={g.sopas} /></b>Sopas hechas</div>
+          <div><b><Contador valor={g.adivinanzas} /></b>Pts adivinanzas</div>
+          <div><b><Contador valor={maximoAlcanzado(g, 'banda')} /></b>Nivel banda</div>
+          <div><b><Contador valor={g.crucigramas} /></b>Crucigramas</div>
+          <div><b><Contador valor={rachaVigente(g, fechaBA())} /></b>Racha reto (máx. {g.rachaMax})</div>
         </section>
         {rachaCortada(g, fechaBA()) && (
           <p className="aviso-amable" role="note">
@@ -228,7 +244,8 @@ export default function App() {
   }
 
   return (
-    <div className="app" data-modo={modoActual || 'menu'} data-perfiles={verPerfiles && !pagina} onClick={alClic}>
+    <div className="app" data-modo={modoActual || 'menu'} data-perfiles={verPerfiles && !pagina} data-fondo={g.fondo} onClick={alClic}>
+      <Fondo activo={g.fondo} />
       <div className="interruptores" aria-label="Sonido y música">
         <button
           className="sonido"
@@ -238,8 +255,24 @@ export default function App() {
         >
           {sonido ? '🔊' : '🔇'}
         </button>
-        <button className="sonido" onClick={() => musica.current?.alternar()} aria-label="Pausar o reanudar música">♪</button>
+        <button
+          className={`sonido musica-estado ${estadoMusica}`}
+          onClick={() => musica.current?.alternar()}
+          aria-label={{ reproduciendo: 'Música sonando: tocá para pausar', silenciado: 'Música silenciada: tocá para activar el sonido', pausado: 'Música en pausa: tocá para reproducir' }[estadoMusica]}
+          aria-pressed={estadoMusica === 'reproduciendo'}
+        >
+          ♪
+        </button>
         <button className="sonido" onClick={() => musica.current?.siguiente()} aria-label="Siguiente canción">⏭</button>
+        <button
+          className="sonido"
+          onClick={() => guardar({ fondo: !g.fondo })}
+          aria-label={g.fondo ? 'Desactivar fondo animado' : 'Activar fondo animado'}
+          title="Fondo animado"
+          aria-pressed={g.fondo}
+        >
+          {g.fondo ? '✨' : '▫️'}
+        </button>
         {vibracionDisponible() && (
           <button
             className="sonido"
@@ -256,7 +289,7 @@ export default function App() {
       <div className="avisos-logros" role="status" aria-live="polite">
         {avisos.map((l) => <p key={l.id} className="aviso-logro">🏆 ¡Logro desbloqueado! <strong>{l.nombre}</strong></p>)}
       </div>
-      <Musica controlRef={musica} />
+      <Musica controlRef={musica} onEstado={setEstadoMusica} />
       <footer className="pie">
         <span>Juego de fans, no oficial, sin relación con la banda.</span>
         <span>Developer: {DESARROLLADOR} · Derechos reservados</span>

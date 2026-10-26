@@ -4,6 +4,7 @@ import { PREGUNTAS_POR_NIVEL, armarNivel, armarNivelBanda, curiosidadAlAzar } fr
 import { LIMITES, PUNTOS_PARA_PASAR, iniciarNivel, terminarNivel, maximoAlcanzado } from './niveles.js'
 import { guardar, leer } from './storage.js'
 import Resultado from './Resultado.jsx'
+import { Barra } from './Animados.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
 import { crearAzar } from './azar.js'
@@ -15,6 +16,7 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
   const modo = banda ? 'banda' : 'trivia'
   const limite = LIMITES[modo]
   const version = desafio?.version ?? (desafio ? 1 : 3)
+  const dif = desafio ? desafio.dif : leer().dificultad // la dificultad decide qué largo de títulos puede aparecer
   const [plan, setPlan] = useState(desafio?.plan)
   const kMejor = banda ? 'mejorBanda' : 'mejor'
   const [vista, setVista] = useState(desafio ? 'jugando' : 'niveles') // niveles | jugando | fin
@@ -22,7 +24,7 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
   const temaId = desafio ? desafio.tema : 'todos'
   const [semilla, setSemilla] = useState(desafio ? desafio.semilla : '') // con la misma semilla salen las mismas preguntas
   const [preguntas, setPreguntas] = useState(() =>
-    desafio ? (banda ? armarNivelBanda(desafio.nivel, desafio.semilla, version, desafio.plan) : armarNivel(desafio.nivel, desafio.semilla, desafio.tema, version, desafio.plan)) : [],
+    desafio ? (banda ? armarNivelBanda(desafio.nivel, desafio.semilla, version, desafio.plan, dif) : armarNivel(desafio.nivel, desafio.semilla, desafio.tema, version, desafio.plan, dif)) : [],
   )
   const [i, setI] = useState(0)
   const [elegida, setElegida] = useState(null)
@@ -38,7 +40,7 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
   const [fraseResp, setFraseResp] = useState('')
 
   const jugar = (n) => {
-    const partida = crearPartida(modo, (sem, p) => banda ? armarNivelBanda(n, sem, 3, p) : armarNivel(n, sem, temaId, 3, p), idsTrivia)
+    const partida = crearPartida(modo, (sem, p) => banda ? armarNivelBanda(n, sem, 3, p, dif) : armarNivel(n, sem, temaId, 3, p, dif), idsTrivia, n)
     const sem = partida.semilla, ronda = partida.juego
     setGuardado(iniciarNivel(modo, n))
     registrarVista(modo, partida.ids)
@@ -140,7 +142,7 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
           mejor={{ etiqueta: 'Mejor puntaje', valor: `${guardado[kMejor]}/${PREGUNTAS_POR_NIVEL}` }}
           mensaje={paso ? frase('victoria') : frase('derrota')}
           exito={paso}
-          desafio={{ modo, nivel, tema: banda ? 'todos' : temaId, dif: desafio?.dif ?? 'casual', version, semilla, plan, puntaje: puntos }}
+          desafio={{ modo, nivel, tema: banda ? 'todos' : temaId, dif, version, semilla, plan, puntaje: puntos }}
           rival={desafio ? { puntaje: desafio.puntaje } : null}
           compartir={`Hice ${puntos}/${preguntas.length} en ${banda ? 'el desafío de La banda' : 'la trivia'} 🎸 ¿Podés superarme?`}
         >
@@ -163,6 +165,7 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
   return (
     <main className="pantalla" key="jugando">
       <Cabecera titulo={<>Nivel {nivel}</>} extra={<>{i + 1}/{preguntas.length}</>} onVolver={() => (desafio ? onVolver() : setVista('niveles'))} onMenu={onMenu} />
+      <Barra valor={i + (elegida !== null ? 1 : 0)} max={preguntas.length} etiqueta="Progreso del nivel" />
       <div className="pregunta">
         <p>{p.texto}</p>
         {p.pistas && (

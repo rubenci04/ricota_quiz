@@ -1,6 +1,7 @@
 // Efectos generados con la Web Audio API (sin archivos de audio) y vibración corta.
 // Nada suena ni vibra hasta la primera interacción del usuario.
 import { guardar, leer } from './storage.js'
+import { alSonido } from './efectos.js'
 
 let ctx = null
 let habilitado = false
@@ -64,6 +65,7 @@ function tono(freq, inicio, duracion, tipo = 'sine', volumen = 0.15) {
 
 // tipos: clic, ok (acierto), error, pista, victoria
 export function sonar(tipo) {
+  if (tipo !== 'clic') { try { if (leer().fondo) alSonido(tipo) } catch { /* los efectos visuales son opcionales */ } }
   if (tipo === 'ok') vibrar(15)
   else if (tipo === 'error') vibrar([40, 40, 40])
   if (!habilitado || !leer().sonido) return

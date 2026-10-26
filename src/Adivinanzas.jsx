@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { guardar, leer, sumarPartida } from './storage.js'
 import { normalizarLetras } from './letras.js'
 import { prepararLetras } from './letrasIniciales.js'
+import { nivelTitulo } from './dificultad.js'
 import Teclado from './Teclado.jsx'
 import Resultado from './Resultado.jsx'
 import Cabecera from './Cabecera.jsx'
@@ -29,6 +30,11 @@ import datos from './data/datos-ricotero.json'
 // Pistas de letra según dificultad (incluye 2 extra). La pista automática tras 2 errores seguidos no cuenta.
 const PISTAS_LETRA = { casual: 5, fanatico: 3 }
 const ERRORES_PARA_PISTA = 2
+const PALABRAS_INICIALES = { casual: 6, fanatico: 5 } // «Otra pista» suma 2 más
+const PALABRAS_EXTRA = 2
+
+// Solo las respuestas que son títulos de canción tienen nivel de título
+const nivelDeRespuesta = (r) => (r.modo === 'palabras' || r.categoria === 'canciones' ? nivelTitulo(r.respuesta) : 1)
 
 function prepararRonda(opciones) {
   const p = crearPartida(opciones.modo === 'palabras' ? 'palabras' : `dicho${opciones.categoria}`, (semilla, plan) => nuevaRonda({ ...opciones, semilla, plan }), idsAdivinanza)
@@ -50,7 +56,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
   }
   const largo = inicial.current ? inicial.current.solucion.length : 0
   useRegistrarInicial('palabras', inicial.current?.ids, !desafio)
-  const ayudaInicial = inicial.current ? prepararLetras(inicial.current.grupos, inicial.current.dif, inicial.current.semilla) : { letras: [], fijas: [], iniciales: [], foco: 0 }
+  const ayudaInicial = inicial.current ? prepararLetras(inicial.current.grupos, inicial.current.dif, inicial.current.semilla, nivelDeRespuesta(inicial.current)) : { letras: [], fijas: [], iniciales: [], foco: 0 }
 
   const [dif, setDif] = useState(desafio ? desafio.dif : leer().dificultad)
   const [modo, setModo] = useState(desafioToken ? desafioToken.modo : inicio)
@@ -92,7 +98,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
     setSemilla(sem)
     setModo(m)
     setRonda(r)
-    const ayuda = prepararLetras(r.grupos, difi, sem)
+    const ayuda = prepararLetras(r.grupos, difi, sem, nivelDeRespuesta(r))
     setLetras(ayuda.letras)
     setFijas(ayuda.fijas)
     setIniciales(ayuda.iniciales)
@@ -331,7 +337,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
   const categoria = etiquetaDe(CATEGORIAS, ronda.categoria)
   const modoInfo = etiquetaDe(MODOS_ADIVINANZA, ronda.modo)
   const difInfo = etiquetaDe(DIFICULTADES, ronda.dif)
-  const palabrasVisibles = ronda.palabras ? ronda.palabras.slice(0, extrasVistos ? 5 : 3) : []
+  const palabrasVisibles = ronda.palabras ? ronda.palabras.slice(0, PALABRAS_INICIALES[ronda.dif] + (extrasVistos ? PALABRAS_EXTRA : 0)) : []
 
   return (
     <main className="pantalla" key="adivinanzas-juego">

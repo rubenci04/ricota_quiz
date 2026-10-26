@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import Cabecera from './Cabecera.jsx'
 import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
-import { hayCrucigrama, nuevoCrucigrama } from './crucigrama.js'
+import { celdasIniciales, hayCrucigrama, nuevoCrucigrama } from './crucigrama.js'
 import Resultado from './Resultado.jsx'
+import { Barra } from './Animados.jsx'
 import { sonar } from './sonido.js'
 import { guardar, leer } from './storage.js'
 import { frase } from './textos.js'
@@ -44,8 +45,10 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
   const [temaId, setTemaId] = useState(inicial.current.tema)
   const [dificultad, setDificultad] = useState(inicial.current.dif)
   const [juego, setJuego] = useState(inicial.current.juego)
-  const [letras, setLetras] = useState({})
-  const [fijas, setFijas] = useState({})
+  const iniciales0 = useRef(inicial.current.juego ? celdasIniciales(inicial.current.juego, inicial.current.dif, inicial.current.semilla) : {}).current
+  const [iniciales, setIniciales] = useState(iniciales0) // letras puestas desde el comienzo
+  const [letras, setLetras] = useState(iniciales0)
+  const [fijas, setFijas] = useState(() => Object.fromEntries(Object.keys(iniciales0).map((k) => [k, true])))
   const [revision, setRevision] = useState({})
   const [sel, setSel] = useState(null) // { r, c, dir }
   const [pistas, setPistas] = useState(0)
@@ -70,7 +73,8 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
     setJuego(p.juego)
     setMensaje('')
     setErroresSeguidos(0)
-    setLetras({}); setFijas({}); setRevision({}); setSel(null); setPistas(0); setPalabrasReveladas(0)
+    const ci = p.juego ? celdasIniciales(p.juego, dif, p.semilla) : {}
+    setIniciales(ci); setLetras(ci); setFijas(Object.fromEntries(Object.keys(ci).map((k) => [k, true]))); setRevision({}); setSel(null); setPistas(0); setPalabrasReveladas(0)
   }
 
   const cambiarTema = (t) => {
@@ -283,6 +287,7 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
   return (
     <main className="pantalla juego">
       <Cabecera titulo={<>Crucigrama</>} onVolver={onVolver} onMenu={onMenu} />
+      <Barra valor={Object.keys(solucion).filter((k) => letras[k] === solucion[k]).length} max={Object.keys(solucion).length} etiqueta="Letras acertadas" />
 
       {juego.completado && (
         <p className="cartel" role="note">Este disco tiene pocas canciones cargadas: completamos con otras.</p>
@@ -329,6 +334,7 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
           if (sel && sel.r === r && sel.c === c) clases.push('actual')
           if (revision[k]) clases.push(revision[k])
           if (fijas[k]) clases.push('fija')
+          if (iniciales[k]) clases.push('inicial')
           return (
             <div
               key={k}

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Confeti from './Confeti.jsx'
+import { Contador } from './Animados.jsx'
 import { NOMBRE_JUEGO, URL_JUEGO } from './config.js'
 import { MODOS_DESAFIO, comparar, crearLink, textoDesafio } from './desafio.js'
 
@@ -61,7 +62,7 @@ export default function Resultado({ titulo, puntaje, detalle, mejor, mensaje, co
     <section className="resultado" aria-label="Resultado">
       {exito && <Confeti />}
       <h2 className="resultado-titulo">{titulo}</h2>
-      <p className="resultado-puntaje">{puntaje}</p>
+      <p className="resultado-puntaje"><Contador valor={puntaje} /></p>
       {detalle && <p className="resultado-detalle">{detalle}</p>}
       {mejor && (
         <p className="resultado-mejor">

@@ -2,6 +2,7 @@ import datos from './data/datos-ricotero.json'
 import { crearAzar } from './azar.js'
 import { cumpleTema } from './temas.js'
 import { idCancion, idTexto, ordenarNovedad } from './identidad.js'
+import { perfilDePlan, rangoPalabras } from './dificultad.js'
 
 export const SIZE = 12
 const MIN_LEN = 4
@@ -94,13 +95,17 @@ function intentarGrilla(candidatas, cantidad) {
   return { grilla, puestas }
 }
 
-function generarPartida(discoId, tema) {
+function generarPartida(discoId, tema, perfil) {
   const { propias, extras, completada } = poolSopa(discoId, tema)
   const cantidad = Math.min(propias.length + extras.length, 8 + R.entero(3))
   let mejor = null
+  // al comienzo, palabras cortas y comunes; las largas quedan para niveles o dificultades altas
+  const rango = perfil ? rangoPalabras(perfil.dif, perfil.nj) : null
+  const entra = (p) => p.norm.length >= rango[0] && p.norm.length <= rango[1]
+  const orden = (lista) => (rango ? [...mezclar(lista.filter(entra)), ...mezclar(lista.filter((p) => !entra(p)))] : mezclar(lista))
   for (let i = 0; i < 20; i++) {
     // las palabras del disco elegido van primero; las de relleno, después
-    const res = intentarGrilla([...mezclar(propias), ...mezclar(extras)], cantidad)
+    const res = intentarGrilla([...orden(propias), ...orden(extras)], cantidad)
     if (!mejor || res.puestas.length > mejor.puestas.length) mejor = res
     if (res.puestas.length >= cantidad) break
   }
@@ -137,11 +142,11 @@ function contarApariciones(grilla, norm) {
 }
 
 // Con la misma semilla y disco da siempre la misma partida; sin semilla es al azar.
-export function nuevaPartida(discoId, semilla, tema = 'todos', plan) {
+export function nuevaPartida(discoId, semilla, tema = 'todos', plan, dif = 'casual') {
   planActual = plan
   R = crearAzar(semilla)
   try {
-    return generarPartida(discoId, tema)
+    return generarPartida(discoId, tema, perfilDePlan(plan, dif))
   } finally {
     R = crearAzar()
     planActual = undefined

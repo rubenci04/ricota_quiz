@@ -4,6 +4,7 @@ import { normalizarLetras } from './letras.js'
 import { crearAzar } from './azar.js'
 import { cumpleTema } from './temas.js'
 import { idTexto, idCancion, ordenarNovedad } from './identidad.js'
+import { filtrarPorTitulo, ordenarDistintivas, perfilDePlan } from './dificultad.js'
 
 export const cancionesConPalabras = datos.canciones.filter((c) => c.palabras_verificadas && c.palabras.length >= 3)
 
@@ -109,7 +110,8 @@ export function nuevaRonda({ modo, categoria = 'canciones', dif = 'casual', ante
   let acertijoId = null
 
   if (modo === 'palabras' || categoria === 'canciones') {
-    const { lista, completada: c } = cancionesParaRonda(disco, tema)
+    const { lista: todas, completada: c } = cancionesParaRonda(disco, tema)
+    const lista = filtrarPorTitulo(todas, (x) => x.titulo, perfilDePlan(plan, dif), azar)
     completada = c
     cancion = elegirDistinta(azar, lista, (x) => x.titulo, anterior, plan, categoria, (x) => x.titulo)
     respuesta = cancion.titulo
@@ -117,7 +119,7 @@ export function nuevaRonda({ modo, categoria = 'canciones', dif = 'casual', ante
     const d = discoDe(cancion.disco)
     if (casual) gratis.push(`Disco: ${d.titulo} (${d.anio})`)
     if (modo === 'palabras') {
-      palabras = azar.mezclar(cancion.palabras)
+      palabras = ordenarDistintivas(cancion, cancionesConPalabras, azar)
     } else {
       const todos = deRespuesta('cancion', respuesta)
       const permitidos = todos.filter((a) => NIVELES_POR_DIFICULTAD[dif].includes(a.nivel))

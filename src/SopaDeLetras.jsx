@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import Cabecera from './Cabecera.jsx'
 import { leer, sumarSopa } from './storage.js'
+import { Barra } from './Animados.jsx'
 import Resultado from './Resultado.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
@@ -45,8 +46,9 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
   if (!inicial.current) {
     const disco = desafio ? desafio.disco : 'todos'
     const tema = desafio ? desafio.tema : 'todos'
-    const p = desafio ? { semilla: desafio.semilla, plan: desafio.plan, juego: nuevaPartida(disco, desafio.semilla, tema, desafio.plan) } : crearPartida('sopa', (sem, plan) => nuevaPartida(disco, sem, tema, plan), idsSopa)
-    inicial.current = { ...p, disco, tema, partida: p.juego }
+    const dif = desafio ? desafio.dif : leer().dificultad // decide el largo de las palabras
+    const p = desafio ? { semilla: desafio.semilla, plan: desafio.plan, juego: nuevaPartida(disco, desafio.semilla, tema, desafio.plan, dif) } : crearPartida('sopa', (sem, plan) => nuevaPartida(disco, sem, tema, plan, dif), idsSopa)
+    inicial.current = { ...p, disco, tema, dif, partida: p.juego }
   }
   useRegistrarInicial('sopa', inicial.current.ids, !desafio)
   const [plan, setPlan] = useState(inicial.current.plan)
@@ -68,7 +70,7 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
   const [reveladas, setReveladas] = useState([]) // norm de palabras resaltadas completas
 
   const empezar = (id, t = temaId) => {
-    const p = crearPartida('sopa', (sem, plan) => nuevaPartida(id, sem, t, plan), idsSopa)
+    const p = crearPartida('sopa', (sem, plan) => nuevaPartida(id, sem, t, plan, inicial.current.dif), idsSopa)
     registrarVista('sopa', p.ids)
     setSemilla(p.semilla)
     setPlan(p.plan)
@@ -230,6 +232,7 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
   return (
     <main className="pantalla juego">
       <Cabecera titulo={<>Sopa de letras</>} onVolver={onVolver} onMenu={onMenu} />
+      <Barra valor={Object.keys(encontradas).length} max={partida.palabras.length} etiqueta="Palabras encontradas" />
 
       <div className="tema">
         <p>Buscá palabras de: <strong>{tema}{temaId !== 'todos' ? ` · ${nombreDeTema(temaId)}` : ''}</strong></p>
@@ -322,7 +325,7 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
           puntaje={`${Math.max(0, 100 - 10 * pistas.length - 25 * reveladas.length)} pts`}
           detalle={`${partida.palabras.length}/${partida.palabras.length} palabras · pistas usadas: ${pistas.length}${reveladas.length ? ' · palabra revelada' : ''}`}
           mejor={{ etiqueta: 'Sopas completadas', valor: leer().sopas }}
-          desafio={{ modo: 'sopa', disco: discoId, tema: temaId, dif: 'casual', semilla, plan, puntaje: Math.max(0, 100 - 10 * pistas.length - 25 * reveladas.length) }}
+          desafio={{ modo: 'sopa', disco: discoId, tema: temaId, dif: inicial.current.dif, semilla, plan, puntaje: Math.max(0, 100 - 10 * pistas.length - 25 * reveladas.length) }}
           rival={desafio ? { puntaje: desafio.puntaje } : null}
           mensaje={frase('victoria')}
           compartir={`Completé una sopa de letras ricotera (${partida.palabras.length}/${partida.palabras.length}) 🎸 ¿Podés superarme?`}

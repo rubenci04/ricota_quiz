@@ -2,7 +2,7 @@
 const CLAVE = 'ricota_quiz'
 const CLAVE_SONIDO_ANTERIOR = 'ricota_quiz_sonido' // versión previa guardaba el sonido aparte
 const VERSION = 7
-const PREFERENCIAS = ['sonido', 'volumen', 'vibracion', 'tutorial', 'dificultad']
+const PREFERENCIAS = ['sonido', 'volumen', 'vibracion', 'tutorial', 'dificultad', 'fondo']
 
 export function normalizarAlias(valor) {
   const alias = typeof valor === 'string' ? valor.normalize('NFKC').trim().replace(/\s+/gu, ' ') : ''
@@ -88,6 +88,7 @@ const ESQUEMA = {
   volumen: { tipo: 'n', def: 30, min: 0, max: 100 }, // volumen de la música de YouTube
   ultimaEleccion: { tipo: 'f', def: null, f: validarEleccion },
   vibracion: { tipo: 'b', def: true },
+  fondo: { tipo: 'b', def: true }, // fondo animado y efectos visuales
   tutorial: { tipo: 'b', def: false },
   dificultad: { tipo: 's', def: 'casual', validos: ['casual', 'fanatico'] },
   ultimoDia: { tipo: 'f', def: '', f: (v) => (esFecha(v) ? v : '') },

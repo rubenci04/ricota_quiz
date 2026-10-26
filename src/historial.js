@@ -1,5 +1,6 @@
 import { guardar, leer } from './storage.js'
 import { nuevaSemilla } from './azar.js'
+import { nivelJugador } from './dificultad.js'
 
 export function planPara(modo) {
   const h = leer().historial[modo] ?? { vistos: [], partidas: [], ciclo: [] }
@@ -15,8 +16,8 @@ export function registrarVista(modo, ids) {
 }
 
 // El plan viaja con la semilla en los desafíos nuevos: el receptor no depende de su historial.
-export function crearPartida(modo, generar, identificar) {
-  const semilla = nuevaSemilla(), plan = planPara(modo)
+export function crearPartida(modo, generar, identificar, nj = nivelJugador(leer())) {
+  const semilla = nuevaSemilla(), plan = { ...planPara(modo), nj }
   const juego = generar(semilla, plan)
   return { semilla, plan, juego, ids: juego ? identificar(juego) : [] }
 }

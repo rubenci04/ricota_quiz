@@ -1,3 +1,4 @@
+import { nivelTitulo } from './dificultad.js'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Cabecera from './Cabecera.jsx'
 import datos from './data/datos-ricotero.json'
@@ -6,7 +7,7 @@ import Resultado from './Resultado.jsx'
 import { armarCasillas, mismaLetra } from './adivinanza.js'
 import { normalizarLetras } from './letras.js'
 import { prepararLetras } from './letrasIniciales.js'
-import { INTENTOS_MAX, cuadro, fechaBA, guardarReto, msHastaProximo, rachaCortada, rachaVigente, retoDe, retoGuardadoDeHoy, textoCompartir } from './reto.js'
+import { INTENTOS_MAX, cuadro, fechaBA, guardarReto, msHastaProximo, rachaAlEmpezar, rachaCortada, rachaVigente, retoDe, retoGuardadoDeHoy, textoCompartir } from './reto.js'
 import { leer } from './storage.js'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
@@ -30,11 +31,12 @@ function CuentaRegresiva() {
 
 export default function RetoDelDia({ onVolver, onMenu }) {
   const [fecha] = useState(() => fechaBA())
-  const reto = useMemo(() => retoDe(fecha), [fecha])
+  const [racha] = useState(() => rachaAlEmpezar(leer(), fecha))
+  const reto = useMemo(() => retoDe(fecha, racha), [fecha, racha])
   const grupos = useMemo(() => armarCasillas(reto.cancion.titulo), [reto])
   const solucion = useMemo(() => grupos.flatMap((g) => g.letras), [grupos])
   const guardado = useRef(retoGuardadoDeHoy(fecha)).current
-  const iniciales = useMemo(() => prepararLetras(grupos, 'casual', `reto-${fecha}`), [grupos, fecha])
+  const iniciales = useMemo(() => prepararLetras(grupos, 'casual', `reto-${fecha}`, nivelTitulo(reto.cancion.titulo)), [grupos, fecha])
 
   const [resultados, setResultados] = useState(guardado?.resultados ?? [])
   const [terminado, setTerminado] = useState(guardado?.terminado ?? false)

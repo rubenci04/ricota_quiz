@@ -70,7 +70,7 @@ export function leerDesafio(hash = typeof location !== 'undefined' ? location.ha
       for (const [k, max] of [['vistos', 150], ['recientes', 150], ['ciclo', 1000]]) {
         if (!Array.isArray(plan[k]) || plan[k].length > max || plan[k].some((id) => typeof id !== 'string' || !/^[a-z0-9:_-]{1,40}$/i.test(id))) return null
       }
-      plan = { vistos: plan.vistos, recientes: plan.recientes, ciclo: plan.ciclo }
+      plan = { vistos: plan.vistos, recientes: plan.recientes, ciclo: plan.ciclo, ...(Number.isInteger(plan.nj) && plan.nj >= 1 && plan.nj <= 5 ? { nj: plan.nj } : {}) }
       if ((modo === 'trivia' || modo === 'banda') && extra.nivel > LIMITES[modo]) return null
     }
     return { modo, ...extra, dif, semilla, puntaje: Number(puntaje), ...(plan ? { plan, version: 3 } : {}) }
@@ -86,7 +86,7 @@ function segmentoDe(d) {
 }
 
 export function crearLink(d) {
-  const plan = d.plan ? `/v3/${btoa(JSON.stringify({ vistos: d.plan.vistos, recientes: d.plan.recientes, ciclo: d.plan.ciclo })).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}` : ''
+  const plan = d.plan ? `/v3/${btoa(JSON.stringify({ vistos: d.plan.vistos, recientes: d.plan.recientes, ciclo: d.plan.ciclo, ...(d.plan.nj ? { nj: d.plan.nj } : {}) })).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}` : ''
   return `${URL_JUEGO}/${PREFIJO}${d.modo}/${segmentoDe(d)}/${d.dif}/${d.semilla}/${d.puntaje}${plan}`
 }
 

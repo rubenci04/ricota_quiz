@@ -3,6 +3,7 @@ import { normalizar } from './sopa.js'
 import { crearAzar } from './azar.js'
 import { cumpleTema } from './temas.js'
 import { idTexto, idCancion, ordenarNovedad } from './identidad.js'
+import { perfilDePlan } from './dificultad.js'
 
 export const MAX = 13
 const MIN_PALABRAS = 5
@@ -122,7 +123,10 @@ function intentar(cands, objetivo) {
 
 const MIN_CANDIDATAS = 14
 
-function generarCrucigrama(discoId, dificultad, tema) {
+// Largo preferido de las palabras: Casual, hasta 8 letras; Fanático, hasta 9 al comienzo. Con más nivel, sin tope.
+const rangoCruci = ({ dif, nj }) => (dif === 'fanatico' ? (nj < 2 ? [4, 9] : [3, MAX]) : nj < 5 ? [3, 8] : [3, MAX])
+
+function generarCrucigrama(discoId, dificultad, tema, perfil) {
   const propias = candidatas(discoId, dificultad, tema)
   const extras = []
   let completado = false
@@ -137,7 +141,10 @@ function generarCrucigrama(discoId, dificultad, tema) {
   }
   const todas = [...propias, ...extras]
   const frescas = planActual ? todas.filter((p) => !planActual.recientes.includes(idTexto('w', p.respuesta)) && (!p.cancion || !planActual.recientes.includes(idCancion(p.cancion)))) : todas
-  const pool = frescas.length >= MIN_CANDIDATAS ? frescas : todas
+  const base = frescas.length >= MIN_CANDIDATAS ? frescas : todas
+  const rango = perfil ? rangoCruci(perfil) : null
+  const enRango = rango ? base.filter((p) => p.respuesta.length >= rango[0] && p.respuesta.length <= rango[1]) : base
+  const pool = enRango.length >= MIN_CANDIDATAS ? enRango : base
   const propiasSet = new Set(propias.map((p) => p.respuesta))
   const objetivo = 8 + R.entero(3)
   let mejor = []
@@ -192,9 +199,32 @@ export function nuevoCrucigrama(discoId, dificultad = 'casual', semilla, tema = 
   planActual = plan
   R = crearAzar(semilla)
   try {
-    return generarCrucigrama(discoId, dificultad, tema)
+    return generarCrucigrama(discoId, dificultad, tema, perfilDePlan(plan, dificultad))
   } finally {
     R = crearAzar()
     planActual = undefined
   }
+}
+
+const celdasDe = (e) => {
+  const [dr, dc] = e.dir === 'across' ? [0, 1] : [1, 0]
+  return Array.from({ length: e.respuesta.length }, (_, i) => `${e.r + dr * i},${e.c + dc * i}`)
+}
+
+// Letras ya puestas (y bloqueadas) además de los cruces: en Casual 2 en las palabras de 7 o más letras y 1 en las demás;
+// en Fanático 1 en cada palabra. Siempre que se puede, la primera letra de la palabra.
+export function celdasIniciales(juego, dificultad, semilla) {
+  const azar = crearAzar(`iniciales-${semilla}`)
+  const usos = new Map()
+  for (const e of juego.entradas) for (const k of celdasDe(e)) usos.set(k, (usos.get(k) ?? 0) + 1)
+  const puestas = new Set()
+  for (const e of juego.entradas) {
+    const celdas = celdasDe(e)
+    const libres = celdas.filter((k) => usos.get(k) === 1)
+    const quiere = dificultad === 'casual' && e.respuesta.length >= 7 ? 2 : 1
+    const propias = (lista) => lista.filter((k) => puestas.has(k)).length
+    if (propias(libres) < quiere && libres.length && !puestas.has(libres[0])) puestas.add(libres[0])
+    while (propias(libres) < Math.min(quiere, libres.length)) puestas.add(azar.elegir(libres.filter((k) => !puestas.has(k))))
+  }
+  return Object.fromEntries([...puestas].map((k) => [k, juego.solucion[k]]))
 }

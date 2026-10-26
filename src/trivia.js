@@ -4,6 +4,7 @@ import { crearAzar } from './azar.js'
 import { cumpleTema } from './temas.js'
 import hechosBanda from './data/banda.json'
 import { idPregunta, idCancion, prioridad } from './identidad.js'
+import { filtrarPorTitulo, nivelTitulo, ordenarDistintivas, perfilDePlan, techoTitulo } from './dificultad.js'
 
 export const PREGUNTAS_POR_NIVEL = 10
 const MAX_PREGUNTAS_ANIO = 2
@@ -17,13 +18,19 @@ const hechos = hechosBanda.filter((h) => h.verificada === true)
 let R = crearAzar()
 let versionGenerador = 1
 let planActual
+// perfil de dificultad por largo de título (solo en partidas con plan: las anteriores no cambian)
+let perfil = null
+const nivelDe = new Map(datos.canciones.map((c) => [c.titulo, nivelTitulo(c.titulo)]))
+const conPalabras = datos.canciones.filter((c) => c.palabras_verificadas)
 const azar = (arr) => R.elegir(arr)
 
 const mezclar = (arr) => R.mezclar(arr)
 
 // Arma 4 opciones: la correcta + 3 distractores únicos del pool.
 function armar(texto, correcta, pool, extra = {}) {
-  const distractores = mezclar([...new Set(pool)].filter((x) => x !== correcta)).slice(0, 3)
+  // con perfil, ningún distractor es un título de nivel 4 ni más largo de lo permitido
+  const tope = perfil ? Math.min(techoTitulo(perfil.dif, perfil.nj), 3) : 4
+  const distractores = mezclar([...new Set(pool)].filter((x) => x !== correcta && (nivelDe.get(x) ?? 0) <= tope)).slice(0, 3)
   if (distractores.length < 3) return null
   const opciones = mezclar([correcta, ...distractores])
   const p = { texto, opciones, correcta: opciones.indexOf(correcta), ...extra }
@@ -64,8 +71,10 @@ function preguntaRol() {
 function preguntaPalabras() {
   const c = azar(canciones.filter((x) => x.palabras_verificadas && x.palabras.length >= 4))
   if (!c) return null
-  const cuantas = Math.min(c.palabras.length, 4 + R.entero(2))
-  const mostradas = mezclar(c.palabras).slice(0, cuantas)
+  const nuevo = versionGenerador >= 3
+  const cuantas = Math.min(c.palabras.length, (nuevo ? 5 : 4) + R.entero(2))
+  // las más distintivas primero: las que aparecen en menos canciones y no están en el título
+  const mostradas = nuevo ? ordenarDistintivas(c, conPalabras, R).slice(0, cuantas) : mezclar(c.palabras).slice(0, cuantas)
   const norm = mostradas.map(normalizar)
   // un distractor que contenga todas las palabras mostradas sería ambiguo
   const pool = canciones
@@ -201,7 +210,7 @@ const GENERADORES = {
 
 // Evita repetidas dentro de la partida y limita las de tipo "año".
 function crearContexto() {
-  return { vistas: new Set(), canciones: new Set(), anios: 0 }
+  return { vistas: new Set(), canciones: new Set(), anios: 0, largos: 0 }
 }
 
 function intentar(gen, ctx) {
@@ -210,6 +219,7 @@ function intentar(gen, ctx) {
     for (let i = 0; i < 80; i++) {
       const p = gen()
       if (!p || ctx.vistas.has(clavePregunta(p)) || (p.tipo === 'anio' && ctx.anios >= MAX_PREGUNTAS_ANIO)) continue
+      if (perfil && nivelDe.get(p.cancion) === 4 && ctx.largos >= 1) continue // un título de nivel 4 como máximo por partida
       if (p.cancion && canciones.length >= 10 && ctx.canciones.has(p.cancion)) continue
       if (planActual.recientes.includes(idPregunta(p))) continue
       const ids = [idPregunta(p), ...(p.cancion ? [idCancion(p.cancion)] : [])]
@@ -220,6 +230,7 @@ function intentar(gen, ctx) {
     if (!mejor) return null
     ctx.vistas.add(clavePregunta(mejor))
     if (mejor.cancion) ctx.canciones.add(mejor.cancion)
+    if (nivelDe.get(mejor.cancion) === 4) ctx.largos++
     if (mejor.tipo === 'anio') ctx.anios++
     return mejor
   }
@@ -332,11 +343,12 @@ export function clavePregunta(p) {
   return p.pistas ? `${p.texto}:${p.opciones[p.correcta]}` : p.texto
 }
 
-export function armarNivel(nivel, semilla, tema = 'todos', version = 1, plan) {
+export function armarNivel(nivel, semilla, tema = 'todos', version = 1, plan, dif = 'casual') {
   versionGenerador = version
   planActual = plan
   R = crearAzar(semilla)
-  canciones = datos.canciones.filter((c) => cumpleTema(c, tema))
+  perfil = perfilDePlan(plan, dif)
+  canciones = filtrarPorTitulo(datos.canciones.filter((c) => cumpleTema(c, tema)), (c) => c.titulo, perfil, R, 8)
   try {
     return generarNivel(nivel, tema === 'todos' ? BASICOS : BASICOS_CANCION)
   } finally {
@@ -344,21 +356,26 @@ export function armarNivel(nivel, semilla, tema = 'todos', version = 1, plan) {
     canciones = datos.canciones
     versionGenerador = 1
     planActual = undefined
+    perfil = null
   }
 }
 
 // ¿Hay canciones suficientes con ese tema para armar un nivel?
 export const triviaTieneTema = (tema) => datos.canciones.filter((c) => cumpleTema(c, tema)).length >= 6
 
-export function armarNivelBanda(nivel, semilla, version = 1, plan) {
+export function armarNivelBanda(nivel, semilla, version = 1, plan, dif = 'casual') {
   versionGenerador = version
   planActual = plan
   R = crearAzar(semilla)
+  perfil = perfilDePlan(plan, dif)
+  canciones = filtrarPorTitulo(datos.canciones, (c) => c.titulo, perfil, R, 8)
   try {
     return generarNivelBanda(nivel)
   } finally {
     R = crearAzar()
+    canciones = datos.canciones
     versionGenerador = 1
     planActual = undefined
+    perfil = null
   }
 }

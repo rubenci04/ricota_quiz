@@ -3,15 +3,22 @@ import datos from './data/datos-ricotero.json'
 import { crearAzar } from './azar.js'
 import { acertijoDeCancion } from './adivinanza.js'
 import { guardar, leer } from './storage.js'
+import { nivelTitulo } from './dificultad.js'
 
 export const ZONA = 'America/Argentina/Buenos_Aires'
 export const INTENTOS_MAX = 6
 const INICIO = '2026-01-01' // día 1 de la rotación
 
 // Catálogo estable: canciones con palabras verificadas y título parafraseado, ordenadas por título.
+// El reto del día nunca usa títulos de nivel 4.
 export const catalogo = datos.canciones
-  .filter((c) => c.palabras_verificadas && c.titulo_parafraseado)
+  .filter((c) => c.palabras_verificadas && c.titulo_parafraseado && nivelTitulo(c.titulo) <= 3)
   .sort((a, b) => a.titulo.localeCompare(b.titulo, 'es'))
+const suaves = catalogo.filter((c) => nivelTitulo(c.titulo) <= 2)
+export const RACHA_CORTA = 3 // con menos días de racha, el reto es de nivel 2 como máximo
+
+// Racha con la que el jugador empezó el día (no cambia al terminar el reto de hoy).
+export const rachaAlEmpezar = (estado, fecha) => (estado.ultimoDia === fecha ? Math.max(0, estado.rachaDias - 1) : rachaVigente(estado, fecha))
 
 // AAAA-MM-DD en Buenos Aires
 export function fechaBA(ahora = new Date()) {
@@ -42,10 +49,12 @@ function ordenDelCiclo(ciclo) {
   return indices
 }
 
-export function retoDe(fecha) {
+export function retoDe(fecha, racha = RACHA_CORTA) {
   const n = Math.max(0, numeroDeDia(fecha) - numeroDeDia(INICIO))
   const total = catalogo.length
-  const cancion = catalogo[ordenDelCiclo(Math.floor(n / total))[n % total]]
+  let cancion = catalogo[ordenDelCiclo(Math.floor(n / total))[n % total]]
+  // racha corta: en vez de un título largo, una canción más fácil elegida por la fecha
+  if (racha < RACHA_CORTA && nivelTitulo(cancion.titulo) > 2) cancion = crearAzar(`reto-suave-${fecha}`).elegir(suaves)
   const azar = crearAzar(`reto-${fecha}`) // la fecha es la semilla del reto
   // segunda pista: un acertijo de la canción (siempre el mismo para esa fecha)
   const dicho = acertijoDeCancion(cancion.titulo, 'casual', crearAzar(`dicho-${fecha}`)) ?? cancion.titulo_parafraseado

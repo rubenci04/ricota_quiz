@@ -280,3 +280,51 @@ body { overflow-wrap: break-word; }
 .tarjeta-modo .insignia { color: var(--texto); background: #221b12; border: 1px solid var(--c); }
 .herramientas .secundario:disabled, .ficha:disabled, .nueva:disabled { opacity: 1; }
 .avisos-logros { position: static; padding: 0 12px; }
+
+/* estado real de la música en el botón ♪ */
+.musica-estado.reproduciendo { border-color: var(--ok); color: var(--ok); }
+.musica-estado.silenciado { opacity: 0.75; text-decoration: line-through; }
+.musica-estado.pausado { opacity: 0.6; }
+.musica-aviso { display: block; width: 100%; padding: 8px; background: var(--acento-fill); color: var(--sobre-acento); border: 0; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
+
+/* ---------- Fondo animado y efectos (detrás de la lectura, sin tocar el contraste) ---------- */
+.app { position: relative; z-index: 0; }
+.fondo-animado { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+.fx-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 60; pointer-events: none; }
+.fx-destello, .fx-vineta { position: fixed; inset: 0; z-index: 55; pointer-events: none; opacity: 0; }
+.fx-destello { background: radial-gradient(circle at 50% 45%, rgba(224, 165, 38, 0.16), transparent 62%); }
+.fx-vineta { background: radial-gradient(circle at 50% 50%, transparent 45%, rgba(192, 57, 43, 0.5) 100%); }
+.fx-destello.fx-activo { animation: fx-destello 0.6s ease-out; }
+.fx-vineta.fx-activo { animation: fx-vineta 0.7s ease-out; }
+@keyframes fx-destello { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes fx-vineta { 0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: 0; } }
+.pantalla.fx-sacudir { animation: fx-sacudir 0.38s ease-out; }
+@keyframes fx-sacudir { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-5px); } 40% { transform: translateX(5px); } 60% { transform: translateX(-3px); } 80% { transform: translateX(3px); } }
+.fx-racha { position: fixed; top: 8px; left: 50%; z-index: 56; transform: translateX(-50%); padding: 4px 14px; border-radius: 999px; background: rgba(11, 11, 12, 0.88); border: 1px solid var(--acento); color: var(--texto); font-size: 0.9rem; font-weight: 800; pointer-events: none; }
+.fx-racha.fx-racha-pop { animation: fx-racha 0.5s cubic-bezier(0.2, 1.6, 0.4, 1); }
+@keyframes fx-racha { 0% { transform: translateX(-50%) scale(0.6); } 60% { transform: translateX(-50%) scale(1.25); } 100% { transform: translateX(-50%) scale(1); } }
+
+/* barras de progreso */
+.barra-progreso { width: 100%; height: 8px; margin: 2px 0 6px; background: var(--panel-2); border: 1px solid var(--borde); border-radius: 999px; overflow: hidden; }
+.barra-progreso span { display: block; height: 100%; background: linear-gradient(90deg, var(--modo), var(--acento-fill)); border-radius: 999px; transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+/* tarjetas del menú con inclinación leve; la entrada escalonada ya no pisa la inclinación */
+.tarjeta-modo { transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.14s ease-out, box-shadow 0.2s, border-color 0.2s; will-change: transform; animation-fill-mode: backwards; }
+.tarjeta-modo.destacada { animation-fill-mode: backwards, none; }
+@media (hover: hover) {
+  .tarjeta-modo:not(:disabled):hover { transform: perspective(700px) translateY(-3px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+}
+
+/* transición fluida entre pantallas */
+.pantalla { animation: pantalla-entra 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes pantalla-entra { from { opacity: 0; transform: translateY(12px) scale(0.99); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-destello, .fx-vineta, .fx-canvas, .fx-racha { display: none !important; }
+  .tarjeta-modo { transform: none !important; }
+  .barra-progreso span { transition: none; }
+}
+
+/* letras puestas desde el comienzo en el crucigrama: estilo propio, como en las adivinanzas */
+.letra.inicial { background: #163b36; color: #9ff0dc; border-color: #6fe0aa; cursor: default; }
+.letra.inicial.actual { outline: 2px solid var(--acento); outline-offset: -2px; }
