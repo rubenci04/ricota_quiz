@@ -3,7 +3,7 @@
 //   #/desafio/sopa|crucigrama/<disco>[.<tema>]/<dificultad>/<semilla>/<puntaje>
 //   #/desafio/adivinanzas/<ronda>[.<disco>[.<tema>]]/<dificultad>/<semilla>/<puntaje>
 // Los links anteriores (sin tema) siguen funcionando. El link no lleva datos personales.
-import { URL_JUEGO } from './config.js'
+import { URL_JUEGO, NOMBRE_JUEGO } from './config.js'
 import datos from './data/datos-ricotero.json'
 import { TOKENS } from './adivinanza.js'
 import { esTemaValido } from './temas.js'
@@ -13,6 +13,7 @@ import { LIMITES } from './niveles.js'
 const PREFIJO = '#/desafio/'
 
 export const MODOS_DESAFIO = {
+  frases: { max: 10, formato: p => `${p}/10`, descripcion: 'Completá la frase' },
   trivia: { max: 10, formato: (p) => `${p}/10`, descripcion: 'la trivia' },
   banda: { max: 10, formato: (p) => `${p}/10`, descripcion: 'La banda, la trivia de nicho' },
   sopa: { max: 100, formato: (p) => `${p} puntos`, descripcion: 'una sopa de letras' },
@@ -28,6 +29,7 @@ export { nuevaSemilla } from './azar.js'
 
 // Interpreta el segmento "tema" según el modo. Devuelve los campos o null si no es válido.
 function leerSegmento(modo, segmento) {
+  if (modo === 'frases') return segmento === 'todos.todos' ? { disco: 'todos', tema: 'todos' } : null
   const p = segmento.split('.')
   if (p.some((x) => !/^[a-z0-9]{1,20}$/.test(x))) return null
   if (modo === 'trivia' || modo === 'banda') {
@@ -92,7 +94,7 @@ export function crearLink(d) {
 
 export function textoDesafio(d) {
   const m = MODOS_DESAFIO[d.modo]
-  return `Te desafío en ${m.descripcion}: hice ${m.formato(d.puntaje)}. ¿Podés superarme? 🎸`
+  return `${NOMBRE_JUEGO}: te desafío en ${m.descripcion}: hice ${m.formato(d.puntaje)}. ¿Podés superarme? 🎸`
 }
 
 export function comparar(mio, rival) {

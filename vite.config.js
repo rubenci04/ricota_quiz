@@ -1,11 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
-import { DESCRIPCION, NOMBRE_JUEGO, URL_JUEGO } from './src/config.js'
+import { DESCRIPCION, NOMBRE_JUEGO, URL_JUEGO, MODOS } from './src/config.js'
 import { readFileSync } from 'node:fs'
 
 // Reemplaza {{NOMBRE}}, {{DESCRIPCION}} y {{URL}} en index.html con los valores de src/config.js
 const REEMPLAZOS = { '{{NOMBRE}}': NOMBRE_JUEGO, '{{DESCRIPCION}}': DESCRIPCION, '{{URL}}': URL_JUEGO }
+let produccion = false
 function datosDeConfig() {
   return {
     name: 'datos-de-config',
@@ -19,9 +20,14 @@ function datosDeConfig() {
 export default defineConfig({
   plugins: [
     {
-      name: 'solo-interpretaciones-verificadas',
+      name: 'catalogos-publicables',
+      configResolved(config) { produccion = config.command === 'build' },
       enforce: 'pre',
       load(id) {
+        const ruta = id.replace(/\\/g, '/')
+        if (ruta.endsWith('/src/catalogoFrases.js') && !MODOS.completarFrase) return 'export const demoFrases=false; export const catalogoFrases=[]; export const frasesDisponibles=false'
+        if (ruta.endsWith('/src/data/frases.ejemplos.json') && produccion) return '[]'
+        if (ruta.endsWith('/src/data/frases.json')) return JSON.stringify(JSON.parse(readFileSync(id,'utf8')).filter(f=>f.aprobada===true && !f.ejemplo))
         if (id.replace(/\\/g, '/').endsWith('/src/data/interpretaciones.json')) {
           return JSON.stringify(JSON.parse(readFileSync(id, 'utf8')).filter((i) => i.verificada === true && i.fuente?.url))
         }

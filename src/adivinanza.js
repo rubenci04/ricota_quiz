@@ -28,7 +28,7 @@ export function armarCasillas(titulo) {
 // ---- modos y categorías
 export const MODOS_ADIVINANZA = [
   { id: 'dicho', etiqueta: 'Dicho de otra forma', icono: '🧩', color: 'var(--c-dicho)', detalle: 'Te lo cuento con otras palabras' },
-  { id: 'palabras', etiqueta: 'Por palabras', icono: '🔤', color: 'var(--c-palabras)', detalle: 'Palabras clave de la canción' },
+  { id: 'palabras', etiqueta: 'Adiviná por palabras', icono: '🔤', color: 'var(--c-palabras)', detalle: 'Palabras clave de la canción' },
 ]
 
 export const CATEGORIAS = [
@@ -40,7 +40,7 @@ export const CATEGORIAS = [
 
 export const DIFICULTADES = [
   { id: 'casual', etiqueta: 'Casual', icono: '🙂' },
-  { id: 'fanatico', etiqueta: 'Fanático', icono: '🔥' },
+  { id: 'fanatico', etiqueta: 'Ricotero (fanático)', icono: '🔥' },
 ]
 export const etiquetaDe = (lista, id) => lista.find((x) => x.id === id)
 

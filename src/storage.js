@@ -1,7 +1,7 @@
 // Progreso y preferencias: se leen una sola vez al iniciar y viven en memoria.
 const CLAVE = 'ricota_quiz'
 const CLAVE_SONIDO_ANTERIOR = 'ricota_quiz_sonido' // versión previa guardaba el sonido aparte
-const VERSION = 7
+const VERSION = 8
 const PREFERENCIAS = ['sonido', 'volumen', 'vibracion', 'tutorial', 'dificultad', 'fondo']
 
 export function normalizarAlias(valor) {
@@ -61,7 +61,7 @@ function validarLogros(v) {
 const ESQUEMA = {
   historial: { tipo: 'f', f: (v) => {
     const resultado = {}
-    for (const modo of ['trivia', 'banda', 'sopa', 'crucigrama', 'palabras', 'dichocanciones', 'dichodiscos', 'dichopalabras', 'dichointegrantes']) {
+    for (const modo of ['trivia', 'banda', 'sopa', 'crucigrama', 'palabras', 'dichocanciones', 'dichodiscos', 'dichopalabras', 'dichointegrantes', 'frases']) {
       const h = v?.[modo]
       if (!h || typeof h !== 'object') continue
       const ids = (a, max = 150) => Array.isArray(a) ? a.filter((x) => typeof x === 'string' && /^[a-z0-9:_-]{1,40}$/i.test(x)).slice(-max) : []
@@ -78,6 +78,9 @@ const ESQUEMA = {
   nivelBanda: { tipo: 'n', def: 1, min: 1 },
   mejorBanda: { tipo: 'n', def: 0, min: 0 },
   crucigramas: { tipo: 'n', def: 0, min: 0 },
+  frasesPartidas: { tipo: 'n', def: 0, min: 0 },
+  mejorFrases: { tipo: 'n', def: 0, min: 0, max: 10 },
+  frasesSinPistas: { tipo: 'b', def: false },
   partidas: { tipo: 'n', def: 0, min: 0 },
   retosGanados: { tipo: 'n', def: 0, min: 0 },
   rachaDias: { tipo: 'n', def: 0, min: 0 },
@@ -96,7 +99,7 @@ const ESQUEMA = {
   modosProbados: {
     tipo: 'f',
     def: [],
-    f: (v) => (Array.isArray(v) ? MODOS_JUGABLES.filter((m) => v.includes(m)) : []),
+    f: (v) => (Array.isArray(v) ? [...MODOS_JUGABLES, 'frases'].filter((m) => v.includes(m)) : []),
   },
   logros: { tipo: 'f', def: {}, f: validarLogros },
 }
@@ -121,7 +124,7 @@ const progresoDe = (v) => Object.fromEntries(Object.entries(validar(v)).filter((
 function cargar() {
   try {
     const guardado = JSON.parse(localStorage.getItem(CLAVE) || 'null')
-    if ([6, VERSION].includes(guardado?.v) && Array.isArray(guardado.perfiles)) {
+    if ([6, 7, VERSION].includes(guardado?.v) && Array.isArray(guardado.perfiles)) {
       const perfiles = []
       for (const p of guardado.perfiles) {
         try {
@@ -154,7 +157,7 @@ function publicar() {
     const anterior = localStorage.getItem(CLAVE)
     let versionAnterior
     try { versionAnterior = JSON.parse(anterior)?.v } catch { /* también respalda datos dañados */ }
-    const respaldo = `${CLAVE}_pre_v${versionAnterior === 6 ? 7 : 6}`
+    const respaldo = `${CLAVE}_pre_v${versionAnterior === 7 ? 8 : versionAnterior === 6 ? 7 : 6}`
     if (anterior && versionAnterior !== VERSION && !localStorage.getItem(respaldo)) {
       localStorage.setItem(respaldo, anterior)
     }

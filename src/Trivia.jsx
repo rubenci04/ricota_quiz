@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Dificultad from './Dificultad.jsx'
 import Cabecera from './Cabecera.jsx'
 import { PREGUNTAS_POR_NIVEL, armarNivel, armarNivelBanda, curiosidadAlAzar } from './trivia.js'
 import { LIMITES, PUNTOS_PARA_PASAR, iniciarNivel, terminarNivel, maximoAlcanzado } from './niveles.js'
@@ -11,12 +12,12 @@ import { crearAzar } from './azar.js'
 import { crearPartida, registrarVista } from './historial.js'
 import { idsTrivia } from './identidad.js'
 
-export default function Trivia({ onVolver, onMenu, categoria = 'general', desafio = null }) {
+export default function Trivia({ onVolver, onMenu, categoria = 'general', desafio = null, selector = null }) {
   const banda = categoria === 'banda'
   const modo = banda ? 'banda' : 'trivia'
   const limite = LIMITES[modo]
   const version = desafio?.version ?? (desafio ? 1 : 3)
-  const dif = desafio ? desafio.dif : leer().dificultad // la dificultad decide qué largo de títulos puede aparecer
+  const [dif, setDif] = useState(desafio ? desafio.dif : 'casual') // la dificultad decide qué largo de títulos puede aparecer
   const [plan, setPlan] = useState(desafio?.plan)
   const kMejor = banda ? 'mejorBanda' : 'mejor'
   const [vista, setVista] = useState(desafio ? 'jugando' : 'niveles') // niveles | jugando | fin
@@ -115,6 +116,8 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
     return (
       <main className="pantalla" key="niveles">
         <Cabecera titulo={<>{banda ? 'La banda' : 'Trivia'}</>} extra={<>Récord {guardado[kMejor]}/{PREGUNTAS_POR_NIVEL}</>} onVolver={onVolver} onMenu={onMenu} />
+        {selector}
+        <Dificultad valor={dif} onCambio={setDif} />
         <p>Nivel máximo alcanzado: {maximoAlcanzado(guardado, modo)} de {limite}. Necesitás 6 de 10 para avanzar.</p>
         <p className="aviso">{banda ? 'Aumentan las preguntas curadas de la banda.' : 'Aumentan las preguntas de palabras y títulos.'} Son {limite} etapas con un banco compartido; podés repetir las disponibles.</p>
         <div className="menu-grid">

@@ -2,7 +2,7 @@
 // Este archivo no importa nada para que también lo pueda leer vite.config.js.
 
 // Nombre del juego: se usa en el título, el tutorial, al compartir y en los metadatos.
-export const NOMBRE_JUEGO = 'ricota_quiz'
+export const NOMBRE_JUEGO = 'Ricotero Quiz'
 
 export const DESCRIPCION =
   'Juego de fans con sopa de letras, trivia, crucigrama y adivinanzas sobre la cultura ricotera. No oficial.'
@@ -26,4 +26,4 @@ export const ANALITICA = { activa: false, token: '' }
 export const PLAYLIST_YOUTUBE = 'PL5Ls9dYg2bl6fvyONvVSfkm_0r9mh0oyk'
 
 // Modos opcionales. El Ahorcado está apagado por defecto: poné true para mostrarlo en el menú.
-export const MODOS = { ahorcado: false }
+export const MODOS = { ahorcado: false, completarFrase: true }

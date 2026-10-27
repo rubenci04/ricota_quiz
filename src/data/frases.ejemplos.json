@@ -1,0 +1,8 @@
+[
+  {"cancion":"Ejemplo ficticio 1","album":"Demo inventada","fragmento":"Las nubes dibujan puentes sobre jardines","faltantes":[2,3],"ejemplo":true,"aprobada":false},
+  {"cancion":"Ejemplo ficticio 2","album":"Demo inventada","fragmento":"Un farol naranja ilumina ventanas pequeñas","faltantes":[2,3],"ejemplo":true,"aprobada":false},
+  {"cancion":"Ejemplo ficticio 3","album":"Demo inventada","fragmento":"La mañana prepara caminos entre montañas","faltantes":[2,3],"ejemplo":true,"aprobada":false},
+  {"cancion":"Ejemplo ficticio 4","album":"Demo inventada","fragmento":"El viajero colecciona piedras junto al puente","faltantes":[2,3],"ejemplo":true,"aprobada":false},
+  {"cancion":"Ejemplo ficticio 5","album":"Demo inventada","fragmento":"Una ventana refleja estrellas del invierno","faltantes":[2,3],"ejemplo":true,"aprobada":false},
+  {"cancion":"Ejemplo ficticio 6","album":"Demo inventada","fragmento":"Los árboles inventan sombras para viajeros","faltantes":[2,3],"ejemplo":true,"aprobada":false}
+]

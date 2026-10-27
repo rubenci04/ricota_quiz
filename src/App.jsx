@@ -8,6 +8,9 @@ import RetoDelDia from './RetoDelDia.jsx'
 import Logros from './Logros.jsx'
 import Perfiles from './Perfiles.jsx'
 import { maximoAlcanzado } from './niveles.js'
+import CompletarFrase from './CompletarFrase.jsx'
+import { frasesDisponibles } from './catalogoFrases.js'
+import TriviaMenu from './TriviaMenu.jsx'
 import Discografia from './Discografia.jsx'
 import Ahorcado from './Ahorcado.jsx'
 import Legal from './Legal.jsx'
@@ -29,22 +32,16 @@ import {
 } from './sonido.js'
 import { guardar, leer, leerPerfiles, marcarModo, suscribir } from './storage.js'
 
-// Menú: una tarjeta por modo, cada una con su ícono y su color. "Dicho de otra forma" es la destacada.
-const LISTA_MODOS = [
-  { id: 'dicho', nombre: 'Dicho de otra forma', detalle: 'Te lo cuento con otras palabras… ¿adivinás cuál es?', icono: '🧩', color: 'var(--c-dicho)', destacada: true, insignia: 'Estrella' },
-  { id: 'reto', nombre: 'Reto del día', detalle: 'Una canción por día, igual para todos', icono: '📅', color: 'var(--c-reto)' },
-  { id: 'banda', nombre: 'La banda', detalle: 'Trivia de nicho', icono: '🎸', color: 'var(--c-banda)' },
+// Juegos numerados; el reto diario y el archivo se presentan por separado.
+const MODOS_MENU = [
+  { id: 'frases', nombre: 'Completá la frase', detalle: frasesDisponibles ? 'Una palabra cambia todo' : 'Próximamente', icono: '✏️', color: 'var(--c-dicho)', destacada: true, deshabilitada: !frasesDisponibles, activo: MODOS.completarFrase },
+  { id: 'dicho', nombre: 'Dicho de otra forma', detalle: 'Adiviná la canción a partir de un acertijo', icono: '🧩', color: 'var(--c-dicho)' },
+  { id: 'crucigrama', nombre: 'Crucigrama', detalle: 'Palabras y definiciones', icono: '✍️', color: 'var(--c-cruci)' },
   { id: 'sopa', nombre: 'Sopa de letras', detalle: 'Encontrá las palabras', icono: '🔍', color: 'var(--c-sopa)' },
-  { id: 'trivia', nombre: 'Trivia', detalle: '10 preguntas por nivel', icono: '🧠', color: 'var(--c-trivia)' },
-  { id: 'crucigrama', nombre: 'Crucigrama', detalle: 'Con definiciones', icono: '✍️', color: 'var(--c-cruci)' },
-  { id: 'discografia', nombre: 'Discografía', detalle: 'Discos, canciones y curiosidades', icono: '💿', color: 'var(--c-disco)' },
-  { id: 'palabras', nombre: 'Adivinanzas por palabras', detalle: 'Palabras clave → canción', icono: '🔤', color: 'var(--c-palabras)', chica: true },
-  { id: 'ahorcado', nombre: 'Ahorcado', detalle: 'Mantené las luces encendidas', icono: '💡', color: 'var(--c-ahorcado)', chica: true, activo: MODOS.ahorcado === true },
-].map((m) => ({ activo: true, ...m }))
+  { id: 'trivia', nombre: 'Trivia', detalle: 'Trivia general · La banda', icono: '🧠', color: 'var(--c-trivia)' },
+  { id: 'palabras', nombre: 'Adiviná por palabras', detalle: 'Palabras clave → canción', icono: '🔤', color: 'var(--c-palabras)' },
+].filter(m => m.activo !== false)
 
-
-// los modos opcionales apagados en config.js no aparecen en el menú
-const MODOS_MENU = LISTA_MODOS.filter((m) => m.activo)
 
 export default function App() {
   const musica = useRef(null)
@@ -162,6 +159,9 @@ export default function App() {
     if (desafio.modo === 'sopa') contenido = <SopaDeLetras {...props} />
     else if (desafio.modo === 'crucigrama') contenido = <Crucigrama {...props} />
     else if (desafio.modo === 'adivinanzas') contenido = <Adivinanzas {...props} />
+    else if (desafio.modo === 'frases') contenido = MODOS.completarFrase
+      ? <CompletarFrase {...props} />
+      : <main className="pantalla"><p>Completá la frase no está disponible.</p><button onClick={salirDelDesafio}>Volver al menú</button></main>
     else contenido = <Trivia {...props} categoria={desafio.modo === 'banda' ? 'banda' : 'general'} />
   } else if (!jugadores) {
     contenido = (
@@ -184,7 +184,8 @@ export default function App() {
   else if (modo === 'discografia') contenido = <Discografia onVolver={volver} onMenu={volver} />
   else if (modo === 'ahorcado' && MODOS.ahorcado) contenido = <Ahorcado onVolver={volver} />
   else if (modo === 'sopa') contenido = <SopaDeLetras onVolver={volver} onMenu={volver} />
-  else if (modo === 'trivia') contenido = <Trivia onVolver={volver} onMenu={volver} />
+  else if (modo === 'frases' && MODOS.completarFrase) contenido = <CompletarFrase onVolver={volver} onMenu={volver} />
+  else if (modo === 'trivia') contenido = <TriviaMenu onVolver={volver} onMenu={volver} />
   else if (modo === 'dicho' || modo === 'palabras') contenido = <Adivinanzas onVolver={volver} onMenu={volver} inicio={modo} />
   else if (modo === 'crucigrama') contenido = <Crucigrama onVolver={volver} onMenu={volver} />
   else if (modo === 'banda') contenido = <Trivia onVolver={volver} onMenu={volver} categoria="banda" />
@@ -193,17 +194,19 @@ export default function App() {
       <main className="pantalla inicio" key="menu">
         <h1 className="logo">{NOMBRE_JUEGO}</h1>
         <p className="sub">Patricio Rey y sus Redonditos de Ricota</p>
+        <button className="reto-banner" onClick={() => elegirModo('reto')}>📅 <strong>Reto del día</strong><small>Una canción por día, igual para todos →</small></button>
         <nav className="menu-grid" aria-label="Modos de juego" onPointerMove={inclinar} onPointerDown={inclinar} onPointerLeave={enderezar} onPointerUp={enderezar} onPointerCancel={enderezar} onPointerOut={enderezar}>
           {MODOS_MENU.map((m, i) => (
             <button
               key={m.id}
+              disabled={m.deshabilitada}
               className={`tarjeta-modo${m.destacada ? ' destacada' : ''}${m.chica ? ' chica' : ''}`}
               style={{ '--c': m.color, '--i': i }}
               onClick={() => elegirModo(m.id)}
             >
               {m.insignia && <span className="insignia">{m.insignia}</span>}
               <span className="icono" aria-hidden="true">{m.icono}</span>
-              <strong>{m.nombre}</strong>
+              <strong>{i + 1}. {m.nombre}</strong>
               {m.detalle && <small>{m.detalle}</small>}
             </button>
           ))}
@@ -227,10 +230,11 @@ export default function App() {
             Ayer no jugaste el reto y la racha se reinició. ¡Pasa en las mejores familias! Hoy arrancás otra. 💪
           </p>
         )}
-        <div className="herramientas">
+        <section className="extras"><h2>Extras · no son juegos</h2><div className="herramientas">
+          <button className="secundario" onClick={() => setModo('discografia')}>Archivo ricotero</button>
           <button className="secundario" onClick={() => setModo('logros')}>Logros ({Object.keys(g.logros).length})</button>
           <button className="secundario" onClick={() => setVerTutorial(true)}>Ayuda</button>
-        </div>
+        </div></section>
       </main>
     )
   }
@@ -291,7 +295,7 @@ export default function App() {
       </div>
       <Musica controlRef={musica} onEstado={setEstadoMusica} />
       <footer className="pie">
-        <span>Juego de fans, no oficial, sin relación con la banda.</span>
+        <span>{NOMBRE_JUEGO} · Juego de fans, no oficial, sin relación con la banda.</span>
         <span>Developer: {DESARROLLADOR} · Derechos reservados</span>
         <nav className="pie-enlaces" aria-label="Información legal">
           <button onClick={() => setPagina('aviso')}>Aviso legal</button>

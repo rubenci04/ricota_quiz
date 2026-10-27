@@ -321,3 +321,16 @@ button, select, input { font: inherit; color: inherit; }
 /* pie con crédito del desarrollador */
 .pantalla { padding-bottom: 100px; }
 .pie span { display: block; }
+
+/* Menú y archivo: jerarquía de juegos, reto y consulta. */
+.reto-banner { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:.6rem; width:100%; padding:1.15rem; margin:1rem 0; border:1px solid var(--c-reto); border-radius:16px; background:#211b30; color:#fff; cursor:pointer; }
+.reto-banner small { flex-basis:100%; }
+.extras { width:100%; border-top:1px solid #555; margin-top:1.5rem; padding-top:1rem; }
+.extras h2 { font-size:1rem; color:#bbb; }
+.frase-puzzle { font-size:clamp(1.2rem,4vw,1.8rem); line-height:1.8; overflow-wrap:anywhere; }
+.frase-puzzle span { display:inline-block; margin-right:.3em; }
+.frase-casillas { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; margin:1rem 0; }
+.frase-palabra { display:flex; flex-wrap:wrap; gap:3px; max-width:100%; }
+.frase-palabra button { width:28px; min-height:40px; padding:0; color:#fff; background:#25252c; border:1px solid #777; border-radius:4px; }
+.frase-palabra button.activa { outline:2px solid #f2bb52; }
+.segmentado { flex-wrap:wrap; }

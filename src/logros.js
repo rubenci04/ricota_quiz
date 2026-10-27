@@ -3,6 +3,7 @@ import { guardar, leer, MODOS_JUGABLES, suscribir } from './storage.js'
 import { fechaBA } from './reto.js'
 
 export const LOGROS = [
+  { id: 'frases10', nombre: 'Palabra precisa', descripcion: 'Completá diez frases sin pistas en una ronda.', ok: e => e.frasesSinPistas },
   { id: 'primera', nombre: 'Primer pogo', descripcion: 'Terminá tu primera partida, en cualquier modo.', ok: (e) => e.partidas >= 1 },
   { id: 'trivia5', nombre: 'Fanático de ley', descripcion: 'Superá el nivel 5 de la trivia.', ok: (e) => e.nivel >= 6 || e.niveles.trivia[5]?.mejor >= 6 },
   { id: 'perfecta', nombre: 'Cero fallas', descripcion: 'Sacá 10 de 10 en una trivia.', ok: (e) => e.mejor >= 10 || e.mejorBanda >= 10 },

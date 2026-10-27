@@ -6,7 +6,6 @@ import { nivelTitulo } from './dificultad.js'
 import Teclado from './Teclado.jsx'
 import Resultado from './Resultado.jsx'
 import Cabecera from './Cabecera.jsx'
-import Fichas from './Fichas.jsx'
 import SelectorDisco from './SelectorDisco.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
@@ -49,7 +48,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
     if (desafio && desafioToken) {
       inicial.current = nuevaRonda({ ...desafioToken, dif: desafio.dif, semilla: desafio.semilla, disco: desafio.disco, tema: desafio.tema, plan: desafio.plan })
     } else if (inicio === 'palabras') {
-      inicial.current = prepararRonda({ modo: 'palabras', categoria: 'canciones', dif: leer().dificultad })
+      inicial.current = prepararRonda({ modo: 'palabras', categoria: 'canciones', dif: 'casual' })
     } else {
       inicial.current = null
     }
@@ -58,7 +57,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
   useRegistrarInicial('palabras', inicial.current?.ids, !desafio)
   const ayudaInicial = inicial.current ? prepararLetras(inicial.current.grupos, inicial.current.dif, inicial.current.semilla, nivelDeRespuesta(inicial.current)) : { letras: [], fijas: [], iniciales: [], foco: 0 }
 
-  const [dif, setDif] = useState(desafio ? desafio.dif : leer().dificultad)
+  const [dif, setDif] = useState(desafio ? desafio.dif : 'casual')
   const [modo, setModo] = useState(desafioToken ? desafioToken.modo : inicio)
   const [disco, setDisco] = useState(desafio ? desafio.disco : 'todos')
   const [tema, setTema] = useState(desafio ? desafio.tema : 'todos')
@@ -75,7 +74,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
   const [resultado, setResultado] = useState(null) // { acierto, puntos }
   const [mensaje, setMensaje] = useState('')
   const [total, setTotal] = useState(() => leer().adivinanzas)
-  const ultima = leer().ultimaEleccion
+
 
   // teclado físico: el manejador vigente se actualiza en cada render
   const acciones = useRef(null)
@@ -117,28 +116,12 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
     guardar({ dificultad: id })
   }
 
-  // ---------------- pantalla de entrada: modo, dificultad (aparte) y categoría
+  // Entrada normal: solo canciones. Los desafíos antiguos conservan su categoría.
   if (!ronda) {
     acciones.current = null
     return (
       <main className="pantalla" key="adivinanzas-entrada">
         <Cabecera titulo="Dicho de otra forma" extra={`${total} pts`} onVolver={onVolver} onMenu={onMenu} />
-
-        {ultima && (
-          <button className="secundario repetir" onClick={() => empezar({ modo: ultima.modo, categoria: ultima.categoria })}>
-            ↻ Repetir: {etiquetaDe(DIFICULTADES, dif).icono} {etiquetaDe(DIFICULTADES, dif).etiqueta} ·{' '}
-            {ultima.modo === 'palabras' ? 'Por palabras' : etiquetaDe(CATEGORIAS, ultima.categoria).etiqueta}
-          </button>
-        )}
-
-        <p className="etiqueta-grupo">1 · Modo</p>
-        <Fichas
-          nombre="Modo"
-          tarjetas
-          valor={modo}
-          opciones={MODOS_ADIVINANZA}
-          onElegir={(id) => (id === 'palabras' ? empezar({ modo: 'palabras', categoria: 'canciones' }) : setModo('dicho'))}
-        />
 
         <p className="etiqueta-grupo">Dificultad</p>
         <div className="segmentado" role="group" aria-label="Dificultad">
@@ -149,18 +132,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
           ))}
         </div>
 
-        {modo === 'dicho' && (
-          <>
-            <p className="etiqueta-grupo">2 · Categoría: tocá una y arrancamos</p>
-            <Fichas
-              nombre="Categoría"
-              tarjetas
-              valor={null}
-              opciones={CATEGORIAS}
-              onElegir={(id) => empezar({ modo: 'dicho', categoria: id })}
-            />
-          </>
-        )}
+        <button className="nueva" onClick={() => empezar({ modo: inicio, categoria: 'canciones' })}>Jugar</button>
 
         <details className="filtros">
           <summary>Filtrar por disco (opcional)</summary>
@@ -347,6 +319,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
         onVolver={() => (desafio ? onVolver() : setRonda(null))}
         onMenu={onMenu}
       />
+        {!desafio && <div className="segmentado" role="group" aria-label="Dificultad">{DIFICULTADES.map(d => <button key={d.id} aria-pressed={ronda.dif===d.id} onClick={() => { setDif(d.id); empezar({ modo: inicio, categoria: 'canciones', difi: d.id }) }}>{d.icono} {d.etiqueta}</button>)}</div>}
 
       <ul className="chips-juego" aria-label="Partida">
         <li>{modoInfo.icono} {modoInfo.etiqueta}</li>
@@ -423,7 +396,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
           {desafio ? (
             <button className="nueva" onClick={onVolver}>Volver al menú</button>
           ) : (
-            <button className="nueva" onClick={() => empezar({ modo: ronda.modo, categoria: ronda.categoria, difi: ronda.dif, anterior: ronda.id })}>
+            <button className="nueva" onClick={() => empezar({ modo: ronda.modo, categoria: 'canciones', difi: ronda.dif, anterior: ronda.id })}>
               Otra más
             </button>
           )}

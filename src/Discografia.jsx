@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import datos from './data/datos-ricotero.json'
 import Cabecera from './Cabecera.jsx'
 import interpretaciones from './data/interpretaciones.json'
@@ -50,14 +51,17 @@ function Cancion({ c }) {
 }
 
 export default function Discografia({ onVolver, onMenu }) {
+  const [tab, setTab] = useState('discos')
   const discos = [...datos.discos].sort((a, b) => a.anio - b.anio)
   const curiosidades = (datos.curiosidades || []).filter((c) => c?.texto && c?.fuente)
 
   return (
     <main className="pantalla" key="discografia">
-      <Cabecera titulo={<>Discografía</>} onVolver={onVolver} onMenu={onMenu} />
+      <Cabecera titulo="Archivo ricotero" onVolver={onVolver} onMenu={onMenu} />
 
-      <section className="discos-lista">
+      <div className="segmentado" role="group" aria-label="Archivo">{[['discos','Discografía'],['palabras','Palabras'],['curiosidades','Curiosidades']].map(([id,t]) => <button key={id} aria-pressed={tab===id} onClick={()=>setTab(id)}>{t}</button>)}</div>
+      {tab==='palabras' && <dl className="definiciones">{[...new Map(datos.canciones.flatMap(c=>c.palabras.map(p=>[p,c.definiciones?.[p]]))).entries()].sort(([a],[b])=>a.localeCompare(b,'es')).map(([p,d])=><div key={p}><dt>{p}</dt><dd>{d}</dd></div>)}</dl>}
+      {tab==='discos' && <section className="discos-lista">
         {discos.map((d) => {
           const canciones = datos.canciones.filter((c) => c.disco === d.id)
           return (
@@ -73,9 +77,9 @@ export default function Discografia({ onVolver, onMenu }) {
             </details>
           )
         })}
-      </section>
+      </section>}
 
-      {curiosidades.length > 0 && (
+      {tab==='curiosidades' && curiosidades.length > 0 && (
         <section className="curiosidades-lista">
           <h3>Curiosidades</h3>
           <ul>

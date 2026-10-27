@@ -34,7 +34,7 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
   if (!inicial.current) {
     const disco = desafio ? desafio.disco : 'todos'
     const tema = desafio ? desafio.tema : 'todos'
-    const dif = desafio ? desafio.dif : leer().dificultad
+    const dif = desafio ? desafio.dif : 'casual'
     const p = desafio ? { semilla: desafio.semilla, plan: desafio.plan, juego: generar(disco, dif, desafio.semilla, tema, desafio.plan) } : crearPartida('crucigrama', (sem, plan) => generar(disco, dif, sem, tema, plan), idsCrucigrama)
     inicial.current = { ...p, disco, tema, dif }
   }
@@ -297,7 +297,7 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
 
       <p className="etiqueta-grupo">Dificultad</p>
       <div className="segmentado" role="group" aria-label="Dificultad">
-        {[['casual', '🙂 Casual'], ['fanatico', '🔥 Fanático']].map(([id, etiqueta]) => (
+        {[['casual', '🙂 Casual'], ['fanatico', '🔥 Ricotero (fanático)']].map(([id, etiqueta]) => (
           <button
             key={id}
             aria-pressed={dificultad === id}

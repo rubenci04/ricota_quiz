@@ -79,7 +79,7 @@ export default function Legal({ seccion, onVolver, onMenu }) {
   return (
     <main className="pantalla" key={`legal-${seccion}`}>
       <Cabecera titulo={<>{TITULOS[seccion] || TITULOS.aviso}</>} onVolver={onVolver} onMenu={onMenu} />
-      <article className="legal">
+      <article className="legal"><p>{NOMBRE_JUEGO}</p>
         <Contenido />
       </article>
     </main>

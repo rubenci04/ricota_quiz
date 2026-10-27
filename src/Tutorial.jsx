@@ -12,8 +12,8 @@ const TARJETAS = [
     texto: 'Elegí un modo, usá las pistas cuando te trabes y sumá puntos. Cada modo guarda tu progreso en este dispositivo.',
   },
   {
-    titulo: 'Casual o Fanático',
-    texto: 'Casual te da más ayudas y datos. Fanático es para los que saben: menos pistas y más desafío. Podés cambiarlo cuando quieras.',
+    titulo: 'Casual o Ricotero',
+    texto: 'Casual te da más ayudas y datos. Ricotero es para fanáticos: menos pistas y más desafío. Cada juego empieza en Casual; podés cambiarlo al entrar.',
   },
 ]
 
@@ -22,8 +22,8 @@ export default function Tutorial({ onTerminar }) {
   const tarjeta = TARJETAS[paso]
   const ultima = paso === TARJETAS.length - 1
 
-  const terminar = (dificultad) => {
-    guardar(dificultad ? { tutorial: true, dificultad } : { tutorial: true })
+  const terminar = () => {
+    guardar({ tutorial: true, dificultad: 'casual' })
     onTerminar()
   }
 
@@ -40,11 +40,8 @@ export default function Tutorial({ onTerminar }) {
       </article>
       {ultima ? (
         <div className="menu">
-          <button className="modo" onClick={() => terminar('casual')}>
-            <span>Casual<small>Más ayudas y datos desde el inicio</small></span>
-          </button>
-          <button className="modo" onClick={() => terminar('fanatico')}>
-            <span>Fanático<small>Menos pistas, más desafío</small></span>
+          <button className="modo" onClick={terminar}>
+            <span>Empezar en Casual<small>Ricotero está disponible dentro de cada juego</small></span>
           </button>
         </div>
       ) : (
