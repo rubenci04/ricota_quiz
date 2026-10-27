@@ -1,0 +1,44 @@
+[
+  {
+    "sector": 1,
+    "pistas": 1,
+    "reducido": true,
+    "flechaCorrecta": true,
+    "errores": 0
+  },
+  {
+    "sector": 2,
+    "pistas": 2,
+    "reducido": true,
+    "flechaCorrecta": true,
+    "errores": 0
+  },
+  {
+    "sector": 3,
+    "pistas": 1,
+    "reducido": true,
+    "flechaCorrecta": true,
+    "errores": 0
+  },
+  {
+    "sector": 4,
+    "pistas": 3,
+    "reducido": false,
+    "flechaCorrecta": true,
+    "errores": 0
+  },
+  {
+    "sector": 5,
+    "pistas": 1,
+    "reducido": true,
+    "flechaCorrecta": true,
+    "errores": 0
+  },
+  {
+    "sector": 6,
+    "pistas": 2,
+    "reducido": true,
+    "flechaCorrecta": true,
+    "errores": 0
+  }
+]

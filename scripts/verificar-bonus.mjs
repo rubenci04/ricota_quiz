@@ -23,6 +23,14 @@ try{
   assert.equal(a.tirarSuerte(`dado:${n}`,'fanatico','dado'),null)
  }
  numero=0
+ for(let n=0;n<6;n++){
+  numero=n;const clave=`ruleta:${n}`,r=a.tirarSuerte(clave,'fanatico','ruleta')
+  assert.equal(r.cara,n+1);assert.equal(r.pistas,a.PREMIOS_RULETA[n])
+  assert.equal(a.tirarSuerte(clave,'fanatico','ruleta'),null)
+  while(a.gastarPistaSuerte(clave)){}
+  assert.equal(a.tirarSuerte(clave,'fanatico','ruleta'),null)
+ }
+ numero=0
  for(let n=0;n<5;n++)a.tirarSuerte(`moneda:${n}`,'fanatico','moneda','P')
  const {revisarLogros}=await import('../src/logros.js');revisarLogros()
  assert.ok(s.leer().logros.moneda5);assert.ok(s.leer().logros.dado6);assert.equal(s.leer().logros.moneda1,'2026-10-27')
@@ -31,4 +39,4 @@ try{
  assert.equal(JSON.parse(memoria.get('ricota_quiz')).v,10);assert.equal(memoria.get('ricota_quiz_pre_v10'),anterior)
  s.seleccionarPerfil(b);assert.equal(s.leer().suerte.monedasJugadas,0)
 }finally{crypto.getRandomValues=original}
-console.log('QA suerte: migración v9→v10 sin inventario, perfiles aislados, límites 2/1, créditos, seis caras, premios y logros: OK.')
+console.log('QA suerte: migración v9→v10, perfiles aislados, límites 2/1, créditos, dado, seis sectores de ruleta, premios y logros: OK.')

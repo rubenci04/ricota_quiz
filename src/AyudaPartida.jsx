@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { estadoSuerte, gastarPistaSuerte, limiteTiradas, tirarSuerte } from './suerte.js'
+import { estadoSuerte, gastarPistaSuerte, limiteTiradas, tirarSuerte, PREMIOS_RULETA } from './suerte.js'
 import { sonar } from './sonido.js'
 
 export function useSuertePartida(clave,dif='casual') {
@@ -14,6 +14,12 @@ export function useSuertePartida(clave,dif='casual') {
 
 const puntos={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]}
 export function ObjetoSuerte({resultado,girando}) {
+  if(resultado.tipo==='ruleta')return <div className="ruleta-escena" aria-label={`Ruleta: ${resultado.pistas} pistas`}>
+    <span className="ruleta-flecha" aria-hidden="true">▼</span>
+    <div className={`ruleta-disco ${girando?'girando':''}`} style={{'--giro':`${-(resultado.cara-1)*60-30}deg`}} aria-hidden="true">
+      {PREMIOS_RULETA.map((p,i)=><span key={i} style={{'--sector':`${i*60+30}deg`}}>{p}</span>)}
+    </div><strong className="ruleta-centro" aria-hidden="true">R</strong>
+  </div>
   const rotaciones={1:[0,0],2:[0,-90],3:[-90,0],4:[90,0],5:[0,90],6:[0,180]}
   const [x,y]=resultado.tipo==='dado'?rotaciones[resultado.cara]:[0,resultado.cara==='R'?180:0]
   return <div className={`suerte-escena ${resultado.cara===6?'especial':''}`} aria-label={`Resultado: ${resultado.cara}`}>
@@ -48,10 +54,11 @@ export default function AyudaPartida({suerte,base,onPista,errores=0,disabled=fal
     <small>Tiradas: {suerte.tiradas}/{suerte.limite} · solo para esta partida</small>
     {abierto&&!girando&&restantes===0&&!agotadas&&<div className="elegir-suerte">
       <p>Elegí una ayuda. Siempre ganás pistas.</p>
-      <button onClick={()=>setTipo('moneda')}>🪙 Moneda</button><button onClick={()=>tirar('dado')}>🎲 Dado</button>
+      <button onClick={()=>setTipo('moneda')}>🪙 Moneda</button><button onClick={()=>tirar('dado')}>🎲 Dado</button><button onClick={()=>tirar('ruleta')}>🎡 Ruleta</button>
+      <small>Ruleta: seis sectores con 1, 2, 1, 3, 1 y 2 pistas. Comparte el límite de tiradas.</small>
       {tipo==='moneda'&&<><button onClick={()=>tirar('moneda','P')}>Elegir P</button><button onClick={()=>tirar('moneda','R')}>Elegir R</button></>}
     </div>}
-    {resultado&&<><ObjetoSuerte resultado={resultado} girando={girando}/>{!girando&&<p role="status">{resultado.tipo==='moneda'?`Salió ${resultado.cara}. `:`Salió ${resultado.cara}. `}{resultado.pistas} {resultado.pistas===1?'pista ganada':'pistas ganadas'}.</p>}</>}
+    {resultado&&<><ObjetoSuerte resultado={resultado} girando={girando}/>{!girando&&<p role="status">{resultado.tipo==='ruleta'?'¡La tribuna te da una mano! ':`Salió ${resultado.cara}. `}{resultado.pistas} {resultado.pistas===1?'pista ganada':'pistas ganadas'}.</p>}</>}
     <p className="bonus-aviso" role="status">{aviso}</p>
   </section>
 }

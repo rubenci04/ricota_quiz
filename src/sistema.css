@@ -260,7 +260,9 @@ button:not(:disabled):active, .ficha:not(:disabled):active, .tarjeta-modo:not(:d
 /* Títulos largos ("…Capitán Buscapina en Cybersiberia") en casillas y textos, también a 360 px */
 body { overflow-wrap: break-word; }
 .par-casillas { gap: 2px; }
-.par-casillas .casilla, .casillas > .casilla { width: clamp(17px, calc((100vw - 64px) / 12 - 2px), 28px); height: 34px; font-size: clamp(0.85rem, 4vw, 1.1rem); }
+.par-casillas { max-width:100%; min-width:0; }
+.grupo-palabra { flex-wrap:wrap; max-width:100%; }
+.par-casillas .casilla, .casillas > .casilla { flex:0 0 40px; width:40px; height:40px; font-size:1.1rem; border:1px solid var(--tenue); border-bottom-width:3px; border-radius:6px; }
 .opcion, .tarjeta-modo strong, .barra h2 { overflow-wrap: anywhere; }
 
 /* Barra y pie dentro del flujo: nunca interceptan los controles del juego. */
@@ -371,5 +373,34 @@ body { overflow-wrap: break-word; }
 .frase-hueco { min-width:72px; margin:3px; padding:7px; border:2px solid #847448; border-radius:7px; background:#27232e; color:#fff0ba; }
 .frase-hueco.activo { outline:2px solid #ffc857; }
 @media(prefers-reduced-motion:reduce) { .suerte-objeto.lanzando,.suerte-sombra.lanzando { animation:none !important; } }
+
+/* Casillas legibles y controles estables en pantallas pequeñas. */
+.frase-casillas .frase-palabra { gap:4px; padding:6px; border:1px solid #756955; border-radius:10px; }
+.frase-casillas .frase-palabra button { flex:0 0 40px; width:40px; height:40px; min-height:40px; font-size:1.15rem; }
+.frase-hueco { display:inline-flex; flex-direction:column; align-items:center; justify-content:center; min-width:110px; min-height:56px; max-width:100%; vertical-align:middle; font:inherit; line-height:1.3; }
+.frase-hueco strong { font-size:1rem; }
+.frase-hueco small { font-size:.75rem; color:#e1d2af; }
+.pantalla-frases .opciones { display:grid; gap:8px; width:100%; }
+.pantalla-frases .opciones button { min-height:48px; padding:10px 14px; border:1px solid #8a7a92; border-radius:10px; color:#f8f3ff; background:#2b2635; font:inherit; cursor:pointer; }
+.pantalla-frases .opciones button[aria-pressed=true] { border-color:#ffc857; background:#4b3c21; }
+.pantalla-frases .opciones button:disabled { opacity:.4; }
+.progreso-frases { width:100%; height:10px; accent-color:#ffc857; }
+.frase-puzzle { width:100%; animation:frase-entrada .3s ease-out; }
+.aliento-frase { width:100%; padding:12px; border-radius:10px; background:#292535; animation:frase-entrada .3s ease-out; }
+.aliento-frase.acierto { background:#173c35; color:#a6f2cf; animation:pop .4s ease-out; }
+.coleccion-frases { width:100%; display:grid; gap:12px; }
+.coleccion-frases label { display:grid; gap:8px; }
+.coleccion-frases input { width:100%; min-height:44px; padding:10px; border:1px solid #807187; border-radius:8px; background:#1c1924; color:#fff; font:inherit; }
+.coleccion-frases blockquote { margin:0 0 12px; line-height:1.65; overflow-wrap:anywhere; }
+.elegir-suerte small { display:block; line-height:1.5; }
+.ruleta-escena { width:210px; height:230px; margin:15px auto; position:relative; display:grid; place-items:center; }
+.ruleta-flecha { position:absolute; z-index:2; top:0; color:#fff1a6; font-size:32px; text-shadow:0 2px 5px #000; }
+.ruleta-disco { width:200px; height:200px; border:6px solid #c7a568; border-radius:50%; background:conic-gradient(#633775 0deg 60deg,#214f64 60deg 120deg,#704125 120deg 180deg,#31684d 180deg 240deg,#633775 240deg 300deg,#214f64 300deg 360deg); box-shadow:0 10px 25px #0009,inset 0 0 0 3px #ffdc99; position:relative; transform:rotate(calc(1440deg + var(--giro))); }
+.ruleta-disco span { position:absolute; left:calc(50% - 14px); top:calc(50% - 14px); width:28px; height:28px; color:#fff; font-size:1.35rem; font-weight:800; transform:rotate(var(--sector)) translateY(-67px); }
+.ruleta-centro { position:absolute; border-radius:50%; background:#f4d494; color:#2c2031; padding:12px 16px; box-shadow:0 2px 8px #0008; }
+.ruleta-disco.girando { animation:ruleta-giro 2.2s cubic-bezier(.12,.65,.16,1) both; }
+@keyframes ruleta-giro { from {transform:rotate(0deg)} to {transform:rotate(calc(1440deg + var(--giro)))} }
+@keyframes frase-entrada { from {opacity:.3;transform:translateY(10px)} to {opacity:1;transform:none} }
+@media(prefers-reduced-motion:reduce) { .ruleta-disco.girando,.frase-puzzle,.aliento-frase,.aliento-frase.acierto { animation:none !important; } }
 
 @media(prefers-reduced-motion:reduce) { .nueva:not(:disabled):hover,.nueva:not(:disabled):active { transform:none !important; } }

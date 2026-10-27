@@ -10,7 +10,7 @@ const informe=[]
 try {
   for(let i=0;i<80;i++){try{if((await fetch(url)).ok)break}catch{}await new Promise(r=>setTimeout(r,250))}
   browser=await chromium.launch({headless:true})
-  for(const width of [360,390,1280]){
+  for(const width of [360,375,390,1280]){
     const context=await browser.newContext({viewport:{width,height:width===360?640:width===390?844:720},reducedMotion:'reduce'})
     await context.addInitScript(()=>{
       window.YT={PlayerState:{PLAYING:1,ENDED:0},Player:class{
@@ -48,7 +48,9 @@ try {
     }
     await page.getByRole('button',{name:/Reto del día/}).click();await check('reto');await page.getByRole('button',{name:'Ir al menú principal'}).click()
     await page.getByRole('navigation',{name:'Secciones principales'}).getByRole('button',{name:/Archivo/}).click()
-    for(const nombre of ['Discografía','Palabras','Curiosidades']){await page.getByRole('group',{name:'Archivo',exact:true}).getByRole('button',{name:nombre,exact:true}).click();await check(nombre)}
+    for(const nombre of ['Discografía','Palabras','Curiosidades','Frases']){await page.getByRole('group',{name:'Archivo',exact:true}).getByRole('button',{name:nombre,exact:true}).click();await check(nombre)}
+    assert.equal(await page.locator('.coleccion-frases article').count(),131)
+    await page.getByRole('searchbox').fill('vulgaridad');assert.equal(await page.locator('.coleccion-frases article').count(),1)
     await page.getByRole('button',{name:'Ir al menú principal'}).click()
     await page.getByRole('navigation',{name:'Secciones principales'}).getByRole('button',{name:/Logros/}).click();assert.ok(await page.getByText('QA Ricotero',{exact:true}).count());await check('logros')
     await page.getByRole('button',{name:'Ir al menú principal'}).click()
@@ -61,18 +63,24 @@ try {
     await page.locator('.opciones button:not(:disabled)').first().click()
     await page.locator('.opciones button').first().click()
     await page.getByRole('button',{name:'Comprobar',exact:true}).click()
-    await page.getByRole('button',{name:'Siguiente',exact:true}).click();await check('frases Casual')
+    await page.getByRole('button',{name:'Siguiente frase',exact:true}).click();await check('frases Casual')
     for(let n=1;n<10;n++){
       await page.getByRole('button',{name:'Pasar',exact:true}).click()
-      await page.getByRole('button',{name:n===9?'Ver resultado':'Siguiente',exact:true}).click()
+      await page.getByRole('button',{name:n===9?'Ver resultado':'Siguiente frase',exact:true}).click()
     }
     assert.ok(await page.getByRole('region',{name:'Resultado'}).count())
     assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('ricota_quiz')).perfiles[0].progreso.frasesPartidas),1)
-    await page.getByRole('button',{name:'Volver al menú',exact:true}).click()
+    await page.getByRole('button',{name:'Otra ronda de 10 frases',exact:true}).click()
+    assert.ok(await page.getByText('Frase 1/10',{exact:false}).count())
+    assert.equal(await page.getByRole('button',{name:'💡 Pista (4)',exact:true}).count(),1)
+    await page.screenshot({path:`qa/frases-casual-${width}.png`,fullPage:true})
+    await page.getByRole('button',{name:'Ir al menú principal'}).click()
     await menu().getByRole('button',{name:/1. Completá/}).click()
     await page.getByRole('group',{name:'Dificultad',exact:true}).getByRole('button',{name:/Ricotero/}).click()
     await page.getByRole('button',{name:'Jugar',exact:true}).click()
     const letras=await page.locator('.frase-casillas button').count()
+    assert.ok((await page.locator('.frase-casillas button').first().boundingBox()).width>=39)
+    await page.screenshot({path:`qa/frases-ricotero-${width}.png`,fullPage:true})
     await page.keyboard.type('x'.repeat(letras));await page.keyboard.press('Enter');await page.keyboard.press('Enter')
     assert.equal(await page.locator('.frase-casillas button:disabled').count(),1)
     await check('frases Ricotero')
