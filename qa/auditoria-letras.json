@@ -1,8 +1,8 @@
 {
-  "archivos": 2,
-  "fragmentosAprobados": 34,
-  "fragmentosEnUnaSolaLinea": 34,
-  "coincidenciasAprobadas": 92,
-  "coincidenciasMetadatos": 147,
+  "archivos": 4,
+  "fragmentosAprobados": 167,
+  "fragmentosEnUnaSolaLinea": 167,
+  "coincidenciasAprobadas": 420,
+  "coincidenciasMetadatos": 212,
   "coincidenciasNoAutorizadas20": 0
 }

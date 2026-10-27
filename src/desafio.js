@@ -29,7 +29,7 @@ export { nuevaSemilla } from './azar.js'
 
 // Interpreta el segmento "tema" según el modo. Devuelve los campos o null si no es válido.
 function leerSegmento(modo, segmento) {
-  if (modo === 'frases') return segmento === 'todos.todos' ? { disco: 'todos', tema: 'todos' } : null
+  if (modo === 'frases') return ['todos.todos','todos.todos.v2'].includes(segmento) ? { disco: 'todos', tema: 'todos', versionFrases: segmento.endsWith('.v2')?2:1 } : null
   const p = segmento.split('.')
   if (p.some((x) => !/^[a-z0-9]{1,20}$/.test(x))) return null
   if (modo === 'trivia' || modo === 'banda') {
@@ -82,6 +82,7 @@ export function leerDesafio(hash = typeof location !== 'undefined' ? location.ha
 }
 
 function segmentoDe(d) {
+  if (d.modo === 'frases') return `todos.todos${d.versionFrases===2?'.v2':''}`
   if (d.modo === 'trivia' || d.modo === 'banda') return `${d.nivel}.${d.tema ?? 'todos'}${d.version === 2 ? '.v2' : ''}`
   if (d.modo === 'adivinanzas') return `${d.ronda}.${d.disco ?? 'todos'}.${d.tema ?? 'todos'}`
   return `${d.disco ?? 'todos'}.${d.tema ?? 'todos'}`

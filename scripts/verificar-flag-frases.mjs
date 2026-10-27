@@ -15,5 +15,5 @@ await build({
   }],
   build:{write:false},
 })
-assert.ok(!modulos.some(id=>/\/src\/data\/frases(?:\.ejemplos)?\.json$/.test(id.replaceAll('\\','/'))))
+assert.ok(!modulos.some(id=>/\/src\/data\/frases(?:\.ejemplos|-iconicas)?\.json$/.test(id.replaceAll('\\','/'))))
 console.log('Flag false: frases.json y ejemplos excluidos del grafo de producción: OK.')

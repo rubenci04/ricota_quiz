@@ -44,6 +44,22 @@ s.seleccionarPerfil(segundo);assert.ok(!s.leer().logros.frases10)
 const guardado=JSON.parse(memoria.get('ricota_quiz'))
 assert.equal(guardado.v,10);assert.ok(memoria.get('ricota_quiz_pre_v8'))
 const {crearLink,leerDesafio}=await import('../src/desafio.js')
+const iconicas=JSON.parse(readFileSync('src/data/frases-iconicas.json','utf8'))
+assert.equal(iconicas.length,131)
+assert.equal(validarFrases(iconicas,{variantes:true}).length,41)
+const nuevo=[...iconicas,...banco]
+for(let n=0;n<200;n++){
+ const semilla=`iconicas${n}`,plan={vistos:[],recientes:[],ciclo:[]}
+ const r=armarRondaFrases(nuevo,semilla,'casual',plan,{variantes:true})
+ assert.equal(r.length,10);assert.equal(new Set(r.map(f=>f.cancion.toLowerCase())).size,10)
+ assert.ok(JSON.stringify(r)===JSON.stringify(armarRondaFrases(nuevo,semilla,'casual',plan,{variantes:true})))
+}
+const nv={modo:'frases',versionFrases:2,dif:'fanatico',semilla:'iconicas1',puntaje:5,plan:{vistos:[],recientes:[],ciclo:[]}}
+const replay=leerDesafio(new URL(crearLink(nv)).hash)
+assert.equal(replay.versionFrases,2)
+assert.equal(replay.version,3)
+assert.ok(JSON.stringify(armarRondaFrases(nuevo,nv.semilla,nv.dif,nv.plan,{variantes:true}))===JSON.stringify(armarRondaFrases(nuevo,replay.semilla,replay.dif,replay.plan,{variantes:true})))
+assert.equal(leerDesafio('#/desafio/frases/todos.todos/casual/abcd1234/3').versionFrases,1)
 const plan={vistos:idsFrases(armarRondaFrases(banco,'anterior')),recientes:[],ciclo:[]}
 const d={modo:'frases',dif:'casual',semilla:'abcd1234',puntaje:8,plan}
 const recibido=leerDesafio(new URL(crearLink({...d,alias:'PRIVADO'})).hash)
@@ -52,4 +68,4 @@ assert.ok(!crearLink({...d,alias:'PRIVADO'}).includes('PRIVADO'))
 for(const ronda of ['dichocanciones','dichodiscos','dichopalabras','dichointegrantes']) assert.ok(leerDesafio(`#/desafio/adivinanzas/${ronda}/casual/abcd1234/1`))
 const js=readdirSync('dist/assets').filter(f=>f.endsWith('.js')).map(f=>readFileSync(`dist/assets/${f}`,'utf8')).join('\n')
 for(const e of ejemplos){assert.ok(!js.includes(e.fragmento));assert.ok(!js.includes(e.cancion))}
-console.log('QA frases: 200 rondas de 10 sin duplicados, semillas, 34 canciones, huecos, ronda corta, migración v7→v10, dos perfiles, logros y enlaces compatibles: OK.')
+console.log('QA frases: 400 rondas de 10, bancos v1/v2, 75 variantes/49 canciones, 131 aportes, 41 curados, perfiles, logros y enlaces compatibles: OK.')

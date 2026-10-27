@@ -1,0 +1,857 @@
+{
+  "total": 141,
+  "cantidades": {
+    "fuera-del-catalogo": 58,
+    "nueva": 68,
+    "fragmento-parcial": 5,
+    "repetida": 10
+  },
+  "detalle": [
+    {
+      "lista": 1,
+      "numero": 1,
+      "cancion": "Mi Genio Amor",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 2,
+      "cancion": "Mi Genio Amor",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 3,
+      "cancion": "Mi Genio Amor",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 4,
+      "cancion": "Mi Genio Amor",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 5,
+      "cancion": "Mi Genio Amor",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 6,
+      "cancion": "Ji ji ji",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 7,
+      "cancion": "Ji ji ji",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 8,
+      "cancion": "Ji ji ji",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 9,
+      "cancion": "La bestia pop",
+      "estado": "fragmento-parcial"
+    },
+    {
+      "lista": 1,
+      "numero": 10,
+      "cancion": "La bestia pop",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 11,
+      "cancion": "La bestia pop",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 12,
+      "cancion": "Esa estrella era mi lujo",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 13,
+      "cancion": "Esa estrella era mi lujo",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 14,
+      "cancion": "Esa estrella era mi lujo",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 15,
+      "cancion": "Juguetes perdidos",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 16,
+      "cancion": "Juguetes perdidos",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 17,
+      "cancion": "Juguetes perdidos",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 18,
+      "cancion": "Juguetes perdidos",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 19,
+      "cancion": "Juguetes perdidos",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 20,
+      "cancion": "Un ángel para tu soledad",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 21,
+      "cancion": "Un ángel para tu soledad",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 22,
+      "cancion": "Un ángel para tu soledad",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 23,
+      "cancion": "Un ángel para tu soledad",
+      "estado": "fragmento-parcial"
+    },
+    {
+      "lista": 1,
+      "numero": 24,
+      "cancion": "Tarea fina",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 25,
+      "cancion": "Tarea fina",
+      "estado": "fragmento-parcial"
+    },
+    {
+      "lista": 1,
+      "numero": 26,
+      "cancion": "Tarea fina",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 27,
+      "cancion": "Tarea fina",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 28,
+      "cancion": "Blues de La Libertad",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 29,
+      "cancion": "Blues de La Libertad",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 30,
+      "cancion": "Blues de La Libertad",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 31,
+      "cancion": "Ella Debe Estar Tan Linda",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 32,
+      "cancion": "Ella Debe Estar Tan Linda",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 33,
+      "cancion": "Ella Debe Estar Tan Linda",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 34,
+      "cancion": "Pura Suerte",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 35,
+      "cancion": "Pura Suerte",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 36,
+      "cancion": "Pura Suerte",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 37,
+      "cancion": "Pura Suerte",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 38,
+      "cancion": "Yo No Me Caí Del Cielo",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 39,
+      "cancion": "Yo No Me Caí Del Cielo",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 40,
+      "cancion": "Yo No Me Caí Del Cielo",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 41,
+      "cancion": "Perdiendo El Tiempo",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 42,
+      "cancion": "Perdiendo El Tiempo",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 43,
+      "cancion": "Perdiendo El Tiempo",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 44,
+      "cancion": "Perdiendo El Tiempo",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 45,
+      "cancion": "Perdiendo El Tiempo",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 46,
+      "cancion": "Todo un palo",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 47,
+      "cancion": "Todo un palo",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 48,
+      "cancion": "Todo un palo",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 49,
+      "cancion": "Fusilados Por La Cruz Roja",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 50,
+      "cancion": "Fusilados Por La Cruz Roja",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 51,
+      "cancion": "Fusilados Por La Cruz Roja",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 52,
+      "cancion": "Reina Momo",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 53,
+      "cancion": "Reina Momo",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 54,
+      "cancion": "Reina Momo",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 55,
+      "cancion": "Reina Momo",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 1,
+      "numero": 56,
+      "cancion": "Salando las heridas",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 57,
+      "cancion": "Salando las heridas",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 58,
+      "cancion": "Salando las heridas",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 59,
+      "cancion": "Salando las heridas",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 60,
+      "cancion": "Salando las heridas",
+      "estado": "fragmento-parcial"
+    },
+    {
+      "lista": 1,
+      "numero": 61,
+      "cancion": "Salando las heridas",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 62,
+      "cancion": "Salando las heridas",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 63,
+      "cancion": "Vencedores vencidos",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 64,
+      "cancion": "Vencedores vencidos",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 65,
+      "cancion": "Vencedores vencidos",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 66,
+      "cancion": "Vencedores vencidos",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 67,
+      "cancion": "Vencedores vencidos",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 68,
+      "cancion": "Vencedores vencidos",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 69,
+      "cancion": "Ya nadie va a escuchar tu remera",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 70,
+      "cancion": "Ya nadie va a escuchar tu remera",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 71,
+      "cancion": "Ya nadie va a escuchar tu remera",
+      "estado": "nueva"
+    },
+    {
+      "lista": 1,
+      "numero": 72,
+      "cancion": "Ya nadie va a escuchar tu remera",
+      "estado": "fragmento-parcial"
+    },
+    {
+      "lista": 2,
+      "numero": 1,
+      "cancion": "Un poco de amor francés",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 2,
+      "cancion": "Un ángel para tu soledad",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 3,
+      "cancion": "Esa estrella era mi lujo",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 4,
+      "cancion": "Mi genio amor",
+      "estado": "repetida"
+    },
+    {
+      "lista": 2,
+      "numero": 5,
+      "cancion": "La bestia pop",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 6,
+      "cancion": "La hija del fletero",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 7,
+      "cancion": "Nuestro amo juega al esclavo",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 8,
+      "cancion": "Ropa sucia",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 9,
+      "cancion": "Un poco de amor francés",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 10,
+      "cancion": "Tarea fina",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 11,
+      "cancion": "Todo un palo",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 12,
+      "cancion": "El pibe de los astilleros",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 13,
+      "cancion": "Yo no me caí del cielo",
+      "estado": "repetida"
+    },
+    {
+      "lista": 2,
+      "numero": 14,
+      "cancion": "Fusilados por la Cruz Roja",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 15,
+      "cancion": "Ladrón de mi cerebro",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 16,
+      "cancion": "Juguetes perdidos",
+      "estado": "repetida"
+    },
+    {
+      "lista": 2,
+      "numero": 17,
+      "cancion": "La hija del fletero",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 18,
+      "cancion": "Mariposa Pontiac - rock del país",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 19,
+      "cancion": "Música para pastillas",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 20,
+      "cancion": "Nueva Roma",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 21,
+      "cancion": "Rock yugular",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 22,
+      "cancion": "Una piba con la remera de Greenpeace",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 23,
+      "cancion": "Pabellón séptimo. Relato de Horacio",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 24,
+      "cancion": "La hija del fletero",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 25,
+      "cancion": "Vencedores vencidos",
+      "estado": "repetida"
+    },
+    {
+      "lista": 2,
+      "numero": 26,
+      "cancion": "El pibe de los astilleros",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 27,
+      "cancion": "La pequeña novia del Carioca",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 28,
+      "cancion": "Perdiendo el tiempo",
+      "estado": "repetida"
+    },
+    {
+      "lista": 2,
+      "numero": 29,
+      "cancion": "Ñam fri frufi fali fru",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 30,
+      "cancion": "Todo un palo",
+      "estado": "repetida"
+    },
+    {
+      "lista": 2,
+      "numero": 31,
+      "cancion": "La hija del fletero",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 32,
+      "cancion": "Un poco de amor francés",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 33,
+      "cancion": "Juguetes perdidos",
+      "estado": "repetida"
+    },
+    {
+      "lista": 2,
+      "numero": 34,
+      "cancion": "Sorpresa en Shangai",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 35,
+      "cancion": "Gualicho",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 36,
+      "cancion": "Luzbelito y las sirenas",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 37,
+      "cancion": "Una piba con la remera de Greenpeace",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 38,
+      "cancion": "Ji ji ji",
+      "estado": "repetida"
+    },
+    {
+      "lista": 2,
+      "numero": 39,
+      "cancion": "Rock para el negro Atila",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 40,
+      "cancion": "La parabellum del buen psicópata",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 41,
+      "cancion": "Un ángel para tu soledad",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 42,
+      "cancion": "Pensando como una acelga",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 43,
+      "cancion": "Yo caníbal",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 44,
+      "cancion": "Luzbelito y las sirenas",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 45,
+      "cancion": "Un ángel para tu soledad",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 46,
+      "cancion": "Semen-Up",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 47,
+      "cancion": "Un pac-man en el Savoy",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 48,
+      "cancion": "Queso ruso",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 49,
+      "cancion": "Queso ruso",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 50,
+      "cancion": "Sorpresa en Shangai",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 51,
+      "cancion": "Yo caníbal",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 52,
+      "cancion": "La pequeña novia del Carioca",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 53,
+      "cancion": "Juguetes perdidos",
+      "estado": "repetida"
+    },
+    {
+      "lista": 2,
+      "numero": 54,
+      "cancion": "Scaramanzia",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 55,
+      "cancion": "Esa estrella era mi lujo",
+      "estado": "repetida"
+    },
+    {
+      "lista": 2,
+      "numero": 56,
+      "cancion": "Tarea fina",
+      "estado": "nueva"
+    },
+    {
+      "lista": 2,
+      "numero": 57,
+      "cancion": "Murga purga",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 58,
+      "cancion": "Veneno paciente",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 59,
+      "cancion": "Vuelo a Sidney",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 60,
+      "cancion": "Beemedobleve",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 61,
+      "cancion": "Ciudad Baigón",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 62,
+      "cancion": "Amok! Amok!",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 63,
+      "cancion": "Y mientras tanto el sol se muere",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 64,
+      "cancion": "El charro chino",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 65,
+      "cancion": "Había una vez",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 66,
+      "cancion": "Había una vez",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 67,
+      "cancion": "Torito es muerto",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 68,
+      "cancion": "Tsunami",
+      "estado": "fuera-del-catalogo"
+    },
+    {
+      "lista": 2,
+      "numero": 69,
+      "cancion": "Y mientras tanto el sol se muere",
+      "estado": "fuera-del-catalogo"
+    }
+  ]
+}

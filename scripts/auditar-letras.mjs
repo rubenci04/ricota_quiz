@@ -7,10 +7,13 @@ import { parse } from '@babel/parser'
 const carpeta=process.argv[2]
 assert.ok(carpeta,'Indicá la carpeta privada como argumento; no se incorpora al bundle.')
 const norm=s=>s.normalize('NFC').toLocaleLowerCase('es').replace(/\s+/g,' ').trim()
-const aprobadas=JSON.parse(readFileSync('src/data/frases.json','utf8')).filter(f=>f.aprobada&&!f.ejemplo).map(f=>norm(f.fragmento))
+const iconicas=JSON.parse(readFileSync('src/data/frases-iconicas.json','utf8'))
+// Estos textos se aportaron explícitamente en los dos listados de esta tarea.
+// Las fuentes adicionales solo se leen para auditar y no se guardan sus rutas.
+const aprobadas=[...new Set([...JSON.parse(readFileSync('src/data/frases.json','utf8')).filter(f=>f.aprobada&&!f.ejemplo).map(f=>norm(f.fragmento)),...iconicas.flatMap(f=>[f.fragmento,f.textoAportado].filter(Boolean).map(norm))])].sort((a,b)=>b.length-a.length)
 const datos=JSON.parse(readFileSync('src/data/datos-ricotero.json','utf8'))
 // Títulos y autores son metadatos públicos, no texto de letras. Se informan aparte.
-const metadatos=[...datos.canciones.flatMap(c=>[c.titulo,...(c.autores??[])]),...datos.discos.map(d=>d.titulo)].map(norm).filter(s=>s.length>=20)
+const metadatos=[...datos.canciones.flatMap(c=>[c.titulo,...(c.autores??[])]),...datos.discos.map(d=>d.titulo),...iconicas.map(f=>f.cancion)].map(norm).filter(s=>s.length>=20)
 const strings=[]
 for(const f of readdirSync('dist/assets').filter(f=>f.endsWith('.js'))){
   const ast=parse(readFileSync(join('dist/assets',f),'utf8'),{sourceType:'module'})
@@ -22,10 +25,10 @@ for(const s of strings)for(let i=0;i<=s.length-20;i++)ventanas.add(s.slice(i,i+2
 let archivos=0, coincidenciasAprobadas=0, coincidenciasMetadatos=0
 const fuentesVerificadas=new Set()
 const noPermitidas=new Set()
-for(const file of readdirSync(carpeta).filter(f=>f.endsWith('.txt'))){
+for(const file of [...readdirSync(carpeta).filter(f=>f.endsWith('.txt')).map(f=>join(carpeta,f)),...process.argv.slice(3)]){
   archivos++
   // Evaluar el cuerpo de cada línea, sin encabezados, numeración ni URLs.
-  const texto=readFileSync(join(carpeta,file),'utf8')
+  const texto=readFileSync(file,'utf8')
   const lineas=texto.split(/\r?\n/).map(norm)
   for(const f of aprobadas)if(lineas.some(linea=>linea.includes(f)))fuentesVerificadas.add(f)
   // También cruza saltos de línea: un fragmento no puede eludir la auditoría al partirse.
@@ -41,7 +44,7 @@ for(const file of readdirSync(carpeta).filter(f=>f.endsWith('.txt'))){
 const informe={archivos,fragmentosAprobados:aprobadas.length,fragmentosEnUnaSolaLinea:fuentesVerificadas.size,coincidenciasAprobadas,coincidenciasMetadatos,coincidenciasNoAutorizadas20:noPermitidas.size}
 console.log(JSON.stringify(informe))
 assert.equal(noPermitidas.size,0,'Se detectaron coincidencias de 20 caracteres fuera de fragmentos aprobados y metadatos públicos; no se imprime el texto.')
-assert.equal(fuentesVerificadas.size,aprobadas.length,'Cada fragmento debe provenir de una sola línea privada; no se imprime el texto.')
+assert.equal(fuentesVerificadas.size,aprobadas.length,'Cada fragmento debe provenir de una sola línea de las fuentes autorizadas; no se imprime el texto.')
 const bundle=readdirSync('dist/assets').filter(f=>f.endsWith('.js')).map(f=>readFileSync(join('dist/assets',f),'utf8')).join('')
 assert.ok(!/[A-Z]:[\\/](?:Users|proyectos)|_privado[\\/]|letras_privadas/i.test(bundle),'Ruta privada en bundle')
 for(const f of JSON.parse(readFileSync('src/data/frases.ejemplos.json','utf8')))assert.ok(!bundle.includes(f.fragmento),'Ejemplo DEV en bundle')

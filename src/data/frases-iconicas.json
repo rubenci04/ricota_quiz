@@ -1,0 +1,2265 @@
+[
+  {
+    "cancion": "Mi Genio Amor",
+    "fragmento": "Si empiezo a desconfiar de mi suerte, estoy perdido, pues tengo ideas cada vez menos atrevidas",
+    "aporte": {
+      "lista": 1,
+      "numero": 1
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Mi Genio Amor",
+    "fragmento": "Aquí cerca, el lobo aúlla despertando al mal hombre, al mago bueno, con un corazón que no puede cumplir más promesas ya",
+    "aporte": {
+      "lista": 1,
+      "numero": 2
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Mi Genio Amor",
+    "fragmento": "Los genios son buenos servidores y malos amos",
+    "aporte": {
+      "lista": 1,
+      "numero": 3
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "relojes",
+          "barcos",
+          "tangos"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "pasajeros",
+          "escritores",
+          "vendedores"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Mi Genio Amor",
+    "fragmento": "Te obedecí hasta donde pude, mi genio amor",
+    "aporte": {
+      "lista": 1,
+      "numero": 4
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Mi Genio Amor",
+    "fragmento": "Me pude apartar de tu corazón en otro crimen más, y me alejé de tu seducción y tu dulce voz",
+    "aporte": {
+      "lista": 1,
+      "numero": 5
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Ji ji ji",
+    "fragmento": "No mires, por favor, y no prendas la luz, la imagen te desfiguró",
+    "aporte": {
+      "lista": 1,
+      "numero": 6
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Ji ji ji",
+    "fragmento": "Este film da una imagen exquisita, esos chicos son como bombas pequeñitas",
+    "aporte": {
+      "lista": 1,
+      "numero": 7
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Ji ji ji",
+    "fragmento": "Vas en la oscura multitud desprevenido, tiranizando a quienes te han querido",
+    "aporte": {
+      "lista": 1,
+      "numero": 8
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "La bestia pop",
+    "fragmento": "Mi héroe es la gran bestia pop que enciende, en sueños, la vigilia, y antes que cuente diez, dormirá",
+    "aporte": {
+      "lista": 1,
+      "numero": 9
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "La bestia pop",
+    "fragmento": "A brillar, mi amor, vamos a brillar",
+    "aporte": {
+      "lista": 1,
+      "numero": 10
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "verbo",
+        "distractores": [
+          "correr",
+          "coser",
+          "barrer"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "tren",
+          "mar",
+          "pan"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "La bestia pop",
+    "fragmento": "Hay caballos que se mueren potros sin galopar",
+    "aporte": {
+      "lista": 1,
+      "numero": 11
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "zapatos",
+          "relojes",
+          "manteles"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "verbo",
+        "distractores": [
+          "bailan",
+          "cosen",
+          "saltan"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "verbo",
+        "distractores": [
+          "cocinar",
+          "dibujar",
+          "estudiar"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Esa estrella era mi lujo",
+    "fragmento": "No nos dimos nada más, solo un buen gesto",
+    "aporte": {
+      "lista": 1,
+      "numero": 12
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Esa estrella era mi lujo",
+    "fragmento": "Mordí el anzuelo una vez más, siempre un iluso",
+    "aporte": {
+      "lista": 1,
+      "numero": 13
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 0,
+        "clase": "verbo",
+        "distractores": [
+          "Cosí",
+          "Bebí",
+          "Dormí"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "mantel",
+          "tornillo",
+          "cuaderno"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Esa estrella era mi lujo",
+    "fragmento": "La más linda del amor que un tonto ha visto soñar",
+    "aporte": {
+      "lista": 1,
+      "numero": 14
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Juguetes perdidos",
+    "fragmento": "Banderas en tu corazón, yo quiero verlas ondeando, luzca el sol o no",
+    "aporte": {
+      "lista": 1,
+      "numero": 15
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Juguetes perdidos",
+    "fragmento": "Son pájaros de la noche que oímos cantar y nunca vemos",
+    "aporte": {
+      "lista": 1,
+      "numero": 16
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "zapatos",
+          "relojes",
+          "clavos"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesa",
+          "papel",
+          "calle"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "verbo",
+        "distractores": [
+          "comer",
+          "coser",
+          "correr"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Juguetes perdidos",
+    "fragmento": "Cuando la noche es más oscura, se viene el día",
+    "aporte": {
+      "lista": 1,
+      "numero": 17
+    },
+    "catalogada": true,
+    "textoAportado": "Cuando la noche es más oscura, se viene el día en tu corazón",
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesa",
+          "papel",
+          "calle"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "adjetivo",
+        "distractores": [
+          "redonda",
+          "dulce",
+          "pequeña"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Juguetes perdidos",
+    "fragmento": "Estás cambiando más que yo, asusta un poco verte así",
+    "aporte": {
+      "lista": 1,
+      "numero": 18
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "verbo",
+        "distractores": [
+          "cocinando",
+          "barriendo",
+          "dibujando"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "verbo",
+        "distractores": [
+          "regala",
+          "pinta",
+          "vende"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Juguetes perdidos",
+    "fragmento": "Yo sé que no puedo darte algo más que un par de promesas",
+    "aporte": {
+      "lista": 1,
+      "numero": 19
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Un ángel para tu soledad",
+    "fragmento": "Aquí, gracias a Dios, uno no cree en lo que oye",
+    "aporte": {
+      "lista": 1,
+      "numero": 20
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Un ángel para tu soledad",
+    "fragmento": "Ángel de la soledad y de la desolación, preso de tu ilusión, vas a bailar, a bailar, a bailar",
+    "aporte": {
+      "lista": 1,
+      "numero": 21
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Un ángel para tu soledad",
+    "fragmento": "Medís tu acrobacia y saltás,",
+    "aporte": {
+      "lista": 1,
+      "numero": 22
+    },
+    "catalogada": true,
+    "textoAportado": "Medís tu acrobacia y saltás, tu secreto es: la suerte del principiante no puede fallar",
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 0,
+        "clase": "verbo",
+        "distractores": [
+          "Cosés",
+          "Saltás",
+          "Bebés"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "carretera",
+          "lapicera",
+          "almohada"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Un ángel para tu soledad",
+    "fragmento": "Alguna vez, quizá, se te va la mano y las llamas en pena invaden tu cuerpo",
+    "aporte": {
+      "lista": 1,
+      "numero": 23
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Tarea fina",
+    "fragmento": "Quemando la turbina, te escapas, ¿vas a volver a herirme otra vez?",
+    "aporte": {
+      "lista": 1,
+      "numero": 24
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Tarea fina",
+    "fragmento": "En tu ternura, está acechándome una buena traición de mujer que echa hielo y brasas en mi corazón",
+    "aporte": {
+      "lista": 1,
+      "numero": 25
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Tarea fina",
+    "fragmento": "Sobrio no te puedo ni hablar, estoy perdido sin mi estupidez",
+    "aporte": {
+      "lista": 1,
+      "numero": 26
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 0,
+        "clase": "adjetivo",
+        "distractores": [
+          "Verde",
+          "Redondo",
+          "Dulce"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "verbo",
+        "distractores": [
+          "coser",
+          "barrer",
+          "correr"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "adjetivo",
+        "distractores": [
+          "cuadrado",
+          "morado",
+          "pequeño"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Tarea fina",
+    "fragmento": "Le das la copa al fin, vencedor, tarea fina, perdida en mi soledad",
+    "aporte": {
+      "lista": 1,
+      "numero": 27
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Blues de La Libertad",
+    "fragmento": "Mi amor, la libertad es fiebre, es oración, fastidio y buena suerte",
+    "aporte": {
+      "lista": 1,
+      "numero": 28
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Blues de La Libertad",
+    "fragmento": "Mi amor, la libertad no es fantástica, no es tormenta mental que da el prestigio loco",
+    "aporte": {
+      "lista": 1,
+      "numero": 29
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Blues de La Libertad",
+    "fragmento": "Mi amor, la libertad es fanática",
+    "aporte": {
+      "lista": 1,
+      "numero": 30
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "tornillo",
+          "cuaderno",
+          "mantel"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "adjetivo",
+        "distractores": [
+          "redonda",
+          "pequeña",
+          "salada"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Ella Debe Estar Tan Linda",
+    "fragmento": "Ella debe estar tan linda, descubriendo mi secreto con sus oscuros ojos delatando",
+    "aporte": {
+      "lista": 1,
+      "numero": 31
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Ella Debe Estar Tan Linda",
+    "fragmento": "Quiero morder el tallo de su rosa, aunque me clave sus uñas espinas",
+    "aporte": {
+      "lista": 1,
+      "numero": 32
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Ella Debe Estar Tan Linda",
+    "fragmento": "Ahora estoy en líos por mi furia, sin un centavo encima y cae la lluvia",
+    "aporte": {
+      "lista": 1,
+      "numero": 33
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Pura Suerte",
+    "fragmento": "Que un sueño acabó, ya te dijeron, pero no que todos los sueñitos, no",
+    "aporte": {
+      "lista": 1,
+      "numero": 34
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Pura Suerte",
+    "fragmento": "Yo no puedo librarme a lo que te debo como ilusión",
+    "aporte": {
+      "lista": 1,
+      "numero": 35
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Pura Suerte",
+    "fragmento": "Hay un par de ojos inclaudicables que valió la pena alquilar para ver",
+    "aporte": {
+      "lista": 1,
+      "numero": 36
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Pura Suerte",
+    "fragmento": "Esto ya no es rock, mi amor, es pura suerte",
+    "aporte": {
+      "lista": 1,
+      "numero": 37
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "tren",
+          "pan",
+          "reloj"
+        ]
+      },
+      {
+        "indice": 9,
+        "clase": "sustantivo",
+        "distractores": [
+          "mantel",
+          "rueda",
+          "cuaderno"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Yo No Me Caí Del Cielo",
+    "fragmento": "Nena, no quiero perderte, no pases de todo, que no está tan mal",
+    "aporte": {
+      "lista": 1,
+      "numero": 38
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Yo No Me Caí Del Cielo",
+    "fragmento": "Yo no me caí del cielo, pero he sido un barco solo y triste",
+    "aporte": {
+      "lista": 1,
+      "numero": 39
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Yo No Me Caí Del Cielo",
+    "fragmento": "Nena, hay alegrías y alegrías, hay mucho vino malicioso y poco vino del mejor",
+    "aporte": {
+      "lista": 1,
+      "numero": 40
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Perdiendo El Tiempo",
+    "fragmento": "El amor empezó a quedarte chico y el silencio lo enredó",
+    "aporte": {
+      "lista": 1,
+      "numero": 41
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Perdiendo El Tiempo",
+    "fragmento": "Ella sí que era el fuego, ella sí que bailaba en las llamas",
+    "aporte": {
+      "lista": 1,
+      "numero": 42
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Perdiendo El Tiempo",
+    "fragmento": "Me ata un fuego y mi sueño duerme aquí",
+    "aporte": {
+      "lista": 1,
+      "numero": 43
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "reloj",
+          "papel",
+          "botón"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "sustantivo",
+        "distractores": [
+          "vaso",
+          "tren",
+          "mantel"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "verbo",
+        "distractores": [
+          "cose",
+          "baila",
+          "dibuja"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Perdiendo El Tiempo",
+    "fragmento": "Por primera vez, tengo miedo de no hacer bien mi papel",
+    "aporte": {
+      "lista": 1,
+      "numero": 44
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Perdiendo El Tiempo",
+    "fragmento": "Nuestro miedo helará este infierno, creo",
+    "aporte": {
+      "lista": 1,
+      "numero": 45
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Todo un palo",
+    "fragmento": "El futuro llegó hace rato, todo un palo, ya lo ves",
+    "aporte": {
+      "lista": 1,
+      "numero": 46
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Todo un palo",
+    "fragmento": "Algo me late y no es mi corazón",
+    "aporte": {
+      "lista": 1,
+      "numero": 47
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "cose",
+          "gira",
+          "pinta"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "sustantivo",
+        "distractores": [
+          "mantel",
+          "tornillo",
+          "cuaderno"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Todo un palo",
+    "fragmento": "El futuro ya llegó, llegó como vos no lo esperabas",
+    "aporte": {
+      "lista": 1,
+      "numero": 48
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "zapato",
+          "mantel",
+          "cuaderno"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "bailó",
+          "cosió",
+          "pintó"
+        ]
+      },
+      {
+        "indice": 9,
+        "clase": "verbo",
+        "distractores": [
+          "dibujabas",
+          "cocinabas",
+          "barrias"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Fusilados Por La Cruz Roja",
+    "fragmento": "Hay mucho misterio en tus ojos y hay mucha chispa aún en tu cerebro loco, pero estás hundido en tu propia herida",
+    "aporte": {
+      "lista": 1,
+      "numero": 49
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Fusilados Por La Cruz Roja",
+    "fragmento": "Vas apartando a golpes tus dolores",
+    "aporte": {
+      "lista": 1,
+      "numero": 50
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "verbo",
+        "distractores": [
+          "cocinando",
+          "dibujando",
+          "barriendo"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesas",
+          "relojes",
+          "papeles"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "manteles",
+          "zapatos",
+          "cuadernos"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Fusilados Por La Cruz Roja",
+    "fragmento": "Tu belleza empieza a abrirse paso en esta vieja cultura frita",
+    "aporte": {
+      "lista": 1,
+      "numero": 51
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Reina Momo",
+    "fragmento": "Linda desde la cabeza hasta los pies, y con su carcajada ronca me tentó",
+    "aporte": {
+      "lista": 1,
+      "numero": 52
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Reina Momo",
+    "fragmento": "El aire se hizo todo azúcar con su voz y no me pude resistir sin respirar",
+    "aporte": {
+      "lista": 1,
+      "numero": 53
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Reina Momo",
+    "fragmento": "Me lastimé los labios al brindar sin ella",
+    "aporte": {
+      "lista": 1,
+      "numero": 54
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "verbo",
+        "distractores": [
+          "dibujé",
+          "cociné",
+          "compré"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesas",
+          "relojes",
+          "papeles"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "verbo",
+        "distractores": [
+          "cocinar",
+          "barrer",
+          "dibujar"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Reina Momo",
+    "fragmento": "Quizás ya sea un poco tarde para mí y para mi última aventura sobre un blues",
+    "aporte": {
+      "lista": 1,
+      "numero": 55
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Salando las heridas",
+    "fragmento": "Todos te daban por muerto y vos allí en mi remolque sin luz, como un polizón",
+    "aporte": {
+      "lista": 1,
+      "numero": 56
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Salando las heridas",
+    "fragmento": "Mirá qué tipo espeso, sumiso como un guiso más",
+    "aporte": {
+      "lista": 1,
+      "numero": 57
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Salando las heridas",
+    "fragmento": "Un vago de mil caravanas a punto de quedar a pie",
+    "aporte": {
+      "lista": 1,
+      "numero": 58
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "lapiceras",
+          "tornillos",
+          "cuadernos"
+        ]
+      },
+      {
+        "indice": 8,
+        "clase": "verbo",
+        "distractores": [
+          "coser",
+          "barrer",
+          "correr"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Salando las heridas",
+    "fragmento": "Apuntamos a tu nariz, hundimos tus pómulos y vos resplandecías",
+    "aporte": {
+      "lista": 1,
+      "numero": 59
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Salando las heridas",
+    "fragmento": "No te quedó sueño por vengar y ya no esperás que te jueguen limpio nunca más",
+    "aporte": {
+      "lista": 1,
+      "numero": 60
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Salando las heridas",
+    "fragmento": "Salando las heridas, jodiste a todo Cristo y más",
+    "aporte": {
+      "lista": 1,
+      "numero": 61
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Salando las heridas",
+    "fragmento": "Tu lengua se derrite en modas de la rabia de hoy",
+    "aporte": {
+      "lista": 1,
+      "numero": 62
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Vencedores vencidos",
+    "fragmento": "Y ahora tiro yo, porque me toca, en este tiempo de plumaje blanco",
+    "aporte": {
+      "lista": 1,
+      "numero": 63
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Vencedores vencidos",
+    "fragmento": "Un mudo con tu voz y un ciego como yo, ¡vencedores vencidos!",
+    "aporte": {
+      "lista": 1,
+      "numero": 64
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Vencedores vencidos",
+    "fragmento": "Te has fugado, me hago humo, den la alarma",
+    "aporte": {
+      "lista": 1,
+      "numero": 65
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "cosido",
+          "barrido",
+          "cocinado"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "pan",
+          "reloj",
+          "tren"
+        ]
+      },
+      {
+        "indice": 8,
+        "clase": "sustantivo",
+        "distractores": [
+          "cuaderno",
+          "tornillo",
+          "mantel"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Vencedores vencidos",
+    "fragmento": "Ensayo general para la farsa actual, teatro antidisturbios",
+    "aporte": {
+      "lista": 1,
+      "numero": 66
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 0,
+        "clase": "sustantivo",
+        "distractores": [
+          "Cuaderno",
+          "Tornillo",
+          "Mantel"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesa",
+          "reloj",
+          "papel"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "sustantivo",
+        "distractores": [
+          "zapato",
+          "tornillo",
+          "mantel"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Vencedores vencidos",
+    "fragmento": "En este rollo de monos de polvo, hemos perdido el rastro unos minutos",
+    "aporte": {
+      "lista": 1,
+      "numero": 67
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Vencedores vencidos",
+    "fragmento": "Me voy corriendo a ver qué escribe en mi pared la tribu de mi calle",
+    "aporte": {
+      "lista": 1,
+      "numero": 68
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Ya nadie va a escuchar tu remera",
+    "fragmento": "Esto es efímero, ahora efímero, ¡cómo corre el tiempo!",
+    "aporte": {
+      "lista": 1,
+      "numero": 69
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "adjetivo",
+        "distractores": [
+          "redondo",
+          "pequeño",
+          "salado"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "verbo",
+        "distractores": [
+          "cose",
+          "pinta",
+          "barre"
+        ]
+      },
+      {
+        "indice": 8,
+        "clase": "sustantivo",
+        "distractores": [
+          "zapato",
+          "reloj",
+          "mantel"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Ya nadie va a escuchar tu remera",
+    "fragmento": "Es casi hipnótico, el tic no alcanza a tac ni me moja el paladar",
+    "aporte": {
+      "lista": 1,
+      "numero": 70
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Ya nadie va a escuchar tu remera",
+    "fragmento": "El grito efímero, el ritmo efímero, pero te creo",
+    "aporte": {
+      "lista": 1,
+      "numero": 71
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Ya nadie va a escuchar tu remera",
+    "fragmento": "Al reloj lo del reloj, y alrededor del reloj, tu estado de ánimo",
+    "aporte": {
+      "lista": 1,
+      "numero": 72
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Un poco de amor francés",
+    "fragmento": "El lujo es vulgaridad",
+    "aporte": {
+      "lista": 2,
+      "numero": 1
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "tren",
+          "pan",
+          "reloj"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "carretera",
+          "lapicera",
+          "cuaderno"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Un ángel para tu soledad",
+    "fragmento": "Ya sufriste cosas mejores que estas",
+    "aporte": {
+      "lista": 2,
+      "numero": 2
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "verbo",
+        "distractores": [
+          "cosiste",
+          "barriste",
+          "cocinaste"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesas",
+          "trenes",
+          "papeles"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "adjetivo",
+        "distractores": [
+          "redondas",
+          "saladas",
+          "verdes"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Esa estrella era mi lujo",
+    "fragmento": "Mi único héroe en este lío",
+    "aporte": {
+      "lista": 2,
+      "numero": 3
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "adjetivo",
+        "distractores": [
+          "verde",
+          "salado",
+          "redondo"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "reloj",
+          "mantel",
+          "papel"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "La bestia pop",
+    "fragmento": "Pero yo sé que hay caballos que se mueren potros, sin galopar",
+    "aporte": {
+      "lista": 2,
+      "numero": 5
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "La hija del fletero",
+    "fragmento": "Siempre fui menos que mi reputación",
+    "aporte": {
+      "lista": 2,
+      "numero": 6
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Nuestro amo juega al esclavo",
+    "fragmento": "Violencia es mentir",
+    "aporte": {
+      "lista": 2,
+      "numero": 7
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 0,
+        "clase": "sustantivo",
+        "distractores": [
+          "Cuaderno",
+          "Tornillo",
+          "Carretera"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "coser",
+          "barrer",
+          "correr"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Ropa sucia",
+    "fragmento": "Vivir sólo cuesta vida",
+    "aporte": {
+      "lista": 2,
+      "numero": 8
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 0,
+        "clase": "verbo",
+        "distractores": [
+          "Coser",
+          "Barrer",
+          "Correr"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "dibuja",
+          "cocina",
+          "pinta"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "tren",
+          "pan",
+          "reloj"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Un poco de amor francés",
+    "fragmento": "De esa miel no comen las hormigas",
+    "aporte": {
+      "lista": 2,
+      "numero": 9
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "tren",
+          "pan",
+          "reloj"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "verbo",
+        "distractores": [
+          "cosen",
+          "barren",
+          "pintan"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "sustantivo",
+        "distractores": [
+          "manteles",
+          "zapatos",
+          "cuadernos"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Tarea fina",
+    "fragmento": "Estoy perdido sin mi estupidez",
+    "aporte": {
+      "lista": 2,
+      "numero": 10
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Todo un palo",
+    "fragmento": "El futuro llegó hace rato",
+    "aporte": {
+      "lista": 2,
+      "numero": 11
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "zapato",
+          "mantel",
+          "cuaderno"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "bailó",
+          "cosió",
+          "pintó"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "El pibe de los astilleros",
+    "fragmento": "Las minitas aman los payasos y la pasta de campeón",
+    "aporte": {
+      "lista": 2,
+      "numero": 12
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Fusilados por la Cruz Roja",
+    "fragmento": "La gente decente es diferente",
+    "aporte": {
+      "lista": 2,
+      "numero": 14
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesa",
+          "papel",
+          "reloj"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "adjetivo",
+        "distractores": [
+          "redonda",
+          "salada",
+          "pequeña"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "adjetivo",
+        "distractores": [
+          "cuadrada",
+          "verde",
+          "amarilla"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Ladrón de mi cerebro",
+    "fragmento": "El mejor testigo se puede contradecir",
+    "aporte": {
+      "lista": 2,
+      "numero": 15
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "zapato",
+          "mantel",
+          "cuaderno"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "verbo",
+        "distractores": [
+          "desatornillar",
+          "desabrochar",
+          "reconstruir"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "La hija del fletero",
+    "fragmento": "Hice de todo por impresionarla y dejé huérfano todo su penar",
+    "aporte": {
+      "lista": 2,
+      "numero": 17
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Mariposa Pontiac - rock del país",
+    "fragmento": "Verte feliz no es nada, es todo lo que hacemos por ti",
+    "aporte": {
+      "lista": 2,
+      "numero": 18
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "adjetivo",
+        "distractores": [
+          "verde",
+          "salado",
+          "redondo"
+        ]
+      },
+      {
+        "indice": 9,
+        "clase": "verbo",
+        "distractores": [
+          "cosemos",
+          "barremos",
+          "dibujamos"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Música para pastillas",
+    "fragmento": "La más hermosa niña del mundo puede dar sólo lo que tiene para dar",
+    "aporte": {
+      "lista": 2,
+      "numero": 19
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Nueva Roma",
+    "fragmento": "Mi vieja crió un idiota de corazón lunático",
+    "aporte": {
+      "lista": 2,
+      "numero": 20
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "cosió",
+          "barrió",
+          "pintó"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "sustantivo",
+        "distractores": [
+          "mantel",
+          "tornillo",
+          "cuaderno"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "adjetivo",
+        "distractores": [
+          "redondo",
+          "pequeño",
+          "salado"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Rock yugular",
+    "fragmento": "Rara vez esta vida tiene sentido, amor",
+    "aporte": {
+      "lista": 2,
+      "numero": 21
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Una piba con la remera de Greenpeace",
+    "fragmento": "Usa su lengua como un sable, mientras se rie y nos apura",
+    "aporte": {
+      "lista": 2,
+      "numero": 22
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Pabellón séptimo. Relato de Horacio",
+    "fragmento": "Nadie es capaz de matarte en mi alma",
+    "aporte": {
+      "lista": 2,
+      "numero": 23
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "La hija del fletero",
+    "fragmento": "Dos que se quieren, se dicen cualquier cosa",
+    "aporte": {
+      "lista": 2,
+      "numero": 24
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "El pibe de los astilleros",
+    "fragmento": "Ciertos reyes no viajan en camellos",
+    "aporte": {
+      "lista": 2,
+      "numero": 26
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesas",
+          "relojes",
+          "papeles"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "cosen",
+          "barren",
+          "pintan"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "manteles",
+          "zapatos",
+          "cuadernos"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "La pequeña novia del Carioca",
+    "fragmento": "Muy poco amable fui, nada nuevo vi en tus ojos",
+    "aporte": {
+      "lista": 2,
+      "numero": 27
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Ñam fri frufi fali fru",
+    "fragmento": "Yo no la cambio por nada cuando empieza a cabalgar",
+    "aporte": {
+      "lista": 2,
+      "numero": 29
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "La hija del fletero",
+    "fragmento": "Un corazón no se endurece porque si",
+    "aporte": {
+      "lista": 2,
+      "numero": 31
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "mantel",
+          "tornillo",
+          "cuaderno"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "verbo",
+        "distractores": [
+          "dibuja",
+          "cocina",
+          "martilla"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Un poco de amor francés",
+    "fragmento": "Es una linda ración, con un defecto, con uno o dos",
+    "aporte": {
+      "lista": 2,
+      "numero": 32
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Sorpresa en Shangai",
+    "fragmento": "El que abandona no tiene premio",
+    "aporte": {
+      "lista": 2,
+      "numero": 34
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "dibuja",
+          "cocina",
+          "martilla"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "zapato",
+          "mantel",
+          "cuaderno"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Gualicho",
+    "fragmento": "Las despedidas son esos dolores dulces",
+    "aporte": {
+      "lista": 2,
+      "numero": 35
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "carreteras",
+          "lapiceras",
+          "tornillos"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "manteles",
+          "zapatos",
+          "cuadernos"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "adjetivo",
+        "distractores": [
+          "verdes",
+          "redondos",
+          "pequeños"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Luzbelito y las sirenas",
+    "fragmento": "La vida sin problemas es matar el tiempo a lo bobo",
+    "aporte": {
+      "lista": 2,
+      "numero": 36
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Una piba con la remera de Greenpeace",
+    "fragmento": "Ya se cansó de dormir todo el tiempo en sillones y de taparse la boca para no gritar",
+    "aporte": {
+      "lista": 2,
+      "numero": 37
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Rock para el negro Atila",
+    "fragmento": "Quiero verte huir como un ladrón al que nunca pueden atrapar",
+    "aporte": {
+      "lista": 2,
+      "numero": 39
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "La parabellum del buen psicópata",
+    "fragmento": "La noche tira un salto mortal",
+    "aporte": {
+      "lista": 2,
+      "numero": 40
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesa",
+          "papel",
+          "reloj"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "zapato",
+          "mantel",
+          "cuaderno"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "adjetivo",
+        "distractores": [
+          "redondo",
+          "pequeño",
+          "salado"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Un ángel para tu soledad",
+    "fragmento": "Tu esqueleto te trajo hasta aquí",
+    "aporte": {
+      "lista": 2,
+      "numero": 41
+    },
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "cuaderno",
+          "tornillo",
+          "lapicera"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "cosió",
+          "barrió",
+          "pintó"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Pensando como una acelga",
+    "fragmento": "Las reliquias huelen mal",
+    "aporte": {
+      "lista": 2,
+      "numero": 42
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "cuadernos",
+          "tornillos",
+          "lapiceras"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "cosen",
+          "barren",
+          "pintan"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Yo caníbal",
+    "fragmento": "Un cordero de mi estilo; un caníbal de mi estilo",
+    "aporte": {
+      "lista": 2,
+      "numero": 43
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Luzbelito y las sirenas",
+    "fragmento": "Llorará su corazón",
+    "aporte": {
+      "lista": 2,
+      "numero": 44
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 0,
+        "clase": "verbo",
+        "distractores": [
+          "Coserá",
+          "Barrerá",
+          "Pintará"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "mantel",
+          "tornillo",
+          "cuaderno"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Un ángel para tu soledad",
+    "fragmento": "Alguna vez, quizá, se te va la mano",
+    "aporte": {
+      "lista": 2,
+      "numero": 45
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Semen-Up",
+    "fragmento": "Con ella soy rico gratis",
+    "aporte": {
+      "lista": 2,
+      "numero": 46
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Un pac-man en el Savoy",
+    "fragmento": "A veces gana, a veces pierde, como todo jugador",
+    "aporte": {
+      "lista": 2,
+      "numero": 47
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "cose",
+          "barre",
+          "pinta"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "verbo",
+        "distractores": [
+          "cocina",
+          "dibuja",
+          "martilla"
+        ]
+      },
+      {
+        "indice": 8,
+        "clase": "sustantivo",
+        "distractores": [
+          "cuaderno",
+          "tornillo",
+          "lapicera"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Queso ruso",
+    "fragmento": "Sentís la mosca joder detrás de la oreja",
+    "aporte": {
+      "lista": 2,
+      "numero": 48
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Queso ruso",
+    "fragmento": "Fijate de que lado de la mecha te encontrás",
+    "aporte": {
+      "lista": 2,
+      "numero": 49
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Sorpresa en Shangai",
+    "fragmento": "Falopas duras en tipos blandos ahuecan corazones",
+    "aporte": {
+      "lista": 2,
+      "numero": 50
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Yo caníbal",
+    "fragmento": "Me acaban el cerebro a mordiscos, bebiendo el jugo de mi corazón",
+    "aporte": {
+      "lista": 2,
+      "numero": 51
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "La pequeña novia del Carioca",
+    "fragmento": "Sólo un tiempo fue que ayudó a pasar un buen rato",
+    "aporte": {
+      "lista": 2,
+      "numero": 52
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Scaramanzia",
+    "fragmento": "La buena felicidad dicen que no se nota",
+    "aporte": {
+      "lista": 2,
+      "numero": 54
+    },
+    "catalogada": false,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "adjetivo",
+        "distractores": [
+          "verde",
+          "redonda",
+          "salada"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "carretera",
+          "lapicera",
+          "tornillo"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "cosen",
+          "barren",
+          "pintan"
+        ]
+      }
+    ]
+  },
+  {
+    "cancion": "Tarea fina",
+    "fragmento": "En tu ternura está acechándome una buena traición de mujer",
+    "aporte": {
+      "lista": 2,
+      "numero": 56
+    },
+    "catalogada": true
+  },
+  {
+    "cancion": "Murga purga",
+    "fragmento": "Penas del corazón que duran siempre menos que las de prisión",
+    "aporte": {
+      "lista": 2,
+      "numero": 57
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Veneno paciente",
+    "fragmento": "Los problemas saben, siempre, donde estás",
+    "aporte": {
+      "lista": 2,
+      "numero": 58
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Vuelo a Sidney",
+    "fragmento": "Sos tan cruel como tus ambiciones",
+    "aporte": {
+      "lista": 2,
+      "numero": 59
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Beemedobleve",
+    "fragmento": "Han clausurando las puertas del cielo, y esas cosas no se pueden ocultar",
+    "aporte": {
+      "lista": 2,
+      "numero": 60
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Ciudad Baigón",
+    "fragmento": "Poder, placer, poder. Rumores oscuros que confunden la cabeza y perturban a los corazones secos",
+    "aporte": {
+      "lista": 2,
+      "numero": 61
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Amok! Amok!",
+    "fragmento": "Nos merecemos bellos milagros, y ocurrirán",
+    "aporte": {
+      "lista": 2,
+      "numero": 62
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Y mientras tanto el sol se muere",
+    "fragmento": "Algún día, pronto, una de mis vidas va a intentar matarme y lo va a lograr",
+    "aporte": {
+      "lista": 2,
+      "numero": 63
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "El charro chino",
+    "fragmento": "Me gustan tus ojos, me gusta tu piel y tus mejillas pero no me gustan tus puntos de vista, amor…",
+    "aporte": {
+      "lista": 2,
+      "numero": 64
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Había una vez",
+    "fragmento": "Con los puños en alto deseando, al final, hacer la revolución con una canción de amor",
+    "aporte": {
+      "lista": 2,
+      "numero": 65
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Había una vez",
+    "fragmento": "Vuelvo a sentirme extraño si me consolás",
+    "aporte": {
+      "lista": 2,
+      "numero": 66
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Torito es muerto",
+    "fragmento": "Cuando al billete hace que baila la mierda corre y la traición también",
+    "aporte": {
+      "lista": 2,
+      "numero": 67
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Tsunami",
+    "fragmento": "Hay mucho beat y mucho soul barato y bossanova ponja",
+    "aporte": {
+      "lista": 2,
+      "numero": 68
+    },
+    "catalogada": false
+  },
+  {
+    "cancion": "Y mientras tanto el sol se muere",
+    "fragmento": "Soy un ladrón que robó dolor",
+    "aporte": {
+      "lista": 2,
+      "numero": 69
+    },
+    "catalogada": false
+  }
+]

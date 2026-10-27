@@ -30,7 +30,7 @@ export default defineConfig({
       enforce: 'pre',
       load(id) {
         const ruta = id.replace(/\\/g, '/')
-        if (ruta.endsWith('/src/catalogoFrases.js') && !MODOS.completarFrase) return 'export const demoFrases=false; export const catalogoFrases=[]; export const frasesDisponibles=false'
+        if (ruta.endsWith('/src/catalogoFrases.js') && !MODOS.completarFrase) return 'export const demoFrases=false; export const catalogoFrases=[]; export const catalogoIconicas=[]; export const aportesFrases=[]; export const generarFrases=()=>[]; export const frasesDisponibles=false'
         if (ruta.endsWith('/src/data/frases.ejemplos.json') && produccion) return '[]'
         if (ruta.endsWith('/src/data/frases.json')) return JSON.stringify(JSON.parse(readFileSync(id,'utf8')).filter(f=>f.aprobada===true && !f.ejemplo))
         if (id.replace(/\\/g, '/').endsWith('/src/data/interpretaciones.json')) {
