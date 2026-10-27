@@ -1,1 +1,1322 @@
-[]
+[
+  {
+    "cancion": "Gualicho",
+    "fragmento": "Con lo que cuesta armar un full",
+    "faltantes": [
+      3,
+      4,
+      6
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "llueve",
+          "baila",
+          "tose"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "verbo",
+        "distractores": [
+          "beber",
+          "coser",
+          "barrer"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "sustantivo",
+        "distractores": [
+          "cubo",
+          "lago",
+          "tren"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
+    "fragmento": "Y vaga con su corazón entre las manos",
+    "faltantes": [
+      1,
+      4,
+      7
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "verbo",
+        "distractores": [
+          "cose",
+          "rema",
+          "paga"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "tornillo",
+          "mantel",
+          "cuaderno"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "sustantivo",
+        "distractores": [
+          "techos",
+          "trenes",
+          "clavos"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Alien duce",
+    "fragmento": "Y en un edificio en llamas te encanó",
+    "faltantes": [
+      3,
+      5,
+      7
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "colador",
+          "tenedor",
+          "diccionario"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesas",
+          "cajas",
+          "tazas"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "verbo",
+        "distractores": [
+          "regó",
+          "bordó",
+          "tejió"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "La pequeña novia del Carioca",
+    "fragmento": "Te voy a robar esta canción de amor",
+    "faltantes": [
+      3,
+      5,
+      7
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "coser",
+          "pesar",
+          "remar"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "cuchara",
+          "maleta",
+          "botella"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "sustantivo",
+        "distractores": [
+          "cartón",
+          "fruta",
+          "cable"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "El templo de Momo",
+    "fragmento": "un amor salvaje y el pulso del trip.",
+    "faltantes": [
+      1,
+      2,
+      5
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "cartón",
+          "fruta",
+          "cable"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "adjetivo",
+        "distractores": [
+          "redondo",
+          "rayado",
+          "dorado"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "balde",
+          "plato",
+          "vaso"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Una piba con la remera de Greenpeace",
+    "fragmento": "Y, sin embargo, mi mundo termina en ella",
+    "faltantes": [
+      4,
+      5
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "papel",
+          "queso",
+          "cajón"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "verbo",
+        "distractores": [
+          "factura",
+          "despega",
+          "cocina"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "La murga de los renegados",
+    "fragmento": "Y la murga nos vuelve a gritar",
+    "faltantes": [
+      2,
+      4,
+      6
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "pluma",
+          "rueda",
+          "tarta"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "verbo",
+        "distractores": [
+          "barre",
+          "riega",
+          "mastica"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "verbo",
+        "distractores": [
+          "coser",
+          "tejer",
+          "medir"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Morta punto com",
+    "fragmento": "Llenan de mentiras su oreja desde un celular",
+    "faltantes": [
+      0,
+      2,
+      4
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 0,
+        "clase": "verbo",
+        "distractores": [
+          "saltan",
+          "lloran",
+          "duermen"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "cucharas",
+          "carpetas",
+          "galletas"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesa",
+          "rueda",
+          "bolsa"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Pool, Averna y Papusa",
+    "fragmento": "Lo echó de la cabina y se desvió",
+    "faltantes": [
+      1,
+      4,
+      7
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "verbo",
+        "distractores": [
+          "cosió",
+          "regó",
+          "tejió"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "cocina",
+          "oficina",
+          "maleta"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "verbo",
+        "distractores": [
+          "cantó",
+          "cosió",
+          "pesó"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Ji ji ji",
+    "fragmento": "una noche de cristal que se hace añicos.",
+    "faltantes": [
+      1,
+      3,
+      7
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "silla",
+          "bolsa",
+          "mesa"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "cartón",
+          "caucho",
+          "algodón"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "sustantivo",
+        "distractores": [
+          "botones",
+          "vasijas",
+          "cadenas"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Juguetes perdidos",
+    "fragmento": "-Vas a robarle el gorro al diablo, así",
+    "faltantes": [
+      2,
+      4,
+      6
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "coserle",
+          "pesarle",
+          "medirle"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "balde",
+          "plato",
+          "libro"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "sustantivo",
+        "distractores": [
+          "mantel",
+          "cajón",
+          "papel"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "La bestia pop",
+    "fragmento": "que enciende en sueños la vigilia",
+    "faltantes": [
+      1,
+      3,
+      5
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "verbo",
+        "distractores": [
+          "estaciona",
+          "factura",
+          "desayuna"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "botones",
+          "tornillos",
+          "pelotas"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "cuchara",
+          "maleta",
+          "ventana"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Todo un palo",
+    "fragmento": "¿Qué podría ser peor? (eso no me arregla...)",
+    "faltantes": [
+      1,
+      3,
+      7
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "verbo",
+        "distractores": [
+          "cosería",
+          "pagaría",
+          "regaría"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "adjetivo",
+        "distractores": [
+          "azul",
+          "dulce",
+          "liso"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "verbo",
+        "distractores": [
+          "taladra",
+          "cocina",
+          "factura"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Motor psico",
+    "fragmento": "lo que debes, cómo puedes quedártelo.",
+    "faltantes": [
+      2,
+      4,
+      5
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "cantas",
+          "tejes",
+          "remas"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "verbo",
+        "distractores": [
+          "lloras",
+          "cocinas",
+          "cobras"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "verbo",
+        "distractores": [
+          "bordártelo",
+          "pesártelo",
+          "cosértelo"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "El pibe de los astilleros",
+    "fragmento": "El pibe de los astilleros nunca se rendía,",
+    "faltantes": [
+      1,
+      4,
+      7
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "vaso",
+          "cable",
+          "tren"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "calendarios",
+          "termómetros",
+          "sacacorchos"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "verbo",
+        "distractores": [
+          "cosía",
+          "regaba",
+          "tejía"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Esa estrella era mi lujo",
+    "fragmento": "metió mi rock'n roll bajo éste pulso.",
+    "faltantes": [
+      0,
+      6
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 0,
+        "clase": "verbo",
+        "distractores": [
+          "cosió",
+          "regó",
+          "tejió"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "sustantivo",
+        "distractores": [
+          "balde",
+          "plato",
+          "vaso"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Etiqueta negra",
+    "fragmento": "si su nariz crecía de tamaño, prometía más.",
+    "faltantes": [
+      2,
+      3,
+      6
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesa",
+          "caja",
+          "rueda"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "bordaba",
+          "cantaba",
+          "cosía"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "verbo",
+        "distractores": [
+          "horneaba",
+          "facturaba",
+          "taladraba"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Vencedores vencidos",
+    "fragmento": "con la costumbre de no contentarse con los restos.",
+    "faltantes": [
+      2,
+      5,
+      8
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "cafetera",
+          "baldosa",
+          "servilleta"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "verbo",
+        "distractores": [
+          "estacionarse",
+          "abotonarse",
+          "despeinarse"
+        ]
+      },
+      {
+        "indice": 8,
+        "clase": "sustantivo",
+        "distractores": [
+          "clavos",
+          "vasos",
+          "manteles"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Un ángel para tu soledad",
+    "fragmento": "y las llamas en pena invaden tu cuerpo",
+    "faltantes": [
+      2,
+      5,
+      7
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesas",
+          "cajas",
+          "tazas"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "verbo",
+        "distractores": [
+          "planchan",
+          "cosen",
+          "taladran"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "sustantivo",
+        "distractores": [
+          "papel",
+          "clavo",
+          "cuaderno"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Ropa sucia",
+    "fragmento": "¡Ahora! ¡ya mismo! puedo ajustar un guión",
+    "faltantes": [
+      3,
+      4,
+      6
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "tejo",
+          "remo",
+          "barro"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "verbo",
+        "distractores": [
+          "cocinar",
+          "barrer",
+          "bordar"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "sustantivo",
+        "distractores": [
+          "plato",
+          "balde",
+          "vaso"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Un poco de amor francés",
+    "fragmento": "(no es sincera, pero te gusta oírla...)",
+    "faltantes": [
+      2,
+      5,
+      6
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "adjetivo",
+        "distractores": [
+          "redonda",
+          "rayada",
+          "dorada"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "verbo",
+        "distractores": [
+          "barre",
+          "cose",
+          "pesa"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "verbo",
+        "distractores": [
+          "pesarla",
+          "coserla",
+          "regarla"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Masacre en el puticlub",
+    "fragmento": "(puso un huevo y la cosa explotó).",
+    "faltantes": [
+      0,
+      2,
+      6
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 0,
+        "clase": "verbo",
+        "distractores": [
+          "cosió",
+          "regó",
+          "tejió"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "clavo",
+          "plato",
+          "vaso"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "verbo",
+        "distractores": [
+          "bordó",
+          "cantó",
+          "tejió"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "La parabellum del buen psicópata",
+    "fragmento": "¡y el joven lobo quemándose de amor!",
+    "faltantes": [
+      2,
+      3,
+      4
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "adjetivo",
+        "distractores": [
+          "dulce",
+          "liso",
+          "azul"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "vaso",
+          "cable",
+          "tren"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "verbo",
+        "distractores": [
+          "abotonándose",
+          "estacionando",
+          "facturando"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Vamos las bandas",
+    "fragmento": "¿Y cuánto vale ser \"la banda nueva\"",
+    "faltantes": [
+      2,
+      5,
+      6
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "rema",
+          "cose",
+          "teje"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "mesa",
+          "bolsa",
+          "caja"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "adjetivo",
+        "distractores": [
+          "dulce",
+          "lisa",
+          "azul"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Preso en mi ciudad",
+    "fragmento": "Casi ya no llora, ¡atrapado en libertad!",
+    "faltantes": [
+      3,
+      4,
+      6
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "cose",
+          "teje",
+          "rema"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "adjetivo",
+        "distractores": [
+          "redondo",
+          "dorado",
+          "rayado"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "sustantivo",
+        "distractores": [
+          "cafetera",
+          "baldosa",
+          "mantelería"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Nuestro amo juega al esclavo",
+    "fragmento": "si nunca un perro mira al cielo.",
+    "faltantes": [
+      3,
+      4,
+      6
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "plato",
+          "vaso",
+          "libro"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "verbo",
+        "distractores": [
+          "cose",
+          "teje",
+          "pesa"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "sustantivo",
+        "distractores": [
+          "balde",
+          "vaso",
+          "papel"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Tarea fina",
+    "fragmento": "que echa hielo y brasas en mi corazón",
+    "faltantes": [
+      1,
+      2,
+      4
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "verbo",
+        "distractores": [
+          "cose",
+          "teje",
+          "pesa"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "papel",
+          "clavo",
+          "cable"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "clavos",
+          "vasos",
+          "libros"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Mi perro dinamita",
+    "fragmento": "Aquí y allá algún fueguito ensaya mi perro",
+    "faltantes": [
+      4,
+      5,
+      7
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "cuaderno",
+          "tornillo",
+          "mantel"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "verbo",
+        "distractores": [
+          "factura",
+          "plancha",
+          "taladra"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "sustantivo",
+        "distractores": [
+          "plato",
+          "vaso",
+          "libro"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Ya nadie va a escuchar tu remera",
+    "fragmento": "¡y alrededor del reloj tu estado de ánimo!",
+    "faltantes": [
+      3,
+      5,
+      7
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "balde",
+          "plato",
+          "libro"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "mantel",
+          "papel",
+          "clavo"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "sustantivo",
+        "distractores": [
+          "cajón",
+          "vaso",
+          "papel"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Me matan, Limón!",
+    "fragmento": "de la tarde y zumba feo algún moscón.",
+    "faltantes": [
+      2,
+      4,
+      7
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "bolsa",
+          "rueda",
+          "mesa"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "verbo",
+        "distractores": [
+          "cose",
+          "teje",
+          "rema"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "sustantivo",
+        "distractores": [
+          "clavo",
+          "plato",
+          "vaso"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Todo preso es político",
+    "fragmento": "Si esta cárcel sigue así",
+    "faltantes": [
+      2,
+      3
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "cafetera",
+          "maleta",
+          "carpeta"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "cose",
+          "teje",
+          "rema"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Aquella solitaria vaca cubana",
+    "fragmento": "salvada del motor eterno y justo a tiempo.",
+    "faltantes": [
+      0,
+      2,
+      3
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 0,
+        "clase": "adjetivo",
+        "distractores": [
+          "redonda",
+          "dorada",
+          "rayada"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "papel",
+          "clavo",
+          "cable"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "adjetivo",
+        "distractores": [
+          "dulce",
+          "liso",
+          "azul"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Salando las heridas",
+    "fragmento": "y ya no esperás que te jueguen limpio",
+    "faltantes": [
+      3,
+      6
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "facturás",
+          "planchás",
+          "taladrás"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "verbo",
+        "distractores": [
+          "cocinen",
+          "planchen",
+          "taladren"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  },
+  {
+    "cancion": "Blues de la artillería",
+    "fragmento": "si ésa moneda hablara más de la cuenta...",
+    "faltantes": [
+      2,
+      3,
+      7
+    ],
+    "aprobada": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "sustantivo",
+        "distractores": [
+          "maleta",
+          "cuchara",
+          "botella"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "cosiera",
+          "regara",
+          "tejiera"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "sustantivo",
+        "distractores": [
+          "rueda",
+          "mesa",
+          "bolsa"
+        ]
+      }
+    ],
+    "revisionOpciones": true
+  }
+]

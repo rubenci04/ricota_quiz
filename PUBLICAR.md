@@ -25,7 +25,7 @@ Todo se cambia en **`src/config.js`**, salvo lo que se indica. Estado actual:
 - El nombre, la descripción y la URL salen de `src/config.js` hacia `index.html` (título, Open Graph, Twitter) y el manifest de la PWA.
 - `public/og.png` tiene el nombre dibujado: si cambiás el nombre, hay que rehacerla. Los íconos no llevan texto.
 - Música: el reproductor usa la lista de YouTube de `PLAYLIST_YOUTUBE` (si queda vacía, usa `src/data/musica.json`), arranca desde un video al azar y sigue en orden aleatorio y en bucle. Salta al siguiente video si uno no se puede incrustar. Cambiar `PLAYLIST_YOUTUBE` ajusta solo la página de Privacidad.
-- `public/_headers` evita que el HTML, el service worker y el manifest queden en caché vieja; la PWA se actualiza sola (`autoUpdate`).
+- `public/_headers` configura la revalidación del HTML, service worker y manifest. La PWA avisa cuando hay una versión nueva y la activa al pulsar Actualizar.
 - Página 404: `wrangler.jsonc` ya configura `assets.not_found_handling = "404-page"` y `assets.directory = "./dist"`. No cambiar ese archivo, el Worker ni `URL_JUEGO` en estas entregas. Los pushes a `main` activan el despliegue automático. Los desafíos viajan en el hash y el servidor recibe `/`.
 - Las efemérides (`src/data/efemerides.json`) solo incluyen fechas confirmadas con fuente.
 - Fuera del build quedan `datos-pendientes/`, `.claude/` y las letras privadas (que además están fuera del proyecto).
@@ -40,14 +40,14 @@ Se mide el ritmo de cuadros cada 1,5 segundos. Por debajo de 30 fps se reducen p
 
 QA: `node scripts/qa-bonus-fondo.mjs` ejercita el canvas con disponibilidad de aceleración simulada y el fallo de canvas con respaldo CSS. En Chromium se verificó movimiento real y unos 60 fps. Firefox 157 se descargó para la prueba, pero Windows rechazó iniciar el ejecutable con `spawn UNKNOWN`; queda pendiente verificarlo en una máquina que lo ejecute. Esto no demuestra compatibilidad real con Firefox.
 
-## Bonus locales (esquema 9)
+## Frases, ayudas y versión actual
 
-Moneda diaria por perfil y día de Buenos Aires; otra moneda con probabilidad de 1/4 por buen resultado. Cada partida queda registrada para impedir repetir su bonus. El dado se ofrece una vez por primera partida de cada juego, por rachas 3/7/30 y al resolver todas las canciones cargadas de un disco mediante Adiviná, Dicho, Reto, Sopa o Crucigrama. «Disco completado» se refiere al catálogo de canciones del juego, que puede ser parcial respecto del disco real.
+El catálogo aprobado contiene 34 fragmentos de 34 canciones. La causa de «Próximamente» era el banco vacío, no el interruptor. El despliegue anterior se verificó como exitoso en GitHub/Cloudflare. El detalle de formato, autorización, selección y QA está en [FRASES.md](FRASES.md).
 
-Inventario máximo cinco de cada tipo, sin compras ni dinero. Las recompensas pendientes sobreviven al cambio de perfil y a la recarga. ⭐ suma una copia del puntaje de la siguiente partida terminada al contador de bonus del perfil; no cambia máximos, niveles, semillas ni resultados base de los desafíos. Las otras ayudas aparecen según su utilidad: pistas en todos los juegos, 50/50 en Trivia y frases Casual, segunda oportunidad en Trivia, frases y el reto en curso. No se modifica Ahorcado. El registro de partidas con bonus crece con las partidas para impedir reclamar dos veces incluso tras muchas sesiones.
+El esquema 10 retira el inventario y los bonus diarios/de fin/hitos. Conserva los logros anteriores y migra estadísticas. La suerte ofrece pistas dentro de la partida, con dos tiradas en Casual y una en Ricotero, y créditos separados por perfil y clave de partida.
 
-La migración conserva v5/v6/v7/v8 y respalda el almacenamiento v8 antes de guardar v9. Comprobación: `node scripts/ejecutar.mjs scripts/verificar-bonus.mjs`.
+Ayuda muestra fecha UTC y hash generados en el build. Workers Builds inyecta [WORKERS_CI_COMMIT_SHA](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/#default-variables); Git se usa como respaldo local. No se guarda el sello en un archivo versionado, para evitar un hash que se invalide a sí mismo.
 
-Dicho y Adiviná colocan aproximadamente 40% de letras en Casual (mínimo dos y cada inicial) y 15% en Ricotero (mínimo una, de la palabra más larga), mediante semilla. Casual tiene base dos puntos y Ricotero tres, con descuento por pistas pedidas y mínimo uno. Los desafíos antiguos mantienen base tres; los nuevos identifican la regla en el plan del enlace (`reglasAdivinanza: 2`). Las letras iniciales no consumen pistas ni descuentan puntos.
+La PWA usa actualización con aviso. Se registra /sw.js sin caché HTTP para la comprobación, escucha un SW nuevo y muestra «Hay una versión nueva · Actualizar». El botón manda SKIP_WAITING y recarga al cambiar el controlador. Una PWA vieja puede mostrar una pantalla anterior hasta recibir la nueva; el sello de Ayuda permite distinguirlas. El aviso se probó con dos SW reales consecutivos.
 
-Auditoría sin imprimir letras: `node scripts/auditar-letras.mjs <carpeta-privada>`. Compara ventanas de 20 caracteres de las cadenas del bundle con los archivos privados, también cruzando saltos de línea. Excluye explícitamente los fragmentos aprobados y los títulos/autores públicos, que son metadatos y se cuentan aparte. Exige cero coincidencias restantes y comprueba rutas privadas, ejemplos DEV e interpretaciones no verificadas. El informe contiene solo cantidades (`qa/auditoria-letras.json`).
+Auditoría: node scripts/auditar-letras.mjs <carpeta-privada>. Exige cero ventanas de veinte caracteres fuera de fragmentos aprobados y metadatos públicos (títulos/autores), comprueba cada fuente como una sola línea y excluye rutas privadas, ejemplos DEV e interpretaciones sin verificar. No imprime contenido privado.

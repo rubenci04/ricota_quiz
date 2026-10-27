@@ -5,7 +5,7 @@ import { prepararLetras } from './letrasIniciales.js'
 import { nivelTitulo } from './dificultad.js'
 import Teclado from './Teclado.jsx'
 import Resultado from './Resultado.jsx'
-import { Comodines } from './Bonus.jsx'
+import AyudaPartida, { useSuertePartida } from './AyudaPartida.jsx'
 import Cabecera from './Cabecera.jsx'
 import SelectorDisco from './SelectorDisco.jsx'
 import { sonar } from './sonido.js'
@@ -64,6 +64,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
   const [tema, setTema] = useState(desafio ? desafio.tema : 'todos')
   const [semilla, setSemilla] = useState(inicial.current?.semilla ?? '')
   const [ronda, setRonda] = useState(inicial.current)
+  const suerte = useSuertePartida(`adivinanzas:${semilla}:${modo}:${dif}`, dif)
   const [letras, setLetras] = useState(ayudaInicial.letras)
   const [fijas, setFijas] = useState(ayudaInicial.fijas)
   const [iniciales, setIniciales] = useState(ayudaInicial.iniciales)
@@ -225,7 +226,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
     let texto = `✓ ${buenas} ${buenas === 1 ? 'letra correcta' : 'letras correctas'} · ✗ ${malas} ${malas === 1 ? 'incorrecta' : 'incorrectas'}. ${frase(malas ? 'error' : 'acierto')}`
     // pista automática tras 2 intentos fallidos seguidos: una letra gratis, sin restar puntos
     const seguidos = malas ? erroresSeguidos + 1 : 0
-    if (seguidos >= ERRORES_PARA_PISTA) {
+    if (seguidos >= ERRORES_PARA_PISTA && pistasLetra < maxPistas) {
       const nuevas = revelarLetra(letras)
       if (nuevas) {
         sonar('pista')
@@ -239,10 +240,10 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
     setMensaje(texto)
   }
 
-  const pistaDeLetra = () => {
-    if (resultado || pistasLetra >= maxPistas) return
+  const pistaDeLetra = (extra = false) => {
+    if (resultado || (!extra && pistasLetra >= maxPistas)) return false
     const nuevas = revelarLetra(letras)
-    if (!nuevas) return
+    if (!nuevas) return false
     setPistasLetra(pistasLetra + 1)
     sonar('pista')
     if (!terminar(nuevas, pistasLetra + 1)) setMensaje(`Pista: te revelé una letra. ${frase('pista')}`)
@@ -324,7 +325,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
       />
         {!desafio && <div className="segmentado" role="group" aria-label="Dificultad">{DIFICULTADES.map(d => <button key={d.id} aria-pressed={ronda.dif===d.id} onClick={() => { setDif(d.id); empezar({ modo: inicio, categoria: 'canciones', difi: d.id }) }}>{d.icono} {d.etiqueta}</button>)}</div>}
 
-      {!resultado && <Comodines acciones={{pista:()=>{const nuevas=revelarLetra(letras);if(!nuevas)return false;terminar(nuevas,pistasLetra)}}} />}
+      {!resultado && <AyudaPartida suerte={suerte} base={Math.max(0,maxPistas-pistasLetra)} onPista={()=>pistaDeLetra(true)} errores={erroresSeguidos} />}
       <ul className="chips-juego" aria-label="Partida">
         <li>{modoInfo.icono} {modoInfo.etiqueta}</li>
         <li>{categoria.icono} {categoria.etiqueta}</li>
@@ -355,7 +356,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
       <div className="casillas" aria-label="Respuesta">{casillas}</div>
       <p className="feedback" role="status" aria-live="polite">{mensaje}</p>
       <p className="contador-pistas">
-        Pistas de letra: <strong>{maxPistas - pistasLetra}</strong> · Otras pistas: <strong>{extraDisponibles}</strong>
+        Pistas de letra: <strong>{Math.max(0,maxPistas - pistasLetra)}</strong> · Otras pistas: <strong>{extraDisponibles}</strong>
       </p>
 
       {!resultado && (
@@ -365,9 +366,6 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
             <button className="nueva" onClick={comprobar}>Comprobar</button>
           </div>
           <div className="herramientas">
-            <button className="secundario" onClick={pistaDeLetra} disabled={pistasLetra >= maxPistas}>
-              💡 Pista de letra ({maxPistas - pistasLetra})
-            </button>
             <button className="secundario" onClick={otraPista} disabled={extraDisponibles <= 0}>
               ➕ Otra pista ({extraDisponibles})
             </button>

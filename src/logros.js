@@ -3,9 +3,9 @@ import { guardar, leer, MODOS_JUGABLES, suscribir } from './storage.js'
 import { fechaBA } from './reto.js'
 
 export const LOGROS = [
-  { id: 'moneda1', nombre: 'Primera vuelta', descripcion: 'Probá la moneda ricotera.', ok: e=>e.bonus.monedasJugadas>=1 },
-  { id: 'moneda5', nombre: 'Cinco caras', descripcion: 'Acertá cinco monedas.', ok: e=>e.bonus.monedasAcertadas>=5 },
-  { id: 'dado6', nombre: 'Seis de suerte', descripcion: 'Sacá un seis en el dado.', ok: e=>e.bonus.seises>=1 },
+  { id: 'moneda1', nombre: 'Primera vuelta', descripcion: 'Hacé tu primera tirada de moneda o dado.', ok: e=>e.suerte.tiradas>=1||e.suerte.monedasJugadas>=1 },
+  { id: 'moneda5', nombre: 'Cinco caras', descripcion: 'Acertá cinco monedas.', ok: e=>e.suerte.monedasAcertadas>=5 },
+  { id: 'dado6', nombre: 'Seis de suerte', descripcion: 'Sacá un seis en el dado.', ok: e=>e.suerte.seises>=1 },
   { id: 'frases10', nombre: 'Palabra precisa', descripcion: 'Completá diez frases sin pistas en una ronda.', ok: e => e.frasesSinPistas },
   { id: 'primera', nombre: 'Primer pogo', descripcion: 'Terminá tu primera partida, en cualquier modo.', ok: (e) => e.partidas >= 1 },
   { id: 'trivia5', nombre: 'Fanático de ley', descripcion: 'Superá el nivel 5 de la trivia.', ok: (e) => e.nivel >= 6 || e.niveles.trivia[5]?.mejor >= 6 },

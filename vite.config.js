@@ -2,10 +2,14 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import { DESCRIPCION, NOMBRE_JUEGO, URL_JUEGO, MODOS } from './src/config.js'
+import { execFileSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 
 // Reemplaza {{NOMBRE}}, {{DESCRIPCION}} y {{URL}} en index.html con los valores de src/config.js
 const REEMPLAZOS = { '{{NOMBRE}}': NOMBRE_JUEGO, '{{DESCRIPCION}}': DESCRIPCION, '{{URL}}': URL_JUEGO }
+let hashBuild = process.env.WORKERS_CI_COMMIT_SHA || process.env.CF_PAGES_COMMIT_SHA
+try { hashBuild ||= execFileSync('git',['rev-parse','--short=7','HEAD'],{encoding:'utf8'}).trim() } catch { hashBuild ||= 'local' }
+const versionBuild = { hash: hashBuild.slice(0,7), fecha: new Date().toISOString().slice(0,10) }
 let produccion = false
 function datosDeConfig() {
   return {
@@ -18,6 +22,7 @@ function datosDeConfig() {
 }
 
 export default defineConfig({
+  define: { __VERSION_JUEGO__: JSON.stringify(versionBuild) },
   plugins: [
     {
       name: 'catalogos-publicables',
@@ -36,7 +41,8 @@ export default defineConfig({
     react(),
     datosDeConfig(),
     VitePWA({
-      registerType: 'autoUpdate', // una versión nueva reemplaza a la anterior sin pedir nada
+      registerType: 'prompt',
+      injectRegister: null,
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
         id: '/',
@@ -59,7 +65,7 @@ export default defineConfig({
       workbox: {
         cleanupOutdatedCaches: true, // borra las cachés de versiones anteriores
         clientsClaim: true,
-        skipWaiting: true,
+        skipWaiting: false,
         navigateFallback: 'index.html',
         navigateFallbackAllowlist: [/^\/$/], // solo la portada usa el HTML guardado; el resto cae en la página 404
         globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest}'],

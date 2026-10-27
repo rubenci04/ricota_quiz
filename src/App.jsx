@@ -20,7 +20,7 @@ import { DESARROLLADOR, MODOS, NOMBRE_JUEGO } from './config.js'
 import { alDesbloquear, iniciarLogros } from './logros.js'
 import { fechaBA, rachaCortada, rachaVigente } from './reto.js'
 import Musica from './Musica.jsx'
-import Bonus from './Bonus.jsx'
+import Actualizacion from './Actualizacion.jsx'
 import Fondo from './Fondo.jsx'
 import { Contador } from './Animados.jsx'
 import {
@@ -196,7 +196,6 @@ export default function App() {
       <main className="pantalla inicio" key="menu">
         <h1 className="logo">{NOMBRE_JUEGO}</h1>
         <p className="sub">Patricio Rey y sus Redonditos de Ricota</p>
-        <Bonus diaria />
         <button className="reto-banner" onClick={() => elegirModo('reto')}>📅 <strong>Reto del día</strong><small>Una canción por día, igual para todos →</small></button>
         <nav className="menu-grid" aria-label="Modos de juego" onPointerMove={inclinar} onPointerDown={inclinar} onPointerLeave={enderezar} onPointerUp={enderezar} onPointerCancel={enderezar} onPointerOut={enderezar}>
           {MODOS_MENU.map((m, i) => (
@@ -292,6 +291,7 @@ export default function App() {
       {navegacion && <div className="navegacion-menu"><nav className="pestanas-menu" aria-label="Secciones principales">
         {[[null,'🎮 Juegos'],['discografia','📖 Archivo'],['logros','🏆 Logros']].map(([id,t])=><button key={id??'juegos'} aria-current={modo===id?'page':undefined} onClick={()=>setModo(id)}>{t}</button>)}
       </nav><button className="secundario ayuda-visible" onClick={()=>setVerTutorial(true)}>Ayuda y ajustes</button></div>}
+      <Actualizacion />
       {contenido}
       {leerPerfiles().errorPersistencia && <p className="aviso-amable" role="alert">No se pudo guardar en este navegador. El avance actual solo está en memoria; evitá cerrar o recargar.</p>}
       <div className="avisos-logros" role="status" aria-live="polite">

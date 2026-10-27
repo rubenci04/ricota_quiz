@@ -54,37 +54,9 @@ try {
           assert.notEqual(antes,despues,'Canvas no cambia')
         }
         await page.getByRole('button',{name:'Saltar',exact:true}).click()
-        await page.getByRole('button',{name:'Elegir P',exact:true}).click()
-        assert.ok(await page.getByText('Vuelve mañana',{exact:true}).count())
-        const giro=await page.locator('.bonus-objeto').evaluate(e=>getComputedStyle(e).animationName)
-        assert.equal(giro,'none','Bonus debe respetar reducir movimiento')
-        assert.equal(await page.getByRole('button',{name:'Elegir P',exact:true}).count(),0)
-        await page.getByRole('navigation',{name:'Modos de juego'}).getByRole('button',{name:/5\. Trivia/}).click()
-        await page.getByRole('button',{name:/Nivel 1/}).click()
-        assert.ok(await page.getByText(/Comodines \(/).count())
-        await page.getByText(/Comodines \(/).click()
-        const panelComodines=page.getByRole('region',{name:'Comodines virtuales'})
-        const inventario=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('ricota_quiz')).perfiles[0].progreso.bonus.inventario)
-        const inicial=await inventario()
-        await panelComodines.getByRole('button',{name:/💡 Pista extra/}).click()
-        await panelComodines.getByRole('button',{name:/✂️ 50\/50/}).click()
-        await panelComodines.getByRole('button',{name:/⭐ Puntos dobles/}).click()
-        const despues=await inventario()
-        assert.equal(despues.pista,inicial.pista-1);assert.equal(despues.mitad,inicial.mitad-1);assert.equal(despues.doble,inicial.doble-1)
-        assert.equal(await page.locator('.opcion.oculta').count(),2)
-        for(let n=0;n<10;n++){
-          await page.locator('.opcion:not(:disabled)').first().click()
-          if(await page.locator('.opcion.mal').count()){
-            await panelComodines.getByRole('button',{name:/🔁 Segunda oportunidad/}).click()
-            assert.equal((await inventario()).oportunidad,inicial.oportunidad-1)
-            assert.equal(await page.locator('.opcion.mal').count(),0)
-            break
-          }
-          await page.locator('main').getByRole('button',{name:/Siguiente|Terminar/}).click()
-        }
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false)
         assert.deepEqual(errores,[])
-        informe.push({navegador:nombre,respaldo,estado,overrideReducirMovimiento:true,bonusSinGiro:true,errores:0})
+        informe.push({navegador:nombre,respaldo,estado,overrideReducirMovimiento:true,errores:0})
         await context.close()
       }
     }finally{await browser.close()}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Dificultad from './Dificultad.jsx'
-import { Comodines } from './Bonus.jsx'
+import AyudaPartida, { useSuertePartida } from './AyudaPartida.jsx'
 import Cabecera from './Cabecera.jsx'
 import { PREGUNTAS_POR_NIVEL, armarNivel, armarNivelBanda, curiosidadAlAzar } from './trivia.js'
 import { LIMITES, PUNTOS_PARA_PASAR, iniciarNivel, terminarNivel, maximoAlcanzado } from './niveles.js'
@@ -25,6 +25,7 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
   const [nivel, setNivel] = useState(desafio ? desafio.nivel : 1)
   const temaId = desafio ? desafio.tema : 'todos'
   const [semilla, setSemilla] = useState(desafio ? desafio.semilla : '') // con la misma semilla salen las mismas preguntas
+  const suerte = useSuertePartida(`trivia:${modo}:${semilla}:${nivel}:${dif}`, dif)
   const [preguntas, setPreguntas] = useState(() =>
     desafio ? (banda ? armarNivelBanda(desafio.nivel, desafio.semilla, version, desafio.plan, dif) : armarNivel(desafio.nivel, desafio.semilla, desafio.tema, version, desafio.plan, dif)) : [],
   )
@@ -169,10 +170,10 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
   return (
     <main className="pantalla" key="jugando">
       <Cabecera titulo={<>Nivel {nivel}</>} extra={<>{i + 1}/{preguntas.length}</>} onVolver={() => (desafio ? onVolver() : setVista('niveles'))} onMenu={onMenu} />
-      <Comodines acciones={{
-        pista:()=>{if(elegida!==null||verAyuda||!p.ayuda)return false;setVerAyuda(true)},
-        mitad:()=>{if(elegida!==null||ocultas.length>=2)return false;setOcultas(p.opciones.map((_,k)=>k).filter(k=>k!==p.correcta).slice(0,2))},
-        oportunidad:()=>{if(elegida===null||elegida===p.correcta)return false;setElegida(null);setOcultas([]);setErroresSeguidos(0)}
+      <AyudaPartida suerte={suerte} base={verAyuda?0:1} errores={erroresSeguidos} disabled={elegida!==null} onPista={()=>{
+        if(elegida!==null)return false
+        if(!verAyuda){setVerAyuda(true);if(!p.ayuda){const k=p.opciones.findIndex((_,k)=>k!==p.correcta&&!ocultas.includes(k));if(k>=0)setOcultas([...ocultas,k])}return true}
+        const k=p.opciones.findIndex((_,k)=>k!==p.correcta&&!ocultas.includes(k));if(k<0)return false;setOcultas([...ocultas,k])
       }} />
       <Barra valor={i + (elegida !== null ? 1 : 0)} max={preguntas.length} etiqueta="Progreso del nivel" />
       <div className="pregunta">
@@ -189,9 +190,6 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
         <div className="herramientas">
           <button className="secundario" onClick={usarComodin} disabled={comodinUsado}>
             ✂️ 50/50 ({comodinUsado ? 0 : 1})
-          </button>
-          <button className="secundario" onClick={() => { setVerAyuda(true); sonar('pista') }} disabled={verAyuda}>
-            💡 Pista ({verAyuda ? 0 : 1})
           </button>
         </div>
       )}

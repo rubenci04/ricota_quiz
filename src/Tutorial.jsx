@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { guardar } from './storage.js'
+import { VERSION_JUEGO } from './version.js'
 import { NOMBRE_JUEGO } from './config.js'
 
 const TARJETAS = [
@@ -29,6 +30,7 @@ export default function Tutorial({ onTerminar, estadoFondo }) {
 
   return (
     <main className="pantalla inicio" key="tutorial">
+      <p className="version-juego">Versión {VERSION_JUEGO.fecha} · {VERSION_JUEGO.hash}</p>
       <p role="status">Fondo: {estadoFondo}</p>
       <p className="pasos" aria-label={`Tarjeta ${paso + 1} de ${TARJETAS.length}`}>
         {TARJETAS.map((_, i) => (

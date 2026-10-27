@@ -1,7 +1,7 @@
 // Progreso y preferencias: se leen una sola vez al iniciar y viven en memoria.
 const CLAVE = 'ricota_quiz'
 const CLAVE_SONIDO_ANTERIOR = 'ricota_quiz_sonido' // versión previa guardaba el sonido aparte
-const VERSION = 9
+const VERSION = 10
 const PREFERENCIAS = ['sonido', 'volumen', 'vibracion', 'tutorial', 'dificultad', 'fondo', 'fondoForzado']
 
 export function normalizarAlias(valor) {
@@ -59,12 +59,11 @@ function validarLogros(v) {
 
 // n: entero >= min · b: booleano · s: texto entre valores válidos · f: función que valida y normaliza
 const ESQUEMA = {
-  bonus: { tipo: 'f', f: v => {
-    const n=(x,max=Number.MAX_SAFE_INTEGER)=>Number.isFinite(x)?Math.max(0,Math.min(max,Math.floor(x))):0
-    const ids=(a,max)=>Array.isArray(a)?[...new Set(a.filter(x=>typeof x==='string'&&/^[\w:.-]{1,160}$/.test(x)))].slice(-max):[]
-    return { inventario:Object.fromEntries(['pista','mitad','oportunidad','doble'].map(t=>[t,n(v?.inventario?.[t],5)])),
-      monedaDia:esFecha(v?.monedaDia)?v.monedaDia:'',monedasJugadas:n(v?.monedasJugadas),monedasAcertadas:n(v?.monedasAcertadas),seises:n(v?.seises),puntos:n(v?.puntos),doble:v?.doble===true,
-      canciones:ids(v?.canciones,1000),partidas:ids(v?.partidas,Infinity),hitos:ids(v?.hitos,300),dados:ids(v?.dados,300),monedas:ids(v?.monedas,Infinity),elecciones:n(v?.elecciones,300) }
+  suerte: { tipo: 'f', f: v => {
+    const n=x=>Number.isFinite(x)?Math.max(0,Math.floor(x)):0
+    const partidas={}
+    for(const [clave,p] of Object.entries(v?.partidas??{}))if(/^[a-z0-9:._-]{1,160}$/i.test(clave)&&p&&typeof p==='object')partidas[clave]={tiradas:Math.min(2,n(p.tiradas)),pistas:Math.min(6,n(p.pistas))}
+    return {tiradas:n(v?.tiradas),monedasJugadas:n(v?.monedasJugadas),monedasAcertadas:n(v?.monedasAcertadas),seises:n(v?.seises),partidas}
   } },
   historial: { tipo: 'f', f: (v) => {
     const resultado = {}
@@ -116,7 +115,7 @@ function validar(crudo) {
   const origen = crudo && typeof crudo === 'object' && !Array.isArray(crudo) ? crudo : {}
   const limpio = {}
   for (const [campo, regla] of Object.entries(ESQUEMA)) {
-    const v = origen[campo]
+    const v = campo === 'suerte' && !origen.suerte ? { monedasJugadas: origen.bonus?.monedasJugadas, monedasAcertadas: origen.bonus?.monedasAcertadas, seises: origen.bonus?.seises } : origen[campo]
     if (regla.tipo === 'n') limpio[campo] = Number.isFinite(v) ? Math.min(regla.max ?? Infinity, Math.max(regla.min, Math.floor(v))) : regla.def
     else if (regla.tipo === 'b') limpio[campo] = typeof v === 'boolean' ? v : regla.def
     else if (regla.tipo === 's') limpio[campo] = regla.validos.includes(v) ? v : regla.def
@@ -132,7 +131,7 @@ const progresoDe = (v) => Object.fromEntries(Object.entries(validar(v)).filter((
 function cargar() {
   try {
     const guardado = JSON.parse(localStorage.getItem(CLAVE) || 'null')
-    if ([6, 7, 8, VERSION].includes(guardado?.v) && Array.isArray(guardado.perfiles)) {
+    if ([6, 7, 8, 9, VERSION].includes(guardado?.v) && Array.isArray(guardado.perfiles)) {
       const perfiles = []
       for (const p of guardado.perfiles) {
         try {
@@ -165,7 +164,7 @@ function publicar() {
     const anterior = localStorage.getItem(CLAVE)
     let versionAnterior
     try { versionAnterior = JSON.parse(anterior)?.v } catch { /* también respalda datos dañados */ }
-    const respaldo = `${CLAVE}_pre_v${versionAnterior === 8 ? 9 : versionAnterior === 7 ? 8 : versionAnterior === 6 ? 7 : 6}`
+    const respaldo = `${CLAVE}_pre_v${versionAnterior === 9 ? 10 : versionAnterior === 8 ? 9 : versionAnterior === 7 ? 8 : versionAnterior === 6 ? 7 : 6}`
     if (anterior && versionAnterior !== VERSION && !localStorage.getItem(respaldo)) {
       localStorage.setItem(respaldo, anterior)
     }

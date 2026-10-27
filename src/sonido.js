@@ -66,11 +66,17 @@ function tono(freq, inicio, duracion, tipo = 'sine', volumen = 0.15) {
 // tipos: clic, ok (acierto), error, pista, victoria
 export function sonar(tipo) {
   if (tipo !== 'clic') { try { if (leer().fondo) alSonido(tipo) } catch { /* los efectos visuales son opcionales */ } }
-  if (tipo === 'ok') vibrar(15)
+  if (tipo === 'giro') vibrar([12,35,12])
+  else if (tipo === 'caida') vibrar([20,35,40])
+  else if (tipo === 'ok') vibrar(15)
   else if (tipo === 'error') vibrar([40, 40, 40])
   if (!habilitado || !leer().sonido) return
   try {
-    if (tipo === 'clic') {
+    if (tipo === 'giro') {
+      ;[0,0.12,0.26,0.45,0.7,1.1,1.6].forEach((t,i)=>tono(180+i*45,t,0.055,'triangle',0.07))
+    } else if (tipo === 'caida') {
+      tono(110,0,0.12,'triangle',0.12); tono(220,0.15,0.08,'triangle',0.08); tono(440,0.3,0.14,'sine',0.06)
+    } else if (tipo === 'clic') {
       tono(700, 0, 0.05, 'square', 0.04)
     } else if (tipo === 'ok') {
       tono(660, 0, 0.12, 'triangle')

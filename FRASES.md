@@ -1,28 +1,42 @@
-# Completá la frase
+# Completá la frase y ayudas de suerte
 
-El catálogo `src/data/frases.json` permanece vacío hasta recibir aprobación explícita de contenido. La tarjeta muestra «Próximamente». Ningún texto privado se importa desde la aplicación.
+## Diagnóstico y contenido aprobado
 
-Cada entrada usa `cancion`, `fragmento` (4–8 palabras), `faltantes` (uno o dos índices de palabra, base cero) y `aprobada: true`. También se admiten palabras inequívocas en `faltantes`. El álbum se busca por título en el catálogo existente. Revisar manualmente que las cuatro opciones de Casual tengan una sola respuesta posible por sentido, además de la validación automática.
+La tarjeta estaba en «Próximamente» porque el catálogo tenía cero entradas aprobadas. El interruptor estaba encendido. El despliegue a2e48f3 había terminado correctamente; también podía verse una portada anterior por caché del navegador o service worker.
 
-Una ronda real necesita diez fragmentos de diez canciones diferentes y tres distractores de longitud similar por pregunta Casual. Con un banco insuficiente no se reciclan canciones. El historial prioriza material menos reciente; semilla y plan de historial viajan en los desafíos. Frases del día usa una semilla separada derivada de la fecha de Buenos Aires.
+La autorización nueva permite seleccionar hasta cuarenta fragmentos, uno por canción, de una sola línea de cinco a diez palabras. Se incorporaron **34 fragmentos de 34 canciones**, con dos o tres palabras de cuatro letras o más aptas para ocultar. Se descartaron seis candidatos iniciales por lenguaje, dobles sentidos o falta de huecos aptos. No se modificaron ni borraron los archivos privados.
 
-Los seis ejemplos inventados tienen `ejemplo: true`, solo sirven en desarrollo y permiten una demo de seis preguntas sin guardar progreso. El cargador de Vite los elimina en producción. Con `MODOS.completarFrase: false`, Vite sustituye el catálogo por uno vacío y no incorpora `frases.json` al grafo de módulos.
+Cada entrada tiene cancion, fragmento, aprobada, huecos y revisionOpciones. Cada hueco define indice (base cero), clase (sustantivo/verbo/adjetivo) y tres distractores curados. La revisión de sentido y sinónimos es editorial; la validación automática comprueba cuatro opciones normalizadas distintas, una sola coincidencia con la respuesta canónica, longitudes aproximadas, índices y clases declaradas. No se genera contenido ni se mezclan palabras arbitrarias como distractores.
 
-La versión 8 del almacenamiento conserva perfiles, preferencias, niveles y récords de Trivia/La banda y todos los historiales anteriores. Agrega partidas, récord y logro de frases por perfil. La banda sigue usando sus claves originales y sus enlaces antiguos.
+## Rondas
 
-Comprobaciones rápidas: `node scripts/ejecutar.mjs scripts/verificar-frases.mjs`, `node scripts/ejecutar.mjs scripts/verificar.mjs`, `node scripts/qa-ricotero.mjs`, `npm run build`, `npx wrangler deploy --dry-run`.
+Casual oculta dos palabras; tocá un hueco para ver sus cuatro opciones. Muestra el disco. Ricotero oculta dos o tres y usa casillas y teclado físico/en pantalla, sin contexto. Las respuestas admiten ausencia de tildes y N por Ñ. Dos fallos pueden revelar una letra mientras queden pistas; si no, se ofrece la suerte. Siempre hay un hueco dentro de la frase, no solamente al final. Después de responder se muestran canción y disco.
 
-También: `node scripts/qa-ricotero.mjs --dev` para la demo y `node scripts/verificar-flag-frases.mjs` para el flag apagado. QA pasó en 360, 375 y 1280 px, con recarga offline de Trivia y sin errores de página ni desbordes. Se verificaron 200 rondas del motor, migraciones v6/v7 a v8, aislamiento de perfiles y desafíos antiguos. Los resultados están en `qa/ricotero-produccion.json` y `qa/ricotero-dev.json`.
+El motor elige hasta diez canciones distintas, prioriza las menos recientes y acorta la ronda si el banco recibido es menor. El menú se habilita desde diez canciones válidas. Las rondas normales guardan historial por perfil; los desafíos llevan semilla y plan, sin alias. Frases del día usa una semilla por fecha de Buenos Aires. Cada frase completamente correcta vale un punto. Se conservan récord, partidas, compartir y logro de diez sin pistas.
 
-Archivos de la entrega:
+MODOS.completarFrase=false oculta el juego y excluye el JSON del grafo de producción. Los ejemplos inventados permanecen fuera del bundle y no se usan con el catálogo real.
 
-- Marca y menú: `src/config.js`, `src/App.jsx`, `src/Tutorial.jsx`, `src/Legal.jsx`, `src/styles.css`, `public/og.png`.
-- Juegos y archivo: `src/TriviaMenu.jsx`, `src/Trivia.jsx`, `src/Dificultad.jsx`, `src/Discografia.jsx`, `src/Adivinanzas.jsx`, `src/adivinanza.js`, `src/SopaDeLetras.jsx`, `src/Crucigrama.jsx`.
-- Motor y progreso: `src/CompletarFrase.jsx`, `src/frases.js`, `src/catalogoFrases.js`, `src/data/frases.json`, `src/data/frases.ejemplos.json`, `src/storage.js`, `src/logros.js`, `src/desafio.js`, `vite.config.js`.
-- Verificación: `scripts/verificar.mjs`, `scripts/verificar-frases.mjs`, `scripts/verificar-flag-frases.mjs`, `scripts/qa-ricotero.mjs`, los dos informes QA y este documento.
+## Ayudas durante la partida
 
-Pendiente: aprobar y revisar manualmente un banco de al menos diez canciones distintas antes de habilitar el juego real. La demo limitada no mide la dificultad de futuros textos aprobados.
+Se eliminaron la moneda diaria, los bonus al terminar, los dados por hitos y el inventario de comodines. El esquema 10 conserva progreso, perfiles y fechas de logros; migra los contadores históricos de moneda/seises. El original v9 queda respaldado antes de guardar v10.
 
-Actualización de esta entrega: se eligió la autorización A (solo líneas que empiecen por OK). El archivo privado tenía cero líneas así marcadas: cero entradas cargadas, cero canciones habilitadas y ninguna candidata privada modificada. No hubo frases autorizadas que revisar o descartar por ambigüedad de distractores. El catálogo permanece vacío y el juego en «Próximamente».
+Cada modo tiene el botón Pista. Con cero pistas cambia a «🪙 Sin pistas: tentá la suerte» y ofrece moneda o dado. Dos fallos seguidos con cero pistas también abren la oferta. Casual permite dos tiradas; Ricotero una. La clave de la partida y los créditos de suerte se guardan por perfil, sin trasladar pistas a otra partida. La moneda da dos pistas al acertar P/R y una al fallar. El dado da una para 1–2, dos para 3–5 y tres para 6. Sorteo con crypto.getRandomValues antes de animar, sin sesgo de módulo. No hay pérdidas, compras ni dinero.
 
-El esquema actual es 9 y conserva los datos de frases de v8; agrega bonus por perfil. La auditoría adicional está en `scripts/auditar-letras.mjs` y recibe la ubicación privada por argumento, sin imprimir letras. Ver detalles y limitaciones en `PUBLICAR.md`.
+La moneda tiene dos caras, canto estriado y grosor. El dado tiene seis caras físicas con puntos, rotaciones verificadas y rebote. Reducir movimiento muestra el resultado sin giro. Los sonidos de giro y caída usan Web Audio y la preferencia existente de efectos/vibración. El proyecto de referencia solicitado no estaba disponible; las formas y estilos son propios.
+
+## Versiones y QA
+
+Ayuda muestra fecha de build (UTC) y hash corto. En Cloudflare se toma WORKERS_CI_COMMIT_SHA; localmente se consulta Git. La PWA avisa «Hay una versión nueva · Actualizar» y activa el SW nuevo al pulsar el botón, sin forzar una recarga durante una partida.
+
+- node scripts/ejecutar.mjs scripts/verificar-frases.mjs: 200 rondas, huecos, opciones, historial, perfiles, logros y replay.
+- node scripts/ejecutar.mjs scripts/verificar-bonus.mjs: migración v9→v10, premios, consumo y límites.
+- node scripts/ejecutar.mjs scripts/verificar.mjs: regresión de los modos y enlaces anteriores.
+- node scripts/qa-ricotero.mjs: 360×640, 390×844 y 1280×720, ronda real, teclado y offline.
+- node scripts/qa-suerte.mjs: moneda/dado durante partidas, caras visibles, límites y movimiento reducido.
+- node scripts/qa-actualizacion.mjs: dos SW reales, aviso y recarga al actualizar.
+- node scripts/qa-bonus-fondo.mjs: fondo conservado; Firefox sigue pendiente por spawn UNKNOWN del entorno.
+- node scripts/auditar-letras.mjs <carpeta-privada>: solo cantidades, sin imprimir letras; verifica las 34 fuentes de una sola línea y ventanas de veinte caracteres. Títulos/autores públicos se cuentan aparte como metadatos.
+- node scripts/verificar-flag-frases.mjs: JSON fuera del grafo al apagar el flag.
+- npm run build y npx wrangler deploy --dry-run.
+
+Los informes están en qa/. No se modificaron Ahorcado, el reproductor musical, el motor del fondo, wrangler.jsonc, el Worker ni URL_JUEGO.

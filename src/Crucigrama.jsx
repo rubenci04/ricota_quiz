@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Comodines } from './Bonus.jsx'
+import AyudaPartida, { useSuertePartida } from './AyudaPartida.jsx'
 import Cabecera from './Cabecera.jsx'
 import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
@@ -45,6 +45,7 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
   const [discoId, setDiscoId] = useState(inicial.current.disco)
   const [temaId, setTemaId] = useState(inicial.current.tema)
   const [dificultad, setDificultad] = useState(inicial.current.dif)
+  const suerte = useSuertePartida(`crucigrama:${semilla}:${dificultad}`, dificultad)
   const [juego, setJuego] = useState(inicial.current.juego)
   const iniciales0 = useRef(inicial.current.juego ? celdasIniciales(inicial.current.juego, inicial.current.dif, inicial.current.semilla) : {}).current
   const [iniciales, setIniciales] = useState(iniciales0) // letras puestas desde el comienzo
@@ -214,7 +215,7 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
     else if (buenas) sonar('ok')
     // pista automática tras 2 comprobaciones con errores seguidas: una letra gratis (no cuenta como pista)
     const seguidos = malas ? erroresSeguidos + 1 : 0
-    if (seguidos >= ERRORES_PARA_PISTA) {
+    if (seguidos >= ERRORES_PARA_PISTA && pistas < MAX_PISTAS) {
       const faltan = Object.keys(solucion).filter((x) => letras[x] !== solucion[x])
       if (faltan.length) {
         const k = crearAzar(`${semilla}-ayuda-${pistas}-${palabrasReveladas}`).elegir(faltan)
@@ -243,12 +244,12 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
     setMensaje(`Palabra revelada. ${frase('pista')}`)
   }
 
-  const pedirPista = () => {
-    if (pistas >= MAX_PISTAS || ganaste) return
+  const pedirPista = (extra = false) => {
+    if ((!extra && pistas >= MAX_PISTAS) || ganaste) return false
     let k = sel && letras[`${sel.r},${sel.c}`] !== solucion[`${sel.r},${sel.c}`] ? `${sel.r},${sel.c}` : null
     if (!k) {
       const faltan = Object.keys(solucion).filter((x) => letras[x] !== solucion[x])
-      if (!faltan.length) return
+      if (!faltan.length) return false
       k = crearAzar(`${semilla}-ayuda-${pistas}-${palabrasReveladas}`).elegir(faltan)
     }
     setLetras((prev) => ({ ...prev, [k]: solucion[k] }))
@@ -385,12 +386,9 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
 
       <p className="feedback" role="status" aria-live="polite">{ganaste ? '✓ ¡Completaste el crucigrama!' : mensaje}</p>
 
-      <Comodines disabled={ganaste} acciones={{pista:()=>{
-        const k=Object.keys(solucion).find(k=>letras[k]!==solucion[k]);if(!k)return false;
-        setLetras(prev=>({...prev,[k]:solucion[k]}));setFijas(prev=>({...prev,[k]:true}))
-      }}} />
+      <AyudaPartida suerte={suerte} base={Math.max(0,MAX_PISTAS-pistas)} onPista={()=>pedirPista(true)} errores={erroresSeguidos} disabled={ganaste} />
       <p className="contador-pistas">
-        Letras: <strong>{MAX_PISTAS - pistas}</strong> · Palabras: <strong>{MAX_PALABRAS - palabrasReveladas}</strong>
+        Letras: <strong>{Math.max(0,MAX_PISTAS - pistas)}</strong> · Palabras: <strong>{MAX_PALABRAS - palabrasReveladas}</strong>
       </p>
 
       <div className="herramientas">
@@ -398,9 +396,6 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
         <button className="secundario" onClick={borrar} aria-label="Borrar letra">⌫</button>
       </div>
       <div className="herramientas">
-        <button className="secundario" onClick={pedirPista} disabled={pistas >= MAX_PISTAS || ganaste}>
-          Revelar letra ({MAX_PISTAS - pistas})
-        </button>
         <button
           className="secundario"
           onClick={revelarPalabra}

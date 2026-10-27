@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import Dificultad from './Dificultad.jsx'
-import { Comodines } from './Bonus.jsx'
+import AyudaPartida, { useSuertePartida } from './AyudaPartida.jsx'
 import Cabecera from './Cabecera.jsx'
 import { leer, sumarSopa } from './storage.js'
 import { Barra } from './Animados.jsx'
@@ -56,6 +56,7 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
   const [dif, setDif] = useState(inicial.current.dif)
   const [plan, setPlan] = useState(inicial.current.plan)
   const [semilla, setSemilla] = useState(inicial.current.semilla)
+  const suerte = useSuertePartida(`sopa:${semilla}:${dif}`, dif)
   const [discoId, setDiscoId] = useState(inicial.current.disco)
   const [temaId, setTemaId] = useState(inicial.current.tema)
   const [partida, setPartida] = useState(inicial.current.partida)
@@ -95,9 +96,14 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
     setMensaje(`Palabra resaltada. ${frase('pista')}`)
   }
 
-  const pedirPista = () => {
+  const pedirPista = (extra = false) => {
     const libres = partida.palabras.filter((p) => !(p.norm in encontradas) && !pistas.includes(p.norm))
-    if (pistas.length >= MAX_PISTAS || libres.length === 0) return
+    if(extra && libres.length===0){
+      const palabra=partida.palabras.find(p=>!(p.norm in encontradas)&&!reveladas.includes(p.norm))
+      if(!palabra)return false
+      setReveladas(v=>[...v,palabra.norm]);setMensaje('Te marqué una palabra completa.');return true
+    }
+    if ((!extra && pistas.length >= MAX_PISTAS) || libres.length === 0) return false
     setPistas([...pistas, crearAzar(`${semilla}-ayuda-${pistas.length}-${reveladas.length}-${auto.length}`).elegir(libres).norm])
     sonar('pista')
     setMensaje(`Pista: mirá la celda que destella. ${frase('pista')}`)
@@ -153,7 +159,7 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
       sonar('error')
       let texto = `✗ Esa no es. ${frase('error')}`
       const seguidos = fallosSeguidos + 1
-      if (seguidos >= FALLOS_PARA_PISTA) {
+      if (seguidos >= FALLOS_PARA_PISTA && pistas.length < MAX_PISTAS) {
         // pista automática tras 2 fallos seguidos: el inicio de una palabra, gratis
         const libres = partida.palabras.filter((p) => !(p.norm in encontradas) && !pistas.includes(p.norm) && !auto.includes(p.norm))
         if (libres.length) {
@@ -246,9 +252,7 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
         <p className="cartel" role="note">Este disco tiene pocas canciones cargadas: completamos con otras.</p>
       )}
 
-      <Comodines disabled={Object.keys(encontradas).length===partida.palabras.length} acciones={{pista:()=>{
-        const p=partida.palabras.find(p=>!(p.norm in encontradas)&&!auto.includes(p.norm));if(!p)return false;setAuto([...auto,p.norm])
-      }}} />
+      <AyudaPartida suerte={suerte} base={Math.max(0,MAX_PISTAS-pistas.length)} onPista={()=>pedirPista(true)} errores={fallosSeguidos} disabled={ganaste} />
       <Dificultad valor={dif} disabled={!!desafio} onCambio={(d) => { setDif(d); empezar(discoId, temaId, d) }} />
       <SelectorDisco valor={discoId} onCambio={cambiarDisco} deshabilitado={!!desafio} />
 
@@ -299,11 +303,8 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
       </div>
 
       <div className="herramientas">
-        <button className="secundario" onClick={pedirPista} disabled={pistas.length >= MAX_PISTAS || ganaste}>
-          Pista ({MAX_PISTAS - pistas.length})
-        </button>
         <button className="secundario" onClick={revelarPalabra} disabled={reveladas.length >= MAX_REVELAR || ganaste}>
-          Revelar palabra ({MAX_REVELAR - reveladas.length})
+          Revelar palabra ({Math.max(0,MAX_REVELAR - reveladas.length)})
         </button>
         <label className="interruptor">
           <input type="checkbox" checked={facil} onChange={(e) => setFacil(e.target.checked)} />
@@ -323,7 +324,7 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
 
       <p className="feedback" role="status" aria-live="polite">{mensaje}</p>
       <p className="contador-pistas">
-        Pistas: <strong>{MAX_PISTAS - pistas.length}</strong> · Palabra revelada: <strong>{MAX_REVELAR - reveladas.length}</strong>
+        Pistas: <strong>{Math.max(0,MAX_PISTAS - pistas.length)}</strong> · Palabra revelada: <strong>{Math.max(0,MAX_REVELAR - reveladas.length)}</strong>
       </p>
 
       {ganaste && (

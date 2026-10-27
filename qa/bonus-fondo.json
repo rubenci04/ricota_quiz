@@ -4,7 +4,6 @@
     "respaldo": false,
     "estado": "Fondo: activo (60 fps)",
     "overrideReducirMovimiento": true,
-    "bonusSinGiro": true,
     "errores": 0
   },
   {
@@ -12,7 +11,6 @@
     "respaldo": true,
     "estado": "Fondo: activo (60 fps)",
     "overrideReducirMovimiento": true,
-    "bonusSinGiro": true,
     "errores": 0
   },
   {

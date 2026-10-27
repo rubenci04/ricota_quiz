@@ -1,6 +1,6 @@
 import { nivelTitulo } from './dificultad.js'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Comodines } from './Bonus.jsx'
+import AyudaPartida, { useSuertePartida } from './AyudaPartida.jsx'
 import Cabecera from './Cabecera.jsx'
 import datos from './data/datos-ricotero.json'
 import Teclado from './Teclado.jsx'
@@ -39,6 +39,8 @@ export default function RetoDelDia({ onVolver, onMenu }) {
   const guardado = useRef(retoGuardadoDeHoy(fecha)).current
   const iniciales = useMemo(() => prepararLetras(grupos, 'casual', `reto-${fecha}`, nivelTitulo(reto.cancion.titulo)), [grupos, fecha])
 
+  const suerte = useSuertePartida(`reto:${fecha}`, 'casual')
+  const [pistasLetra,setPistasLetra] = useState(0)
   const [resultados, setResultados] = useState(guardado?.resultados ?? [])
   const [terminado, setTerminado] = useState(guardado?.terminado ?? false)
   const [gano, setGano] = useState(guardado?.gano ?? false)
@@ -171,13 +173,10 @@ export default function RetoDelDia({ onVolver, onMenu }) {
     <main className="pantalla" key="reto">
       <Cabecera titulo={<>Reto del día #{reto.numero}</>} extra={<>{fecha}</>} onVolver={onVolver} onMenu={onMenu} />
 
-      {!terminado && <Comodines acciones={{oportunidad:()=>{
-        if(!resultados.length||resultados.at(-1)===1)return false;
-        const nuevos=resultados.slice(0,-1);setResultados(nuevos);guardarReto(fecha,nuevos,false,false);setRevision([])
-      },pista:()=>{
+      {!terminado && <AyudaPartida suerte={suerte} base={Math.max(0,3-pistasLetra)} errores={resultados.length} onPista={()=>{
         const n=solucion.findIndex((l,i)=>!mismaLetra(letras[i],l));if(n<0)return false;
-        setLetras(prev=>prev.map((l,i)=>i===n?solucion[i]:l))
-      }}} />}
+        setLetras(prev=>prev.map((l,i)=>i===n?solucion[i]:l));setPistasLetra(v=>v+1)
+      }} />}
       {cortada && !terminado && (
         <p className="aviso-amable" role="note">
           Ayer te tomaste franco y la racha se reinició, pero no pasa nada: hoy arrancás otra. 💪
@@ -218,7 +217,6 @@ export default function RetoDelDia({ onVolver, onMenu }) {
 
       {terminado && (
         <Resultado
-          bonus={{clave:`reto:${fecha}`,modo:'reto',buenResultado:gano,canciones:gano?[reto.cancion.titulo]:[],puntos:gano?INTENTOS_MAX-resultados.length+1:0}}
           titulo={`Reto del día #${reto.numero}`}
           puntaje={`${gano ? resultados.length : 'X'}/${INTENTOS_MAX}`}
           detalle={`${resultados.map(cuadro).join('')} · Era «${reto.cancion.titulo}»`}

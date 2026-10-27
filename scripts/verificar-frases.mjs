@@ -2,27 +2,29 @@ import assert from 'node:assert/strict'
 import { readFileSync, readdirSync } from 'node:fs'
 import { armarRondaFrases, frasesDelDia, idsFrases, normalizarFrase, validarFrases } from '../src/frases.js'
 
-// Datos sintéticos en memoria: nunca se incorporan al catálogo de producción.
-const palabras = ['ventanas','senderos','jardines','estrellas','bosques','caminos','linternas','cuadernos','puentes','viajeros','colores','piedras']
-const banco = palabras.map((p,i)=>({ cancion:`Ensayo ${i}`, fragmento:`Los dibujos muestran ${p} cada mañana`, faltantes:[3], aprobada:true }))
-for (const dif of ['casual','fanatico']) for(let n=0;n<100;n++) {
-  const plan={vistos:[],recientes:[],ciclo:[]}
-  const r=armarRondaFrases(banco,`ensayo${n}`,dif,plan)
-  assert.equal(r.length,10)
-  assert.equal(new Set(r.map(f=>f.id)).size,10)
-  assert.equal(new Set(r.map(f=>f.cancion)).size,10)
-  assert.deepEqual(r,armarRondaFrases(banco,`ensayo${n}`,dif,plan))
-  if(dif==='casual') for(const f of r){assert.equal(new Set(f.opciones.map(normalizarFrase)).size,4);assert.ok(f.opciones.includes(f.respuesta))}
+const banco=JSON.parse(readFileSync('src/data/frases.json','utf8'))
+assert.ok(banco.length>=30&&banco.length<=40)
+assert.equal(validarFrases(banco).length,banco.length)
+assert.equal(new Set(banco.map(f=>f.cancion)).size,banco.length)
+for(const dif of ['casual','fanatico'])for(let n=0;n<100;n++){
+ const plan={vistos:[],recientes:[],ciclo:[]},semilla=`ensayo${n}`
+ const r=armarRondaFrases(banco,semilla,dif,plan)
+ assert.equal(r.length,10);assert.equal(new Set(r.map(f=>f.id)).size,10);assert.equal(new Set(r.map(f=>f.cancion)).size,10)
+ assert.ok(JSON.stringify(r)===JSON.stringify(armarRondaFrases(banco,semilla,dif,plan)),'Replay reproducible')
+ for(const f of r){
+  assert.ok(f.faltantes.length===(dif==='casual'?2:f.faltantes.length)&&f.faltantes.length>=2&&f.faltantes.length<=3)
+  assert.ok(f.faltantes.some(n=>n<f.palabras.length-2),'Debe haber un hueco dentro de la frase')
+  for(const indice of f.faltantes){const opciones=f.opcionesPorHueco[indice];assert.equal(new Set(opciones.map(normalizarFrase)).size,4);assert.equal(opciones.filter(p=>normalizarFrase(p)===normalizarFrase(f.palabras[indice])).length,1)}
+ }
 }
-assert.deepEqual(armarRondaFrases(banco.slice(0,9),'ensayo','casual'),[])
-assert.deepEqual(armarRondaFrases([...banco,...banco].map(f=>({...f,cancion:'Una sola'})),'ensayo','fanatico'),[])
-assert.deepEqual(frasesDelDia(banco,'2026-10-27'),frasesDelDia(banco,'2026-10-27'))
+assert.equal(armarRondaFrases(banco.slice(0,7),'ensayo').length,7)
+assert.equal(armarRondaFrases([...banco,...banco].map(f=>({...f,cancion:'Una sola'})),'ensayo').length,1)
+assert.ok(JSON.stringify(frasesDelDia(banco,'2026-10-27'))===JSON.stringify(frasesDelDia(banco,'2026-10-27')))
 assert.equal(normalizarFrase('cañón'),'CANON')
 const ejemplos=JSON.parse(readFileSync('src/data/frases.ejemplos.json','utf8'))
-assert.equal(ejemplos.length,6)
 assert.equal(validarFrases(ejemplos).length,0)
-assert.equal(armarRondaFrases(ejemplos,'ensayo','casual',undefined,{demo:true}).length,6)
-assert.deepEqual(JSON.parse(readFileSync('src/data/frases.json','utf8')),[])
+const mutilada={...banco[0],huecos:banco[0].huecos.map(h=>({...h,distractores:['igual','igual','igual']}))}
+assert.equal(validarFrases([mutilada]).length,0)
 
 const progreso={nivel:4,mejor:9,nivelBanda:3,mejorBanda:8,partidas:12,logros:{primera:'2026-10-25'},historial:{dichodiscos:{vistos:['a:1'],partidas:[],ciclo:[]}}}
 const memoria=new Map([['ricota_quiz',JSON.stringify({v:7,activo:'uno',preferencias:{fondo:false,volumen:42,dificultad:'fanatico'},perfiles:[{id:'uno',alias:'Primer alias',progreso}]})]])
@@ -40,14 +42,14 @@ const { revisarLogros }=await import('../src/logros.js')
 revisarLogros();assert.ok(s.leer().logros.frases10)
 s.seleccionarPerfil(segundo);assert.ok(!s.leer().logros.frases10)
 const guardado=JSON.parse(memoria.get('ricota_quiz'))
-assert.equal(guardado.v,9);assert.ok(memoria.get('ricota_quiz_pre_v8'))
+assert.equal(guardado.v,10);assert.ok(memoria.get('ricota_quiz_pre_v8'))
 const {crearLink,leerDesafio}=await import('../src/desafio.js')
 const plan={vistos:idsFrases(armarRondaFrases(banco,'anterior')),recientes:[],ciclo:[]}
 const d={modo:'frases',dif:'casual',semilla:'abcd1234',puntaje:8,plan}
 const recibido=leerDesafio(new URL(crearLink({...d,alias:'PRIVADO'})).hash)
-assert.deepEqual(armarRondaFrases(banco,d.semilla,d.dif,d.plan),armarRondaFrases(banco,recibido.semilla,recibido.dif,recibido.plan))
+assert.ok(JSON.stringify(armarRondaFrases(banco,d.semilla,d.dif,d.plan))===JSON.stringify(armarRondaFrases(banco,recibido.semilla,recibido.dif,recibido.plan)))
 assert.ok(!crearLink({...d,alias:'PRIVADO'}).includes('PRIVADO'))
 for(const ronda of ['dichocanciones','dichodiscos','dichopalabras','dichointegrantes']) assert.ok(leerDesafio(`#/desafio/adivinanzas/${ronda}/casual/abcd1234/1`))
 const js=readdirSync('dist/assets').filter(f=>f.endsWith('.js')).map(f=>readFileSync(`dist/assets/${f}`,'utf8')).join('\n')
 for(const e of ejemplos){assert.ok(!js.includes(e.fragmento));assert.ok(!js.includes(e.cancion))}
-console.log('QA frases: 200 rondas de 10 sin duplicados, semillas, demo DEV, banco vacío, migración v7→v9, dos perfiles, logros y enlaces compatibles: OK.')
+console.log('QA frases: 200 rondas de 10 sin duplicados, semillas, 34 canciones, huecos, ronda corta, migración v7→v10, dos perfiles, logros y enlaces compatibles: OK.')

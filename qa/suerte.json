@@ -1,0 +1,20 @@
+[
+  {
+    "reducido": false,
+    "monedaDosCaras": true,
+    "dadoSeisCaras": true,
+    "limiteCasual": 2,
+    "limiteRicotero": 1,
+    "desborde": false,
+    "errores": 0
+  },
+  {
+    "reducido": true,
+    "monedaDosCaras": true,
+    "dadoSeisCaras": true,
+    "limiteCasual": 2,
+    "limiteRicotero": 1,
+    "desborde": false,
+    "errores": 0
+  }
+]
