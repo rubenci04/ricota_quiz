@@ -1,5 +1,7 @@
 # Completá la frase y ayudas de suerte
 
+Corrección posterior de dificultad: los huecos de Completá la frase ya no muestran cantidades de letras. En Dicho de otra forma se retira una letra de ayuda inicial por palabra que la tenía, en ambas dificultades; ninguna palabra aparece resuelta de entrada. El crucigrama y Adiviná por palabras conservan sus ayudas anteriores. Se mantienen los acertijos, respuestas, semillas, pistas a demanda y resultados guardados. La verificación está en `scripts/verificar-ayudas.mjs`, además de QA móvil y regresión general.
+
 ## Ampliación: listados icónicos y celular (27/10/2026)
 
 Base auditada: main `766c29d`, coincidente con origin/main; compilación de referencia correcta.

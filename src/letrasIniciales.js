@@ -20,3 +20,18 @@ export function prepararLetras(grupos, dificultad, semilla) {
   return { letras: solucion.map((l,i) => iniciales[i] ? l : ''), fijas: iniciales, iniciales,
     foco: Math.max(0, iniciales.findIndex(f => !f)) }
 }
+
+// Dicho de otra forma: retira una letra de ayuda de cada palabra que la tenía.
+// Así tampoco quedan resueltas de entrada las palabras cortas del título.
+export function prepararLetrasDicho(grupos,dificultad,semilla) {
+  const ayuda=prepararLetras(grupos,dificultad,semilla)
+  let inicio=0
+  for(const grupo of grupos){
+    const fin=inicio+grupo.letras.length
+    const quitar=ayuda.iniciales.findIndex((f,i)=>f&&i>=inicio&&i<fin)
+    if(quitar>=0){ayuda.letras[quitar]='';ayuda.fijas[quitar]=false;ayuda.iniciales[quitar]=false}
+    inicio=fin
+  }
+  ayuda.foco=Math.max(0,ayuda.fijas.findIndex(f=>!f))
+  return ayuda
+}

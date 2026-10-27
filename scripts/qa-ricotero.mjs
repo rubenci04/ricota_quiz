@@ -39,7 +39,16 @@ try {
       await check(nombre)
       const dificultad=page.getByRole('group',{name:'Dificultad',exact:true})
       assert.equal(await dificultad.getByRole('button',{name:/Casual/}).getAttribute('aria-pressed'),'true')
-      if(numero===2){assert.equal(await page.getByRole('button',{name:/Discos|Integrantes/,exact:true}).count(),0);await dificultad.getByRole('button',{name:/Ricotero/}).click();await page.getByRole('button',{name:'Jugar',exact:true}).click();await check('Dicho partida')}
+      if(numero===2){
+        assert.equal(await page.getByRole('button',{name:/Discos|Integrantes/,exact:true}).count(),0)
+        await dificultad.getByRole('button',{name:/Ricotero/}).click();await page.getByRole('button',{name:'Jugar',exact:true}).click()
+        for(const dif of ['Ricotero','Casual']){
+          if(dif==='Casual')await dificultad.getByRole('button',{name:/Casual/}).click()
+          for(const palabra of await page.locator('.grupo-palabra').all())assert.ok(await palabra.locator('.casilla:not(:disabled)').count(),'Cada palabra de Dicho debe tener letras por resolver')
+          await check(`Dicho ${dif}`)
+        }
+        await page.screenshot({path:`qa/dicho-menos-ayudas-${width}.png`,fullPage:true})
+      }
       if(numero===5){
         await page.getByRole('group',{name:'Categoría de trivia'}).getByRole('button',{name:'La banda',exact:true}).click()
         await page.getByRole('button',{name:/Nivel 1/}).click();await check('La banda partida')
@@ -57,6 +66,7 @@ try {
     await menu().getByRole('button',{name:/1. Completá/}).click()
     await page.getByRole('button',{name:'Jugar',exact:true}).click()
     assert.equal(await page.getByRole('button',{name:/^Hueco [12]$/}).count(),2)
+    assert.ok(!/\d+\s+letras/i.test(await page.locator('.frase-puzzle').innerText()),'Los huecos no deben anunciar la longitud de la respuesta')
     await page.getByRole('button',{name:'Hueco 1',exact:true}).click()
     await page.getByRole('button',{name:/^💡 Pista/}).click()
     assert.equal(await page.locator('.opciones button:disabled').count(),2)

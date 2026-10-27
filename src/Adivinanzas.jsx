@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { guardar, leer, sumarPartida } from './storage.js'
 import { normalizarLetras } from './letras.js'
-import { prepararLetras } from './letrasIniciales.js'
+import { prepararLetras, prepararLetrasDicho } from './letrasIniciales.js'
 import { nivelTitulo } from './dificultad.js'
 import Teclado from './Teclado.jsx'
 import Resultado from './Resultado.jsx'
@@ -35,6 +35,7 @@ const PALABRAS_EXTRA = 2
 
 // Solo las respuestas que son títulos de canción tienen nivel de título
 const nivelDeRespuesta = (r) => (r.modo === 'palabras' || r.categoria === 'canciones' ? nivelTitulo(r.respuesta) : 1)
+const ayudaDeRonda = r => (r.modo==='dicho'?prepararLetrasDicho:prepararLetras)(r.grupos,r.dif,r.semilla,nivelDeRespuesta(r))
 
 function prepararRonda(opciones) {
   const p = crearPartida(opciones.modo === 'palabras' ? 'palabras' : `dicho${opciones.categoria}`, (semilla, plan) => nuevaRonda({ ...opciones, semilla, plan }), idsAdivinanza)
@@ -56,7 +57,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
   }
   const largo = inicial.current ? inicial.current.solucion.length : 0
   useRegistrarInicial('palabras', inicial.current?.ids, !desafio)
-  const ayudaInicial = inicial.current ? prepararLetras(inicial.current.grupos, inicial.current.dif, inicial.current.semilla, nivelDeRespuesta(inicial.current)) : { letras: [], fijas: [], iniciales: [], foco: 0 }
+  const ayudaInicial = inicial.current ? ayudaDeRonda(inicial.current) : { letras: [], fijas: [], iniciales: [], foco: 0 }
 
   const [dif, setDif] = useState(desafio ? desafio.dif : 'casual')
   const [modo, setModo] = useState(desafioToken ? desafioToken.modo : inicio)
@@ -99,7 +100,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
     setSemilla(sem)
     setModo(m)
     setRonda(r)
-    const ayuda = prepararLetras(r.grupos, difi, sem, nivelDeRespuesta(r))
+    const ayuda = ayudaDeRonda(r)
     setLetras(ayuda.letras)
     setFijas(ayuda.fijas)
     setIniciales(ayuda.iniciales)
@@ -151,7 +152,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
 
   const terminar = (nuevasLetras, usadas) => {
     if (!nuevasLetras.every((l, i) => mismaLetra(l, solucion[i]))) return false
-    // Casual regala 40%: base 2; Ricotero mantiene base 3. Iniciales gratis.
+    // Casual: base 2; Ricotero mantiene base 3. Las iniciales son gratuitas.
     const legado = desafio && desafio.plan?.reglasAdivinanza !== 2
     const puntos = Math.max(1, (ronda.dif === 'casual' && !legado ? 2 : 3) - usadas)
     const e = leer()
