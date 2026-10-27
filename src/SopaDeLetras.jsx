@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import Dificultad from './Dificultad.jsx'
+import { Comodines } from './Bonus.jsx'
 import Cabecera from './Cabecera.jsx'
 import { leer, sumarSopa } from './storage.js'
 import { Barra } from './Animados.jsx'
@@ -245,6 +246,9 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
         <p className="cartel" role="note">Este disco tiene pocas canciones cargadas: completamos con otras.</p>
       )}
 
+      <Comodines disabled={Object.keys(encontradas).length===partida.palabras.length} acciones={{pista:()=>{
+        const p=partida.palabras.find(p=>!(p.norm in encontradas)&&!auto.includes(p.norm));if(!p)return false;setAuto([...auto,p.norm])
+      }}} />
       <Dificultad valor={dif} disabled={!!desafio} onCambio={(d) => { setDif(d); empezar(discoId, temaId, d) }} />
       <SelectorDisco valor={discoId} onCambio={cambiarDisco} deshabilitado={!!desafio} />
 
@@ -324,6 +328,7 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
 
       {ganaste && (
         <Resultado
+          canciones={partida.palabras.map(p=>p.cancion)}
           titulo="Sopa de letras"
           puntaje={`${Math.max(0, 100 - 10 * pistas.length - 25 * reveladas.length)} pts`}
           detalle={`${partida.palabras.length}/${partida.palabras.length} palabras · pistas usadas: ${pistas.length}${reveladas.length ? ' · palabra revelada' : ''}`}

@@ -20,6 +20,7 @@ import { DESARROLLADOR, MODOS, NOMBRE_JUEGO } from './config.js'
 import { alDesbloquear, iniciarLogros } from './logros.js'
 import { fechaBA, rachaCortada, rachaVigente } from './reto.js'
 import Musica from './Musica.jsx'
+import Bonus from './Bonus.jsx'
 import Fondo from './Fondo.jsx'
 import { Contador } from './Animados.jsx'
 import {
@@ -59,6 +60,7 @@ export default function App() {
   const [sonido, setSonido] = useState(sonidoActivo)
   const [vibracion, setVibracion] = useState(vibracionActiva)
   const [estadoMusica, setEstadoMusica] = useState('pausado') // reproduciendo | silenciado | pausado
+  const [estadoFondo, setEstadoFondo] = useState('activo (0 fps)')
   const [avisos, setAvisos] = useState([]) // logros recién desbloqueados
   const volver = () => setModo(null)
   // inclinación leve de las tarjetas del menú con el puntero o el toque
@@ -130,7 +132,7 @@ export default function App() {
       </main>
     )
   } else if (verTutorial) {
-    contenido = <Tutorial onTerminar={() => setVerTutorial(false)} />
+    contenido = <Tutorial estadoFondo={estadoFondo} onTerminar={() => setVerTutorial(false)} />
   } else if (desafio && !aceptado) {
     const m = MODOS_DESAFIO[desafio.modo]
     contenido = (
@@ -194,6 +196,7 @@ export default function App() {
       <main className="pantalla inicio" key="menu">
         <h1 className="logo">{NOMBRE_JUEGO}</h1>
         <p className="sub">Patricio Rey y sus Redonditos de Ricota</p>
+        <Bonus diaria />
         <button className="reto-banner" onClick={() => elegirModo('reto')}>📅 <strong>Reto del día</strong><small>Una canción por día, igual para todos →</small></button>
         <nav className="menu-grid" aria-label="Modos de juego" onPointerMove={inclinar} onPointerDown={inclinar} onPointerLeave={enderezar} onPointerUp={enderezar} onPointerCancel={enderezar} onPointerOut={enderezar}>
           {MODOS_MENU.map((m, i) => (
@@ -230,14 +233,12 @@ export default function App() {
             Ayer no jugaste el reto y la racha se reinició. ¡Pasa en las mejores familias! Hoy arrancás otra. 💪
           </p>
         )}
-        <section className="extras"><h2>Extras · no son juegos</h2><div className="herramientas">
-          <button className="secundario" onClick={() => setModo('discografia')}>Archivo ricotero</button>
-          <button className="secundario" onClick={() => setModo('logros')}>Logros ({Object.keys(g.logros).length})</button>
-          <button className="secundario" onClick={() => setVerTutorial(true)}>Ayuda</button>
-        </div></section>
+
       </main>
     )
   }
+
+  const navegacion = entro && !verPerfiles && !pagina && !verTutorial && jugadores && !desafio && [null, 'discografia', 'logros'].includes(modo)
 
   // el modo en curso tiñe la pantalla con su color
   const modoActual = desafio && aceptado ? (desafio.modo === 'adivinanzas' ? 'dicho' : desafio.modo) : modo
@@ -249,7 +250,7 @@ export default function App() {
 
   return (
     <div className="app" data-modo={modoActual || 'menu'} data-perfiles={verPerfiles && !pagina} data-fondo={g.fondo} onClick={alClic}>
-      <Fondo activo={g.fondo} />
+      <Fondo activo={g.fondo} forzado={g.fondoForzado} onEstado={setEstadoFondo} />
       <div className="interruptores" aria-label="Sonido y música">
         <button
           className="sonido"
@@ -270,7 +271,7 @@ export default function App() {
         <button className="sonido" onClick={() => musica.current?.siguiente()} aria-label="Siguiente canción">⏭</button>
         <button
           className="sonido"
-          onClick={() => guardar({ fondo: !g.fondo })}
+          onClick={() => guardar({ fondo: !g.fondo, fondoForzado: !g.fondo })}
           aria-label={g.fondo ? 'Desactivar fondo animado' : 'Activar fondo animado'}
           title="Fondo animado"
           aria-pressed={g.fondo}
@@ -288,6 +289,9 @@ export default function App() {
           </button>
         )}
       </div>
+      {navegacion && <div className="navegacion-menu"><nav className="pestanas-menu" aria-label="Secciones principales">
+        {[[null,'🎮 Juegos'],['discografia','📖 Archivo'],['logros','🏆 Logros']].map(([id,t])=><button key={id??'juegos'} aria-current={modo===id?'page':undefined} onClick={()=>setModo(id)}>{t}</button>)}
+      </nav><button className="secundario ayuda-visible" onClick={()=>setVerTutorial(true)}>Ayuda y ajustes</button></div>}
       {contenido}
       {leerPerfiles().errorPersistencia && <p className="aviso-amable" role="alert">No se pudo guardar en este navegador. El avance actual solo está en memoria; evitá cerrar o recargar.</p>}
       <div className="avisos-logros" role="status" aria-live="polite">

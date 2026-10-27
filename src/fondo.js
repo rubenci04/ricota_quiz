@@ -2,7 +2,6 @@
 // Solo formas y efectos originales. Un único requestAnimationFrame, pausado con la pestaña oculta.
 
 const NOTAS = ['♪', '♫', '♩']
-const reducido = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
 // Paleta del juego, leída de las variables CSS (con valores de respaldo).
 function paleta() {
@@ -17,11 +16,17 @@ export function cantidadParticulas(ancho, alto, nucleos = navigator.hardwareConc
   return Math.round(base * Math.min(1, (ancho * alto) / 900000))
 }
 
-export function iniciarFondo(canvas) {
+export function iniciarFondo(canvas, { estatico = false, onEstado = () => {}, onFallo = () => {} } = {}) {
+  // Un contexto con caveat de rendimiento suele indicar renderizado por software.
+  // En ese caso las luces CSS son una alternativa más barata al dibujo continuo.
+  try {
+    const prueba=document.createElement('canvas').getContext('webgl', { failIfMajorPerformanceCaveat:true })
+    if (!prueba) { onFallo(); return () => {} }
+    prueba.getExtension('WEBGL_lose_context')?.loseContext()
+  } catch { onFallo(); return () => {} }
   const ctx = canvas.getContext('2d')
-  if (!ctx) return () => {}
+  if (!ctx) { onFallo(); return () => {} }
   const colores = paleta()
-  const estatico = reducido()
   let ancho = 0, alto = 0, dpr = 1, particulas = [], frame = 0, anterior = 0
   const puntero = { x: 0, y: 0 } // objetivo del paralaje, de -0.5 a 0.5
   const suave = { x: 0, y: 0 }
@@ -88,16 +93,24 @@ export function iniciarFondo(canvas) {
     ctx.globalAlpha = 1
   }
 
+  let muestra = performance.now(), cuadros = 0
   const bucle = (t) => {
     const dt = Math.min(0.05, (t - anterior) / 1000 || 0)
     anterior = t
-    dibujar(t, dt)
+    try { dibujar(t, dt) } catch { onFallo(); return }
+    cuadros++
+    if (t - muestra >= 1500) {
+      const fps = Math.round(cuadros * 1000 / (t - muestra))
+      if (fps < 30 && particulas.length > 2) particulas = particulas.slice(0, Math.max(2, Math.floor(particulas.length / 2)))
+      onEstado(fps < 15 ? 'ahorro de energía o rendimiento bajo' : `activo (${fps} fps)`)
+      cuadros = 0; muestra = t
+    }
     frame = requestAnimationFrame(bucle)
   }
-  const arrancar = () => { cancelAnimationFrame(frame); anterior = performance.now(); frame = requestAnimationFrame(bucle) }
+  const arrancar = () => { cancelAnimationFrame(frame); anterior = muestra = performance.now(); cuadros = 0; frame = requestAnimationFrame(bucle) }
   const detener = () => cancelAnimationFrame(frame)
 
-  const alVisibilidad = () => (document.hidden ? detener() : arrancar())
+  const alVisibilidad = () => { if (document.hidden) { detener(); onEstado('ahorro de energía o rendimiento bajo') } else arrancar() }
   const mover = (x, y) => { puntero.x = x / ancho - 0.5; puntero.y = y / alto - 0.5 }
   const alPuntero = (e) => mover(e.clientX, e.clientY)
   // giroscopio solo si está disponible sin pedir permisos (en iOS hay que pedirlos: no se usa)

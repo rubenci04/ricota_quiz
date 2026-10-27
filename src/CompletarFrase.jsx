@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Comodines } from './Bonus.jsx'
 import Cabecera from './Cabecera.jsx'
 import Dificultad from './Dificultad.jsx'
 import Teclado from './Teclado.jsx'
@@ -91,6 +92,7 @@ export default function CompletarFrase({ onVolver, onMenu, desafio }) {
   )
   if (fin) return pantalla(
     <Resultado
+      exito={puntos>=6}
       titulo="Completá la frase"
       puntaje={`${puntos}/${ronda.length}`}
       detalle={`${pistas} ayudas utilizadas`}
@@ -103,6 +105,13 @@ export default function CompletarFrase({ onVolver, onMenu, desafio }) {
     </Resultado>
   )
   return pantalla(<>
+    <Comodines disabled={respuesta===true} acciones={{
+      ...(dif==='casual'?{mitad:()=>{if(ocultas.length)return false;usarPista()}}:{pista:()=>{
+        const n=[...solucion].findIndex((_,k)=>!fijas.includes(k));if(n<0)return false;
+        setLetras(v=>{const a=[...v];a[n]=solucion[n];return a});setFijas(v=>[...v,n]);setPistas(v=>v+1)
+      }}),
+      oportunidad:()=>{if(respuesta!==false)return false;setRespuesta(null);setMensaje('Segunda oportunidad')}
+    }} />
     <p>{i + 1}/{ronda.length} · {dif === 'casual' ? '🙂 Casual' : '🔥 Ricotero (fanático)'}</p>
     {dif === 'casual' && <p>Álbum: {actual.album}</p>}
     <p className="frase-puzzle">

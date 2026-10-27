@@ -16,8 +16,8 @@ try {
     await og.setContent(`<body style="margin:0;background:#0b0b0c;color:#f5eddf;font-family:Arial, sans-serif;overflow:hidden"><div style="position:absolute;width:520px;height:520px;border:3px solid #ba8548;border-radius:50%;right:-210px;top:-180px"></div><div style="position:absolute;width:300px;height:300px;border:2px solid #625b8d;transform:rotate(30deg);right:30px;bottom:-170px"></div><main style="padding:94px 85px"><p style="font-size:22px;letter-spacing:7px;color:#e2b774">CULTURA · MEMORIA · JUEGO</p><h1 style="font-size:94px;line-height:1.1;margin:35px 0 22px">Ricotero Quiz</h1><p style="font-size:29px;line-height:1.5;max-width:900px">Trivia, palabras y acertijos.<br>Elegí tu juego. Encontrá tu desafío.</p><p style="margin-top:46px;color:#bab4ac;font-size:20px">Juego de fans, no oficial, sin relación con la banda</p></main></body>`)
     await og.screenshot({path:'public/og.png'});await og.close()
   }
-  for(const width of [360,375,1280]){
-    const context=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce'})
+  for(const width of [360,390,1280]){
+    const context=await browser.newContext({viewport:{width,height:width===360?640:width===390?844:720},reducedMotion:'reduce'})
     await context.addInitScript(()=>{
       window.YT={PlayerState:{PLAYING:1,ENDED:0},Player:class{
         constructor(destino,opciones){this.estado=2;this.opciones=opciones;this.iframe=document.createElement('iframe');this.iframe.width=200;this.iframe.height=200;destino.append(this.iframe);queueMicrotask(()=>opciones.events.onReady({target:this}))}
@@ -53,10 +53,10 @@ try {
       await page.getByRole('button',{name:'Ir al menú principal'}).click()
     }
     await page.getByRole('button',{name:/Reto del día/}).click();await check('reto');await page.getByRole('button',{name:'Ir al menú principal'}).click()
-    await page.getByRole('button',{name:'Archivo ricotero',exact:true}).click()
+    await page.getByRole('navigation',{name:'Secciones principales'}).getByRole('button',{name:/Archivo/}).click()
     for(const nombre of ['Discografía','Palabras','Curiosidades']){await page.getByRole('group',{name:'Archivo',exact:true}).getByRole('button',{name:nombre,exact:true}).click();await check(nombre)}
     await page.getByRole('button',{name:'Ir al menú principal'}).click()
-    await page.getByRole('button',{name:/^Logros/}).click();assert.ok(await page.getByText('QA Ricotero',{exact:true}).count());await check('logros')
+    await page.getByRole('navigation',{name:'Secciones principales'}).getByRole('button',{name:/Logros/}).click();assert.ok(await page.getByText('QA Ricotero',{exact:true}).count());await check('logros')
     await page.getByRole('button',{name:'Ir al menú principal'}).click()
     if(dev){
       await menu().getByRole('button',{name:/1. Completá/}).click()
@@ -84,7 +84,7 @@ try {
     }
     await page.reload();assert.equal(await page.getByLabel('Crear perfil',{exact:true}).count(),0)
     const persistido=await page.evaluate(()=>JSON.parse(localStorage.getItem('ricota_quiz')))
-    assert.equal(persistido.v,8);assert.equal(persistido.perfiles[0].alias,'QA Ricotero')
+    assert.equal(persistido.v,9);assert.equal(persistido.perfiles[0].alias,'QA Ricotero')
     if(!dev && width===360){
       await page.evaluate(()=>navigator.serviceWorker.ready)
       await page.reload()

@@ -17,7 +17,7 @@ const TARJETAS = [
   },
 ]
 
-export default function Tutorial({ onTerminar }) {
+export default function Tutorial({ onTerminar, estadoFondo }) {
   const [paso, setPaso] = useState(0)
   const tarjeta = TARJETAS[paso]
   const ultima = paso === TARJETAS.length - 1
@@ -29,6 +29,7 @@ export default function Tutorial({ onTerminar }) {
 
   return (
     <main className="pantalla inicio" key="tutorial">
+      <p role="status">Fondo: {estadoFondo}</p>
       <p className="pasos" aria-label={`Tarjeta ${paso + 1} de ${TARJETAS.length}`}>
         {TARJETAS.map((_, i) => (
           <span key={i} className={i === paso ? 'punto activo' : 'punto'} aria-hidden="true" />

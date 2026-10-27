@@ -22,3 +22,7 @@ Archivos de la entrega:
 - Verificación: `scripts/verificar.mjs`, `scripts/verificar-frases.mjs`, `scripts/verificar-flag-frases.mjs`, `scripts/qa-ricotero.mjs`, los dos informes QA y este documento.
 
 Pendiente: aprobar y revisar manualmente un banco de al menos diez canciones distintas antes de habilitar el juego real. La demo limitada no mide la dificultad de futuros textos aprobados.
+
+Actualización de esta entrega: se eligió la autorización A (solo líneas que empiecen por OK). El archivo privado tenía cero líneas así marcadas: cero entradas cargadas, cero canciones habilitadas y ninguna candidata privada modificada. No hubo frases autorizadas que revisar o descartar por ambigüedad de distractores. El catálogo permanece vacío y el juego en «Próximamente».
+
+El esquema actual es 9 y conserva los datos de frases de v8; agrega bonus por perfil. La auditoría adicional está en `scripts/auditar-letras.mjs` y recibe la ubicación privada por argumento, sin imprimir letras. Ver detalles y limitaciones en `PUBLICAR.md`.

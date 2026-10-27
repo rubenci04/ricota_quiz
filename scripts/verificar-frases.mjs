@@ -40,7 +40,7 @@ const { revisarLogros }=await import('../src/logros.js')
 revisarLogros();assert.ok(s.leer().logros.frases10)
 s.seleccionarPerfil(segundo);assert.ok(!s.leer().logros.frases10)
 const guardado=JSON.parse(memoria.get('ricota_quiz'))
-assert.equal(guardado.v,8);assert.ok(memoria.get('ricota_quiz_pre_v8'))
+assert.equal(guardado.v,9);assert.ok(memoria.get('ricota_quiz_pre_v8'))
 const {crearLink,leerDesafio}=await import('../src/desafio.js')
 const plan={vistos:idsFrases(armarRondaFrases(banco,'anterior')),recientes:[],ciclo:[]}
 const d={modo:'frases',dif:'casual',semilla:'abcd1234',puntaje:8,plan}
@@ -50,4 +50,4 @@ assert.ok(!crearLink({...d,alias:'PRIVADO'}).includes('PRIVADO'))
 for(const ronda of ['dichocanciones','dichodiscos','dichopalabras','dichointegrantes']) assert.ok(leerDesafio(`#/desafio/adivinanzas/${ronda}/casual/abcd1234/1`))
 const js=readdirSync('dist/assets').filter(f=>f.endsWith('.js')).map(f=>readFileSync(`dist/assets/${f}`,'utf8')).join('\n')
 for(const e of ejemplos){assert.ok(!js.includes(e.fragmento));assert.ok(!js.includes(e.cancion))}
-console.log('QA frases: 200 rondas de 10 sin duplicados, semillas, demo DEV, banco vacío, migración v7→v8, dos perfiles, logros y enlaces compatibles: OK.')
+console.log('QA frases: 200 rondas de 10 sin duplicados, semillas, demo DEV, banco vacío, migración v7→v9, dos perfiles, logros y enlaces compatibles: OK.')

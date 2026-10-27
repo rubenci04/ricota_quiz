@@ -328,3 +328,34 @@ body { overflow-wrap: break-word; }
 /* letras puestas desde el comienzo en el crucigrama: estilo propio, como en las adivinanzas */
 .letra.inicial { background: #163b36; color: #9ff0dc; border-color: #6fe0aa; cursor: default; }
 .letra.inicial.actual { outline: 2px solid var(--acento); outline-offset: -2px; }
+
+/* Navegación de consulta separada de las tarjetas de juego. */
+.navegacion-menu { max-width:520px; margin:0 auto; padding:8px 12px; }
+.pestanas-menu { display:flex; gap:4px; border-bottom:2px solid #57545e; }
+.pestanas-menu button { flex:1; min-height:48px; background:transparent; border:0; color:#c9c4d0; cursor:pointer; }
+.pestanas-menu [aria-current=page] { color:#ffe0a5; border-bottom:3px solid #e0a526; background:#272029; }
+.ayuda-visible { display:block; margin:8px auto 0; }
+.fondo-respaldo { position:fixed; inset:0; pointer-events:none; z-index:-1; overflow:hidden; }
+.fondo-respaldo i { position:absolute; top:-10%; left:15%; height:120%; width:16%; background:linear-gradient(#e0a52644,transparent); transform-origin:top center; animation:luz-respaldo 9s ease-in-out infinite alternate !important; }
+.fondo-respaldo i:nth-child(2) { left:50%; background:linear-gradient(#e11d4844,transparent); animation-delay:-4s !important; }
+.fondo-respaldo i:nth-child(3) { left:80%; background:linear-gradient(#10b98144,transparent); animation-delay:-7s !important; }
+.fondo-respaldo[data-estatico=true] i { animation:none !important; }
+@keyframes luz-respaldo { from {transform:rotate(-22deg)} to {transform:rotate(22deg)} }
+.bonus-panel,.comodines { width:100%; border:1px solid #55515d; border-radius:10px; padding:10px; font-size:.85rem; }
+.bonus-panel:empty { display:none; }
+.bonus-panel button,.comodines button { padding:8px; margin:4px; border-radius:8px; border:1px solid #82734c; background:#27232a; color:#f6eddf; cursor:pointer; }
+.bonus-objeto { display:grid; place-items:center; width:76px; height:76px; margin:16px auto; background:#b38b37; border:4px double #ffe7a2; font:700 36px system-ui,sans-serif; color:#17120a; }
+.bonus-objeto.moneda { border-radius:50%; transform-style:preserve-3d; transform:perspective(350px) rotateY(var(--giro-final)); }
+.bonus-objeto.moneda span { position:absolute; inset:0; display:grid; place-items:center; backface-visibility:hidden; border-radius:50%; background:#b38b37; }
+.bonus-objeto.moneda .cara-r { transform:rotateY(180deg); }
+.bonus-objeto.dado { border:0; border-radius:12px; background:transparent; transform-style:preserve-3d; transform:perspective(350px) rotateX(-16deg) rotateY(-22deg); }
+.dado-cara { position:absolute; width:68px; height:68px; display:grid; place-items:center; border:2px solid #dfbd68; border-radius:8px; background:#b38b37; }
+.dado-cara.frente { transform:translateZ(34px); }
+.dado-cara.derecha { transform:rotateY(90deg) translateZ(34px); background:#8d6e30; }
+.dado-cara.arriba { transform:rotateX(90deg) translateZ(34px); background:#d8b655; }
+.bonus-objeto.girando { animation:bonus-giro .9s ease-out; }
+.bonus-objeto.seis { box-shadow:0 0 35px #f5b438; }
+.bonus-aviso:not(:empty) { animation:bonus-aviso .4s ease-out; }
+@keyframes bonus-giro { from {transform:perspective(350px) rotateY(0) rotateX(0)} to {transform:perspective(350px) rotateY(calc(1080deg + var(--giro-final))) rotateX(360deg)} }
+@keyframes bonus-aviso { from {opacity:0; transform:scale(.9)} to {opacity:1;transform:scale(1)} }
+@media(prefers-reduced-motion:reduce) { .bonus-objeto,.bonus-aviso { animation:none !important; } }

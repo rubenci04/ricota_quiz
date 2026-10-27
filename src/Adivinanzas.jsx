@@ -5,6 +5,7 @@ import { prepararLetras } from './letrasIniciales.js'
 import { nivelTitulo } from './dificultad.js'
 import Teclado from './Teclado.jsx'
 import Resultado from './Resultado.jsx'
+import { Comodines } from './Bonus.jsx'
 import Cabecera from './Cabecera.jsx'
 import SelectorDisco from './SelectorDisco.jsx'
 import { sonar } from './sonido.js'
@@ -37,7 +38,7 @@ const nivelDeRespuesta = (r) => (r.modo === 'palabras' || r.categoria === 'canci
 
 function prepararRonda(opciones) {
   const p = crearPartida(opciones.modo === 'palabras' ? 'palabras' : `dicho${opciones.categoria}`, (semilla, plan) => nuevaRonda({ ...opciones, semilla, plan }), idsAdivinanza)
-  return { ...p.juego, plan: p.plan, ids: p.ids }
+  return { ...p.juego, plan: { ...p.plan, reglasAdivinanza: 2 }, ids: p.ids }
 }
 
 export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio = 'dicho' }) {
@@ -149,7 +150,9 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
 
   const terminar = (nuevasLetras, usadas) => {
     if (!nuevasLetras.every((l, i) => mismaLetra(l, solucion[i]))) return false
-    const puntos = usadas === 0 ? 3 : usadas === 1 ? 2 : 1
+    // Casual regala 40%: base 2; Ricotero mantiene base 3. Iniciales gratis.
+    const legado = desafio && desafio.plan?.reglasAdivinanza !== 2
+    const puntos = Math.max(1, (ronda.dif === 'casual' && !legado ? 2 : 3) - usadas)
     const e = leer()
     setTotal(
       guardar({
@@ -321,6 +324,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
       />
         {!desafio && <div className="segmentado" role="group" aria-label="Dificultad">{DIFICULTADES.map(d => <button key={d.id} aria-pressed={ronda.dif===d.id} onClick={() => { setDif(d.id); empezar({ modo: inicio, categoria: 'canciones', difi: d.id }) }}>{d.icono} {d.etiqueta}</button>)}</div>}
 
+      {!resultado && <Comodines acciones={{pista:()=>{const nuevas=revelarLetra(letras);if(!nuevas)return false;terminar(nuevas,pistasLetra)}}} />}
       <ul className="chips-juego" aria-label="Partida">
         <li>{modoInfo.icono} {modoInfo.etiqueta}</li>
         <li>{categoria.icono} {categoria.etiqueta}</li>
@@ -374,6 +378,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
 
       {resultado && (
         <Resultado
+          canciones={resultado.acierto&&ronda.cancion?[ronda.cancion.titulo]:[]}
           titulo={resultado.acierto ? 'Adivinanzas · ¡Correcto!' : `Era «${ronda.respuesta}»`}
           puntaje={resultado.acierto ? `+${resultado.puntos}` : '0'}
           detalle={resultado.acierto ? `Pistas de letra usadas: ${pistasLetra}` : 'Esta vez no sumaste puntos.'}

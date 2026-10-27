@@ -1,0 +1,50 @@
+import assert from 'node:assert/strict'
+const memoria=new Map([['ricota_quiz',JSON.stringify({v:8,activo:'uno',preferencias:{volumen:42,fondo:true},perfiles:[{id:'uno',alias:'Jugador uno',progreso:{partidas:12,nivel:4,mejorFrases:8}}]})]])
+globalThis.localStorage={getItem:k=>memoria.get(k)??null,setItem:(k,v)=>memoria.set(k,v)}
+const s=await import('../src/storage.js')
+const b=await import('../src/bonus.js')
+const {prepararLetras}=await import('../src/letrasIniciales.js')
+const {armarCasillas}=await import('../src/adivinanza.js')
+const {crearLink,leerDesafio}=await import('../src/desafio.js')
+const link=crearLink({modo:'adivinanzas',ronda:'dichocanciones',dif:'casual',semilla:'abcd1234',puntaje:2,plan:{vistos:[],recientes:[],ciclo:[],reglasAdivinanza:2}})
+assert.equal(leerDesafio(new URL(link).hash).plan.reglasAdivinanza,2)
+assert.ok(leerDesafio('#/desafio/adivinanzas/dichocanciones/casual/abcd1234/3'))
+for(const titulo of ['Alfa','Alfa beta gama delta','Una prueba de varias palabras largas','Sol'])for(const dif of ['casual','fanatico']){
+  const grupos=armarCasillas(titulo), n=grupos.flatMap(g=>g.letras).length
+  const a=prepararLetras(grupos,dif,'semilla')
+  assert.deepEqual(a,prepararLetras(grupos,dif,'semilla'))
+  let inicio=0
+  if(dif==='casual')for(const g of grupos){assert.equal(a.fijas[inicio],true);inicio+=g.letras.length}
+  assert.ok(a.fijas.filter(Boolean).length>=Math.min(n,dif==='casual'?2:1))
+}
+assert.equal(s.leer().partidas,12)
+assert.equal(s.leer().mejorFrases,8)
+b.premiar(Array(20).fill('pista'));assert.equal(s.leer().bonus.inventario.pista,5)
+assert.equal(b.usarComodin('pista',()=>false),false);assert.equal(s.leer().bonus.inventario.pista,5)
+assert.equal(b.usarComodin('pista',()=>true),true);assert.equal(s.leer().bonus.inventario.pista,4)
+const moneda=b.tirarMoneda('P','diaria','P');assert.equal(moneda.acierto,true)
+assert.equal(b.tirarMoneda('P','diaria','P'),null)
+const d={clave:'trivia:abc123:1',modo:'trivia',buenResultado:true,disco:'todos',puntos:8}
+b.registrarBonusPartida(d,0)
+b.registrarBonusPartida(d,0)
+assert.deepEqual(s.leer().bonus.dados,['primera:trivia'])
+assert.deepEqual(s.leer().bonus.monedas,[d.clave])
+assert.equal(b.tirarMoneda('P',d.clave,'R').acierto,false)
+assert.equal(b.tirarMoneda('P',d.clave,'P'),null)
+assert.equal(b.tirarDado('primera:trivia',6).cara,6)
+assert.equal(b.tirarDado('primera:trivia',6),null)
+assert.equal(s.leer().bonus.seises,1)
+s.guardar({rachaMax:30})
+const datos=(await import('../src/data/datos-ricotero.json')).default
+b.registrarBonusPartida({...d,clave:'sopa:abc123',modo:'sopa',canciones:datos.canciones.filter(c=>c.disco==='oktubre').map(c=>c.titulo)},1)
+assert.ok(s.leer().bonus.dados.includes('racha:3'));assert.ok(s.leer().bonus.dados.includes('racha:7'));assert.ok(s.leer().bonus.dados.includes('racha:30'));assert.ok(s.leer().bonus.dados.includes('disco:oktubre'))
+b.tirarDado('racha:3',3);assert.ok(s.leer().bonus.elecciones)
+b.elegirPremio('mitad');assert.equal(s.leer().bonus.elecciones,0)
+b.usarComodin('doble',()=>{s.guardar({bonus:{...s.leer().bonus,doble:true}})})
+b.registrarBonusPartida({...d,clave:'trivia:nueva:1'},1)
+assert.equal(s.leer().bonus.puntos,8);assert.equal(s.leer().bonus.doble,false)
+const {revisarLogros}=await import('../src/logros.js');revisarLogros();assert.ok(s.leer().logros.moneda1);assert.ok(s.leer().logros.dado6)
+s.crearPerfil('Segundo jugador');assert.equal(s.leer().bonus.monedasJugadas,0);assert.equal(s.leer().bonus.inventario.pista,0)
+s.seleccionarPerfil('uno');assert.equal(s.leer().bonus.puntos,8)
+assert.equal(JSON.parse(memoria.get('ricota_quiz')).v,9);assert.ok(memoria.get('ricota_quiz_pre_v9'))
+console.log('QA bonus: migración v8→v9, aislamiento, topes, consumo, moneda diaria, bonus único, dado, elección, hitos y puntos dobles: OK.')

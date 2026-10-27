@@ -1,0 +1,23 @@
+[
+  {
+    "navegador": "Chromium",
+    "respaldo": false,
+    "estado": "Fondo: activo (60 fps)",
+    "overrideReducirMovimiento": true,
+    "bonusSinGiro": true,
+    "errores": 0
+  },
+  {
+    "navegador": "Chromium",
+    "respaldo": true,
+    "estado": "Fondo: activo (60 fps)",
+    "overrideReducirMovimiento": true,
+    "bonusSinGiro": true,
+    "errores": 0
+  },
+  {
+    "navegador": "Firefox",
+    "noVerificado": true,
+    "motivo": "Firefox instalado; Windows rechazó iniciar el ejecutable (spawn UNKNOWN)."
+  }
+]

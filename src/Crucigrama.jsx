@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Comodines } from './Bonus.jsx'
 import Cabecera from './Cabecera.jsx'
 import datos from './data/datos-ricotero.json'
 import { normalizar } from './sopa.js'
@@ -369,6 +370,7 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
 
       {ganaste && (
         <Resultado
+          canciones={entradas.map(p=>p.cancion).filter(Boolean)}
           titulo="Crucigrama"
           puntaje={`${puntajeCruci} pts`}
           detalle={`${entradas.length}/${entradas.length} palabras · letras reveladas: ${pistas} · palabras reveladas: ${palabrasReveladas}`}
@@ -383,6 +385,10 @@ export default function Crucigrama({ onVolver, onMenu, desafio = null }) {
 
       <p className="feedback" role="status" aria-live="polite">{ganaste ? '✓ ¡Completaste el crucigrama!' : mensaje}</p>
 
+      <Comodines disabled={ganaste} acciones={{pista:()=>{
+        const k=Object.keys(solucion).find(k=>letras[k]!==solucion[k]);if(!k)return false;
+        setLetras(prev=>({...prev,[k]:solucion[k]}));setFijas(prev=>({...prev,[k]:true}))
+      }}} />
       <p className="contador-pistas">
         Letras: <strong>{MAX_PISTAS - pistas}</strong> · Palabras: <strong>{MAX_PALABRAS - palabrasReveladas}</strong>
       </p>

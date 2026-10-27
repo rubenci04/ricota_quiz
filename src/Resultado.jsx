@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import Bonus from './Bonus.jsx'
+import { registrarBonusPartida } from './bonus.js'
 import Confeti from './Confeti.jsx'
 import { Contador } from './Animados.jsx'
 import { NOMBRE_JUEGO, URL_JUEGO } from './config.js'
@@ -8,7 +10,7 @@ import { MODOS_DESAFIO, comparar, crearLink, textoDesafio } from './desafio.js'
 // `compartir` es el texto corto (sin letras ni versos); la URL sale de config.js.
 // `desafio` ({modo, tema, dif, semilla, puntaje}) habilita "Desafiar a un amigo".
 // `rival` ({puntaje}) aparece cuando se juega un desafío recibido: compara los dos puntajes.
-export default function Resultado({ titulo, puntaje, detalle, mejor, mensaje, compartir, exito = true, alMostrar, desafio, rival, children }) {
+export default function Resultado({ titulo, puntaje, detalle, mejor, mensaje, compartir, exito = true, alMostrar, desafio, rival, bonus, canciones = [], children }) {
   const [estado, setEstado] = useState('')
   const avisado = useRef(false)
 
@@ -16,6 +18,8 @@ export default function Resultado({ titulo, puntaje, detalle, mejor, mensaje, co
     if (avisado.current) return
     avisado.current = true
     alMostrar?.()
+    if (bonus) registrarBonusPartida(bonus)
+    else if (desafio) registrarBonusPartida({ clave: [desafio.modo,desafio.semilla,desafio.nivel??desafio.ronda??desafio.disco??'todos'].join(':'), modo:desafio.modo==='adivinanzas'?(desafio.ronda==='palabras'?'palabras':'dicho'):desafio.modo, buenResultado:exito, canciones, puntos:Number.parseInt(puntaje)||0 })
   }, [alMostrar])
 
   // copia con la API moderna y, si el navegador la rechaza, con un textarea temporal
@@ -83,6 +87,7 @@ export default function Resultado({ titulo, puntaje, detalle, mejor, mensaje, co
       <button className="secundario" onClick={compartirResultado}>Compartir</button>
       {desafio && <button className="secundario" onClick={desafiar}>Desafiar a un amigo</button>}
       <p className="feedback" role="status" aria-live="polite">{estado}</p>
+      {(desafio||bonus) && <Bonus />}
       {children}
     </section>
   )

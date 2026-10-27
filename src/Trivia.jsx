@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Dificultad from './Dificultad.jsx'
+import { Comodines } from './Bonus.jsx'
 import Cabecera from './Cabecera.jsx'
 import { PREGUNTAS_POR_NIVEL, armarNivel, armarNivelBanda, curiosidadAlAzar } from './trivia.js'
 import { LIMITES, PUNTOS_PARA_PASAR, iniciarNivel, terminarNivel, maximoAlcanzado } from './niveles.js'
@@ -168,6 +169,11 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
   return (
     <main className="pantalla" key="jugando">
       <Cabecera titulo={<>Nivel {nivel}</>} extra={<>{i + 1}/{preguntas.length}</>} onVolver={() => (desafio ? onVolver() : setVista('niveles'))} onMenu={onMenu} />
+      <Comodines acciones={{
+        pista:()=>{if(elegida!==null||verAyuda||!p.ayuda)return false;setVerAyuda(true)},
+        mitad:()=>{if(elegida!==null||ocultas.length>=2)return false;setOcultas(p.opciones.map((_,k)=>k).filter(k=>k!==p.correcta).slice(0,2))},
+        oportunidad:()=>{if(elegida===null||elegida===p.correcta)return false;setElegida(null);setOcultas([]);setErroresSeguidos(0)}
+      }} />
       <Barra valor={i + (elegida !== null ? 1 : 0)} max={preguntas.length} etiqueta="Progreso del nivel" />
       <div className="pregunta">
         <p>{p.texto}</p>

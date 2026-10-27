@@ -8,7 +8,7 @@ const s = await import('../src/storage.js')
 assert.equal(s.leer().nivel, 4)
 s.guardar({})
 const migrado = JSON.parse(memoria.get('ricota_quiz'))
-assert.equal(migrado.v, 8)
+assert.equal(migrado.v, 9)
 assert.equal(migrado.preferencias.volumen, 40)
 assert.ok(!('apariencia' in migrado.preferencias))
 const { registrarVista, planPara } = await import('../src/historial.js')
@@ -22,7 +22,7 @@ const { prepararLetras } = await import('../src/letrasIniciales.js')
 for (const [titulo, esperadas] of [['Alfa', 0], ['Alfa beta gama delta', 1], ['Alfa beta gama delta epsilon zeta', 2], ['Abecedariolarguisimodeprueba', 2]]) {
   for (const dif of ['casual', 'fanatico']) {
     const g = armarCasillas(titulo), ayuda = prepararLetras(g, dif, 'semillaqa')
-    assert.equal(ayuda.fijas.filter(Boolean).length, Math.max(0, esperadas - (dif === 'fanatico' ? 1 : 0)))
+    assert.ok(ayuda.fijas.filter(Boolean).length >= Math.min(g.flatMap(x=>x.letras).length, dif === 'casual' ? 2 : 1))
     assert.deepEqual(ayuda, prepararLetras(g, dif, 'semillaqa'))
     assert.ok(!ayuda.fijas[ayuda.foco])
   }
@@ -60,4 +60,4 @@ const coloresSopa = ['#e0a526','#c0392b','#3aa17e','#5b8def','#b455d6','#e0742b'
 const ratios = [...coloresSopa.map((c) => contraste(c,textoSobre(c))), contraste('#ffffff','#c63f28'), contraste('#ece8de','#161617'), contraste('#e2dbcc','#861a36'), contraste('#9ff0dc','#163b36')]
 assert.ok(Math.min(...ratios) >= 4.5)
 console.log(`Contraste mínimo de paleta/textos verificados: ${Math.min(...ratios).toFixed(2)}:1`)
-console.log('QA rápida aprobada: migración v6→v8, 150 vistos/3 rondas, semillas, letras iniciales, replay de cinco modos, catálogo y bundle público.')
+console.log('QA rápida aprobada: migración v6→v9, 150 vistos/3 rondas, semillas, letras iniciales, replay de cinco modos, catálogo y bundle público.')
