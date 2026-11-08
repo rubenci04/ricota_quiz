@@ -13,27 +13,27 @@
         "indice": 3,
         "clase": "verbo",
         "distractores": [
-          "llueve",
-          "baila",
-          "tose"
+          "falta",
+          "sobra",
+          "tarda"
         ]
       },
       {
         "indice": 4,
         "clase": "verbo",
         "distractores": [
-          "beber",
-          "coser",
-          "barrer"
+          "repartir",
+          "mostrar",
+          "guardar"
         ]
       },
       {
         "indice": 6,
         "clase": "sustantivo",
         "distractores": [
-          "cubo",
-          "lago",
-          "tren"
+          "póker",
+          "color",
+          "trío"
         ]
       }
     ],
@@ -53,27 +53,27 @@
         "indice": 1,
         "clase": "verbo",
         "distractores": [
-          "cose",
-          "rema",
-          "paga"
+          "sueña",
+          "corre",
+          "duerme"
         ]
       },
       {
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "tornillo",
-          "mantel",
-          "cuaderno"
+          "guitarra",
+          "cabeza",
+          "sombrero"
         ]
       },
       {
         "indice": 7,
         "clase": "sustantivo",
         "distractores": [
-          "techos",
-          "trenes",
-          "clavos"
+          "rejas",
+          "sombras",
+          "piernas"
         ]
       }
     ],
@@ -93,27 +93,27 @@
         "indice": 3,
         "clase": "sustantivo",
         "distractores": [
-          "colador",
-          "tenedor",
-          "diccionario"
+          "hospital",
+          "colegio",
+          "teatro"
         ]
       },
       {
         "indice": 5,
         "clase": "sustantivo",
         "distractores": [
-          "mesas",
-          "cajas",
-          "tazas"
+          "ruinas",
+          "obras",
+          "venta"
         ]
       },
       {
         "indice": 7,
         "clase": "verbo",
         "distractores": [
-          "regó",
-          "bordó",
-          "tejió"
+          "engañó",
+          "olvidó",
+          "abandonó"
         ]
       }
     ],
@@ -133,27 +133,27 @@
         "indice": 3,
         "clase": "verbo",
         "distractores": [
-          "coser",
-          "pesar",
-          "remar"
+          "romper",
+          "quemar",
+          "vender"
         ]
       },
       {
         "indice": 5,
         "clase": "sustantivo",
         "distractores": [
-          "cuchara",
-          "maleta",
-          "botella"
+          "carta",
+          "poesía",
+          "historia"
         ]
       },
       {
         "indice": 7,
         "clase": "sustantivo",
         "distractores": [
-          "cartón",
-          "fruta",
-          "cable"
+          "dolor",
+          "pena",
+          "odio"
         ]
       }
     ],
@@ -173,27 +173,27 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "cartón",
-          "fruta",
-          "cable"
+          "sueño",
+          "fuego",
+          "viaje"
         ]
       },
       {
         "indice": 2,
         "clase": "adjetivo",
         "distractores": [
-          "redondo",
-          "rayado",
-          "dorado"
+          "eterno",
+          "furioso",
+          "perfecto"
         ]
       },
       {
         "indice": 5,
         "clase": "sustantivo",
         "distractores": [
-          "balde",
-          "plato",
-          "vaso"
+          "ritmo",
+          "latido",
+          "ruido"
         ]
       }
     ],
@@ -212,18 +212,18 @@
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "papel",
-          "queso",
-          "cajón"
+          "vida",
+          "cielo",
+          "camino"
         ]
       },
       {
         "indice": 5,
         "clase": "verbo",
         "distractores": [
-          "factura",
-          "despega",
-          "cocina"
+          "gira",
+          "vuela",
+          "queda"
         ]
       }
     ],
@@ -243,27 +243,27 @@
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "pluma",
-          "rueda",
-          "tarta"
+          "banda",
+          "gente",
+          "calle"
         ]
       },
       {
         "indice": 4,
         "clase": "verbo",
         "distractores": [
-          "barre",
-          "riega",
-          "mastica"
+          "lleva",
+          "invita",
+          "obliga"
         ]
       },
       {
         "indice": 6,
         "clase": "verbo",
         "distractores": [
-          "coser",
-          "tejer",
-          "medir"
+          "bailar",
+          "cantar",
+          "saltar"
         ]
       }
     ],
@@ -283,27 +283,27 @@
         "indice": 0,
         "clase": "verbo",
         "distractores": [
-          "saltan",
-          "lloran",
-          "duermen"
+          "Cubren",
+          "Cargan",
+          "Pintan"
         ]
       },
       {
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "cucharas",
-          "carpetas",
-          "galletas"
+          "promesas",
+          "historias",
+          "palabras"
         ]
       },
       {
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "mesa",
-          "rueda",
-          "bolsa"
+          "cabeza",
+          "mente",
+          "vida"
         ]
       }
     ],
@@ -323,27 +323,27 @@
         "indice": 1,
         "clase": "verbo",
         "distractores": [
-          "cosió",
-          "regó",
-          "tejió"
+          "sacó",
+          "bajó",
+          "corrió"
         ]
       },
       {
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "cocina",
+          "cancha",
           "oficina",
-          "maleta"
+          "cárcel"
         ]
       },
       {
         "indice": 7,
         "clase": "verbo",
         "distractores": [
-          "cantó",
-          "cosió",
-          "pesó"
+          "perdió",
+          "cayó",
+          "enojó"
         ]
       }
     ],
@@ -363,27 +363,27 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "silla",
-          "bolsa",
-          "mesa"
+          "copa",
+          "ventana",
+          "lámpara"
         ]
       },
       {
         "indice": 3,
         "clase": "sustantivo",
         "distractores": [
-          "cartón",
-          "caucho",
-          "algodón"
+          "fuego",
+          "hielo",
+          "plata"
         ]
       },
       {
         "indice": 7,
         "clase": "sustantivo",
         "distractores": [
-          "botones",
-          "vasijas",
-          "cadenas"
+          "polvo",
+          "humo",
+          "nada"
         ]
       }
     ],
@@ -403,27 +403,27 @@
         "indice": 2,
         "clase": "verbo",
         "distractores": [
-          "coserle",
-          "pesarle",
-          "medirle"
+          "pedirle",
+          "prestarle",
+          "devolverle"
         ]
       },
       {
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "balde",
-          "plato",
-          "libro"
+          "cuerno",
+          "tridente",
+          "bastón"
         ]
       },
       {
         "indice": 6,
         "clase": "sustantivo",
         "distractores": [
-          "mantel",
-          "cajón",
-          "papel"
+          "brujo",
+          "cura",
+          "payaso"
         ]
       }
     ],
@@ -443,27 +443,27 @@
         "indice": 1,
         "clase": "verbo",
         "distractores": [
-          "estaciona",
-          "factura",
-          "desayuna"
+          "apaga",
+          "alumbra",
+          "borra"
         ]
       },
       {
         "indice": 3,
         "clase": "sustantivo",
         "distractores": [
-          "botones",
-          "tornillos",
-          "pelotas"
+          "sombras",
+          "noches",
+          "luces"
         ]
       },
       {
         "indice": 5,
         "clase": "sustantivo",
         "distractores": [
-          "cuchara",
-          "maleta",
-          "ventana"
+          "noche",
+          "ciudad",
+          "mañana"
         ]
       }
     ],
@@ -483,27 +483,27 @@
         "indice": 1,
         "clase": "verbo",
         "distractores": [
-          "cosería",
-          "pagaría",
-          "regaría"
+          "puede",
+          "debería",
+          "querría"
         ]
       },
       {
         "indice": 3,
         "clase": "adjetivo",
         "distractores": [
-          "azul",
-          "dulce",
-          "liso"
+          "mejor",
+          "raro",
+          "triste"
         ]
       },
       {
         "indice": 7,
         "clase": "verbo",
         "distractores": [
-          "taladra",
-          "cocina",
-          "factura"
+          "asusta",
+          "molesta",
+          "alcanza"
         ]
       }
     ],
@@ -523,27 +523,27 @@
         "indice": 2,
         "clase": "verbo",
         "distractores": [
-          "cantas",
-          "tejes",
-          "remas"
+          "tienes",
+          "quieres",
+          "ganas"
         ]
       },
       {
         "indice": 4,
         "clase": "verbo",
         "distractores": [
-          "lloras",
-          "cocinas",
-          "cobras"
+          "quieres",
+          "logras",
+          "sabes"
         ]
       },
       {
         "indice": 5,
         "clase": "verbo",
         "distractores": [
-          "bordártelo",
-          "pesártelo",
-          "cosértelo"
+          "guardártelo",
+          "llevártelo",
+          "comprártelo"
         ]
       }
     ],
@@ -563,27 +563,27 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "vaso",
-          "cable",
-          "tren"
+          "chico",
+          "viejo",
+          "obrero"
         ]
       },
       {
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "calendarios",
-          "termómetros",
-          "sacacorchos"
+          "talleres",
+          "puertos",
+          "muelles"
         ]
       },
       {
         "indice": 7,
         "clase": "verbo",
         "distractores": [
-          "cosía",
-          "regaba",
-          "tejía"
+          "cansaba",
+          "quejaba",
+          "dormía"
         ]
       }
     ],
@@ -602,18 +602,18 @@
         "indice": 0,
         "clase": "verbo",
         "distractores": [
-          "cosió",
-          "regó",
-          "tejió"
+          "puso",
+          "guardó",
+          "llevó"
         ]
       },
       {
         "indice": 6,
         "clase": "sustantivo",
         "distractores": [
-          "balde",
-          "plato",
-          "vaso"
+          "techo",
+          "cielo",
+          "foco"
         ]
       }
     ],
@@ -633,27 +633,27 @@
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "mesa",
-          "caja",
-          "rueda"
+          "barriga",
+          "fama",
+          "deuda"
         ]
       },
       {
         "indice": 3,
         "clase": "verbo",
         "distractores": [
-          "bordaba",
-          "cantaba",
-          "cosía"
+          "cambiaba",
+          "variaba",
+          "subía"
         ]
       },
       {
         "indice": 6,
         "clase": "verbo",
         "distractores": [
-          "horneaba",
-          "facturaba",
-          "taladraba"
+          "pedía",
+          "costaba",
+          "pagaba"
         ]
       }
     ],
@@ -673,27 +673,27 @@
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "cafetera",
-          "baldosa",
-          "servilleta"
+          "tradición",
+          "intención",
+          "obligación"
         ]
       },
       {
         "indice": 5,
         "clase": "verbo",
         "distractores": [
-          "estacionarse",
-          "abotonarse",
-          "despeinarse"
+          "enfrentarse",
+          "pelearse",
+          "juntarse"
         ]
       },
       {
         "indice": 8,
         "clase": "sustantivo",
         "distractores": [
-          "clavos",
-          "vasos",
-          "manteles"
+          "otros",
+          "dueños",
+          "viejos"
         ]
       }
     ],
@@ -713,27 +713,27 @@
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "mesas",
-          "cajas",
-          "tazas"
+          "sombras",
+          "voces",
+          "luces"
         ]
       },
       {
         "indice": 5,
         "clase": "verbo",
         "distractores": [
-          "planchan",
-          "cosen",
-          "taladran"
+          "habitan",
+          "recorren",
+          "rodean"
         ]
       },
       {
         "indice": 7,
         "clase": "sustantivo",
         "distractores": [
-          "papel",
-          "clavo",
-          "cuaderno"
+          "alma",
+          "mente",
+          "casa"
         ]
       }
     ],
@@ -753,27 +753,27 @@
         "indice": 3,
         "clase": "verbo",
         "distractores": [
-          "tejo",
-          "remo",
-          "barro"
+          "quiero",
+          "debo",
+          "pienso"
         ]
       },
       {
         "indice": 4,
         "clase": "verbo",
         "distractores": [
-          "cocinar",
-          "barrer",
-          "bordar"
+          "cambiar",
+          "escribir",
+          "romper"
         ]
       },
       {
         "indice": 6,
         "clase": "sustantivo",
         "distractores": [
-          "plato",
-          "balde",
-          "vaso"
+          "plan",
+          "texto",
+          "motor"
         ]
       }
     ],
@@ -793,27 +793,27 @@
         "indice": 2,
         "clase": "adjetivo",
         "distractores": [
-          "redonda",
-          "rayada",
-          "dorada"
+          "bonita",
+          "perfecta",
+          "elegante"
         ]
       },
       {
         "indice": 5,
         "clase": "verbo",
         "distractores": [
-          "barre",
-          "cose",
-          "pesa"
+          "alegra",
+          "conviene",
+          "calma"
         ]
       },
       {
         "indice": 6,
         "clase": "verbo",
         "distractores": [
-          "pesarla",
-          "coserla",
-          "regarla"
+          "leerla",
+          "decirla",
+          "creerla"
         ]
       }
     ],
@@ -833,27 +833,27 @@
         "indice": 0,
         "clase": "verbo",
         "distractores": [
-          "cosió",
-          "regó",
-          "tejió"
+          "tiró",
+          "metió",
+          "rompió"
         ]
       },
       {
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "clavo",
-          "plato",
-          "vaso"
+          "petardo",
+          "fósforo",
+          "chiste"
         ]
       },
       {
         "indice": 6,
         "clase": "verbo",
         "distractores": [
-          "bordó",
-          "cantó",
-          "tejió"
+          "terminó",
+          "cambió",
+          "saltó"
         ]
       }
     ],
@@ -873,27 +873,27 @@
         "indice": 2,
         "clase": "adjetivo",
         "distractores": [
-          "dulce",
-          "liso",
-          "azul"
+          "viejo",
+          "pobre",
+          "triste"
         ]
       },
       {
         "indice": 3,
         "clase": "sustantivo",
         "distractores": [
-          "vaso",
-          "cable",
-          "tren"
+          "zorro",
+          "tigre",
+          "león"
         ]
       },
       {
         "indice": 4,
         "clase": "verbo",
         "distractores": [
-          "abotonándose",
-          "estacionando",
-          "facturando"
+          "muriéndose",
+          "ahogándose",
+          "derritiéndose"
         ]
       }
     ],
@@ -913,27 +913,27 @@
         "indice": 2,
         "clase": "verbo",
         "distractores": [
-          "rema",
-          "cose",
-          "teje"
+          "dura",
+          "sirve",
+          "pesa"
         ]
       },
       {
         "indice": 5,
         "clase": "sustantivo",
         "distractores": [
-          "mesa",
-          "bolsa",
-          "caja"
+          "moda",
+          "onda",
+          "marca"
         ]
       },
       {
         "indice": 6,
         "clase": "adjetivo",
         "distractores": [
-          "dulce",
-          "lisa",
-          "azul"
+          "buena",
+          "grande",
+          "única"
         ]
       }
     ],
@@ -953,27 +953,27 @@
         "indice": 3,
         "clase": "verbo",
         "distractores": [
-          "cose",
-          "teje",
-          "rema"
+          "grita",
+          "sueña",
+          "duerme"
         ]
       },
       {
         "indice": 4,
         "clase": "adjetivo",
         "distractores": [
-          "redondo",
-          "dorado",
-          "rayado"
+          "perdido",
+          "hundido",
+          "cansado"
         ]
       },
       {
         "indice": 6,
         "clase": "sustantivo",
         "distractores": [
-          "cafetera",
-          "baldosa",
-          "mantelería"
+          "silencio",
+          "soledad",
+          "oscuridad"
         ]
       }
     ],
@@ -993,27 +993,27 @@
         "indice": 3,
         "clase": "sustantivo",
         "distractores": [
-          "plato",
-          "vaso",
-          "libro"
+          "gato",
+          "hombre",
+          "burro"
         ]
       },
       {
         "indice": 4,
         "clase": "verbo",
         "distractores": [
-          "cose",
-          "teje",
-          "pesa"
+          "ladra",
+          "aúlla",
+          "apunta"
         ]
       },
       {
         "indice": 6,
         "clase": "sustantivo",
         "distractores": [
-          "balde",
-          "vaso",
-          "papel"
+          "dueño",
+          "suelo",
+          "techo"
         ]
       }
     ],
@@ -1033,27 +1033,27 @@
         "indice": 1,
         "clase": "verbo",
         "distractores": [
-          "cose",
-          "teje",
-          "pesa"
+          "tira",
+          "mete",
+          "deja"
         ]
       },
       {
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "papel",
-          "clavo",
-          "cable"
+          "fuego",
+          "humo",
+          "nieve"
         ]
       },
       {
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "clavos",
-          "vasos",
-          "libros"
+          "llamas",
+          "cenizas",
+          "chispas"
         ]
       }
     ],
@@ -1073,27 +1073,27 @@
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "cuaderno",
-          "tornillo",
-          "mantel"
+          "humito",
+          "ruidito",
+          "petardo"
         ]
       },
       {
         "indice": 5,
         "clase": "verbo",
         "distractores": [
-          "factura",
-          "plancha",
-          "taladra"
+          "persigue",
+          "ataca",
+          "asusta"
         ]
       },
       {
         "indice": 7,
         "clase": "sustantivo",
         "distractores": [
-          "plato",
-          "vaso",
-          "libro"
+          "gato",
+          "loro",
+          "chico"
         ]
       }
     ],
@@ -1113,27 +1113,27 @@
         "indice": 3,
         "clase": "sustantivo",
         "distractores": [
-          "balde",
-          "plato",
-          "libro"
+          "mundo",
+          "sueño",
+          "barrio"
         ]
       },
       {
         "indice": 5,
         "clase": "sustantivo",
         "distractores": [
-          "mantel",
-          "papel",
-          "clavo"
+          "cambio",
+          "tono",
+          "nivel"
         ]
       },
       {
         "indice": 7,
         "clase": "sustantivo",
         "distractores": [
-          "cajón",
-          "vaso",
-          "papel"
+          "humor",
+          "salud",
+          "alerta"
         ]
       }
     ],
@@ -1153,27 +1153,27 @@
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "bolsa",
-          "rueda",
-          "mesa"
+          "noche",
+          "siesta",
+          "calle"
         ]
       },
       {
         "indice": 4,
         "clase": "verbo",
         "distractores": [
-          "cose",
-          "teje",
-          "rema"
+          "pica",
+          "ronda",
+          "molesta"
         ]
       },
       {
         "indice": 7,
         "clase": "sustantivo",
         "distractores": [
-          "clavo",
-          "plato",
-          "vaso"
+          "mosquito",
+          "zancudo",
+          "tábano"
         ]
       }
     ],
@@ -1192,18 +1192,18 @@
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "cafetera",
-          "maleta",
-          "carpeta"
+          "ciudad",
+          "escuela",
+          "justicia"
         ]
       },
       {
         "indice": 3,
         "clase": "verbo",
         "distractores": [
-          "cose",
-          "teje",
-          "rema"
+          "anda",
+          "queda",
+          "viene"
         ]
       }
     ],
@@ -1223,27 +1223,27 @@
         "indice": 0,
         "clase": "adjetivo",
         "distractores": [
-          "redonda",
-          "dorada",
-          "rayada"
+          "alejada",
+          "sacada",
+          "curada"
         ]
       },
       {
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "papel",
-          "clavo",
-          "cable"
+          "ruido",
+          "humo",
+          "fuego"
         ]
       },
       {
         "indice": 3,
         "clase": "adjetivo",
         "distractores": [
-          "dulce",
-          "liso",
-          "azul"
+          "oscuro",
+          "viejo",
+          "lento"
         ]
       }
     ],
@@ -1262,18 +1262,18 @@
         "indice": 3,
         "clase": "verbo",
         "distractores": [
-          "facturás",
-          "planchás",
-          "taladrás"
+          "querés",
+          "pedís",
+          "soñás"
         ]
       },
       {
         "indice": 6,
         "clase": "verbo",
         "distractores": [
-          "cocinen",
-          "planchen",
-          "taladren"
+          "traten",
+          "hablen",
+          "peguen"
         ]
       }
     ],
@@ -1293,27 +1293,27 @@
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "maleta",
-          "cuchara",
-          "botella"
+          "radio",
+          "campana",
+          "mujer"
         ]
       },
       {
         "indice": 3,
         "clase": "verbo",
         "distractores": [
-          "cosiera",
-          "regara",
-          "tejiera"
+          "cantara",
+          "sonara",
+          "contara"
         ]
       },
       {
         "indice": 7,
         "clase": "sustantivo",
         "distractores": [
-          "rueda",
-          "mesa",
-          "bolsa"
+          "medida",
+          "hora",
+          "vida"
         ]
       }
     ],

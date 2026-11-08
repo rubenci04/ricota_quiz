@@ -10,9 +10,13 @@ const anterior=execFileSync('git',['show',`${base}:src/frases.js`],{encoding:'ut
 const legado=await import(`data:text/javascript;base64,${Buffer.from(anterior).toString('base64')}`)
 const bancoAnterior=JSON.parse(execFileSync('git',['show',`${base}:src/data/frases.json`],{encoding:'utf8'}))
 const banco=JSON.parse(readFileSync('src/data/frases.json','utf8'))
-assert.ok(JSON.stringify(banco)===JSON.stringify(bancoAnterior),'El banco legado debe permanecer intacto')
+// Los distractores se mejoraron a propósito (ver FRASES.md): las frases, huecos y respuestas deben seguir idénticos.
+const sinDistractores=b=>JSON.stringify(b.map(f=>({...f,huecos:f.huecos.map(({distractores,...h})=>h)})))
+assert.ok(sinDistractores(banco)===sinDistractores(bancoAnterior),'Las frases del banco legado deben permanecer intactas')
+// Compara rondas sin las palabras de las opciones (sí su cantidad y orden de mezcla).
+const forma=r=>JSON.stringify(r.map(f=>({...f,huecos:f.huecos.map(({distractores,...h})=>h),opcionesPorHueco:Object.fromEntries(Object.entries(f.opcionesPorHueco).map(([k,v])=>[k,v.length]))})))
 for(const dif of ['casual','fanatico'])for(let i=0;i<100;i++){
  const semilla=`legado${i}`,plan={vistos:legado.idsFrases(legado.armarRondaFrases(bancoAnterior,`previa${i}`,dif)),recientes:[],ciclo:[]}
- assert.ok(JSON.stringify(armarRondaFrases(banco,semilla,dif,plan))===JSON.stringify(legado.armarRondaFrases(bancoAnterior,semilla,dif,plan)),`Replay legado ${dif}/${i}`)
+ assert.ok(forma(armarRondaFrases(banco,semilla,dif,plan))===forma(legado.armarRondaFrases(bancoAnterior,semilla,dif,plan)),`Replay legado ${dif}/${i}`)
 }
-console.log('Compatibilidad: 200 rondas y sus opciones idénticas al código y banco publicados en 766c29d: OK.')
+console.log('Compatibilidad: 200 rondas con las mismas frases, huecos y respuestas al código y banco publicados en 766c29d: OK.')

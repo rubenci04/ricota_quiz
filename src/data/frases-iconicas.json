@@ -32,18 +32,18 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "relojes",
-          "barcos",
-          "tangos"
+          "dioses",
+          "reyes",
+          "jefes"
         ]
       },
       {
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "pasajeros",
-          "escritores",
-          "vendedores"
+          "compañeros",
+          "guardianes",
+          "soldados"
         ]
       }
     ]
@@ -117,18 +117,18 @@
         "indice": 1,
         "clase": "verbo",
         "distractores": [
-          "correr",
-          "coser",
-          "barrer"
+          "bailar",
+          "volar",
+          "cantar"
         ]
       },
       {
         "indice": 3,
         "clase": "sustantivo",
         "distractores": [
-          "tren",
-          "mar",
-          "pan"
+          "vida",
+          "nena",
+          "reina"
         ]
       }
     ]
@@ -148,27 +148,27 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "zapatos",
-          "relojes",
-          "manteles"
+          "hombres",
+          "poetas",
+          "pájaros"
         ]
       },
       {
         "indice": 4,
         "clase": "verbo",
         "distractores": [
-          "bailan",
-          "cosen",
-          "saltan"
+          "quedan",
+          "vuelven",
+          "sienten"
         ]
       },
       {
         "indice": 7,
         "clase": "verbo",
         "distractores": [
-          "cocinar",
-          "dibujar",
-          "estudiar"
+          "correr",
+          "volar",
+          "soñar"
         ]
       }
     ]
@@ -197,18 +197,18 @@
         "indice": 0,
         "clase": "verbo",
         "distractores": [
-          "Cosí",
-          "Bebí",
-          "Dormí"
+          "Perdí",
+          "Cambié",
+          "Tiré"
         ]
       },
       {
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "mantel",
-          "tornillo",
-          "cuaderno"
+          "polvo",
+          "freno",
+          "labio"
         ]
       }
     ]
@@ -246,27 +246,27 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "zapatos",
-          "relojes",
-          "clavos"
+          "grillos",
+          "sapos",
+          "lechuzas"
         ]
       },
       {
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "mesa",
-          "papel",
-          "calle"
+          "selva",
+          "tarde",
+          "sombra"
         ]
       },
       {
         "indice": 7,
         "clase": "verbo",
         "distractores": [
-          "comer",
-          "coser",
-          "correr"
+          "gritar",
+          "llorar",
+          "aullar"
         ]
       }
     ]
@@ -287,18 +287,18 @@
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "mesa",
-          "papel",
-          "calle"
+          "vida",
+          "calle",
+          "tarde"
         ]
       },
       {
         "indice": 5,
         "clase": "adjetivo",
         "distractores": [
-          "redonda",
-          "dulce",
-          "pequeña"
+          "larga",
+          "fría",
+          "triste"
         ]
       }
     ]
@@ -318,18 +318,18 @@
         "indice": 1,
         "clase": "verbo",
         "distractores": [
-          "cocinando",
-          "barriendo",
-          "dibujando"
+          "creciendo",
+          "bebiendo",
+          "mejorando"
         ]
       },
       {
         "indice": 5,
         "clase": "verbo",
         "distractores": [
-          "regala",
-          "pinta",
-          "vende"
+          "duele",
+          "preocupa",
+          "extraña"
         ]
       }
     ]
@@ -377,18 +377,18 @@
         "indice": 0,
         "clase": "verbo",
         "distractores": [
-          "Cosés",
-          "Saltás",
-          "Bebés"
+          "Ensayás",
+          "Soñás",
+          "Mirás"
         ]
       },
       {
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "carretera",
-          "lapicera",
-          "almohada"
+          "distancia",
+          "carrera",
+          "jugada"
         ]
       }
     ]
@@ -435,27 +435,27 @@
         "indice": 0,
         "clase": "adjetivo",
         "distractores": [
-          "Verde",
-          "Redondo",
-          "Dulce"
+          "Serio",
+          "Cansado",
+          "Solo"
         ]
       },
       {
         "indice": 5,
         "clase": "verbo",
         "distractores": [
-          "coser",
-          "barrer",
-          "correr"
+          "mirar",
+          "tocar",
+          "llamar"
         ]
       },
       {
         "indice": 7,
         "clase": "adjetivo",
         "distractores": [
-          "cuadrado",
-          "morado",
-          "pequeño"
+          "vacío",
+          "ciego",
+          "muerto"
         ]
       }
     ]
@@ -502,18 +502,18 @@
         "indice": 3,
         "clase": "sustantivo",
         "distractores": [
-          "tornillo",
-          "cuaderno",
-          "mantel"
+          "verdad",
+          "justicia",
+          "pasión"
         ]
       },
       {
         "indice": 5,
         "clase": "adjetivo",
         "distractores": [
-          "redonda",
-          "pequeña",
-          "salada"
+          "peligrosa",
+          "imposible",
+          "hermosa"
         ]
       }
     ]
@@ -587,18 +587,18 @@
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "tren",
-          "pan",
-          "reloj"
+          "juego",
+          "magia",
+          "broma"
         ]
       },
       {
         "indice": 9,
         "clase": "sustantivo",
         "distractores": [
-          "mantel",
-          "rueda",
-          "cuaderno"
+          "locura",
+          "mentira",
+          "verdad"
         ]
       }
     ]
@@ -663,27 +663,27 @@
         "indice": 3,
         "clase": "sustantivo",
         "distractores": [
-          "reloj",
-          "papel",
-          "botón"
+          "hilo",
+          "miedo",
+          "nudo"
         ]
       },
       {
         "indice": 6,
         "clase": "sustantivo",
         "distractores": [
-          "vaso",
-          "tren",
-          "mantel"
+          "cuerpo",
+          "dolor",
+          "tiempo"
         ]
       },
       {
         "indice": 7,
         "clase": "verbo",
         "distractores": [
-          "cose",
-          "baila",
-          "dibuja"
+          "vive",
+          "muere",
+          "queda"
         ]
       }
     ]
@@ -730,18 +730,18 @@
         "indice": 2,
         "clase": "verbo",
         "distractores": [
-          "cose",
-          "gira",
-          "pinta"
+          "duele",
+          "pesa",
+          "quema"
         ]
       },
       {
         "indice": 7,
         "clase": "sustantivo",
         "distractores": [
-          "mantel",
-          "tornillo",
-          "cuaderno"
+          "cabeza",
+          "espalda",
+          "estómago"
         ]
       }
     ]
@@ -761,27 +761,27 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "zapato",
-          "mantel",
-          "cuaderno"
+          "invierno",
+          "verano",
+          "peligro"
         ]
       },
       {
         "indice": 3,
         "clase": "verbo",
         "distractores": [
-          "bailó",
-          "cosió",
-          "pintó"
+          "empezó",
+          "volvió",
+          "pasó"
         ]
       },
       {
         "indice": 9,
         "clase": "verbo",
         "distractores": [
-          "dibujabas",
-          "cocinabas",
-          "barrias"
+          "imaginabas",
+          "soñabas",
+          "creías"
         ]
       }
     ]
@@ -810,27 +810,27 @@
         "indice": 1,
         "clase": "verbo",
         "distractores": [
-          "cocinando",
-          "dibujando",
-          "barriendo"
+          "olvidando",
+          "curando",
+          "pagando"
         ]
       },
       {
         "indice": 3,
         "clase": "sustantivo",
         "distractores": [
-          "mesas",
-          "relojes",
-          "papeles"
+          "tragos",
+          "gritos",
+          "pasos"
         ]
       },
       {
         "indice": 5,
         "clase": "sustantivo",
         "distractores": [
-          "manteles",
-          "zapatos",
-          "cuadernos"
+          "miedos",
+          "deudas",
+          "pecados"
         ]
       }
     ]
@@ -877,27 +877,27 @@
         "indice": 1,
         "clase": "verbo",
         "distractores": [
-          "dibujé",
-          "cociné",
-          "compré"
+          "mordí",
+          "quemé",
+          "corté"
         ]
       },
       {
         "indice": 3,
         "clase": "sustantivo",
         "distractores": [
-          "mesas",
-          "relojes",
-          "papeles"
+          "dedos",
+          "dientes",
+          "brazos"
         ]
       },
       {
         "indice": 5,
         "clase": "verbo",
         "distractores": [
-          "cocinar",
-          "barrer",
-          "dibujar"
+          "bailar",
+          "llorar",
+          "cantar"
         ]
       }
     ]
@@ -944,18 +944,18 @@
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "lapiceras",
-          "tornillos",
-          "cuadernos"
+          "batallas",
+          "ciudades",
+          "guerras"
         ]
       },
       {
         "indice": 8,
         "clase": "verbo",
         "distractores": [
-          "coser",
-          "barrer",
-          "correr"
+          "volver",
+          "salir",
+          "llegar"
         ]
       }
     ]
@@ -1029,27 +1029,27 @@
         "indice": 2,
         "clase": "verbo",
         "distractores": [
-          "cosido",
-          "barrido",
-          "cocinado"
+          "perdido",
+          "dormido",
+          "enojado"
         ]
       },
       {
         "indice": 5,
         "clase": "sustantivo",
         "distractores": [
-          "pan",
-          "reloj",
-          "tren"
+          "polvo",
+          "sombra",
+          "viento"
         ]
       },
       {
         "indice": 8,
         "clase": "sustantivo",
         "distractores": [
-          "cuaderno",
-          "tornillo",
-          "mantel"
+          "señal",
+          "orden",
+          "voz"
         ]
       }
     ]
@@ -1069,27 +1069,27 @@
         "indice": 0,
         "clase": "sustantivo",
         "distractores": [
-          "Cuaderno",
-          "Tornillo",
-          "Mantel"
+          "Plan",
+          "Boceto",
+          "Operativo"
         ]
       },
       {
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "mesa",
-          "reloj",
-          "papel"
+          "obra",
+          "guerra",
+          "escena"
         ]
       },
       {
         "indice": 6,
         "clase": "sustantivo",
         "distractores": [
-          "zapato",
-          "tornillo",
-          "mantel"
+          "circo",
+          "drama",
+          "juego"
         ]
       }
     ]
@@ -1127,27 +1127,27 @@
         "indice": 2,
         "clase": "adjetivo",
         "distractores": [
-          "redondo",
-          "pequeño",
-          "salado"
+          "eterno",
+          "mágico",
+          "sagrado"
         ]
       },
       {
         "indice": 6,
         "clase": "verbo",
         "distractores": [
-          "cose",
-          "pinta",
-          "barre"
+          "pasa",
+          "vuela",
+          "huye"
         ]
       },
       {
         "indice": 8,
         "clase": "sustantivo",
         "distractores": [
-          "zapato",
-          "reloj",
-          "mantel"
+          "viento",
+          "agua",
+          "mundo"
         ]
       }
     ]
@@ -1194,18 +1194,18 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "tren",
-          "pan",
-          "reloj"
+          "arte",
+          "poder",
+          "dinero"
         ]
       },
       {
         "indice": 3,
         "clase": "sustantivo",
         "distractores": [
-          "carretera",
-          "lapicera",
-          "cuaderno"
+          "elegancia",
+          "tristeza",
+          "violencia"
         ]
       }
     ]
@@ -1225,27 +1225,27 @@
         "indice": 1,
         "clase": "verbo",
         "distractores": [
-          "cosiste",
-          "barriste",
-          "cocinaste"
+          "viviste",
+          "perdiste",
+          "soñaste"
         ]
       },
       {
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "mesas",
-          "trenes",
-          "papeles"
+          "noches",
+          "golpes",
+          "tiempos"
         ]
       },
       {
         "indice": 3,
         "clase": "adjetivo",
         "distractores": [
-          "redondas",
-          "saladas",
-          "verdes"
+          "peores",
+          "mayores",
+          "grandes"
         ]
       }
     ]
@@ -1265,18 +1265,18 @@
         "indice": 1,
         "clase": "adjetivo",
         "distractores": [
-          "verde",
-          "salado",
-          "redondo"
+          "mejor",
+          "primer",
+          "pobre"
         ]
       },
       {
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "reloj",
-          "mantel",
-          "papel"
+          "amigo",
+          "socio",
+          "ángel"
         ]
       }
     ]
@@ -1297,7 +1297,38 @@
       "lista": 2,
       "numero": 6
     },
-    "catalogada": true
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 0,
+        "clase": "adjetivo",
+        "distractores": [
+          "Nunca",
+          "Quizás",
+          "Todavía"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "adjetivo",
+        "distractores": [
+          "más",
+          "peor",
+          "mejor"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "historia",
+          "leyenda",
+          "apariencia"
+        ]
+      }
+    ]
   },
   {
     "cancion": "Nuestro amo juega al esclavo",
@@ -1314,18 +1345,18 @@
         "indice": 0,
         "clase": "sustantivo",
         "distractores": [
-          "Cuaderno",
-          "Tornillo",
-          "Carretera"
+          "Traición",
+          "Ignorancia",
+          "Maldad"
         ]
       },
       {
         "indice": 2,
         "clase": "verbo",
         "distractores": [
-          "coser",
-          "barrer",
-          "correr"
+          "callar",
+          "pegar",
+          "robar"
         ]
       }
     ]
@@ -1345,27 +1376,27 @@
         "indice": 0,
         "clase": "verbo",
         "distractores": [
-          "Coser",
-          "Barrer",
-          "Correr"
+          "Morir",
+          "Soñar",
+          "Amar"
         ]
       },
       {
         "indice": 2,
         "clase": "verbo",
         "distractores": [
-          "dibuja",
-          "cocina",
-          "pinta"
+          "dura",
+          "vale",
+          "pide"
         ]
       },
       {
         "indice": 3,
         "clase": "sustantivo",
         "distractores": [
-          "tren",
-          "pan",
-          "reloj"
+          "tiempo",
+          "plata",
+          "sangre"
         ]
       }
     ]
@@ -1385,27 +1416,27 @@
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "tren",
-          "pan",
-          "reloj"
+          "torta",
+          "leche",
+          "sopa"
         ]
       },
       {
         "indice": 4,
         "clase": "verbo",
         "distractores": [
-          "cosen",
-          "barren",
-          "pintan"
+          "beben",
+          "viven",
+          "prueban"
         ]
       },
       {
         "indice": 6,
         "clase": "sustantivo",
         "distractores": [
-          "manteles",
-          "zapatos",
-          "cuadernos"
+          "abejas",
+          "moscas",
+          "avispas"
         ]
       }
     ]
@@ -1434,18 +1465,18 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "zapato",
-          "mantel",
-          "cuaderno"
+          "invierno",
+          "verano",
+          "peligro"
         ]
       },
       {
         "indice": 2,
         "clase": "verbo",
         "distractores": [
-          "bailó",
-          "cosió",
-          "pintó"
+          "pasó",
+          "murió",
+          "empezó"
         ]
       }
     ]
@@ -1474,27 +1505,27 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "mesa",
-          "papel",
-          "reloj"
+          "mujer",
+          "persona",
+          "clase"
         ]
       },
       {
         "indice": 2,
         "clase": "adjetivo",
         "distractores": [
-          "redonda",
-          "salada",
-          "pequeña"
+          "común",
+          "honesta",
+          "inocente"
         ]
       },
       {
         "indice": 4,
         "clase": "adjetivo",
         "distractores": [
-          "cuadrada",
-          "verde",
-          "amarilla"
+          "valiente",
+          "culpable",
+          "peligrosa"
         ]
       }
     ]
@@ -1514,18 +1545,18 @@
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "zapato",
-          "mantel",
-          "cuaderno"
+          "abogado",
+          "fiscal",
+          "médico"
         ]
       },
       {
         "indice": 5,
         "clase": "verbo",
         "distractores": [
-          "desatornillar",
-          "desabrochar",
-          "reconstruir"
+          "sobornar",
+          "equivocar",
+          "convencer"
         ]
       }
     ]
@@ -1554,18 +1585,18 @@
         "indice": 1,
         "clase": "adjetivo",
         "distractores": [
-          "verde",
-          "salado",
-          "redondo"
+          "bien",
+          "libre",
+          "fuerte"
         ]
       },
       {
         "indice": 9,
         "clase": "verbo",
         "distractores": [
-          "cosemos",
-          "barremos",
-          "dibujamos"
+          "damos",
+          "haríamos",
+          "sufrimos"
         ]
       }
     ]
@@ -1577,7 +1608,38 @@
       "lista": 2,
       "numero": 19
     },
-    "catalogada": true
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "adjetivo",
+        "distractores": [
+          "pobre",
+          "triste",
+          "pequeña"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "barrio",
+          "pueblo",
+          "planeta"
+        ]
+      },
+      {
+        "indice": 11,
+        "clase": "verbo",
+        "distractores": [
+          "debe",
+          "quiere",
+          "guarda"
+        ]
+      }
+    ]
   },
   {
     "cancion": "Nueva Roma",
@@ -1594,27 +1656,27 @@
         "indice": 2,
         "clase": "verbo",
         "distractores": [
-          "cosió",
-          "barrió",
-          "pintó"
+          "tuvo",
+          "parió",
+          "formó"
         ]
       },
       {
         "indice": 6,
         "clase": "sustantivo",
         "distractores": [
-          "mantel",
-          "tornillo",
-          "cuaderno"
+          "barrio",
+          "carácter",
+          "talento"
         ]
       },
       {
         "indice": 7,
         "clase": "adjetivo",
         "distractores": [
-          "redondo",
-          "pequeño",
-          "salado"
+          "solitario",
+          "romántico",
+          "tranquilo"
         ]
       }
     ]
@@ -1670,27 +1732,27 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "mesas",
-          "relojes",
-          "papeles"
+          "magos",
+          "sabios",
+          "gitanos"
         ]
       },
       {
         "indice": 3,
         "clase": "verbo",
         "distractores": [
-          "cosen",
-          "barren",
-          "pintan"
+          "andan",
+          "montan",
+          "duermen"
         ]
       },
       {
         "indice": 5,
         "clase": "sustantivo",
         "distractores": [
-          "manteles",
-          "zapatos",
-          "cuadernos"
+          "caballos",
+          "elefantes",
+          "trenes"
         ]
       }
     ]
@@ -1728,18 +1790,18 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "mantel",
-          "tornillo",
-          "cuaderno"
+          "hombre",
+          "carácter",
+          "cuerpo"
         ]
       },
       {
         "indice": 4,
         "clase": "verbo",
         "distractores": [
-          "dibuja",
-          "cocina",
-          "martilla"
+          "rompe",
+          "enferma",
+          "ablanda"
         ]
       }
     ]
@@ -1768,18 +1830,18 @@
         "indice": 2,
         "clase": "verbo",
         "distractores": [
-          "dibuja",
-          "cocina",
-          "martilla"
+          "espera",
+          "arriesga",
+          "trabaja"
         ]
       },
       {
         "indice": 5,
         "clase": "sustantivo",
         "distractores": [
-          "zapato",
-          "mantel",
-          "cuaderno"
+          "perdón",
+          "suerte",
+          "salida"
         ]
       }
     ]
@@ -1799,27 +1861,27 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "carreteras",
-          "lapiceras",
-          "tornillos"
+          "mentiras",
+          "heridas",
+          "tormentas"
         ]
       },
       {
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "manteles",
-          "zapatos",
-          "cuadernos"
+          "recuerdos",
+          "regalos",
+          "castigos"
         ]
       },
       {
         "indice": 5,
         "clase": "adjetivo",
         "distractores": [
-          "verdes",
-          "redondos",
-          "pequeños"
+          "amargos",
+          "tristes",
+          "eternos"
         ]
       }
     ]
@@ -1866,27 +1928,27 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "mesa",
-          "papel",
-          "reloj"
+          "vida",
+          "luna",
+          "calle"
         ]
       },
       {
         "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "zapato",
-          "mantel",
-          "cuaderno"
+          "golpe",
+          "grito",
+          "beso"
         ]
       },
       {
         "indice": 5,
         "clase": "adjetivo",
         "distractores": [
-          "redondo",
-          "pequeño",
-          "salado"
+          "perfecto",
+          "final",
+          "gigante"
         ]
       }
     ]
@@ -1906,18 +1968,18 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "cuaderno",
-          "tornillo",
-          "lapicera"
+          "destino",
+          "instinto",
+          "orgullo"
         ]
       },
       {
         "indice": 3,
         "clase": "verbo",
         "distractores": [
-          "cosió",
-          "barrió",
-          "pintó"
+          "guió",
+          "empujó",
+          "dejó"
         ]
       }
     ]
@@ -1937,18 +1999,18 @@
         "indice": 1,
         "clase": "sustantivo",
         "distractores": [
-          "cuadernos",
-          "tornillos",
-          "lapiceras"
+          "cenizas",
+          "heridas",
+          "ruinas"
         ]
       },
       {
         "indice": 2,
         "clase": "verbo",
         "distractores": [
-          "cosen",
-          "barren",
-          "pintan"
+          "saben",
+          "suenan",
+          "lucen"
         ]
       }
     ]
@@ -1960,7 +2022,29 @@
       "lista": 2,
       "numero": 43
     },
-    "catalogada": true
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "guerrero",
+          "poeta",
+          "payaso"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "sustantivo",
+        "distractores": [
+          "bandido",
+          "asesino",
+          "ladrón"
+        ]
+      }
+    ]
   },
   {
     "cancion": "Luzbelito y las sirenas",
@@ -1977,18 +2061,18 @@
         "indice": 0,
         "clase": "verbo",
         "distractores": [
-          "Coserá",
-          "Barrerá",
-          "Pintará"
+          "Cantará",
+          "Guardará",
+          "Perderá"
         ]
       },
       {
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "mantel",
-          "tornillo",
-          "cuaderno"
+          "dolor",
+          "destino",
+          "pasado"
         ]
       }
     ]
@@ -2026,27 +2110,27 @@
         "indice": 2,
         "clase": "verbo",
         "distractores": [
-          "cose",
-          "barre",
-          "pinta"
+          "sube",
+          "vive",
+          "sale"
         ]
       },
       {
         "indice": 5,
         "clase": "verbo",
         "distractores": [
-          "cocina",
-          "dibuja",
-          "martilla"
+          "empata",
+          "falla",
+          "sufre"
         ]
       },
       {
         "indice": 8,
         "clase": "sustantivo",
         "distractores": [
-          "cuaderno",
-          "tornillo",
-          "lapicera"
+          "apostador",
+          "soñador",
+          "guerrero"
         ]
       }
     ]
@@ -2067,7 +2151,38 @@
       "lista": 2,
       "numero": 49
     },
-    "catalogada": true
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "parte",
+          "punta",
+          "zona"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "sustantivo",
+        "distractores": [
+          "pared",
+          "calle",
+          "bomba"
+        ]
+      },
+      {
+        "indice": 8,
+        "clase": "verbo",
+        "distractores": [
+          "mantenés",
+          "escondés",
+          "colocás"
+        ]
+      }
+    ]
   },
   {
     "cancion": "Sorpresa en Shangai",
@@ -2085,7 +2200,38 @@
       "lista": 2,
       "numero": 51
     },
-    "catalogada": true
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "cuerpo",
+          "cuello",
+          "estómago"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "golpes",
+          "abrazos",
+          "empujones"
+        ]
+      },
+      {
+        "indice": 6,
+        "clase": "verbo",
+        "distractores": [
+          "mirando",
+          "probando",
+          "robando"
+        ]
+      }
+    ]
   },
   {
     "cancion": "La pequeña novia del Carioca",
@@ -2111,27 +2257,27 @@
         "indice": 1,
         "clase": "adjetivo",
         "distractores": [
-          "verde",
-          "redonda",
-          "salada"
+          "mejor",
+          "simple",
+          "vieja"
         ]
       },
       {
         "indice": 2,
         "clase": "sustantivo",
         "distractores": [
-          "carretera",
-          "lapicera",
-          "tornillo"
+          "amistad",
+          "tristeza",
+          "libertad"
         ]
       },
       {
         "indice": 3,
         "clase": "verbo",
         "distractores": [
-          "cosen",
-          "barren",
-          "pintan"
+          "creen",
+          "juran",
+          "saben"
         ]
       }
     ]

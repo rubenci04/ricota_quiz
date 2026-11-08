@@ -1,5 +1,11 @@
 # Completá la frase y ayudas de suerte
 
+## Revisión de opciones y ampliación (nov. 2026)
+
+- **Distractores reescritos:** las alternativas de los 75 fragmentos anteriores eran poco creíbles (verbos y objetos al azar). Ahora cada una conserva la clase y la flexión de la palabra oculta (persona, tiempo, género, número, voseo), cabe en la frase y no repite la respuesta; se evitaron los sinónimos exactos. La validación automática sigue exigiendo cuatro opciones distintas y longitudes parecidas. Las frases, huecos y respuestas no cambian, por lo que los enlaces de desafío anteriores siguen mostrando las mismas frases (solo cambian las palabras erróneas de las opciones). `verificar-legado-frases.mjs` ahora compara frases, huecos y respuestas, no el texto de los distractores.
+- **Cinco fragmentos nuevos** de los aportes ya cargados, todos de títulos del catálogo: «Música para pastillas», «Yo caníbal» (dos), «Queso ruso» y «La hija del fletero». El banco pasa de 75 a 80 variantes y de 49 a 52 canciones. Se descartó «Sentís la mosca joder…» por lenguaje.
+- **Pendiente:** las otras ~85 atribuciones no catalogadas necesitan que se confirme autoría antes de curarlas.
+
 Corrección posterior de dificultad: los huecos de Completá la frase ya no muestran cantidades de letras. En Dicho de otra forma se retira una letra de ayuda inicial por palabra que la tenía, en ambas dificultades; ninguna palabra aparece resuelta de entrada. El crucigrama y Adiviná por palabras conservan sus ayudas anteriores. Se mantienen los acertijos, respuestas, semillas, pistas a demanda y resultados guardados. La verificación está en `scripts/verificar-ayudas.mjs`, además de QA móvil y regresión general.
 
 ## Ampliación: listados icónicos y celular (27/10/2026)
