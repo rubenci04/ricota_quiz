@@ -11,36 +11,30 @@ import { leer, guardar } from './storage.js'
 import { fechaBA } from './reto.js'
 import { crearAzar } from './azar.js'
 import PanelRuleta from './PanelRuleta.jsx'
+import { discoDeCancion, porcionDeDisco } from './ruletaDiscos.js'
 
-const RULETA_CLASES = [
- {id:'sustantivo',texto:'Sustantivos',icono:'🏷️',color:'#0ea5e9'},
- {id:'verbo',texto:'Verbos',icono:'🏃',color:'#e11d48'},
- {id:'adjetivo',texto:'Adjetivos',icono:'🎨',color:'#7c3aed'},
- {id:'todos',texto:'Sorpresa',icono:'🎁',color:'#f59e0b'},
-]
-const NOMBRE_CLASE={sustantivo:'Sustantivos',verbo:'Verbos',adjetivo:'Adjetivos'}
 
 export default function CompletarFrase({onVolver,onMenu,desafio}) {
  const [dif,setDif]=useState(desafio?.dif??'casual')
- const [partida,setPartida]=useState(()=>desafio?{semilla:desafio.semilla,plan:desafio.plan,version:desafio.versionFrases??1,clase:desafio.clase,juego:generarFrases(desafio.semilla,desafio.dif,desafio.plan,desafio.versionFrases??1,desafio.clase)}:null)
+ const [partida,setPartida]=useState(()=>desafio?{semilla:desafio.semilla,plan:desafio.plan,version:desafio.versionFrases??1,juego:generarFrases(desafio.semilla,desafio.dif,desafio.plan,desafio.versionFrases??1)}:null)
+ const [turnos,setTurnos]=useState([]) // índices de la ronda en el orden que fue sacando la ruleta
  const [i,setI]=useState(0),[puntos,setPuntos]=useState(0),[fin,setFin]=useState(false)
  const [respuesta,setRespuesta]=useState(null),[errores,setErrores]=useState(0),[pistas,setPistas]=useState(0)
  const [fallosSeguidos,setFallosSeguidos]=useState(0)
  const [elegidas,setElegidas]=useState({}),[hueco,setHueco]=useState(0),[ocultas,setOcultas]=useState({})
  const [letras,setLetras]=useState([]),[fijas,setFijas]=useState([]),[foco,setFoco]=useState(0),[mensaje,setMensaje]=useState('')
  const acciones=useRef(null),guardado=useRef(false)
- const ronda=partida?.juego??[],actual=ronda[i]
+ const ronda=partida?.juego??[],actual=ronda[turnos[i]]
  const solucion=actual?actual.faltantes.map(n=>normalizarFrase(actual.palabras[n])).join(''):''
  const suerte=useSuertePartida(`frases:${partida?.version===2?'v2:':''}${partida?.semilla??'entrada'}:${dif}`,dif)
  const presupuesto=dif==='casual'?4:3,base=Math.max(0,presupuesto-pistas)
  const reiniciarPregunta=()=>{setRespuesta(null);setErrores(0);setElegidas({});setHueco(0);setOcultas({});setLetras([]);setFijas([]);setFoco(0);setMensaje('')}
- const empezar=(diario=false,categoria)=>{
-  const clase=diario||!categoria||categoria==='todos'?undefined:categoria
-  const generar=(sem,plan)=>generarFrases(sem,dif,plan,2,clase)
+ const empezar=(diario=false)=>{
+  const generar=(sem,plan)=>generarFrases(sem,dif,plan)
   const semilla=semillaFrasesDia(fechaBA())
   const p=diario?{semilla,juego:generar(semilla)}:crearPartida('frases',generar,idsFrases)
   if(p.juego.length&&!demoFrases)registrarVista('frases',p.ids??idsFrases(p.juego))
-  setPartida({...p,clase,version:2});setI(0);setPuntos(0);setPistas(0);setFallosSeguidos(0);setFin(false);guardado.current=false;reiniciarPregunta()
+  setPartida({...p,version:2});setTurnos([]);setI(0);setPuntos(0);setPistas(0);setFallosSeguidos(0);setFin(false);guardado.current=false;reiniciarPregunta()
  }
  const aplicarPista=()=>{
   if(!actual||respuesta!==null)return false
@@ -94,14 +88,22 @@ export default function CompletarFrase({onVolver,onMenu,desafio}) {
   if(!guardado.current&&!demoFrases){guardado.current=true;const e=leer();guardar({partidas:e.partidas+1,frasesPartidas:e.frasesPartidas+1,mejorFrases:Math.max(e.mejorFrases,puntos),frasesSinPistas:e.frasesSinPistas||(puntos===10&&pistas===0)})}
   setFin(true)
  }
+ const restantes=ronda.map((_,k)=>k).filter(k=>!turnos.includes(k))
+ const claveDisco=k=>discoDeCancion(ronda[k].cancion)??'todos'
+ const porciones=[...new Set(restantes.map(claveDisco))].map(porcionDeDisco)
+ const elegirTurno=id=>setTurnos(t=>t.length>i?t:[...t,restantes.find(k=>claveDisco(k)===id)])
+ const idDiscoActual=actual?discoDeCancion(actual.cancion):null,discoActual=idDiscoActual?porcionDeDisco(idDiscoActual):null
+ // con una sola opción no hace falta girar
+ useEffect(()=>{if(!partida||fin||actual||!restantes.length||porciones.length!==1)return;const t=setTimeout(()=>elegirTurno(porciones[0].id),700);return()=>clearTimeout(t)})
  const pantalla=c=><main className="pantalla pantalla-frases"><div ref={cabecera} tabIndex={-1}><Cabecera titulo="Completá la frase" onVolver={onVolver} onMenu={onMenu}/></div>{demoFrases&&<p>Demo: textos inventados, sin guardar resultados.</p>}{c}</main>
- if(!partida)return pantalla(<><Dificultad valor={dif} onCambio={setDif}/><p>Hasta 10 canciones sin repetir. Casual: dos huecos con opciones; Ricotero: dos o tres palabras con teclado. Un punto por frase completa.</p><PanelRuleta titulo="Ruleta de palabras" nota="Gira y los huecos serán de la clase de palabra que salga (cuando la frase la tenga)." categorias={RULETA_CLASES} onElegida={id=>setTimeout(()=>empezar(false,id),1300)}/><button className="secundario" onClick={()=>empezar()}>Jugar sin ruleta</button><button className="secundario" onClick={()=>empezar(true)}>Frases del día</button></>)
+ if(!partida)return pantalla(<><Dificultad valor={dif} onCambio={setDif}/><p>Hasta 10 canciones sin repetir. Casual: dos huecos con opciones; Ricotero: dos o tres palabras con teclado. Un punto por frase completa.</p><p>🎡 Antes de cada frase gira la ruleta de discos: el año te da una pista de dónde sale la frase.</p><button className="nueva" onClick={()=>empezar()}>Jugar</button><button className="secundario" onClick={()=>empezar(true)}>Frases del día</button></>)
  if(!ronda.length)return pantalla(<p role="status">Próximamente. Aún no hay fragmentos válidos disponibles.</p>)
- if(fin)return pantalla(<Resultado titulo="Completá la frase" puntaje={`${puntos}/${ronda.length}`} detalle={`${pistas} pistas usadas`} compartir={`Hice ${puntos}/${ronda.length} en Completá la frase`} exito={puntos>=Math.ceil(ronda.length*.6)} mejor={{etiqueta:'Récord',valor:`${leer().mejorFrases}/10`}} desafio={!demoFrases?{modo:'frases',disco:'todos',clase:partida.clase,dif,semilla:partida.semilla,plan:partida.plan,versionFrases:partida.version,puntaje:puntos}:undefined} rival={desafio}>{!desafio&&<><button className="nueva" onClick={()=>empezar(false,partida.clase)}>Otra ronda de 10 frases</button><button className="secundario" onClick={()=>{setFin(false);setPartida(null)}}>🎡 Girar la ruleta otra vez</button></>}<button className="secundario" onClick={onMenu}>Volver al menú</button></Resultado>)
+ if(!fin&&!actual)return pantalla(<><p aria-live="polite">Frase {i+1}/{ronda.length} · {dif==='casual'?'🙂 Casual':'🔥 Ricotero'}</p><progress className="progreso-frases" max={ronda.length} value={i} aria-label="Frases completadas"/>{porciones.length>1?<PanelRuleta key={i} titulo={`Ruleta de discos · frase ${i+1}`} nota="Gira: el año y el disco que salgan te dicen de dónde es la próxima frase." categorias={porciones} indice={crearAzar(`${partida.semilla}-rt-${i}`).entero(porciones.length)} textoBoton={`🎡 Girar para la frase ${i+1}`} onElegida={id=>setTimeout(()=>elegirTurno(id),1400)}/>:<p role="status">{restantes.length===1?'Última frase de la ronda…':'Preparando la frase…'}</p>}</>)
+ if(fin)return pantalla(<Resultado titulo="Completá la frase" puntaje={`${puntos}/${ronda.length}`} detalle={`${pistas} pistas usadas`} compartir={`Hice ${puntos}/${ronda.length} en Completá la frase`} exito={puntos>=Math.ceil(ronda.length*.6)} mejor={{etiqueta:'Récord',valor:`${leer().mejorFrases}/10`}} desafio={!demoFrases?{modo:'frases',disco:'todos',dif,semilla:partida.semilla,plan:partida.plan,versionFrases:partida.version,puntaje:puntos}:undefined} rival={desafio}>{!desafio&&<button className="nueva" onClick={()=>empezar()}>Otra ronda de 10 frases</button>}<button className="secundario" onClick={onMenu}>Volver al menú</button></Resultado>)
  const grupoActivo=dif==='fanatico'?actual.faltantes.findIndex((_,g)=>foco<actual.faltantes.slice(0,g+1).reduce((a,j)=>a+normalizarFrase(actual.palabras[j]).length,0)):hueco
  const n=actual.faltantes[Math.max(0,grupoActivo)]
  return pantalla(<>
-  <p aria-live="polite">Frase {i+1}/{ronda.length} · {dif==='casual'?'🙂 Casual':'🔥 Ricotero'}{partida.clase&&` · 🎡 ${NOMBRE_CLASE[partida.clase]}`}</p>
+  <p aria-live="polite">Frase {i+1}/{ronda.length} · {dif==='casual'?'🙂 Casual':'🔥 Ricotero'}{discoActual&&` · 🎡 ${discoActual.icono} ${discoActual.texto}`}</p>
   <progress className="progreso-frases" max={ronda.length} value={i+(respuesta!==null?1:0)} aria-label="Frases completadas"/>
   {dif==='casual'&&<p>Disco: {actual.album}</p>}
   <div className="frase-puzzle" key={`${partida.semilla}:${i}`}>{actual.palabras.map((p,k)=>actual.faltantes.includes(k)?<button className={`frase-hueco ${k===n?'activo':''}`} key={k} disabled={respuesta!==null} aria-label={`Hueco ${actual.faltantes.indexOf(k)+1}`} aria-pressed={k===n} onClick={()=>{const g=actual.faltantes.indexOf(k);setHueco(g);if(dif==='fanatico')setFoco(actual.faltantes.slice(0,g).reduce((a,j)=>a+normalizarFrase(actual.palabras[j]).length,0))}}>{respuesta!==null?p:elegidas[k]||<><strong>Palabra {actual.faltantes.indexOf(k)+1}</strong></>}</button>:<span key={k}>{p} </span>)}</div>

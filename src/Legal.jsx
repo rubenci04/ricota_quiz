@@ -1,4 +1,4 @@
-import { ANALITICA, DESARROLLADOR, EMAIL_CONTACTO, NOMBRE_JUEGO, PLAYLIST_YOUTUBE } from './config.js'
+import { ANALITICA, DESARROLLADOR, EMAIL_CONTACTO, NOMBRE_JUEGO, PLAYLIST_YOUTUBE, RANKING_URL } from './config.js'
 import Cabecera from './Cabecera.jsx'
 import musica from './data/musica.json'
 
@@ -49,9 +49,17 @@ function Privacidad() {
       <p>Elegí un alias ficticio para tu perfil local. No pedimos correo ni contraseña y no hay cuentas online.</p>
       <p>
         Tu progreso (niveles, puntajes, logros, racha y preferencias como el sonido) se guarda únicamente en tu
-        dispositivo, en el almacenamiento local del navegador. No se envía a ningún servidor y podés borrarlo cuando
+        dispositivo, en el almacenamiento local del navegador. No se envía a ningún servidor (salvo los puntos del ranking, si está activado) y podés borrarlo cuando
         quieras desde los datos del sitio de tu navegador.
       </p>
+      {RANKING_URL && (
+        <p>
+          Ranking: cuando terminás una partida se envían a nuestro servidor (Cloudflare Workers y D1) tu alias, un identificador
+          anónimo generado en tu dispositivo, el juego y los puntos que sumaste, para armar la tabla de los 10 mejores, que es
+          pública. No pedimos correo ni contraseña. Elegí un alias ficticio: para que se borren tus datos del ranking escribinos
+          a <a href={`mailto:${EMAIL_CONTACTO}`}>{EMAIL_CONTACTO}</a> con tu alias.
+        </p>
+      )}
       <p>
         Los links de desafío incluyen solo el modo, el tema, la dificultad, una semilla y un puntaje. No llevan nombres
         ni datos personales.

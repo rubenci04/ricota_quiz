@@ -3,6 +3,7 @@ import Confeti from './Confeti.jsx'
 import { Contador } from './Animados.jsx'
 import { NOMBRE_JUEGO, URL_JUEGO } from './config.js'
 import { MODOS_DESAFIO, comparar, crearLink, textoDesafio } from './desafio.js'
+import { enviarPuntaje, mensajePuesto, rankingActivo } from './ranking.js'
 
 // Pantalla final común: puntaje, mejor puntaje, compartir y desafiar a un amigo.
 // `compartir` es el texto corto (sin letras ni versos); la URL sale de config.js.
@@ -11,6 +12,15 @@ import { MODOS_DESAFIO, comparar, crearLink, textoDesafio } from './desafio.js'
 export default function Resultado({ titulo, puntaje, detalle, mejor, mensaje, compartir, exito = true, alMostrar, desafio, rival, children }) {
   const [estado, setEstado] = useState('')
   const avisado = useRef(false)
+  const enviado = useRef(false)
+  const [rank, setRank] = useState(null) // puesto devuelto por el ranking online
+
+  // cada partida terminada suma puntos al ranking (si está activado)
+  useEffect(() => {
+    if (enviado.current || !desafio || !rankingActivo) return
+    enviado.current = true
+    enviarPuntaje(desafio.modo, desafio.puntaje).then(setRank)
+  }, [desafio])
 
   useEffect(() => {
     if (avisado.current) return
@@ -80,6 +90,13 @@ export default function Resultado({ titulo, puntaje, detalle, mejor, mensaje, co
         </div>
       )}
       {mensaje && <p className="resultado-mensaje">{mensaje}</p>}
+      {rank && (
+        <div className="aviso-ranking" role="status">
+          <p>+{rank.puntos} pts al ranking</p>
+          <p>{mensajePuesto(rank)}</p>
+          <button className="secundario" onClick={() => window.dispatchEvent(new Event('ricota:ranking'))}>Ver el ranking</button>
+        </div>
+      )}
       <button className="secundario" onClick={compartirResultado}>Compartir</button>
       {desafio && <button className="secundario" onClick={desafiar}>Desafiar a un amigo</button>}
       <p className="feedback" role="status" aria-live="polite">{estado}</p>

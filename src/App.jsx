@@ -6,6 +6,7 @@ import Crucigrama from './Crucigrama.jsx'
 import Tutorial from './Tutorial.jsx'
 import RetoDelDia from './RetoDelDia.jsx'
 import Logros from './Logros.jsx'
+import Ranking from './Ranking.jsx'
 import Perfiles from './Perfiles.jsx'
 import { maximoAlcanzado } from './niveles.js'
 import CompletarFrase from './CompletarFrase.jsx'
@@ -103,6 +104,12 @@ export default function App() {
 
 
   useEffect(() => {
+    const verRanking = () => { setDesafio(null); setAceptado(false); limpiarHash(); setModo('ranking') }
+    window.addEventListener('ricota:ranking', verRanking)
+    return () => window.removeEventListener('ricota:ranking', verRanking)
+  }, [])
+
+  useEffect(() => {
     const quitarAviso = alDesbloquear((logro) => {
       setAvisos((prev) => [...prev, logro])
       setTimeout(() => setAvisos((prev) => prev.filter((l) => l.id !== logro.id)), 5000)
@@ -183,6 +190,7 @@ export default function App() {
     )
   } else if (modo === 'reto') contenido = <RetoDelDia onVolver={volver} onMenu={volver} />
   else if (modo === 'logros') contenido = <Logros onVolver={volver} onMenu={volver} />
+  else if (modo === 'ranking') contenido = <Ranking onVolver={volver} onMenu={volver} />
   else if (modo === 'discografia') contenido = <Discografia onVolver={volver} onMenu={volver} />
   else if (modo === 'ahorcado' && MODOS.ahorcado) contenido = <Ahorcado onVolver={volver} />
   else if (modo === 'sopa') contenido = <SopaDeLetras onVolver={volver} onMenu={volver} />
@@ -237,7 +245,7 @@ export default function App() {
     )
   }
 
-  const navegacion = entro && !verPerfiles && !pagina && !verTutorial && jugadores && !desafio && [null, 'discografia', 'logros'].includes(modo)
+  const navegacion = entro && !verPerfiles && !pagina && !verTutorial && jugadores && !desafio && [null, 'discografia', 'logros', 'ranking'].includes(modo)
 
   // el modo en curso tiñe la pantalla con su color
   const modoActual = desafio && aceptado ? (desafio.modo === 'adivinanzas' ? 'dicho' : desafio.modo) : modo
@@ -289,7 +297,7 @@ export default function App() {
         )}
       </div>
       {navegacion && <div className="navegacion-menu"><nav className="pestanas-menu" aria-label="Secciones principales">
-        {[[null,'🎮 Juegos'],['discografia','📖 Archivo'],['logros','🏆 Logros']].map(([id,t])=><button key={id??'juegos'} aria-current={modo===id?'page':undefined} onClick={()=>setModo(id)}>{t}</button>)}
+        {[[null,'🎮 Juegos'],['discografia','📖 Archivo'],['logros','🏆 Logros'],['ranking','🏅 Ranking']].map(([id,t])=><button key={id??'juegos'} aria-current={modo===id?'page':undefined} onClick={()=>setModo(id)}>{t}</button>)}
       </nav><button className="secundario ayuda-visible" onClick={()=>setVerTutorial(true)}>Ayuda y ajustes</button></div>}
       <Actualizacion />
       {contenido}

@@ -3,7 +3,7 @@ import Ruleta from './Ruleta.jsx'
 
 // Ruleta de categorías: el azar elige y el juego sigue con lo que salió.
 // categorias: [{ id, texto, icono, color }]. onElegida(id) se llama al frenar la ruleta.
-export default function PanelRuleta({ titulo, categorias, onElegida, textoBoton = '🎡 ¡Girar la ruleta!', nota }) {
+export default function PanelRuleta({ titulo, categorias, onElegida, textoBoton = '🎡 ¡Girar la ruleta!', nota, indice }) {
   const [salio, setSalio] = useState(null)
   return (
     <section className="panel-ruleta" aria-label={titulo}>
@@ -12,6 +12,7 @@ export default function PanelRuleta({ titulo, categorias, onElegida, textoBoton 
       <Ruleta
         titulo={titulo}
         etiquetas={categorias.map((c) => ({ texto: c.texto, icono: c.icono, color: c.color }))}
+        indice={indice}
         textoBoton={salio ? '🎡 Girar de nuevo' : textoBoton}
         onResultado={(idx) => {
           setSalio(categorias[idx])

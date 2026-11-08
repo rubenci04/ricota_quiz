@@ -7,7 +7,7 @@ const entero = (n) => crypto.getRandomValues(new Uint32Array(1))[0] % n
 
 // Ruleta estilo concurso: la porción ganadora se sortea antes de girar y el disco frena justo ahí.
 // etiquetas: [{ texto, icono, color }]. Con autoGirar gira sola (por ejemplo, el turno de la CPU).
-export default function Ruleta({ etiquetas, onResultado, textoBoton = '¡Girar!', autoGirar = false, titulo, deshabilitada = false }) {
+export default function Ruleta({ etiquetas, onResultado, textoBoton = '¡Girar!', autoGirar = false, titulo, deshabilitada = false, indice }) {
   const n = etiquetas.length
   const [giro, setGiro] = useState(0)
   const [estado, setEstado] = useState('quieta') // quieta | girando | lista
@@ -28,7 +28,7 @@ export default function Ruleta({ etiquetas, onResultado, textoBoton = '¡Girar!'
   const girar = () => {
     if (estado === 'girando' || deshabilitada) return
     setEstado('quieta')
-    const idx = entero(n)
+    const idx = Number.isInteger(indice) && indice >= 0 && indice < n ? indice : entero(n)
     const centro = idx * paso + paso / 2 + (Math.random() - 0.5) * paso * 0.6
     const base = Math.ceil(giro / 360) * 360
     setGanadora(idx)

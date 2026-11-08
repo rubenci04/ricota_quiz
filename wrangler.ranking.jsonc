@@ -1,0 +1,17 @@
+{
+  // Worker del ranking (separado del juego). Ver RANKING.md para crear la base y desplegarlo.
+  "name": "ricotero-ranking",
+  "main": "worker/ranking.js",
+  "compatibility_date": "2025-09-01",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ricotero-ranking",
+      "database_id": "REEMPLAZAR_POR_EL_ID_QUE_DA_wrangler_d1_create"
+    }
+  ],
+  "vars": {
+    "ORIGENES": "https://ricota-quiz.rea-04.workers.dev,http://localhost:5173,http://localhost:4173",
+    "BLOQUEADAS": ""
+  }
+}

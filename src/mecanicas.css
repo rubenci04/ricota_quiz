@@ -59,3 +59,22 @@
 /* con muchas porciones solo cabe el ícono (o el año); el nombre sale en el cartel de resultado */
 .rt-muchas .rt-seg small { display: none; }
 .rt-muchas .rt-seg b { font-size: calc(var(--rt) * 0.065); font-weight: 800; margin: 0; }
+
+/* ranking */
+.app[data-modo='ranking'] { --modo: #eab308; }
+.chips-ranking { width: 100%; display: flex; flex-wrap: wrap; gap: 6px; }
+.chips-ranking button { padding: 6px 12px; min-height: 36px; border-radius: 999px; border: 2px solid var(--borde-fuerte); background: var(--panel); font-size: 0.82rem; font-weight: 700; }
+.chips-ranking button[aria-pressed='true'] { background: var(--modo); border-color: var(--modo); color: #111; }
+.tabla-ranking { list-style: none; margin: 0; padding: 0; width: 100%; display: grid; gap: 8px; }
+.tabla-ranking li { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 12px; background: var(--panel); border: 2px solid var(--borde); animation: rt-entra 0.4s ease-out both; }
+.tabla-ranking li:nth-child(-n+3) { border-color: color-mix(in srgb, var(--modo) 70%, var(--borde)); background: color-mix(in srgb, var(--modo) 10%, var(--panel)); }
+.tabla-ranking li.yo { box-shadow: 0 0 0 3px var(--ok); }
+.tabla-ranking .pos { width: 2rem; font-size: 1.4rem; text-align: center; }
+.tabla-ranking .nom { flex: 1; min-width: 0; display: flex; flex-direction: column; font-weight: 700; overflow-wrap: anywhere; }
+.tabla-ranking .nom small { font-weight: 400; color: var(--tenue); }
+.tabla-ranking strong { font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.tu-puesto { margin: 0; text-align: center; padding: 10px; border-radius: 10px; background: var(--aviso-bg); border: 1px solid var(--acento); }
+.aviso-ranking { width: 100%; display: grid; gap: 6px; padding: 12px; border-radius: 12px; background: color-mix(in srgb, var(--modo) 16%, var(--panel)); border: 2px solid var(--modo); text-align: center; animation: rt-entra 0.5s cubic-bezier(.2, 1.4, .4, 1) both; }
+.aviso-ranking p { margin: 0; }
+.aviso-ranking p:first-child { font-weight: 800; }
+@media (prefers-reduced-motion: reduce) { .tabla-ranking li, .aviso-ranking { animation: none !important; } }

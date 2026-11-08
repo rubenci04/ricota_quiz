@@ -8,3 +8,5 @@ letras_privadas/
 playwright-report/
 test-results/
 qa/*.png
+.env.local
+.wrangler/

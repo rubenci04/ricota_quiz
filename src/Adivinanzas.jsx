@@ -9,6 +9,7 @@ import AyudaPartida, { useSuertePartida } from './AyudaPartida.jsx'
 import Cabecera from './Cabecera.jsx'
 import SelectorDisco from './SelectorDisco.jsx'
 import PanelRuleta from './PanelRuleta.jsx'
+import { RULETA_DISCOS } from './ruletaDiscos.js'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
 import { crearAzar } from './azar.js'
@@ -29,9 +30,6 @@ import { nombreDeTema } from './temas.js'
 import datos from './data/datos-ricotero.json'
 
 const RULETA_CATEGORIAS = CATEGORIAS.map((c) => ({ id: c.id, texto: c.etiqueta, icono: c.icono, color: c.color }))
-const COLORES_DISCO = ['#e11d48', '#f59e0b', '#10b981', '#0ea5e9', '#7c3aed', '#ec4899', '#14b8a6', '#f97316']
-// un disco por porción; la ruleta suma "Todos" para que nunca quede un tramo vacío
-const RULETA_DISCOS = [{ id: 'todos', texto: 'Todos', icono: '🎲', color: '#64748b' }, ...datos.discos.map((d, i) => ({ id: d.id, texto: d.titulo, icono: String(d.anio), color: COLORES_DISCO[i % COLORES_DISCO.length] }))]
 
 // Pistas de letra según dificultad (incluye 2 extra). La pista automática tras 2 errores seguidos no cuenta.
 const PISTAS_LETRA = { casual: 5, fanatico: 3 }
@@ -422,10 +420,10 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
             <button className="nueva" onClick={onVolver}>Volver al menú</button>
           ) : (
             <>
-              <button className="nueva" onClick={() => empezar({ modo: ronda.modo, categoria: ronda.categoria, difi: ronda.dif, anterior: ronda.id })}>
-                Otra más
+              <button className="nueva" onClick={() => setRonda(null)}>🎡 Girar la ruleta y seguir</button>
+              <button className="secundario" onClick={() => empezar({ modo: ronda.modo, categoria: ronda.categoria, difi: ronda.dif, anterior: ronda.id, discoElegido: disco })}>
+                Otra más, mismo sorteo
               </button>
-              <button className="secundario" onClick={() => setRonda(null)}>🎡 Girar la ruleta otra vez</button>
             </>
           )}
         </Resultado>

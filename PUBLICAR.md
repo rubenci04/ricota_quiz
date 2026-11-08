@@ -52,13 +52,13 @@ La PWA usa actualización con aviso. Se registra /sw.js sin caché HTTP para la 
 
 Auditoría: node scripts/auditar-letras.mjs <carpeta-privada>. Exige cero ventanas de veinte caracteres fuera de fragmentos aprobados y metadatos públicos (títulos/autores), comprueba cada fuente como una sola línea y excluye rutas privadas, ejemplos DEV e interpretaciones sin verificar. No imprime contenido privado.
 
-## Ruletas de categoría y tablero claro de la sopa
+## Ruletas y tablero claro de la sopa
 
 - Se retiró el modo Duelo/CPU (el juego depende del conocimiento de la banda). «Contra un amigo» sigue como «Próximamente» (sala online).
-- **Ruleta de categorías** (`src/Ruleta.jsx`, `src/PanelRuleta.jsx`, estilos en `src/mecanicas.css`): el resultado se sortea antes de girar y el disco frena ahí; respeta «reducir movimiento». Se usa en:
-  - *Dicho de otra forma*: gira entre Canciones, Discos, Palabras e Integrantes y arranca el acertijo de esa categoría.
-  - *Adiviná por palabras*: gira entre los 9 discos (o «Todos»).
-  - *Trivia general*: gira entre los 6 temas; todo el nivel sale de ese tema. *La banda* gira entre los niveles desbloqueados (si hay 2 o más).
-  - *Completá la frase*: gira entre sustantivos, verbos, adjetivos o sorpresa; los huecos priorizan esa clase de palabra.
-  Todos tienen «Jugar sin ruleta». Los desafíos por link conservan la categoría; en *Completá la frase* el segmento del link pasó a `todos.<clase>[.v2]` y los links anteriores (`todos.todos[.v2]`) siguen valiendo.
+- **Ruletas** (`src/Ruleta.jsx`, `src/PanelRuleta.jsx`, `src/ruletaDiscos.js`, estilos en `src/mecanicas.css`): el resultado se sortea antes de girar y el disco frena ahí; respeta «reducir movimiento». Se gira entre partida y partida:
+  - *Completá la frase*: antes de **cada frase** gira la ruleta de discos con el año; sale una frase de ese disco (si el disco ya no tiene frases en la ronda, no aparece en la ruleta; las frases sin disco conocido salen en «Sorpresa»). La ruleta usa un resultado calculado con la semilla de la ronda: el conjunto de 10 frases es el mismo de siempre, así que los links de desafío anteriores siguen valiendo.
+  - *Adiviná por palabras*: gira entre los 9 discos (con año) o «Sorpresa».
+  - *Dicho de otra forma*: gira entre Canciones, Discos, Palabras e Integrantes; al terminar, «Girar la ruleta y seguir».
+  - *Trivia general*: gira entre los 6 temas y el nivel sale de ese tema (se vuelve a girar en «Elegir nivel»). *La banda* gira entre los niveles desbloqueados (si hay 2 o más).
+- **Ranking online**: ver [RANKING.md](RANKING.md). Apagado hasta que se complete `RANKING_URL` en `src/config.js`.
 - **Sopa de letras**: el tablero es claro por defecto (papel #fbf6e9, letras #14110c, contraste ≈ 17:1; selección #1d4ed8 con texto blanco, ≈ 6,7:1) y se puede volver al oscuro. La elección se recuerda en `localStorage` (`ricota_sopa_tablero`). Criterios: WCAG 1.4.3 (≥ 4,5:1 texto) y 1.4.11 (≥ 3:1 componentes); la ventaja de polaridad positiva (texto oscuro sobre claro) en agudeza y corrección de textos es mayor cuanto más chico el carácter (Piepenbrock, Mayr y Buchner; Human Factors), aunque otros trabajos (Dobres et al., 2017) la matizan como una leve desventaja de la polaridad negativa. No existe una regla que obligue a fondo claro: lo que manda es el contraste y el tamaño de letra, que además subió ~16 %.

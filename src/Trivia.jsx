@@ -181,6 +181,7 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
               {curiosidad && <div className="curiosidad"><strong>Curiosidad:</strong> {curiosidad}</div>}
               {paso && nivel < limite && <button className="nueva" onClick={() => jugar(nivel + 1)}>Nivel {nivel + 1}</button>}
               <button className="secundario" onClick={() => jugar(nivel)}>Repetir nivel</button>
+              <p className="aviso">🎡 En «Elegir nivel» te espera la ruleta de temas para la próxima ronda.</p>
               <button className="secundario" onClick={() => setVista('niveles')}>Elegir nivel</button>
             </>
           )}
