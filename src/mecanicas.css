@@ -1,0 +1,96 @@
+/* Mecánicas por turnos (ruleta, duelo) y tablero claro de la sopa de letras. Se carga al final. */
+:root { --c-duelo: #ec4899; }
+.app[data-modo='duelo'] { --modo: var(--c-duelo); }
+
+/* ---------- Sopa de letras: tablero tipo papel (texto oscuro sobre fondo claro) ---------- */
+.grilla.papel {
+  background: #fbf6e9;
+  border: 3px solid var(--modo);
+  border-radius: 14px;
+  padding: 2px;
+  box-shadow: 0 10px 24px -12px var(--sombra);
+}
+.grilla.papel .celda {
+  color: #14110c; /* contraste ~17:1 sobre el papel */
+  font-weight: 800;
+  font-size: calc(var(--ancho) / 12 * 0.58);
+  border-radius: 9px;
+  margin: 1px;
+}
+.grilla.papel .celda.sel { background: #1d4ed8; color: #ffffff; } /* 6.7:1 */
+.grilla.papel .celda.destello { background: #ffd24a; }
+.grilla.papel .celda.revelada { background: #ffd24a; color: #14110c; outline: 2px solid #8a5a00; outline-offset: -2px; }
+.grilla.papel .celda.hallada { box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.35); animation: ola-letra 0.55s cubic-bezier(.2, 1.5, .4, 1) both; }
+.grilla.papel:focus-visible .celda.cursor-teclado { outline: 3px solid #000; }
+.grilla.noche .celda { font-weight: 800; font-size: calc(var(--ancho) / 12 * 0.56); }
+@keyframes ola-letra { 0% { transform: scale(0.6); filter: brightness(2); } 60% { transform: scale(1.18); } 100% { transform: scale(1); filter: none; } }
+.tablero-opciones { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 0.85rem; color: var(--tenue); }
+.tablero-opciones .segmentado { width: auto; min-width: 190px; }
+
+/* ---------- Ruleta ---------- */
+.rt { --rt: min(78vw, 300px); display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+.rt-escena { position: relative; width: var(--rt); height: var(--rt); margin-top: 22px; display: grid; place-items: center; }
+.rt-disco {
+  position: relative; width: 100%; height: 100%; border-radius: 50%;
+  border: 6px solid #f4d494; box-shadow: 0 14px 30px -10px var(--sombra), inset 0 0 0 3px rgba(0, 0, 0, 0.35);
+  transition-property: transform; transition-timing-function: cubic-bezier(0.1, 0.72, 0.08, 1);
+  will-change: transform;
+}
+.rt-seg { position: absolute; left: calc(50% - var(--rt) * 0.15); top: 50%; width: calc(var(--rt) * 0.3); height: 0; display: block; text-align: center; transform-origin: 50% 0; }
+.rt-seg b { display: block; margin-bottom: 5px; font-size: calc(var(--rt) * 0.1); line-height: 1; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.4)); }
+.rt-seg small { display: block; font-size: calc(var(--rt) * 0.045); font-weight: 800; white-space: nowrap; text-align: center; margin-top: 2px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.rt-seg.gana b { animation: latido 0.6s ease-in-out 3; }
+.rt-puntero { position: absolute; z-index: 3; top: -26px; left: 50%; transform: translateX(-50%); font-size: 2.2rem; line-height: 1; color: #fff1a6; text-shadow: 0 2px 6px #000; transform-origin: 50% 20%; }
+.rt-puntero.tic { animation: tic 0.16s ease-in-out infinite alternate; }
+.rt-centro { position: absolute; width: 16%; height: 16%; display: grid; place-items: center; border-radius: 50%; background: #f4d494; box-shadow: 0 2px 8px #0008; font-size: calc(var(--rt) * 0.07); }
+.rt-boton { max-width: 340px; }
+@keyframes tic { from { transform: translateX(-50%) rotate(-14deg); } to { transform: translateX(-50%) rotate(8deg); } }
+@keyframes latido { 50% { transform: scale(1.5); } }
+
+/* ---------- Duelo ---------- */
+.duelo { gap: 12px; }
+.duelo-campo { width: 100%; display: grid; gap: 6px; }
+.duelo-campo > span { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--tenue); }
+.duelo-nombres { width: 100%; display: grid; gap: 8px; }
+.duelo-nombres label { display: flex; align-items: center; gap: 10px; }
+.duelo-nombres i { width: 14px; height: 38px; border-radius: 6px; background: var(--jc); flex: none; }
+.duelo-nombres input { flex: 1; min-width: 0; padding: 10px 12px; background: var(--panel); border: 2px solid var(--borde-fuerte); border-radius: 10px; }
+.duelo-titulo { margin: 0; text-align: center; font-size: 1.15rem; }
+.marcador { list-style: none; margin: 0; padding: 0; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
+.marcador li { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 7px 10px; border-radius: 10px; background: var(--panel); border: 2px solid var(--borde); border-left: 6px solid var(--jc); font-size: 0.85rem; overflow: hidden; }
+.marcador li span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.marcador li b { font-variant-numeric: tabular-nums; font-size: 1.1rem; }
+.marcador li em { font-style: normal; font-size: 0.8rem; }
+.marcador li.activo { border-color: var(--jc); box-shadow: 0 0 0 2px var(--jc), 0 0 16px -2px var(--jc); animation: latido-suave 1.4s ease-in-out infinite; }
+@keyframes latido-suave { 50% { transform: scale(1.03); } }
+.anuncio-turno { width: 100%; text-align: center; padding: 22px 16px; border-radius: 16px; background: color-mix(in srgb, var(--jc) 22%, var(--panel)); border: 3px solid var(--jc); animation: entrada-turno 0.5s cubic-bezier(.2, 1.4, .4, 1) both; }
+.anuncio-turno > span { font-size: 3rem; display: block; animation: latido 1s ease-in-out infinite; }
+.anuncio-turno h3 { margin: 6px 0; font-size: 1.5rem; overflow-wrap: anywhere; }
+.anuncio-turno p { margin: 0; }
+@keyframes entrada-turno { from { opacity: 0; transform: scale(0.7) rotate(-4deg); } to { opacity: 1; transform: none; } }
+.suerte-aviso { text-align: center; animation: entrada-turno 0.4s ease-out both; }
+.chips-suerte { margin: 0; padding: 5px 14px; border-radius: 999px; background: color-mix(in srgb, var(--jc) 28%, var(--panel)); border: 2px solid var(--jc); font-size: 0.9rem; }
+.reloj { position: relative; width: 100%; height: 24px; border-radius: 999px; background: var(--panel-2); border: 2px solid var(--borde-fuerte); overflow: hidden; }
+.reloj span { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, var(--ok), var(--acento-fill)); transition: width 1s linear; }
+.reloj b { position: absolute; inset: 0; display: grid; place-items: center; font-size: 0.8rem; color: #fff; text-shadow: 0 1px 2px #000; }
+.reloj.urgente span { background: var(--mal); }
+.reloj.urgente { animation: sacudir 0.5s ease-in-out infinite; }
+@keyframes sacudir { 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
+.puntos-ganados { margin: 0; text-align: center; font-size: 1rem; }
+.puntos-ganados strong { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--panel-2); animation: flota 0.7s cubic-bezier(.2, 1.5, .4, 1) both; }
+.puntos-ganados.pos strong { background: var(--ok-bg); color: var(--ok-texto); }
+.puntos-ganados.neg strong { background: var(--mal-bg); color: var(--mal-texto); }
+@keyframes flota { from { opacity: 0; transform: translateY(14px) scale(0.6); } to { opacity: 1; transform: none; } }
+.duelo-ganador { margin: 4px 0; text-align: center; font-size: 1.5rem; animation: entrada-turno 0.6s cubic-bezier(.2, 1.4, .4, 1) both; }
+.podio { list-style: none; margin: 0; padding: 0; width: 100%; display: grid; gap: 8px; }
+.podio li { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 12px; background: var(--panel); border: 2px solid var(--borde); border-left: 8px solid var(--jc); animation: entrada-turno 0.5s ease-out both; }
+.podio li.campeon { border-color: var(--jc); background: color-mix(in srgb, var(--jc) 18%, var(--panel)); }
+.podio .pos { font-size: 1.6rem; }
+.podio .nom { flex: 1; min-width: 0; display: flex; flex-direction: column; font-weight: 700; overflow-wrap: anywhere; }
+.podio .nom small { font-weight: 400; color: var(--tenue); }
+.podio strong { font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rt-puntero.tic, .rt-seg.gana b, .marcador li.activo, .anuncio-turno, .anuncio-turno > span, .suerte-aviso,
+  .reloj.urgente, .puntos-ganados strong, .duelo-ganador, .podio li, .grilla.papel .celda.hallada { animation: none !important; }
+}

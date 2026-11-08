@@ -37,6 +37,10 @@ function lineaHasta(ini, r, c) {
   return Array.from({ length: largo }, (_, i) => ({ r: ini.r + ddr * i, c: ini.c + ddc * i }))
 }
 
+// Tablero claro por defecto: texto oscuro sobre fondo claro se lee mejor (ver PUBLICAR.md). Se recuerda la elección.
+const CLAVE_TABLERO = 'ricota_sopa_tablero'
+const leerTablero = () => { try { return localStorage.getItem(CLAVE_TABLERO) === 'noche' ? 'noche' : 'papel' } catch { return 'papel' } }
+
 const MAX_PISTAS = 7 // incluye 2 extra
 const FALLOS_PARA_PISTA = 2
 const MAX_REVELAR = 1
@@ -72,6 +76,8 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
   const [auto, setAuto] = useState([]) // pistas automáticas (gratis) tras 2 fallos seguidos
   const [fallosSeguidos, setFallosSeguidos] = useState(0)
   const [reveladas, setReveladas] = useState([]) // norm de palabras resaltadas completas
+  const [tablero, setTablero] = useState(leerTablero)
+  const cambiarTablero = (t) => { setTablero(t); try { localStorage.setItem(CLAVE_TABLERO, t) } catch { /* opcional */ } }
 
   const empezar = (id, t = temaId, dificultad = dif) => {
     const p = crearPartida('sopa', (sem, plan) => nuevaPartida(id, sem, t, plan, dificultad), idsSopa)
@@ -257,8 +263,15 @@ export default function SopaDeLetras({ onVolver, onMenu, desafio = null }) {
       <SelectorDisco valor={discoId} onCambio={cambiarDisco} deshabilitado={!!desafio} />
 
 
+      <div className="tablero-opciones">
+        <span>Fondo del tablero</span>
+        <div className="segmentado" role="group" aria-label="Fondo del tablero">
+          {[['papel', '☀️ Claro'], ['noche', '🌙 Oscuro']].map(([id, t]) => <button key={id} aria-pressed={tablero === id} onClick={() => cambiarTablero(id)}>{t}</button>)}
+        </div>
+      </div>
+
       <div
-        className="grilla"
+        className={`grilla ${tablero}`}
         ref={gridRef}
         onPointerDown={alPresionar}
         onPointerMove={alMover}

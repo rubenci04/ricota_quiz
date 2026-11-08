@@ -13,6 +13,7 @@ import { frasesDisponibles } from './catalogoFrases.js'
 import TriviaMenu from './TriviaMenu.jsx'
 import Discografia from './Discografia.jsx'
 import Ahorcado from './Ahorcado.jsx'
+import Duelo from './Duelo.jsx'
 import Legal from './Legal.jsx'
 import { MODOS_DESAFIO, leerDesafio, limpiarHash } from './desafio.js'
 import { efemeridesDeHoy } from './efemerides.js'
@@ -41,6 +42,7 @@ const MODOS_MENU = [
   { id: 'sopa', nombre: 'Sopa de letras', detalle: 'Encontrá las palabras', icono: '🔍', color: 'var(--c-sopa)' },
   { id: 'trivia', nombre: 'Trivia', detalle: 'Trivia general · La banda', icono: '🧠', color: 'var(--c-trivia)' },
   { id: 'palabras', nombre: 'Adiviná por palabras', detalle: 'Palabras clave → canción', icono: '🔤', color: 'var(--c-palabras)' },
+  { id: 'duelo', nombre: 'Duelo con ruleta', detalle: 'Por turnos: amigos o CPU, ¡gira la ruleta!', icono: '🎡', color: 'var(--c-duelo)', insignia: 'Nuevo' },
 ].filter(m => m.activo !== false)
 
 
@@ -77,7 +79,7 @@ export default function App() {
     t?.style.removeProperty('--ry')
   }
   const elegirModo = (id) => {
-    marcarModo(id === 'dicho' || id === 'palabras' ? 'adivinanzas' : id)
+    if (id !== 'duelo') marcarModo(id === 'dicho' || id === 'palabras' ? 'adivinanzas' : id)
     setModo(id)
   }
 
@@ -174,8 +176,11 @@ export default function App() {
           <button className="modo" onClick={() => setJugadores('solo')}>
             <span>Un jugador<small>Practicá y sumá puntos</small></span>
           </button>
+          <button className="modo" onClick={() => { setJugadores('local'); setModo('duelo') }}>
+            <span>🎡 Duelo con ruleta<small>Amigos en este dispositivo o contra la CPU</small></span>
+          </button>
           <button className="modo" disabled>
-            <span>Contra un amigo<small>Sala online: elegís juegos y temática</small></span>
+            <span>Sala online<small>Jugar a distancia: elegís juegos y temática</small></span>
             <em className="pronto">Próximamente</em>
           </button>
         </nav>
@@ -184,6 +189,7 @@ export default function App() {
   } else if (modo === 'reto') contenido = <RetoDelDia onVolver={volver} onMenu={volver} />
   else if (modo === 'logros') contenido = <Logros onVolver={volver} onMenu={volver} />
   else if (modo === 'discografia') contenido = <Discografia onVolver={volver} onMenu={volver} />
+  else if (modo === 'duelo') contenido = <Duelo onVolver={volver} onMenu={volver} />
   else if (modo === 'ahorcado' && MODOS.ahorcado) contenido = <Ahorcado onVolver={volver} />
   else if (modo === 'sopa') contenido = <SopaDeLetras onVolver={volver} onMenu={volver} />
   else if (modo === 'frases' && MODOS.completarFrase) contenido = <CompletarFrase onVolver={volver} onMenu={volver} />
