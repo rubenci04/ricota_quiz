@@ -1,6 +1,8 @@
 # Ranking online (gratis)
 
-El juego ya trae todo el código. Mientras `RANKING_URL` (en `src/config.js`) esté vacío, el ranking queda apagado: la pestaña **Ranking** muestra «Muy pronto» y no se envía ningún dato.
+**Estado: activo.** Base D1 `ricotero-ranking` y Worker en `https://ricotero-ranking.rea-04.workers.dev` (creados en la cuenta de Cloudflare del proyecto); `RANKING_URL` ya apunta ahí. Las instrucciones de abajo sirven para recrearlo o moverlo.
+
+El juego ya trae todo el código. Si `RANKING_URL` (en `src/config.js`) está vacío, el ranking queda apagado: la pestaña **Ranking** muestra «Muy pronto» y no se envía ningún dato.
 
 ## Cómo funciona
 

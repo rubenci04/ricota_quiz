@@ -31,4 +31,4 @@ export const MODOS = { ahorcado: false, completarFrase: true }
 // Ranking online (Cloudflare Worker + D1, gratis). Vacío = ranking apagado y sin envíos de datos.
 // Para activarlo seguí RANKING.md y pegá acá la URL del Worker, sin barra final.
 // Para probar en local: VITE_RANKING_URL=http://localhost:8787 en .env.local
-export const RANKING_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_RANKING_URL) || ''
+export const RANKING_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_RANKING_URL) || 'https://ricotero-ranking.rea-04.workers.dev'
