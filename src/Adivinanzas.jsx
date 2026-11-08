@@ -8,6 +8,7 @@ import Resultado from './Resultado.jsx'
 import AyudaPartida, { useSuertePartida } from './AyudaPartida.jsx'
 import Cabecera from './Cabecera.jsx'
 import SelectorDisco from './SelectorDisco.jsx'
+import PanelRuleta from './PanelRuleta.jsx'
 import { sonar } from './sonido.js'
 import { frase } from './textos.js'
 import { crearAzar } from './azar.js'
@@ -26,6 +27,11 @@ import {
 } from './adivinanza.js'
 import { nombreDeTema } from './temas.js'
 import datos from './data/datos-ricotero.json'
+
+const RULETA_CATEGORIAS = CATEGORIAS.map((c) => ({ id: c.id, texto: c.etiqueta, icono: c.icono, color: c.color }))
+const COLORES_DISCO = ['#e11d48', '#f59e0b', '#10b981', '#0ea5e9', '#7c3aed', '#ec4899', '#14b8a6', '#f97316']
+// un disco por porción; la ruleta suma "Todos" para que nunca quede un tramo vacío
+const RULETA_DISCOS = [{ id: 'todos', texto: 'Todos', icono: '🎲', color: '#64748b' }, ...datos.discos.map((d, i) => ({ id: d.id, texto: d.titulo, icono: String(d.anio), color: COLORES_DISCO[i % COLORES_DISCO.length] }))]
 
 // Pistas de letra según dificultad (incluye 2 extra). La pista automática tras 2 errores seguidos no cuenta.
 const PISTAS_LETRA = { casual: 5, fanatico: 3 }
@@ -49,8 +55,6 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
   if (inicial.current === undefined) {
     if (desafio && desafioToken) {
       inicial.current = nuevaRonda({ ...desafioToken, dif: desafio.dif, semilla: desafio.semilla, disco: desafio.disco, tema: desafio.tema, plan: desafio.plan })
-    } else if (inicio === 'palabras') {
-      inicial.current = prepararRonda({ modo: 'palabras', categoria: 'canciones', dif: 'casual' })
     } else {
       inicial.current = null
     }
@@ -92,8 +96,10 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
   }, [])
 
   // arranca una partida: la última elección queda guardada para ofrecer "Repetir"
-  const empezar = ({ modo: m = modo, categoria = 'canciones', difi = dif, anterior = null } = {}) => {
-    const r = prepararRonda({ modo: m, categoria, dif: difi, anterior, disco, tema })
+  const empezar = ({ modo: m = modo, categoria = 'canciones', difi = dif, anterior = null, discoElegido } = {}) => {
+    const d = discoElegido ?? disco
+    setDisco(d)
+    const r = prepararRonda({ modo: m, categoria, dif: difi, anterior, disco: d, tema })
     const sem = r.semilla
     registrarVista(m === 'palabras' ? 'palabras' : `dicho${categoria}`, r.ids)
     const n = r.solucion.length
@@ -124,7 +130,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
     acciones.current = null
     return (
       <main className="pantalla" key="adivinanzas-entrada">
-        <Cabecera titulo="Dicho de otra forma" extra={`${total} pts`} onVolver={onVolver} onMenu={onMenu} />
+        <Cabecera titulo={inicio === 'palabras' ? 'Adiviná por palabras' : 'Dicho de otra forma'} extra={`${total} pts`} onVolver={onVolver} onMenu={onMenu} />
 
         <p className="etiqueta-grupo">Dificultad</p>
         <div className="segmentado" role="group" aria-label="Dificultad">
@@ -135,7 +141,22 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
           ))}
         </div>
 
-        <button className="nueva" onClick={() => empezar({ modo: inicio, categoria: 'canciones' })}>Jugar</button>
+        {inicio === 'palabras' ? (
+          <PanelRuleta
+            titulo="Ruleta de discos"
+            nota="Gira y las palabras vienen de las canciones del disco que salga."
+            categorias={RULETA_DISCOS}
+            onElegida={(id) => { setTimeout(() => empezar({ modo: inicio, categoria: 'canciones', discoElegido: id }), 1300) }}
+          />
+        ) : (
+          <PanelRuleta
+            titulo="Ruleta de categorías"
+            nota="Gira y el acertijo sale de la categoría que te toque."
+            categorias={RULETA_CATEGORIAS}
+            onElegida={(id) => { setTimeout(() => empezar({ modo: inicio, categoria: id }), 1300) }}
+          />
+        )}
+        <button className="secundario" onClick={() => empezar({ modo: inicio, categoria: 'canciones' })}>Jugar sin ruleta</button>
 
         <details className="filtros">
           <summary>Filtrar por disco (opcional)</summary>
@@ -324,7 +345,7 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
         onVolver={() => (desafio ? onVolver() : setRonda(null))}
         onMenu={onMenu}
       />
-        {!desafio && <div className="segmentado" role="group" aria-label="Dificultad">{DIFICULTADES.map(d => <button key={d.id} aria-pressed={ronda.dif===d.id} onClick={() => { setDif(d.id); empezar({ modo: inicio, categoria: 'canciones', difi: d.id }) }}>{d.icono} {d.etiqueta}</button>)}</div>}
+        {!desafio && <div className="segmentado" role="group" aria-label="Dificultad">{DIFICULTADES.map(d => <button key={d.id} aria-pressed={ronda.dif===d.id} onClick={() => { setDif(d.id); empezar({ modo: inicio, categoria: ronda.categoria, difi: d.id }) }}>{d.icono} {d.etiqueta}</button>)}</div>}
 
       {!resultado && <AyudaPartida suerte={suerte} base={Math.max(0,maxPistas-pistasLetra)} onPista={()=>pistaDeLetra(true)} errores={erroresSeguidos} />}
       <ul className="chips-juego" aria-label="Partida">
@@ -400,9 +421,12 @@ export default function Adivinanzas({ onVolver, onMenu, desafio = null, inicio =
           {desafio ? (
             <button className="nueva" onClick={onVolver}>Volver al menú</button>
           ) : (
-            <button className="nueva" onClick={() => empezar({ modo: ronda.modo, categoria: 'canciones', difi: ronda.dif, anterior: ronda.id })}>
-              Otra más
-            </button>
+            <>
+              <button className="nueva" onClick={() => empezar({ modo: ronda.modo, categoria: ronda.categoria, difi: ronda.dif, anterior: ronda.id })}>
+                Otra más
+              </button>
+              <button className="secundario" onClick={() => setRonda(null)}>🎡 Girar la ruleta otra vez</button>
+            </>
           )}
         </Resultado>
       )}

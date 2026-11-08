@@ -12,6 +12,12 @@ import { frase } from './textos.js'
 import { crearAzar } from './azar.js'
 import { crearPartida, registrarVista } from './historial.js'
 import { idsTrivia } from './identidad.js'
+import PanelRuleta from './PanelRuleta.jsx'
+import { TEMAS, nombreDeTema } from './temas.js'
+
+const COLOR_TEMA = { politica: '#ef4444', amor: '#ec4899', noche: '#6366f1', rock: '#f59e0b', personajes: '#22c55e', vida: '#0891b2' }
+const RULETA_TEMAS = TEMAS.map((t) => ({ id: t.id, texto: t.nombre.split(' y ')[0].split(',')[0], icono: t.icono, color: COLOR_TEMA[t.id] }))
+const COLORES_NIVEL = ['#e11d48', '#f59e0b', '#10b981', '#0ea5e9', '#7c3aed']
 
 export default function Trivia({ onVolver, onMenu, categoria = 'general', desafio = null, selector = null }) {
   const banda = categoria === 'banda'
@@ -23,7 +29,8 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
   const kMejor = banda ? 'mejorBanda' : 'mejor'
   const [vista, setVista] = useState(desafio ? 'jugando' : 'niveles') // niveles | jugando | fin
   const [nivel, setNivel] = useState(desafio ? desafio.nivel : 1)
-  const temaId = desafio ? desafio.tema : 'todos'
+  const [temaElegido, setTemaId] = useState('todos') // lo decide la ruleta de temas
+  const temaId = desafio ? desafio.tema : banda ? 'todos' : temaElegido
   const [semilla, setSemilla] = useState(desafio ? desafio.semilla : '') // con la misma semilla salen las mismas preguntas
   const suerte = useSuertePartida(`trivia:${modo}:${semilla}:${nivel}:${dif}`, dif)
   const [preguntas, setPreguntas] = useState(() =>
@@ -120,6 +127,22 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
         <Cabecera titulo={<>{banda ? 'La banda' : 'Trivia'}</>} extra={<>Récord {guardado[kMejor]}/{PREGUNTAS_POR_NIVEL}</>} onVolver={onVolver} onMenu={onMenu} />
         {selector}
         <Dificultad valor={dif} onCambio={setDif} />
+        {!banda ? (
+          <PanelRuleta
+            titulo="Ruleta de temas"
+            nota={temaId === 'todos' ? 'Gira y todas las preguntas del nivel serán del tema que salga. Sin girar, salen de todos los temas.' : `Tema activo: ${nombreDeTema(temaId)}. Elegí un nivel o girá de nuevo.`}
+            categorias={RULETA_TEMAS}
+            onElegida={setTemaId}
+          />
+        ) : maximoAlcanzado(guardado, modo) >= 2 && (
+          <PanelRuleta
+            titulo="Ruleta de niveles"
+            nota="Gira y el azar elige a qué nivel desbloqueado jugás."
+            categorias={Array.from({ length: maximoAlcanzado(guardado, modo) }, (_, k) => ({ id: k + 1, texto: `Nivel ${k + 1}`, icono: '🎸', color: COLORES_NIVEL[k % COLORES_NIVEL.length] }))}
+            onElegida={(n) => setTimeout(() => jugar(n), 1300)}
+          />
+        )}
+        {!banda && temaId !== 'todos' && <button className="secundario" onClick={() => setTemaId('todos')}>Quitar tema (todos los temas)</button>}
         <p>Nivel máximo alcanzado: {maximoAlcanzado(guardado, modo)} de {limite}. Necesitás 6 de 10 para avanzar.</p>
         <p className="aviso">{banda ? 'Aumentan las preguntas curadas de la banda.' : 'Aumentan las preguntas de palabras y títulos.'} Son {limite} etapas con un banco compartido; podés repetir las disponibles.</p>
         <div className="menu-grid">
@@ -176,6 +199,7 @@ export default function Trivia({ onVolver, onMenu, categoria = 'general', desafi
         const k=p.opciones.findIndex((_,k)=>k!==p.correcta&&!ocultas.includes(k));if(k<0)return false;setOcultas([...ocultas,k])
       }} />
       <Barra valor={i + (elegida !== null ? 1 : 0)} max={preguntas.length} etiqueta="Progreso del nivel" />
+      {!banda && temaId !== 'todos' && <ul className="chips-juego" aria-label="Tema de la ruleta"><li>🎡 {nombreDeTema(temaId)}</li></ul>}
       <div className="pregunta">
         <p>{p.texto}</p>
         {p.pistas && (

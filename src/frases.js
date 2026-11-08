@@ -25,14 +25,16 @@ export function armarRondaFrases(lista,semilla,dif='casual',plan,opciones={}) {
  const azar=crearAzar(semilla), banco=validarFrases(lista,opciones)
  const prioridad=f=>Math.max(-1,...[f.id,idDe(f.cancion)].map(id=>(plan?.recientes?.includes(id)?10000:0)+(plan?.vistos?.lastIndexOf(id)??-1)+1))
  const canciones=new Set()
- return azar.mezclar(banco).sort((a,b)=>prioridad(a)-prioridad(b)).filter(f=>{
+ return azar.mezclar(banco).sort((a,b)=>(opciones.clase?(b.huecos.some(h=>h.clase===opciones.clase)-a.huecos.some(h=>h.clase===opciones.clase)):0)||prioridad(a)-prioridad(b)).filter(f=>{
   const clave=f.cancion.toLocaleLowerCase('es')
   if(canciones.has(clave))return false
   canciones.add(clave);return true
  }).slice(0,10).map(f=>{
   const cantidad=dif==='casual'?2:Math.min(f.huecos.length,2+azar.entero(2))
   const mezclados=azar.mezclar(f.huecos)
-  const interior=mezclados.find(h=>h.indice<f.palabras.length-2)
+  // con categoría, los huecos de esa clase de palabra pasan al frente (sin tocar el azar de las partidas sin categoría)
+  if(opciones.clase)mezclados.sort((a,b)=>(b.clase===opciones.clase)-(a.clase===opciones.clase))
+  const interior=(opciones.clase&&mezclados.find(h=>h.clase===opciones.clase&&h.indice<f.palabras.length-2))||mezclados.find(h=>h.indice<f.palabras.length-2)
   const seleccion=[interior,...mezclados.filter(h=>h!==interior)].slice(0,cantidad).sort((a,b)=>a.indice-b.indice)
   return {...f,faltantes:seleccion.map(h=>h.indice),respuesta:seleccion.map(h=>f.palabras[h.indice]).join(' '),opcionesPorHueco:Object.fromEntries(seleccion.map(h=>[h.indice,azar.mezclar([f.palabras[h.indice].replace(/[^\p{L}]/gu,''),...h.distractores])]))}
  })

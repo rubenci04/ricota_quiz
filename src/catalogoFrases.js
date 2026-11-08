@@ -9,5 +9,5 @@ export const catalogoFrases = (demoFrases ? ejemplos : aprobadas).map(f => ({ ..
 export const aportesFrases = iconicas
 export const catalogoIconicas = [...iconicas.filter(f=>f.aprobada),...catalogoFrases].map(f=>({...f,album:datos.discos.find(d=>d.id===datos.canciones.find(c=>c.titulo===f.cancion)?.disco)?.titulo||f.album}))
 // Los enlaces anteriores conservan el banco y algoritmo originales.
-export const generarFrases = (semilla,dif,plan,version=2) => armarRondaFrases(version===1?catalogoFrases:catalogoIconicas,semilla,dif,plan,{demo:demoFrases,variantes:version===2})
+export const generarFrases = (semilla,dif,plan,version=2,clase) => armarRondaFrases(version===1?catalogoFrases:catalogoIconicas,semilla,dif,plan,{demo:demoFrases,variantes:version===2,...(clase?{clase}:{})})
 export const frasesDisponibles = generarFrases('disponibilidad','casual').length >= 10

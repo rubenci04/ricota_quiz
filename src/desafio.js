@@ -11,6 +11,7 @@ import { triviaTieneTema } from './trivia.js'
 import { LIMITES } from './niveles.js'
 
 const PREFIJO = '#/desafio/'
+export const CLASES_FRASE = ['sustantivo', 'verbo', 'adjetivo']
 
 export const MODOS_DESAFIO = {
   frases: { max: 10, formato: p => `${p}/10`, descripcion: 'Completá la frase' },
@@ -29,7 +30,12 @@ export { nuevaSemilla } from './azar.js'
 
 // Interpreta el segmento "tema" según el modo. Devuelve los campos o null si no es válido.
 function leerSegmento(modo, segmento) {
-  if (modo === 'frases') return ['todos.todos','todos.todos.v2'].includes(segmento) ? { disco: 'todos', tema: 'todos', versionFrases: segmento.endsWith('.v2')?2:1 } : null
+  if (modo === 'frases') {
+    // todos.<categoría>[.v2]: la categoría es la clase de palabra que sale de la ruleta ("todos" = sin categoría)
+    const f = segmento.split('.')
+    const ok = f[0] === 'todos' && (f[1] === 'todos' || CLASES_FRASE.includes(f[1])) && (f.length === 2 || (f.length === 3 && f[2] === 'v2'))
+    return ok ? { disco: 'todos', tema: 'todos', ...(f[1] !== 'todos' ? { clase: f[1] } : {}), versionFrases: f[2] === 'v2' ? 2 : 1 } : null
+  }
   const p = segmento.split('.')
   if (p.some((x) => !/^[a-z0-9]{1,20}$/.test(x))) return null
   if (modo === 'trivia' || modo === 'banda') {
@@ -82,7 +88,7 @@ export function leerDesafio(hash = typeof location !== 'undefined' ? location.ha
 }
 
 function segmentoDe(d) {
-  if (d.modo === 'frases') return `todos.todos${d.versionFrases===2?'.v2':''}`
+  if (d.modo === 'frases') return `todos.${d.clase ?? 'todos'}${d.versionFrases===2?'.v2':''}`
   if (d.modo === 'trivia' || d.modo === 'banda') return `${d.nivel}.${d.tema ?? 'todos'}${d.version === 2 ? '.v2' : ''}`
   if (d.modo === 'adivinanzas') return `${d.ronda}.${d.disco ?? 'todos'}.${d.tema ?? 'todos'}`
   return `${d.disco ?? 'todos'}.${d.tema ?? 'todos'}`

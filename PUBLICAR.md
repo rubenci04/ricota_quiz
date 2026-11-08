@@ -52,7 +52,13 @@ La PWA usa actualización con aviso. Se registra /sw.js sin caché HTTP para la 
 
 Auditoría: node scripts/auditar-letras.mjs <carpeta-privada>. Exige cero ventanas de veinte caracteres fuera de fragmentos aprobados y metadatos públicos (títulos/autores), comprueba cada fuente como una sola línea y excluye rutas privadas, ejemplos DEV e interpretaciones sin verificar. No imprime contenido privado.
 
-## Duelo con ruleta y tablero claro de la sopa
+## Ruletas de categoría y tablero claro de la sopa
 
-- **Duelo con ruleta** (`src/Duelo.jsx`, `src/Ruleta.jsx`, `src/duelo.js`): modo por turnos para 2–4 amigos en el mismo dispositivo o contra la CPU (Fácil 45 %, Normal 68 %, Ricotero 88 % de acierto). Cada ronda una ruleta sortea quién juega (sin repetir hasta que todos jugaron), otra ruleta de la suerte modifica la pregunta (x2, 50/50, +10 s, triple o nada, +5 gratis). Hay reloj de 20 s, bonus por rapidez y por racha, y podio final con revancha. Reutiliza los bancos de Trivia; no toca el almacenamiento ni los logros.
+- Se retiró el modo Duelo/CPU (el juego depende del conocimiento de la banda). «Contra un amigo» sigue como «Próximamente» (sala online).
+- **Ruleta de categorías** (`src/Ruleta.jsx`, `src/PanelRuleta.jsx`, estilos en `src/mecanicas.css`): el resultado se sortea antes de girar y el disco frena ahí; respeta «reducir movimiento». Se usa en:
+  - *Dicho de otra forma*: gira entre Canciones, Discos, Palabras e Integrantes y arranca el acertijo de esa categoría.
+  - *Adiviná por palabras*: gira entre los 9 discos (o «Todos»).
+  - *Trivia general*: gira entre los 6 temas; todo el nivel sale de ese tema. *La banda* gira entre los niveles desbloqueados (si hay 2 o más).
+  - *Completá la frase*: gira entre sustantivos, verbos, adjetivos o sorpresa; los huecos priorizan esa clase de palabra.
+  Todos tienen «Jugar sin ruleta». Los desafíos por link conservan la categoría; en *Completá la frase* el segmento del link pasó a `todos.<clase>[.v2]` y los links anteriores (`todos.todos[.v2]`) siguen valiendo.
 - **Sopa de letras**: el tablero es claro por defecto (papel #fbf6e9, letras #14110c, contraste ≈ 17:1; selección #1d4ed8 con texto blanco, ≈ 6,7:1) y se puede volver al oscuro. La elección se recuerda en `localStorage` (`ricota_sopa_tablero`). Criterios: WCAG 1.4.3 (≥ 4,5:1 texto) y 1.4.11 (≥ 3:1 componentes); la ventaja de polaridad positiva (texto oscuro sobre claro) en agudeza y corrección de textos es mayor cuanto más chico el carácter (Piepenbrock, Mayr y Buchner; Human Factors), aunque otros trabajos (Dobres et al., 2017) la matizan como una leve desventaja de la polaridad negativa. No existe una regla que obligue a fondo claro: lo que manda es el contraste y el tamaño de letra, que además subió ~16 %.

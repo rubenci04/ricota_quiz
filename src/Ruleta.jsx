@@ -26,7 +26,8 @@ export default function Ruleta({ etiquetas, onResultado, textoBoton = '¡Girar!'
   }
 
   const girar = () => {
-    if (estado !== 'quieta' || deshabilitada) return
+    if (estado === 'girando' || deshabilitada) return
+    setEstado('quieta')
     const idx = entero(n)
     const centro = idx * paso + paso / 2 + (Math.random() - 0.5) * paso * 0.6
     const base = Math.ceil(giro / 360) * 360
@@ -46,7 +47,7 @@ export default function Ruleta({ etiquetas, onResultado, textoBoton = '¡Girar!'
 
   const fondo = `conic-gradient(${etiquetas.map((e, i) => `${e.color} ${i * paso}deg ${(i + 1) * paso}deg`).join(', ')})`
   return (
-    <div className="rt" aria-label={titulo}>
+    <div className={`rt${n > 6 ? ' rt-muchas' : ''}`} aria-label={titulo}>
       <div className="rt-escena">
         <span className={`rt-puntero${estado === 'girando' ? ' tic' : ''}`} aria-hidden="true">▼</span>
         <div
@@ -68,7 +69,7 @@ export default function Ruleta({ etiquetas, onResultado, textoBoton = '¡Girar!'
         <span className="rt-centro" aria-hidden="true">🎸</span>
       </div>
       {!autoGirar && (
-        <button className="nueva rt-boton" onClick={girar} disabled={estado !== 'quieta' || deshabilitada}>
+        <button className="nueva rt-boton" onClick={girar} disabled={estado === 'girando' || deshabilitada}>
           {estado === 'girando' ? 'Girando…' : textoBoton}
         </button>
       )}
