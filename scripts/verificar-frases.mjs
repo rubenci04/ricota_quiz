@@ -45,8 +45,8 @@ const guardado=JSON.parse(memoria.get('ricota_quiz'))
 assert.equal(guardado.v,10);assert.ok(memoria.get('ricota_quiz_pre_v8'))
 const {crearLink,leerDesafio}=await import('../src/desafio.js')
 const iconicas=JSON.parse(readFileSync('src/data/frases-iconicas.json','utf8'))
-assert.equal(iconicas.length,131)
-assert.equal(validarFrases(iconicas,{variantes:true}).length,46)
+assert.equal(iconicas.length,136)
+assert.equal(validarFrases(iconicas,{variantes:true}).length,55)
 const nuevo=[...iconicas,...banco]
 for(let n=0;n<200;n++){
  const semilla=`iconicas${n}`,plan={vistos:[],recientes:[],ciclo:[]}
@@ -68,4 +68,4 @@ assert.ok(!crearLink({...d,alias:'PRIVADO'}).includes('PRIVADO'))
 for(const ronda of ['dichocanciones','dichodiscos','dichopalabras','dichointegrantes']) assert.ok(leerDesafio(`#/desafio/adivinanzas/${ronda}/casual/abcd1234/1`))
 const js=readdirSync('dist/assets').filter(f=>f.endsWith('.js')).map(f=>readFileSync(`dist/assets/${f}`,'utf8')).join('\n')
 for(const e of ejemplos){assert.ok(!js.includes(e.fragmento));assert.ok(!js.includes(e.cancion))}
-console.log('QA frases: 400 rondas de 10, bancos v1/v2, 80 variantes/52 canciones, 131 aportes, 46 curados, perfiles, logros y enlaces compatibles: OK.')
+console.log('QA frases: 400 rondas de 10, bancos v1/v2, 136 entradas en colección, 55 curadas, perfiles, logros y enlaces compatibles: OK.')

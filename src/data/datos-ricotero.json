@@ -1530,86 +1530,6 @@
       ]
     },
     {
-      "titulo": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
-      "disco": "finisterre",
-      "palabras": [
-        "avalanchas",
-        "bocado",
-        "campeón",
-        "canallas",
-        "cinturones",
-        "clones",
-        "deudas",
-        "farándula",
-        "resacas",
-        "surfeando"
-      ],
-      "verificar": false,
-      "definiciones": {
-        "avalanchas": "Desprendimientos violentos de nieve o tierra",
-        "bocado": "Porción pequeña de comida",
-        "campeón": "Ganador de una competencia",
-        "canallas": "Personas ruines y despreciables",
-        "cinturones": "Tiras de cuero que sujetan el pantalón",
-        "clones": "Copias genéticas idénticas",
-        "deudas": "Dinero que se debe",
-        "farándula": "Mundo del espectáculo y los famosos",
-        "resacas": "Malestar posterior a beber en exceso",
-        "surfeando": "Deslizándose sobre las olas en tabla"
-      },
-      "titulo_parafraseado": "Las hazañas inverosímiles de un superhéroe de los petardos, en una tierra digital helada",
-      "palabras_verificadas": true,
-      "disco_verificado": true,
-      "autores": [
-        "Carlos \"Indio\" Solari",
-        "Eduardo \"Skay\" Beilinson"
-      ],
-      "temas": [
-        "Personajes y relatos",
-        "Rock y música"
-      ]
-    },
-    {
-      "titulo": "Alien duce",
-      "disco": "finisterre",
-      "palabras": [
-        "esclavitud",
-        "evangelio",
-        "flotando",
-        "gavilán",
-        "hígado",
-        "minestrón",
-        "nadando",
-        "sobrevuela",
-        "escupe",
-        "edificio"
-      ],
-      "verificar": false,
-      "definiciones": {
-        "esclavitud": "Condición de quien carece de libertad",
-        "evangelio": "Libro sagrado cristiano sobre la vida de Jesús",
-        "flotando": "Sostenido sobre la superficie del agua",
-        "gavilán": "Ave rapaz de tamaño mediano",
-        "hígado": "Órgano que filtra la sangre",
-        "minestrón": "Sopa espesa italiana de verduras",
-        "nadando": "Desplazándose dentro del agua con brazos",
-        "sobrevuela": "Pasa por el aire por encima",
-        "escupe": "Arroja saliva por la boca",
-        "edificio": "Construcción de varios pisos"
-      },
-      "titulo_parafraseado": "Un extraterrestre con rango de caudillo",
-      "palabras_verificadas": true,
-      "disco_verificado": true,
-      "autores": [
-        "Carlos \"Indio\" Solari",
-        "Eduardo \"Skay\" Beilinson"
-      ],
-      "temas": [
-        "Política y sociedad",
-        "Personajes y relatos"
-      ]
-    },
-    {
       "titulo": "Pogo",
       "disco": "finisterre",
       "palabras": [
@@ -1810,46 +1730,6 @@
       ]
     },
     {
-      "titulo": "Morta punto com",
-      "disco": "momo",
-      "palabras": [
-        "aceite",
-        "burbujas",
-        "cascote",
-        "diluvio",
-        "estribor",
-        "guateque",
-        "hinchado",
-        "picante",
-        "serrín",
-        "toallón"
-      ],
-      "verificar": false,
-      "definiciones": {
-        "aceite": "Líquido graso para cocinar",
-        "burbujas": "Esferas de aire en un líquido",
-        "cascote": "Fragmento de material de obra",
-        "diluvio": "Lluvia torrencial y abundante",
-        "estribor": "Lado derecho de una nave",
-        "guateque": "Fiesta animada con baile",
-        "hinchado": "Con volumen aumentado por aire",
-        "picante": "Que arde en la lengua",
-        "serrín": "Polvo fino de madera cortada",
-        "toallón": "Paño grande para secarse"
-      },
-      "titulo_parafraseado": "Muerta, pero con dirección de internet",
-      "palabras_verificadas": true,
-      "disco_verificado": true,
-      "autores": [
-        "Carlos \"Indio\" Solari",
-        "Eduardo \"Skay\" Beilinson"
-      ],
-      "temas": [
-        "Vida, muerte y existencia",
-        "Noche y bajos fondos"
-      ]
-    },
-    {
       "titulo": "Pool, Averna y Papusa",
       "disco": "momo",
       "palabras": [
@@ -1888,6 +1768,409 @@
         "Noche y bajos fondos",
         "Personajes y relatos"
       ]
+    },
+    {
+      "titulo": "Semen-Up",
+      "disco": "oktubre",
+      "palabras": [
+        "manzana",
+        "demonio",
+        "alfombra",
+        "saludable",
+        "católica",
+        "nariz",
+        "fruta",
+        "estilo"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "manzana": "Fruta redonda que crece en el manzano",
+        "demonio": "Ser sobrenatural asociado al mal",
+        "alfombra": "Tejido que cubre el piso",
+        "saludable": "Que favorece la salud",
+        "católica": "Perteneciente a la Iglesia de Roma",
+        "nariz": "Órgano del olfato",
+        "fruta": "Producto comestible de ciertas plantas",
+        "estilo": "Manera particular de hacer algo"
+      },
+      "titulo_parafraseado": "Una bebida imaginaria cuyo nombre mezcla biología y una marca de gaseosa",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Amor y desamor"
+      ],
+      "fuente": "https://redondossubtitulados.com/patriciorey/oktubre/semen-up/"
+    },
+    {
+      "titulo": "Rock para los dientes",
+      "disco": "bang",
+      "palabras": [
+        "empresa",
+        "cabeza",
+        "línea",
+        "trabajo",
+        "fiero",
+        "prontuariado",
+        "infierno",
+        "caldero",
+        "fatalidad",
+        "tieso"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "empresa": "Organización dedicada a una actividad económica",
+        "cabeza": "Parte del cuerpo que contiene el cerebro",
+        "línea": "Trazo continuo o sucesión en una dirección",
+        "trabajo": "Actividad realizada como ocupación",
+        "fiero": "De aspecto feroz o temible",
+        "prontuariado": "Registrado con antecedentes policiales",
+        "infierno": "Lugar de castigo o sufrimiento extremo",
+        "caldero": "Recipiente grande para calentar líquidos",
+        "fatalidad": "Desgracia considerada inevitable",
+        "tieso": "Rígido, sin flexibilidad"
+      },
+      "titulo_parafraseado": "Música eléctrica destinada a las piezas con las que mordemos",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Rock y música",
+        "Política y sociedad"
+      ],
+      "fuente": "https://redondossubtitulados.com/patriciorey/bangbang/rock-para-los-dientes/"
+    },
+    {
+      "titulo": "Maldición, va a ser un día hermoso",
+      "disco": "bang",
+      "palabras": [
+        "moscardón",
+        "imaginario",
+        "testigo",
+        "caricias",
+        "guardia",
+        "aventura",
+        "rufián",
+        "balanza",
+        "risotadas",
+        "avalancha"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "moscardón": "Insecto parecido a una mosca grande",
+        "imaginario": "Que existe solamente en la imaginación",
+        "testigo": "Persona que presencia un hecho",
+        "caricias": "Gestos suaves de afecto con las manos",
+        "guardia": "Estado de vigilancia o protección",
+        "aventura": "Experiencia arriesgada o poco habitual",
+        "rufián": "Persona que actúa con vileza",
+        "balanza": "Instrumento para comparar pesos",
+        "risotadas": "Carcajadas fuertes y ruidosas",
+        "avalancha": "Masa que se precipita de manera repentina"
+      },
+      "titulo_parafraseado": "Una queja ante el anuncio de una jornada espléndida",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Vida, muerte y existencia"
+      ],
+      "fuente": "https://redondossubtitulados.com/patriciorey/bangbang/maldicion-va-a-ser-un-dia-hermoso/"
+    },
+    {
+      "titulo": "Yo no me caí del cielo",
+      "disco": "gulp",
+      "palabras": [
+        "nena",
+        "perderte",
+        "cielo",
+        "triste",
+        "gato",
+        "apostar",
+        "alegrías",
+        "vino",
+        "malicioso",
+        "mejor"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "nena": "Forma afectuosa de llamar a una chica",
+        "perderte": "Dejar de tenerte cerca",
+        "cielo": "Espacio visible sobre la Tierra",
+        "triste": "Que siente pena o melancolía",
+        "gato": "Felino doméstico",
+        "apostar": "Arriesgar algo confiando en un resultado",
+        "alegrías": "Sentimientos de felicidad",
+        "vino": "Bebida obtenida de la fermentación de uvas",
+        "malicioso": "Que encierra mala intención",
+        "mejor": "De calidad superior a otra cosa"
+      },
+      "titulo_parafraseado": "Niego haber aterrizado desde las alturas celestes",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Amor y desamor",
+        "Noche y bajos fondos"
+      ],
+      "fuente": "https://redondossubtitulados.com/patriciorey/gulp/yo-no-me-cai-del-cielo/"
+    },
+    {
+      "titulo": "Superlógico",
+      "disco": "gulp",
+      "palabras": [
+        "machos",
+        "consumar",
+        "hermosa",
+        "dotación",
+        "vital",
+        "mantis",
+        "nervioso",
+        "hembras",
+        "rostro",
+        "devorar"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "machos": "Animales de sexo masculino",
+        "consumar": "Llevar una acción a su realización completa",
+        "hermosa": "Que posee belleza",
+        "dotación": "Conjunto de recursos con los que se cuenta",
+        "vital": "Relacionado con la vida",
+        "mantis": "Insecto de patas delanteras plegadas y cazadoras",
+        "nervioso": "Que muestra inquietud o agitación",
+        "hembras": "Animales de sexo femenino",
+        "rostro": "Cara de una persona",
+        "devorar": "Comer de manera voraz"
+      },
+      "titulo_parafraseado": "Más que razonable: un adjetivo llevado al grado máximo",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Personajes y relatos"
+      ],
+      "fuente": "https://redondossubtitulados.com/patriciorey/gulp/superlogico/"
+    },
+    {
+      "titulo": "Ñam fi frufi fali fru",
+      "disco": "gulp",
+      "palabras": [
+        "cuidar",
+        "amorcito",
+        "borracha",
+        "doctor",
+        "cabalgar",
+        "vidrio",
+        "sifón",
+        "muerde",
+        "alocada"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "cuidar": "Atender y proteger a alguien",
+        "amorcito": "Diminutivo cariñoso de un ser querido",
+        "borracha": "Que está bajo los efectos del alcohol",
+        "doctor": "Profesional que atiende enfermedades",
+        "cabalgar": "Montar y desplazarse a caballo",
+        "vidrio": "Material duro y transparente de las ventanas",
+        "sifón": "Recipiente que sirve agua con gas a presión",
+        "muerde": "Aprieta algo con los dientes",
+        "alocada": "Que actúa con poco juicio o mucha exaltación"
+      },
+      "titulo_parafraseado": "Una cadena de sonidos juguetones que empieza como si alguien saboreara comida",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Amor y desamor",
+        "Noche y bajos fondos"
+      ],
+      "fuente": "https://redondossubtitulados.com/patriciorey/gulp/nam-fi-frufi-fali-fru/"
+    },
+    {
+      "titulo": "Sorpresa de Shangai",
+      "disco": "lobo",
+      "palabras": [
+        "hocico",
+        "acalorado",
+        "lengua",
+        "misiles",
+        "veneno",
+        "pellejo",
+        "ultravioletas",
+        "terciopelos",
+        "premio",
+        "piedras"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "hocico": "Parte saliente de la cara de un animal",
+        "acalorado": "Que siente mucho calor",
+        "lengua": "Órgano de la boca que interviene en el habla",
+        "misiles": "Proyectiles dirigidos hacia un objetivo",
+        "veneno": "Sustancia capaz de intoxicar",
+        "pellejo": "Piel de una persona o animal",
+        "ultravioletas": "Radiaciones situadas más allá del violeta visible",
+        "terciopelos": "Tejidos suaves de pelo corto y denso",
+        "premio": "Recompensa por un logro",
+        "piedras": "Fragmentos sólidos de roca"
+      },
+      "titulo_parafraseado": "Un hecho inesperado asociado a una gran ciudad de China",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Noche y bajos fondos",
+        "Personajes y relatos"
+      ],
+      "fuente": "https://redondossubtitulados.com/patriciorey/lobosuelto/sorpresa-de-shangai/"
+    },
+    {
+      "titulo": "Susanita",
+      "disco": "lobo",
+      "palabras": [
+        "bonita",
+        "nena",
+        "padre",
+        "gato",
+        "festejó",
+        "televisión",
+        "pelo",
+        "pañuelo",
+        "dulce",
+        "amarga"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "bonita": "Que resulta agradable a la vista",
+        "nena": "Forma afectuosa de llamar a una chica",
+        "padre": "Progenitor masculino",
+        "gato": "Felino doméstico",
+        "festejó": "Celebró un acontecimiento",
+        "televisión": "Medio que transmite imágenes y sonido a distancia",
+        "pelo": "Conjunto de cabellos",
+        "pañuelo": "Trozo de tela para el bolsillo o el cuello",
+        "dulce": "Que tiene sabor parecido al azúcar",
+        "amarga": "Produce un sabor opuesto al dulce"
+      },
+      "titulo_parafraseado": "El diminutivo de Susana convertido en canción",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Amor y desamor",
+        "Personajes y relatos"
+      ],
+      "fuente": "https://redondossubtitulados.com/patriciorey/lobosuelto/susanita/"
+    },
+    {
+      "titulo": "Rock para el negro Atila",
+      "disco": "lobo",
+      "palabras": [
+        "ladrón",
+        "atrapar",
+        "bolsillo",
+        "metálico",
+        "brillo",
+        "ratón",
+        "peligro",
+        "sirena",
+        "matraca",
+        "gabán",
+        "marginal"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "ladrón": "Persona que se apodera de lo ajeno",
+        "atrapar": "Capturar a alguien o algo",
+        "bolsillo": "Pequeña bolsa cosida en una prenda",
+        "metálico": "Hecho de metal o parecido a él",
+        "brillo": "Luz reflejada por una superficie",
+        "ratón": "Roedor pequeño de cola larga",
+        "peligro": "Riesgo de sufrir daño",
+        "sirena": "Dispositivo que emite una alarma sonora",
+        "matraca": "Instrumento de madera que produce un ruido seco",
+        "gabán": "Abrigo largo y grueso",
+        "marginal": "Que vive al margen de las normas sociales"
+      },
+      "titulo_parafraseado": "Dedicatoria eléctrica a un personaje con el nombre de un rey de los hunos",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Personajes y relatos",
+        "Noche y bajos fondos"
+      ],
+      "fuente": "https://redondossubtitulados.com/patriciorey/lobosuelto/rock-para-el-negro-atila/"
+    },
+    {
+      "titulo": "Luzbelito y las sirenas",
+      "disco": "luzbelito",
+      "palabras": [
+        "destino",
+        "soledad",
+        "risa",
+        "lealtad",
+        "nazareno",
+        "lágrima",
+        "problemas",
+        "tiempo",
+        "insomnio",
+        "deseos"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "destino": "Curso de acontecimientos que se considera predeterminado",
+        "soledad": "Ausencia de compañía",
+        "risa": "Manifestación de alegría con sonidos y gestos",
+        "lealtad": "Fidelidad a una persona o una causa",
+        "nazareno": "Natural de Nazaret o figura religiosa de Jesús",
+        "lágrima": "Gota que brota de los ojos",
+        "problemas": "Situaciones que requieren solución",
+        "tiempo": "Magnitud con la que se mide la duración",
+        "insomnio": "Dificultad para conciliar el sueño",
+        "deseos": "Anhelos de conseguir o experimentar algo"
+      },
+      "titulo_parafraseado": "Un pequeño ángel caído acompañado por criaturas marinas de canto irresistible",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Personajes y relatos",
+        "Vida, muerte y existencia"
+      ],
+      "fuente": "https://redondossubtitulados.com/patriciorey/luzbelito/luzbelito-y-las-sirenas/"
     }
   ],
   "curiosidades": [

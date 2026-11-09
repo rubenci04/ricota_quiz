@@ -43,8 +43,9 @@ for (const modo of ['trivia', 'banda', 'sopa', 'crucigrama', 'adivinanzas']) {
 }
 assert.equal(leerDesafio('#/desafio/trivia/99/casual/abcd1234/6').version, 1)
 const catalogo = JSON.parse(readFileSync('src/data/adivinanzas.json', 'utf8')).filter((a) => !a.descartada)
-assert.equal(catalogo.filter((a) => a.tipo === 'cancion').length, 44)
-assert.equal(new Set(catalogo.filter((a) => a.tipo === 'cancion').map((a) => a.respuesta)).size, 44)
+const cancionesActuales = JSON.parse(readFileSync('src/data/datos-ricotero.json', 'utf8')).canciones
+assert.equal(catalogo.filter((a) => a.tipo === 'cancion').length, cancionesActuales.length)
+assert.deepEqual(new Set(catalogo.filter((a) => a.tipo === 'cancion').map((a) => a.respuesta)), new Set(cancionesActuales.map(c => c.titulo)))
 for (let i = 0; i < 50; i++) {
   const r = nuevaRonda({ modo: 'dicho', semilla: `legado${i}` })
   assert.ok(catalogo.some((a) => a.id === r.acertijoId), 'Un enlace antiguo usó una alusión descartada')

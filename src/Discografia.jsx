@@ -65,10 +65,10 @@ export default function Discografia({ onVolver, onMenu }) {
 
       <div className="segmentado" role="group" aria-label="Archivo">{[['discos','Discografía'],['palabras','Palabras'],['curiosidades','Curiosidades'],...(aportesFrases.length?[['frases','Frases']]:[])].map(([id,t]) => <button key={id} aria-pressed={tab===id} onClick={()=>setTab(id)}>{t}</button>)}</div>
       {tab==='frases'&&<section className="coleccion-frases">
-        <p>Frases de los dos listados aportados. Las atribuciones de canciones ajenas a la discografía del juego están pendientes de revisión.</p>
+        <p>Frases aportadas y fragmentos revisados del catálogo. Las atribuciones de canciones ajenas a la discografía del juego están pendientes de revisión.</p>
         <label>Buscar una frase o canción<input type="search" value={buscarFrase} onChange={e=>setBuscarFrase(e.target.value)}/></label>
         <p role="status">{frases.length} de {aportesFrases.length} aportes</p>
-        {frases.map(f=><article className="tarjeta" key={`${f.aporte.lista}:${f.aporte.numero}`}><blockquote>{f.textoAportado??f.fragmento}</blockquote><p><strong>{f.cancion}</strong></p><small>Listado {f.aporte.lista}, entrada {f.aporte.numero}{f.aprobada?' · Disponible en Completá la frase':' · En colección'}{!f.catalogada?' · Atribución por revisar':''}</small></article>)}
+        {frases.map(f=><article className="tarjeta" key={f.id??`${f.aporte.lista}:${f.aporte.numero}`}><blockquote>{f.textoAportado??f.fragmento}</blockquote><p><strong>{f.cancion}</strong></p><small>{f.aporte?`Listado ${f.aporte.lista}, entrada ${f.aporte.numero}`:'Catálogo revisado'}{f.aprobada?' · Disponible en Completá la frase':' · En colección'}{!f.catalogada?' · Atribución por revisar':''}{f.fuente&&<> · <a href={f.fuente} target="_blank" rel="noopener noreferrer">Ver fuente</a></>}</small></article>)}
       </section>}
       {tab==='palabras' && <dl className="definiciones">{[...new Map(datos.canciones.flatMap(c=>c.palabras.map(p=>[p,c.definiciones?.[p]]))).entries()].sort(([a],[b])=>a.localeCompare(b,'es')).map(([p,d])=><div key={p}><dt>{p}</dt><dd>{d}</dd></div>)}</dl>}
       {tab==='discos' && <section className="discos-lista">

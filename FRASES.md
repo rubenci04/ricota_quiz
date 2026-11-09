@@ -1,5 +1,15 @@
 # Completá la frase y ayudas de suerte
 
+## Actualización del catálogo (9 de noviembre de 2026)
+
+Se incorporaron diez canciones con disco, autores, temas, palabras verificadas, definiciones y un acertijo propio por canción: Semen-Up (Oktubre); Rock para los dientes y Maldición, va a ser un día hermoso (Bang!); Yo no me caí del cielo, Superlógico y Ñam fi frufi fali fru (Gulp!); Sorpresa de Shangai, Susanita y Rock para el negro Atila (Lobo suelto, volumen 1, dentro del disco doble que agrupa el juego); Luzbelito y las sirenas (Luzbelito).
+
+Alien duce, Las increíbles andanzas del Capitán Buscapina en Cybersiberia y Morta punto com se retiraron del catálogo actual, los acertijos, las opciones de Trivia v3 y las rondas nuevas de frases. El catálogo tiene 51 canciones. Los datos anteriores se conservan exclusivamente para reproducir desafíos de Trivia v1/v2 y frases v1 ya compartidos.
+
+Cada alta tiene al menos un fragmento validado con huecos y distractores revisados. La colección pasa a 136 entradas, de las cuales 55 están curadas. Se unificaron las variantes de los títulos de los aportes con los títulos del catálogo y se corrigieron dos transcripciones anteriores (el aporte 1/39 y el 2/44). Las entradas nuevas y las atribuciones incorporadas enlazan su fuente en Redondos Subtitulados; los enlaces de cada canción quedan también en `fuente` dentro de los datos. No se incorporan letras completas.
+
+`scripts/actualizar-catalogo.mjs` documenta y reproduce la migración sin modificar la instantánea de compatibilidad ya creada. Verificación: 36 pruebas Vitest, incluidos bancos y búsqueda en Archivo; 400 rondas de frases; 200 rondas de compatibilidad de frases; regresión de cinco modos y build de producción. Vite advierte que el paquete principal supera 500 kB sin comprimir; la compilación y el precache PWA terminan correctamente.
+
 ## Revisión de opciones y ampliación (nov. 2026)
 
 - **Distractores reescritos:** las alternativas de los 75 fragmentos anteriores eran poco creíbles (verbos y objetos al azar). Ahora cada una conserva la clase y la flexión de la palabra oculta (persona, tiempo, género, número, voseo), cabe en la frase y no repite la respuesta; se evitaron los sinónimos exactos. La validación automática sigue exigiendo cuatro opciones distintas y longitudes parecidas. Las frases, huecos y respuestas no cambian, por lo que los enlaces de desafío anteriores siguen mostrando las mismas frases (solo cambian las palabras erróneas de las opciones). `verificar-legado-frases.mjs` ahora compara frases, huecos y respuestas, no el texto de los distractores.

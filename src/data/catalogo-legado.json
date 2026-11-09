@@ -1,0 +1,170 @@
+{
+  "titulos": [
+    "Ji ji ji",
+    "Juguetes perdidos",
+    "La bestia pop",
+    "Todo un palo",
+    "Motor psico",
+    "El pibe de los astilleros",
+    "Esa estrella era mi lujo",
+    "Etiqueta negra",
+    "Vencedores vencidos",
+    "Un ángel para tu soledad",
+    "Ropa sucia",
+    "Un poco de amor francés",
+    "Masacre en el puticlub",
+    "Preso en mi ciudad",
+    "Salando las heridas",
+    "Queso ruso",
+    "Tarea fina",
+    "Yo caníbal",
+    "Nuestro amo juega al esclavo",
+    "La hija del fletero",
+    "El infierno está encantador esta noche",
+    "Gualicho",
+    "La parabellum del buen psicópata",
+    "Caña seca y un membrillo",
+    "Vamos las bandas",
+    "Mi perro dinamita",
+    "Ya nadie va a escuchar tu remera",
+    "Me matan, Limón!",
+    "Mariposa Pontiac - rock del país",
+    "Todo preso es político",
+    "Aquella solitaria vaca cubana",
+    "Blues de la artillería",
+    "Toxi-Taxi",
+    "Música para pastillas",
+    "Una piba con la remera de Greenpeace",
+    "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
+    "Alien duce",
+    "Pogo",
+    "La pequeña novia del Carioca",
+    "El templo de Momo",
+    "La murga de los renegados",
+    "Sheriff",
+    "Morta punto com",
+    "Pool, Averna y Papusa"
+  ],
+  "retiradas": [
+    {
+      "titulo": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
+      "disco": "finisterre",
+      "palabras": [
+        "avalanchas",
+        "bocado",
+        "campeón",
+        "canallas",
+        "cinturones",
+        "clones",
+        "deudas",
+        "farándula",
+        "resacas",
+        "surfeando"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "avalanchas": "Desprendimientos violentos de nieve o tierra",
+        "bocado": "Porción pequeña de comida",
+        "campeón": "Ganador de una competencia",
+        "canallas": "Personas ruines y despreciables",
+        "cinturones": "Tiras de cuero que sujetan el pantalón",
+        "clones": "Copias genéticas idénticas",
+        "deudas": "Dinero que se debe",
+        "farándula": "Mundo del espectáculo y los famosos",
+        "resacas": "Malestar posterior a beber en exceso",
+        "surfeando": "Deslizándose sobre las olas en tabla"
+      },
+      "titulo_parafraseado": "Las hazañas inverosímiles de un superhéroe de los petardos, en una tierra digital helada",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Personajes y relatos",
+        "Rock y música"
+      ]
+    },
+    {
+      "titulo": "Alien duce",
+      "disco": "finisterre",
+      "palabras": [
+        "esclavitud",
+        "evangelio",
+        "flotando",
+        "gavilán",
+        "hígado",
+        "minestrón",
+        "nadando",
+        "sobrevuela",
+        "escupe",
+        "edificio"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "esclavitud": "Condición de quien carece de libertad",
+        "evangelio": "Libro sagrado cristiano sobre la vida de Jesús",
+        "flotando": "Sostenido sobre la superficie del agua",
+        "gavilán": "Ave rapaz de tamaño mediano",
+        "hígado": "Órgano que filtra la sangre",
+        "minestrón": "Sopa espesa italiana de verduras",
+        "nadando": "Desplazándose dentro del agua con brazos",
+        "sobrevuela": "Pasa por el aire por encima",
+        "escupe": "Arroja saliva por la boca",
+        "edificio": "Construcción de varios pisos"
+      },
+      "titulo_parafraseado": "Un extraterrestre con rango de caudillo",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Política y sociedad",
+        "Personajes y relatos"
+      ]
+    },
+    {
+      "titulo": "Morta punto com",
+      "disco": "momo",
+      "palabras": [
+        "aceite",
+        "burbujas",
+        "cascote",
+        "diluvio",
+        "estribor",
+        "guateque",
+        "hinchado",
+        "picante",
+        "serrín",
+        "toallón"
+      ],
+      "verificar": false,
+      "definiciones": {
+        "aceite": "Líquido graso para cocinar",
+        "burbujas": "Esferas de aire en un líquido",
+        "cascote": "Fragmento de material de obra",
+        "diluvio": "Lluvia torrencial y abundante",
+        "estribor": "Lado derecho de una nave",
+        "guateque": "Fiesta animada con baile",
+        "hinchado": "Con volumen aumentado por aire",
+        "picante": "Que arde en la lengua",
+        "serrín": "Polvo fino de madera cortada",
+        "toallón": "Paño grande para secarse"
+      },
+      "titulo_parafraseado": "Muerta, pero con dirección de internet",
+      "palabras_verificadas": true,
+      "disco_verificado": true,
+      "autores": [
+        "Carlos \"Indio\" Solari",
+        "Eduardo \"Skay\" Beilinson"
+      ],
+      "temas": [
+        "Vida, muerte y existencia",
+        "Noche y bajos fondos"
+      ]
+    }
+  ]
+}

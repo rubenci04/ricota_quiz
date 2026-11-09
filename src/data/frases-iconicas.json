@@ -604,31 +604,65 @@
     ]
   },
   {
-    "cancion": "Yo No Me Caí Del Cielo",
+    "cancion": "Yo no me caí del cielo",
     "fragmento": "Nena, no quiero perderte, no pases de todo, que no está tan mal",
     "aporte": {
       "lista": 1,
       "numero": 38
     },
-    "catalogada": false
+    "catalogada": true,
+    "fuente": "https://redondossubtitulados.com/patriciorey/gulp/yo-no-me-cai-del-cielo/",
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "puedo",
+          "debo",
+          "suelo"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "tenerte",
+          "buscarte",
+          "llamarte"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "verbo",
+        "distractores": [
+          "huyas",
+          "dudes",
+          "vivas"
+        ]
+      }
+    ]
   },
   {
-    "cancion": "Yo No Me Caí Del Cielo",
-    "fragmento": "Yo no me caí del cielo, pero he sido un barco solo y triste",
+    "cancion": "Yo no me caí del cielo",
+    "fragmento": "Pero sí de un bar muy triste",
     "aporte": {
       "lista": 1,
       "numero": 39
     },
-    "catalogada": false
+    "catalogada": true,
+    "fuente": "https://redondossubtitulados.com/patriciorey/gulp/yo-no-me-cai-del-cielo/"
   },
   {
-    "cancion": "Yo No Me Caí Del Cielo",
+    "cancion": "Yo no me caí del cielo",
     "fragmento": "Nena, hay alegrías y alegrías, hay mucho vino malicioso y poco vino del mejor",
     "aporte": {
       "lista": 1,
       "numero": 40
     },
-    "catalogada": false
+    "catalogada": true,
+    "fuente": "https://redondossubtitulados.com/patriciorey/gulp/yo-no-me-cai-del-cielo/"
   },
   {
     "cancion": "Perdiendo El Tiempo",
@@ -1767,13 +1801,45 @@
     "catalogada": true
   },
   {
-    "cancion": "Ñam fri frufi fali fru",
+    "cancion": "Ñam fi frufi fali fru",
     "fragmento": "Yo no la cambio por nada cuando empieza a cabalgar",
     "aporte": {
       "lista": 2,
       "numero": 29
     },
-    "catalogada": false
+    "catalogada": true,
+    "fuente": "https://redondossubtitulados.com/patriciorey/gulp/nam-fi-frufi-fali-fru/",
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "busco",
+          "pierdo",
+          "dejo"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "verbo",
+        "distractores": [
+          "termina",
+          "regresa",
+          "aprende"
+        ]
+      },
+      {
+        "indice": 9,
+        "clase": "verbo",
+        "distractores": [
+          "caminar",
+          "navegar",
+          "patinar"
+        ]
+      }
+    ]
   },
   {
     "cancion": "La hija del fletero",
@@ -1816,13 +1882,13 @@
     "catalogada": true
   },
   {
-    "cancion": "Sorpresa en Shangai",
+    "cancion": "Sorpresa de Shangai",
     "fragmento": "El que abandona no tiene premio",
     "aporte": {
       "lista": 2,
       "numero": 34
     },
-    "catalogada": false,
+    "catalogada": true,
     "aprobada": true,
     "revisionOpciones": true,
     "huecos": [
@@ -1844,7 +1910,8 @@
           "salida"
         ]
       }
-    ]
+    ],
+    "fuente": "https://redondossubtitulados.com/patriciorey/lobosuelto/sorpresa-de-shangai/"
   },
   {
     "cancion": "Gualicho",
@@ -1893,7 +1960,39 @@
       "lista": 2,
       "numero": 36
     },
-    "catalogada": false
+    "catalogada": true,
+    "fuente": "https://redondossubtitulados.com/patriciorey/luzbelito/luzbelito-y-las-sirenas/",
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "suerte",
+          "noche",
+          "calle"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "recuerdos",
+          "preguntas",
+          "secretos"
+        ]
+      },
+      {
+        "indice": 7,
+        "clase": "sustantivo",
+        "distractores": [
+          "miedo",
+          "dolor",
+          "sueño"
+        ]
+      }
+    ]
   },
   {
     "cancion": "Una piba con la remera de Greenpeace",
@@ -1911,7 +2010,39 @@
       "lista": 2,
       "numero": 39
     },
-    "catalogada": false
+    "catalogada": true,
+    "fuente": "https://redondossubtitulados.com/patriciorey/lobosuelto/rock-para-el-negro-atila/",
+    "aprobada": true,
+    "revisionOpciones": true,
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "verbo",
+        "distractores": [
+          "tenerte",
+          "sentirte",
+          "buscarte"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "sustantivo",
+        "distractores": [
+          "bandido",
+          "testigo",
+          "soldado"
+        ]
+      },
+      {
+        "indice": 10,
+        "clase": "verbo",
+        "distractores": [
+          "encontrar",
+          "alcanzar",
+          "detener"
+        ]
+      }
+    ]
   },
   {
     "cancion": "La parabellum del buen psicópata",
@@ -2048,34 +2179,35 @@
   },
   {
     "cancion": "Luzbelito y las sirenas",
-    "fragmento": "Llorará su corazón",
+    "fragmento": "Y llorará en su corazón",
     "aporte": {
       "lista": 2,
       "numero": 44
     },
-    "catalogada": false,
+    "catalogada": true,
     "aprobada": true,
     "revisionOpciones": true,
     "huecos": [
       {
-        "indice": 0,
+        "indice": 1,
         "clase": "verbo",
         "distractores": [
-          "Cantará",
-          "Guardará",
-          "Perderá"
+          "cantará",
+          "soñará",
+          "bailará"
         ]
       },
       {
-        "indice": 2,
+        "indice": 4,
         "clase": "sustantivo",
         "distractores": [
-          "dolor",
           "destino",
-          "pasado"
+          "pasado",
+          "cabeza"
         ]
       }
-    ]
+    ],
+    "fuente": "https://redondossubtitulados.com/patriciorey/luzbelito/luzbelito-y-las-sirenas/"
   },
   {
     "cancion": "Un ángel para tu soledad",
@@ -2093,7 +2225,8 @@
       "lista": 2,
       "numero": 46
     },
-    "catalogada": false
+    "catalogada": true,
+    "fuente": "https://redondossubtitulados.com/patriciorey/oktubre/semen-up/"
   },
   {
     "cancion": "Un pac-man en el Savoy",
@@ -2185,13 +2318,14 @@
     ]
   },
   {
-    "cancion": "Sorpresa en Shangai",
+    "cancion": "Sorpresa de Shangai",
     "fragmento": "Falopas duras en tipos blandos ahuecan corazones",
     "aporte": {
       "lista": 2,
       "numero": 50
     },
-    "catalogada": false
+    "catalogada": true,
+    "fuente": "https://redondossubtitulados.com/patriciorey/lobosuelto/sorpresa-de-shangai/"
   },
   {
     "cancion": "Yo caníbal",
@@ -2407,5 +2541,177 @@
       "numero": 69
     },
     "catalogada": false
+  },
+  {
+    "id": "catalogo-2026-1",
+    "cancion": "Semen-Up",
+    "fragmento": "Su estilo desprecia mi soñar",
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "fuente": "https://redondossubtitulados.com/patriciorey/oktubre/semen-up/",
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "gesto",
+          "ritmo",
+          "acento"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "domina",
+          "reclama",
+          "despierta"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "verbo",
+        "distractores": [
+          "vivir",
+          "sentir",
+          "pensar"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "catalogo-2026-2",
+    "cancion": "Rock para los dientes",
+    "fragmento": "Voy cumpliendo como puedo",
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "fuente": "https://redondossubtitulados.com/patriciorey/bangbang/rock-para-los-dientes/",
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "verbo",
+        "distractores": [
+          "trabajando",
+          "resistiendo",
+          "aprendiendo"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "verbo",
+        "distractores": [
+          "quiero",
+          "siento",
+          "debo"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "catalogo-2026-3",
+    "cancion": "Maldición, va a ser un día hermoso",
+    "fragmento": "Impecable testigo de caricias",
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "fuente": "https://redondossubtitulados.com/patriciorey/bangbang/maldicion-va-a-ser-un-dia-hermoso/",
+    "huecos": [
+      {
+        "indice": 0,
+        "clase": "adjetivo",
+        "distractores": [
+          "invisible",
+          "incansable",
+          "implacable"
+        ]
+      },
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "guardián",
+          "cómplice",
+          "heredero"
+        ]
+      },
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "promesas",
+          "mentiras",
+          "miradas"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "catalogo-2026-5",
+    "cancion": "Superlógico",
+    "fragmento": "El club de Mantis muy nervioso está",
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "fuente": "https://redondossubtitulados.com/patriciorey/gulp/superlogico/",
+    "huecos": [
+      {
+        "indice": 3,
+        "clase": "sustantivo",
+        "distractores": [
+          "grillos",
+          "moscas",
+          "avispas"
+        ]
+      },
+      {
+        "indice": 5,
+        "clase": "adjetivo",
+        "distractores": [
+          "tranquilo",
+          "contento",
+          "cansado"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "catalogo-2026-8",
+    "cancion": "Susanita",
+    "fragmento": "Su pelo endulza su pañuelo",
+    "catalogada": true,
+    "aprobada": true,
+    "revisionOpciones": true,
+    "fuente": "https://redondossubtitulados.com/patriciorey/lobosuelto/susanita/",
+    "huecos": [
+      {
+        "indice": 1,
+        "clase": "sustantivo",
+        "distractores": [
+          "risa",
+          "voz",
+          "piel"
+        ]
+      },
+      {
+        "indice": 2,
+        "clase": "verbo",
+        "distractores": [
+          "perfuma",
+          "adorna",
+          "calienta"
+        ]
+      },
+      {
+        "indice": 4,
+        "clase": "sustantivo",
+        "distractores": [
+          "vestido",
+          "abrigo",
+          "sombrero"
+        ]
+      }
+    ]
   }
 ]

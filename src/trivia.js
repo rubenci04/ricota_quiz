@@ -1,4 +1,5 @@
 import datos from './data/datos-ricotero.json'
+import legado from './data/catalogo-legado.json'
 import { normalizar } from './sopa.js'
 import { crearAzar } from './azar.js'
 import { cumpleTema } from './temas.js'
@@ -9,6 +10,7 @@ import { filtrarPorTitulo, nivelTitulo, ordenarDistintivas, perfilDePlan, techoT
 export const PREGUNTAS_POR_NIVEL = 10
 const MAX_PREGUNTAS_ANIO = 2
 const { discos, integrantes } = datos
+const cancionesLegado = legado.titulos.map(titulo => [...datos.canciones, ...legado.retiradas].find(c => c.titulo === titulo))
 // canciones de la partida en curso (se acotan cuando se elige un tema)
 let canciones = datos.canciones
 // solo se usan preguntas de la banda con fuente confirmada
@@ -348,7 +350,7 @@ export function armarNivel(nivel, semilla, tema = 'todos', version = 1, plan, di
   planActual = plan
   R = crearAzar(semilla)
   perfil = perfilDePlan(plan, dif)
-  canciones = filtrarPorTitulo(datos.canciones.filter((c) => cumpleTema(c, tema)), (c) => c.titulo, perfil, R, 8)
+  canciones = filtrarPorTitulo((version < 3 ? cancionesLegado : datos.canciones).filter((c) => cumpleTema(c, tema)), (c) => c.titulo, perfil, R, 8)
   try {
     return generarNivel(nivel, tema === 'todos' ? BASICOS : BASICOS_CANCION)
   } finally {
@@ -368,7 +370,7 @@ export function armarNivelBanda(nivel, semilla, version = 1, plan, dif = 'casual
   planActual = plan
   R = crearAzar(semilla)
   perfil = perfilDePlan(plan, dif)
-  canciones = filtrarPorTitulo(datos.canciones, (c) => c.titulo, perfil, R, 8)
+  canciones = filtrarPorTitulo(version < 3 ? cancionesLegado : datos.canciones, (c) => c.titulo, perfil, R, 8)
   try {
     return generarNivelBanda(nivel)
   } finally {

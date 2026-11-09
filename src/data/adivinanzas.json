@@ -1260,78 +1260,6 @@
   "descartada": false
  },
  {
-  "id": "c36-1",
-  "tipo": "cancion",
-  "respuesta": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
-  "nivel": "facil",
-  "texto": "Las hazañas inverosímiles de un superhéroe de los petardos, en una tierra digital helada.",
-  "revisada": false,
-  "descartada": true
- },
- {
-  "id": "c36-2",
-  "tipo": "cancion",
-  "respuesta": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
-  "nivel": "medio",
-  "texto": "Tema de un disco de 1998 con videoclip de 1999, protagonizado por un héroe pirotécnico.",
-  "revisada": false,
-  "descartada": true
- },
- {
-  "id": "c36-3",
-  "tipo": "cancion",
-  "respuesta": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
-  "nivel": "medio",
-  "texto": "Aventuras asombrosas de un personaje cuyo nombre es un cohete de feria, en un reino virtual.",
-  "revisada": false,
-  "descartada": false
- },
- {
-  "id": "c36-4",
-  "tipo": "cancion",
-  "respuesta": "Las increíbles andanzas del Capitán Buscapina en Cybersiberia",
-  "nivel": "dificil",
-  "texto": "Un mártir de la pirotecnia explora Siberia, pero con prefijo de red informática.",
-  "revisada": false,
-  "descartada": true
- },
- {
-  "id": "c37-1",
-  "tipo": "cancion",
-  "respuesta": "Alien duce",
-  "nivel": "facil",
-  "texto": "Un extraterrestre con rango de caudillo.",
-  "revisada": false,
-  "descartada": true
- },
- {
-  "id": "c37-2",
-  "tipo": "cancion",
-  "respuesta": "Alien duce",
-  "nivel": "medio",
-  "texto": "Tema de un disco de 1998 que habla de tecnología y máquinas.",
-  "revisada": false,
-  "descartada": true
- },
- {
-  "id": "c37-3",
-  "tipo": "cancion",
-  "respuesta": "Alien duce",
-  "nivel": "medio",
-  "texto": "Forastero espacial y líder supremo en una sola expresión.",
-  "revisada": false,
-  "descartada": true
- },
- {
-  "id": "c37-4",
-  "tipo": "cancion",
-  "respuesta": "Alien duce",
-  "nivel": "dificil",
-  "texto": "Mezcla inglesa y latina: el que viene de afuera y el que conduce.",
-  "revisada": false,
-  "descartada": false
- },
- {
   "id": "c38-1",
   "tipo": "cancion",
   "respuesta": "Pogo",
@@ -1508,42 +1436,6 @@
   "respuesta": "Sheriff",
   "nivel": "dificil",
   "texto": "Alguien con placa, sombrero y revólver, y la ley del polvo del desierto.",
-  "revisada": false,
-  "descartada": false
- },
- {
-  "id": "c43-1",
-  "tipo": "cancion",
-  "respuesta": "Morta punto com",
-  "nivel": "facil",
-  "texto": "Muerta, pero con dirección de internet.",
-  "revisada": false,
-  "descartada": true
- },
- {
-  "id": "c43-2",
-  "tipo": "cancion",
-  "respuesta": "Morta punto com",
-  "nivel": "medio",
-  "texto": "Tema de un disco de 2000 con un dominio comercial en el título.",
-  "revisada": false,
-  "descartada": true
- },
- {
-  "id": "c43-3",
-  "tipo": "cancion",
-  "respuesta": "Morta punto com",
-  "nivel": "medio",
-  "texto": "Fallecida con terminación de página web.",
-  "revisada": false,
-  "descartada": true
- },
- {
-  "id": "c43-4",
-  "tipo": "cancion",
-  "respuesta": "Morta punto com",
-  "nivel": "dificil",
-  "texto": "El deceso más digital: una difunta con extensión de sitio comercial.",
   "revisada": false,
   "descartada": false
  },
@@ -1743,6 +1635,96 @@
   "nivel": "medio",
   "texto": "Último disco de estudio, en una caja de goma EVA con un medallón, 2000.",
   "revisada": false,
+  "descartada": false
+ },
+ {
+  "id": "catalogo-2026-1",
+  "tipo": "cancion",
+  "respuesta": "Semen-Up",
+  "nivel": "medio",
+  "texto": "Una bebida imaginaria cuyo nombre mezcla biología y una marca de gaseosa",
+  "revisada": true,
+  "descartada": false
+ },
+ {
+  "id": "catalogo-2026-2",
+  "tipo": "cancion",
+  "respuesta": "Rock para los dientes",
+  "nivel": "medio",
+  "texto": "Música eléctrica destinada a las piezas con las que mordemos",
+  "revisada": true,
+  "descartada": false
+ },
+ {
+  "id": "catalogo-2026-3",
+  "tipo": "cancion",
+  "respuesta": "Maldición, va a ser un día hermoso",
+  "nivel": "medio",
+  "texto": "Una queja ante el anuncio de una jornada espléndida",
+  "revisada": true,
+  "descartada": false
+ },
+ {
+  "id": "catalogo-2026-4",
+  "tipo": "cancion",
+  "respuesta": "Yo no me caí del cielo",
+  "nivel": "medio",
+  "texto": "Niego haber aterrizado desde las alturas celestes",
+  "revisada": true,
+  "descartada": false
+ },
+ {
+  "id": "catalogo-2026-5",
+  "tipo": "cancion",
+  "respuesta": "Superlógico",
+  "nivel": "medio",
+  "texto": "Más que razonable: un adjetivo llevado al grado máximo",
+  "revisada": true,
+  "descartada": false
+ },
+ {
+  "id": "catalogo-2026-6",
+  "tipo": "cancion",
+  "respuesta": "Ñam fi frufi fali fru",
+  "nivel": "medio",
+  "texto": "Una cadena de sonidos juguetones que empieza como si alguien saboreara comida",
+  "revisada": true,
+  "descartada": false
+ },
+ {
+  "id": "catalogo-2026-7",
+  "tipo": "cancion",
+  "respuesta": "Sorpresa de Shangai",
+  "nivel": "medio",
+  "texto": "Un hecho inesperado asociado a una gran ciudad de China",
+  "revisada": true,
+  "descartada": false
+ },
+ {
+  "id": "catalogo-2026-8",
+  "tipo": "cancion",
+  "respuesta": "Susanita",
+  "nivel": "medio",
+  "texto": "El diminutivo de Susana convertido en canción",
+  "revisada": true,
+  "descartada": false
+ },
+ {
+  "id": "catalogo-2026-9",
+  "tipo": "cancion",
+  "respuesta": "Rock para el negro Atila",
+  "nivel": "medio",
+  "texto": "Dedicatoria eléctrica a un personaje con el nombre de un rey de los hunos",
+  "revisada": true,
+  "descartada": false
+ },
+ {
+  "id": "catalogo-2026-10",
+  "tipo": "cancion",
+  "respuesta": "Luzbelito y las sirenas",
+  "nivel": "medio",
+  "texto": "Un pequeño ángel caído acompañado por criaturas marinas de canto irresistible",
+  "revisada": true,
   "descartada": false
  }
 ]
